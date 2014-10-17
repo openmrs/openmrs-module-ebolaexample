@@ -16,7 +16,9 @@ package org.openmrs.module.ebolaexample;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.api.context.Context;
 import org.openmrs.module.BaseModuleActivator;
+import org.openmrs.module.appframework.service.AppFrameworkService;
 
 /**
  * This class contains the logic that is run every time this module is either started or stopped.
@@ -27,7 +29,12 @@ public class EbolaExampleActivator extends BaseModuleActivator {
 
     @Override
     public void started() {
+        disableApps(Context.getService(AppFrameworkService.class));
         log.info("Started Ebola Example module");
+    }
+
+    void disableApps(AppFrameworkService service) {
+        service.disableApp("coreapps.configuremetadata");
     }
 
 }
