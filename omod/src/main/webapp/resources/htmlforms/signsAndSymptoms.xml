@@ -1,0 +1,147 @@
+<!--
+  ~ The contents of this file are subject to the OpenMRS Public License
+  ~ Version 1.0 (the "License"); you may not use this file except in
+  ~ compliance with the License. You may obtain a copy of the License at
+  ~ http//license.openmrs.org
+  ~
+  ~ Software distributed under the License is distributed on an "AS IS"
+  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing rights and limitations
+  ~ under the License.
+  ~
+  ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+  -->
+
+<!-- formUuid from header.xml and groupUuid -->
+<htmlform formUuid="c1d1b5b7-2d51-4f58-b8f3-7d9cb542fe4a" formName="Ebola clinical signs and symptoms" formEncounterType="fcb70d58-ec4c-46ed-a9a8-f44b1d976e08" formVersion="0.1">
+
+    <style type="text/css">
+        #who-when-where {
+            margin-bottom: 6px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        #who-when-where p {
+            display: inline-block;
+            padding-right: 20px;
+        }
+
+        #where > input[type=text] {
+            display: inline-block;
+        }
+
+        .field-error {
+            color: #ff6666;
+            font-size: 1.1em;
+            display: block;
+        }
+
+        <ifMode mode="VIEW" include="false">
+            #data-collection {
+                display: inline-block;
+                width: 58%;
+                vertical-align: top;
+            }
+
+            #encounter-diagnoses-target {
+                display: inline-block;
+                width: 40%;
+                vertical-align: top;
+            }
+
+            #encounter-diagnoses-app {
+                margin-bottom: 20px;
+            }
+        </ifMode>
+    </style>
+
+    <ifMode mode="VIEW" include="false">
+        <h2><uimessage code="referenceapplication.visitNote.title"/></h2>
+
+        <div id="who-when-where">
+            <p id="who">
+                <label><uimessage code="coreapps.patientDashBoard.provider"/></label>
+                <span><encounterProvider default="currentUser" required="true"  /></span>
+            </p>
+            <p id="when">
+                <label><uimessage code="coreapps.patientDashBoard.location"/></label>
+                <span><encounterLocation default="SessionAttribute:emrContext.sessionLocationId"/></span>
+            </p>
+            <p id="where">
+                <label><uimessage code="coreapps.patientDashBoard.date"/></label>
+                <span><encounterDate id="encounterDate" default="now" /></span>
+            </p>
+        </div>
+    </ifMode>
+
+    <div id="data-collection">
+
+        <p>
+            <label>Date of Initial Symptom</label>
+            <obs conceptId="CIEL:1730" />
+        </p>
+
+	<table>
+          <tr>
+            <obsgroup groupingConceptId="CIEL:1727">
+              <td class="symptom"><obs conceptId="CIEL:1728" answerConceptId="CIEL:140238" /></td>
+              <td><obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067" answerLabels="yes,no,unknown" style="radio"/></td>
+            </obsgroup>
+            <td><obs conceptId="CIEL:5088" id="temperature" labelText="if yes, temperature" showUnits="uicommons.units.degreesCelsius" unitsCssClass="append-to-value"/></td>
+          </tr>
+
+	  <repeat>
+	    <template>
+              <obsgroup groupingConceptId="CIEL:1727">
+		<tr>
+                  <td class="symptom"><obs conceptId="CIEL:1728" answerConceptId="{concept}" labelText=""/></td>
+                  <td><obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067" answerLabels="yes,no,unknown" style="radio"/></td>
+		</tr>
+              </obsgroup>
+	    </template>
+	    <render concept="CIEL:133473" sign="Vomiting and nausea" />
+	    <render concept="CIEL:142412" />
+	    <render concept="CIEL:135367" />
+	    <render concept="CIEL:148503" sign="Anorexia/Loss of appetite"/>
+	    <render concept="CIEL:151" />
+	    <render concept="CIEL:120749" />
+	    <render concept="CIEL:133632" />
+	    <render concept="CIEL:80" />
+	    <render concept="CIEL:139084" />
+	    <render concept="CIEL:143264" />
+	    <render concept="CIEL:122496" />
+	    <render concept="CIEL:158843" />
+	    <render concept="CIEL:136443" />
+	    <render concept="CIEL:119905" />
+	    <render concept="CIEL:512" />
+	    <render concept="CIEL:138662" />
+	    <render concept="CIEL:140827" />
+	    <render concept="CIEL:144576" />
+	    <render concept="CIEL:144386" />
+	    <render concept="CIEL:147241" />
+	  </repeat>
+	</table>
+
+        <p>
+            <label><uimessage code="coreapps.consult.freeTextComments"/></label>
+            <obs conceptId="CIEL:159395" style="textarea" rows="5"/>
+        </p>
+
+    </div>
+
+    <div id="encounter-diagnoses-target">
+    </div>
+
+    <ifMode mode="VIEW" include="false">
+        <div id="buttons">
+            <submit submitClass="confirm right" submitCode="general.save"/>
+            <button type="button" class="cancel"><uimessage code="general.cancel"/></button>
+        </div>
+
+        <script type="text/javascript">
+                jQuery(function() {
+                    jQuery('td.symptom input[type=checkbox]').prop('checked', true).hide();
+                });
+        </script>
+    </ifMode>
+</htmlform>
