@@ -1,0 +1,22 @@
+[
+    {
+        "id": "ebolaexample.findPatient",
+        "instanceOf": "coreapps.template.findPatient",
+        "description": "Patient search that goes to the Ebola patient dashboard",
+        "order": 2,
+        "requiredPrivilege": "App: coreapps.findPatient",
+        "extensions": [
+            {
+                "id": "ebolaexample.findPatientHomepageLink",
+                "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
+                "type": "link",
+                "label": "coreapps.findPatient.app.label",
+                "url": "coreapps/findpatient/findPatient.page?app=ebolaexample.findPatient",
+                "icon": "icon-search"
+            }
+        ],
+        "config": {
+            "afterSelectedUrl": "/ebolaexample/ebolaOverview.page?patient={{patientId}}"
+        }
+    }
+]

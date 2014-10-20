@@ -16,9 +16,21 @@ package org.openmrs.module.ebolaexample;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.GlobalProperty;
+import org.openmrs.Location;
+import org.openmrs.LocationTag;
+import org.openmrs.api.AdministrationService;
+import org.openmrs.api.LocationService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.BaseModuleActivator;
+import org.openmrs.module.appframework.AppFrameworkConstants;
 import org.openmrs.module.appframework.service.AppFrameworkService;
+import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
+import org.openmrs.module.emrapi.EmrApiConstants;
+import org.openmrs.module.metadatadeploy.api.MetadataDeployService;
+import org.openmrs.module.metadatadeploy.bundle.MetadataBundle;
+
+import java.util.Arrays;
 
 /**
  * This class contains the logic that is run every time this module is either started or stopped.
@@ -29,12 +41,47 @@ public class EbolaExampleActivator extends BaseModuleActivator {
 
     @Override
     public void started() {
+        deployMetadataPackages(Context.getService(MetadataDeployService.class));
+
+        setupEmrApiGlobalProperties(Context.getAdministrationService());
+
         disableApps(Context.getService(AppFrameworkService.class));
+        doNotSupportLoginAtUnknownLocation(Context.getLocationService());
         log.info("Started Ebola Example module");
+    }
+
+    private void doNotSupportLoginAtUnknownLocation(LocationService locationService) {
+        Location location = locationService.getLocation("Unknown Location");
+        if (location != null) {
+            LocationTag supportsLogin = locationService.getLocationTagByName(AppFrameworkConstants.LOCATION_TAG_SUPPORTS_LOGIN);
+            location.removeTag(supportsLogin);
+            locationService.saveLocation(location);
+        }
+    }
+
+    public void deployMetadataPackages(MetadataDeployService service) {
+        MetadataBundle ebola = Context.getRegisteredComponent("ebolaMetadata", MetadataBundle.class);
+        MetadataBundle ebolaDemoData = Context.getRegisteredComponent("ebolaDemoData", MetadataBundle.class);
+        service.installBundles(Arrays.asList(ebola, ebolaDemoData));
+    }
+
+    public void setupEmrApiGlobalProperties(AdministrationService administrationService) {
+        setGlobalProperty(administrationService, EmrApiConstants.GP_CLINICIAN_ENCOUNTER_ROLE, EbolaMetadata._EncounterRole.CLINICIAN);
     }
 
     void disableApps(AppFrameworkService service) {
         service.disableApp("coreapps.configuremetadata");
+        service.disableApp("coreapps.findPatient");
+        service.disableApp("coreapps.activeVisits");
+    }
+
+    private void setGlobalProperty(AdministrationService administrationService, String propertyName, String propertyValue) {
+        GlobalProperty gp = administrationService.getGlobalPropertyObject(propertyName);
+        if (gp == null) {
+            gp = new GlobalProperty(propertyName, propertyValue);
+        }
+        gp.setPropertyValue(propertyValue);
+        administrationService.saveGlobalProperty(gp);
     }
 
 }
