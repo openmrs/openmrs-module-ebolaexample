@@ -13,7 +13,7 @@ import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.program;
 public class EbolaMetadata extends AbstractMetadataBundle {
 
     public static class _Concept {
-        public static final String EBOLA_PROGRAM = "162637AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+        public static final String EBOLA_PROGRAM = "162637AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"; // from CIEL
     }
 
     public static class _Program {
