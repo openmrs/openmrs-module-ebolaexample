@@ -27,7 +27,7 @@ import java.util.Set;
 
 public class InpatientLocationFragmentController {
 
-    public void controller(@FragmentParam("activeVisit") VisitDomainWrapper activeVisit,
+    public void controller(@FragmentParam(value = "activeVisit", required = false) VisitDomainWrapper activeVisit,
                            @SpringBean AdtService adtService,
                            FragmentModel model) {
         Location currentLocation = null;
