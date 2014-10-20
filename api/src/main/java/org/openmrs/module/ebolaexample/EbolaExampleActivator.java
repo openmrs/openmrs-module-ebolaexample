@@ -73,6 +73,7 @@ public class EbolaExampleActivator extends BaseModuleActivator {
         service.disableApp("coreapps.configuremetadata");
         service.disableApp("coreapps.findPatient");
         service.disableApp("coreapps.activeVisits");
+        service.disableApp("referenceapplication.registrationapp.registerPatient");
     }
 
     private void setGlobalProperty(AdministrationService administrationService, String propertyName, String propertyValue) {

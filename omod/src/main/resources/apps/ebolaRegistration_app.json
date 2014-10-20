@@ -1,0 +1,61 @@
+[
+    {
+        "id": "ebolaexample.registrationapp.registerPatient",
+        "instanceOf": "registrationapp.registerPatient",
+        "label": "Register Patient",
+        "description": "Create a new Patient Record",
+        "extensions": [
+            {
+                "id": "ebolaexample.registrationapp.registerPatient.homepageLink",
+                "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
+                "type": "link",
+                "label": "referenceapplication.app.registerPatient.label",
+                "url": "registrationapp/registerPatient.page?appId=ebolaexample.registrationapp.registerPatient",
+                "icon": "icon-user",
+                "order": 1,
+                "requiredPrivilege": "App: registrationapp.registerPatient"
+            }
+        ],
+        "config": {
+            "afterCreatedUrl": "/ebolaexample/ebolaOverview.page?patient={{patientId}}",
+            "sections": [
+                {
+                    "id": "contactInfo",
+                    "label": "registrationapp.patient.contactInfo.label",
+                    "questions": [
+                        {
+                            "legend": "Person.address",
+                            "fields": [
+                                {
+                                    "type": "personAddress",
+                                    "label": "registrationapp.patient.address.question",
+                                    "widget": {
+                                        "providerName": "uicommons",
+                                        "fragmentId": "field/personAddress"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "legend": "registrationapp.patient.phone.label",
+                            "id": "phoneNumberLabel",
+                            "fields": [
+                                {
+                                    "type": "personAttribute",
+                                    "label": "registrationapp.patient.phone.question",
+                                    "formFieldName": "phoneNumber",
+                                    "uuid": "14d4f066-15f5-102d-96e4-000c29c2a5d7",
+                                    "widget": {
+                                        "providerName": "uicommons",
+                                        "fragmentId": "field/text"
+                                    },
+                                    "cssClasses": ["number"]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+]
