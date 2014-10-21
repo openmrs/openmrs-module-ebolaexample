@@ -11,7 +11,7 @@
                 "type": "link",
                 "label": "Ebola Dashboard",
                 "url": "ebolaexample/ebolaDashboard.page?app=ebolaexample.ebolaDashboard",
-                "icon": "icon-table"
+                "icon": "icon-bar-chart"
             }
         ]
     }

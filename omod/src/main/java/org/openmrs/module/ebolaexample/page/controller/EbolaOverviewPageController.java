@@ -12,6 +12,7 @@ import org.openmrs.module.coreapps.contextmodel.PatientContextModel;
 import org.openmrs.module.coreapps.contextmodel.VisitContextModel;
 import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
 import org.openmrs.module.emrapi.adt.AdtService;
+import org.openmrs.module.emrapi.event.ApplicationEventService;
 import org.openmrs.module.emrapi.patient.PatientDomainWrapper;
 import org.openmrs.module.emrapi.visit.VisitDomainWrapper;
 import org.openmrs.module.metadatadeploy.MetadataUtils;
@@ -30,6 +31,7 @@ public class EbolaOverviewPageController {
                     @InjectBeans PatientDomainWrapper patientDomainWrapper,
                     @SpringBean AdtService adtService,
                     @SpringBean AppFrameworkService appFrameworkService,
+                    @SpringBean("applicationEventService") ApplicationEventService applicationEventService,
                     UiSessionContext sessionContext,
                     PageModel model) {
 
@@ -69,6 +71,8 @@ public class EbolaOverviewPageController {
         List<Extension> includeFragments = appFrameworkService.getExtensionsForCurrentUser("patientDashboard.includeFragments");
         Collections.sort(includeFragments);
         model.addAttribute("includeFragments", includeFragments);
+
+        applicationEventService.patientViewed(patient, sessionContext.getCurrentUser());
     }
 
     private VisitDomainWrapper getActiveVisit(Patient patient, AdtService adtService, UiSessionContext sessionContext) {

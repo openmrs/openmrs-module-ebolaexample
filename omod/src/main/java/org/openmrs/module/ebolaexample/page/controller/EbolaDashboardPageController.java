@@ -1,31 +1,25 @@
 package org.openmrs.module.ebolaexample.page.controller;
 
-import org.joda.time.DateMidnight;
-import org.openmrs.Program;
-import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
-import org.openmrs.module.metadatadeploy.MetadataUtils;
 import org.openmrs.module.reporting.cohort.EvaluatedCohort;
-import org.openmrs.module.reporting.cohort.definition.InProgramCohortDefinition;
-import org.openmrs.module.reporting.cohort.definition.ProgramEnrollmentCohortDefinition;
+import org.openmrs.module.reporting.cohort.definition.CohortDefinition;
 import org.openmrs.module.reporting.cohort.definition.service.CohortDefinitionService;
+import org.openmrs.module.reporting.definition.library.AllDefinitionLibraries;
 import org.openmrs.module.reporting.evaluation.EvaluationContext;
 import org.openmrs.module.reporting.evaluation.EvaluationException;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.page.PageModel;
 
+import static org.openmrs.module.ebolaexample.reporting.EbolaCohortDefinitionLibrary.ENROLLED_TODAY;
+import static org.openmrs.module.ebolaexample.reporting.EbolaCohortDefinitionLibrary.IN_PROGRAM_NOW;
+import static org.openmrs.module.ebolaexample.reporting.EbolaCohortDefinitionLibrary.PREFIX;
+
 public class EbolaDashboardPageController {
 
     public void get(@SpringBean CohortDefinitionService cohortDefinitionService,
+                    @SpringBean AllDefinitionLibraries definitionLibraries,
                     PageModel model) throws EvaluationException {
-        Program program = MetadataUtils.existing(Program.class, EbolaMetadata._Program.EBOLA_PROGRAM);
-
-        // TODO move these definitions to a reporting DefinitionLibrary
-        InProgramCohortDefinition inProgramDef = new InProgramCohortDefinition();
-        inProgramDef.addProgram(program);
-
-        ProgramEnrollmentCohortDefinition enrolledTodayDef = new ProgramEnrollmentCohortDefinition();
-        enrolledTodayDef.addProgram(program);
-        enrolledTodayDef.setEnrolledOnOrAfter(new DateMidnight().toDate());
+        CohortDefinition inProgramDef = definitionLibraries.getDefinition(CohortDefinition.class, PREFIX + IN_PROGRAM_NOW);
+        CohortDefinition enrolledTodayDef = definitionLibraries.getDefinition(CohortDefinition.class, PREFIX + ENROLLED_TODAY);
 
         EvaluationContext evaluationContext = new EvaluationContext();
 
