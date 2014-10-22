@@ -13,7 +13,7 @@
 
             No active visit. <br/>
 
-            <a class="button" href="${ ui.actionLink("ebolaexample", "overview/assignedLocation", "startOutpatientVisit",
+            <a class="button" href="${ ui.actionLink("ebolaexample", "overview/inpatientLocation", "startOutpatientVisit",
                     [ patient: patient.patient.uuid ]) }">
                 <i class="icon-exchange"></i>
                 Outpatient visit
@@ -23,7 +23,7 @@
 
             Outpatient <br/>
 
-            <form method="POST" action="${ ui.actionLink("ebolaexample", "overview/assignedLocation", "admit",
+            <form method="POST" action="${ ui.actionLink("ebolaexample", "overview/inpatientLocation", "admit",
                                             [ patient: patient.patient.uuid ]) }">
                 ${ ui.includeFragment("uicommons", "field/location", [
                         label: "Admit to",
@@ -39,7 +39,7 @@
 
             Inpatient at <strong>${ ui.format(currentLocation) }</strong> <br/>
 
-            <form method="POST" action="${ ui.actionLink("ebolaexample", "overview/assignedLocation", "transfer",
+            <form method="POST" action="${ ui.actionLink("ebolaexample", "overview/inpatientLocation", "transfer",
                     [ patient: patient.patient.uuid ]) }">
                 ${ ui.includeFragment("uicommons", "field/location", [
                         label: "Transfer to",
