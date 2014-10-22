@@ -28,7 +28,12 @@
                 <% } %>
                 <% rows.each { row -> %>
                     <tr>
-                        <td>${ row.getColumnValue("identifier") }</td>
+                        <td>
+                            <a href="${ ui.pageLink("ebolaexample", "ebolaOverview",
+                                    [ patient: row.getColumnValue("patientId")]) }">
+                                ${ row.getColumnValue("identifier") }
+                            </a>
+                        </td>
                         <td>${ row.getColumnValue("familyName") }</td>
                         <td>${ row.getColumnValue("givenName") }</td>
                         <td>${ row.getColumnValue("birthdate") }</td>

@@ -37,6 +37,7 @@ public class PatientsByLocationPageController {
         // TODO limit to those with an active visit
         CohortDefinition enrolled = libraries.getDefinition(CohortDefinition.class, EbolaCohortDefinitionLibrary.PREFIX + IN_PROGRAM_NOW);
         PatientDataDefinition locationDef = libraries.getDefinition(PatientDataDefinition.class, EbolaPatientDataDefinitionLibrary.PREFIX + INPATIENT_LOCATION);
+        PatientDataDefinition patientId = libraries.getDefinition(PatientDataDefinition.class, BuiltInPatientDataLibrary.PREFIX + "patientId");
         PatientDataDefinition identifier = libraries.getDefinition(PatientDataDefinition.class, BuiltInPatientDataLibrary.PREFIX + "preferredIdentifier.identifier");
         PatientDataDefinition familyName = libraries.getDefinition(PatientDataDefinition.class, BuiltInPatientDataLibrary.PREFIX + "preferredName.familyName");
         PatientDataDefinition givenName = libraries.getDefinition(PatientDataDefinition.class, BuiltInPatientDataLibrary.PREFIX + "preferredName.givenName");
@@ -45,6 +46,7 @@ public class PatientsByLocationPageController {
 
         PatientDataSetDefinition dsd = new PatientDataSetDefinition();
         dsd.addRowFilter(enrolled, "");
+        dsd.addColumn("patientId", patientId, "");
         dsd.addColumn("identifier", identifier, "");
         dsd.addColumn("familyName", familyName, "");
         dsd.addColumn("givenName", givenName, "");
