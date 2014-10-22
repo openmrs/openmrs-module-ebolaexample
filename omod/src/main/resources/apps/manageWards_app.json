@@ -1,0 +1,18 @@
+[
+    {
+        "id": "ebolaexample.manageWards",
+        "description": "Manage Observation and Hot Zone locations",
+        "order": 10,
+        "requiredPrivilege": "App: ebolaexample.manageWards",
+        "extensions": [
+            {
+                "id": "ebolaexample.manageWardsSystemAdministrationLink",
+                "extensionPointId": "systemAdministration.apps",
+                "type": "link",
+                "label": "Manage Ward Definitions",
+                "url": "ebolaexample/admin/manageWards.page?app=ebolaexample.manageWards",
+                "icon": "icon-th"
+            }
+        ]
+    }
+]
