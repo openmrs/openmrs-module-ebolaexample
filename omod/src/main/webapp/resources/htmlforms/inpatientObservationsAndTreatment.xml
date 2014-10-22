@@ -1,0 +1,53 @@
+<htmlform formUuid="ab215dd2-59ff-11e4-af12-660e112eb3f5" formName="Ebola Inpatient Observations and Treatment" formEncounterType="83413734-587d-11e4-af12-660e112eb3f5" formVersion="0.1">
+
+    <h1>Inpatient Daily Observations and Treatment</h1>
+
+    <table>
+        <tr>
+            <td>
+                <p>
+                    <label>Date</label>
+                    (automatic timestamp)
+                    <span style="display: none">
+                        <encounterDate showTime="true" default="now"/>
+                    </span>
+                </p>
+            </td>
+            <td>
+                <p>
+                    <label>Location</label>
+                    <encounterLocation default="SessionAttribute:emrContext.sessionLocationId"/>
+                </p>
+            </td>
+            <td>
+                <p>
+                    <label>Provider</label>
+                    <encounterProvider default="currentUser" required="true"/>
+                </p>
+            </td>
+        </tr>
+    </table>
+
+    <p>
+        <label>Temperature</label>
+        <obs conceptId="CIEL:5088"/>
+    </p>
+
+    <p>
+        <label>SaO2</label>
+        <obs conceptId="CIEL:5092"/>
+    </p>
+
+    <p>
+        <label>Respiratory Rate</label>
+        <obs conceptId="CIEL:5242"/>
+    </p>
+
+    <p>
+        <label>Pulse</label>
+        <obs conceptId="CIEL:5087"/>
+    </p>
+
+    <submit/>
+
+</htmlform>

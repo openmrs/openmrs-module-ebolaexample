@@ -39,7 +39,9 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient, a
         <div class="info-container column">
 
             ${ ui.includeFragment("ebolaexample", "overview/encountersInActiveVisit",
-                    [ patient: patient, activeVisit: activeVisit, encounterType: followupEncounterType ]) }
+                    [ patient: patient, activeVisit: activeVisit,
+                      encounterType: followupEncounterType,
+                      entryLinks: followupForms ]) }
 
             ${ ui.includeFragment("ebolaexample", "overview/mostRecentEncounter",
                     [ patient: patient, encounterType: followupEncounterType]) }
@@ -48,31 +50,8 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient, a
 
         <div class="action-container column">
             <div class="action-section">
-                <% if (activeVisit) { %>
-                    <ul>
-                        <h3>${ ui.message("coreapps.clinicianfacing.activeVisitActions") }</h3>
-                        <% visitActions.each { ext -> %>
-                            <li>
-                                <a href="${ ui.escapeJs(ext.url("/" + ui.contextPath(), appContextModel, ui.thisUrl())) }" id="${ ext.id }">
-                                    <i class="${ ext.icon }"></i>
-                                    ${ ui.message(ext.label) }
-                                </a>
-                            </li>
-                        <% } %>
-                    </ul>
-                <% } %>
-
                 <ul>
-                    <h3>${ ui.message("coreapps.clinicianfacing.overallActions") }</h3>
-                    <%
-                        overallActions.each { ext -> %>
-                    <a href="${ ui.escapeJs(ext.url("/" + ui.contextPath(), appContextModel, ui.thisUrl())) }" id="${ ext.id }">
-                        <li>
-                            <i class="${ ext.icon }"></i>
-                            ${ ui.message(ext.label) }
-                        </li>
-                    </a>
-                    <% } %>
+                    <li>More actions here?</li>
                 </ul>
             </div>
         </div>

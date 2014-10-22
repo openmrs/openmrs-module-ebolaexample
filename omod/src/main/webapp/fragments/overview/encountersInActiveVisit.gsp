@@ -16,14 +16,21 @@
         <% if (!config.activeVisit) { %>
             No active visit
         <% } else { %>
+            <div>
+                <% config.entryLinks.each { %>
+                    <a class="button" href="${ ui.escapeAttribute(it.value) }">+ ${ it.key }</a>
+                <% } %>
+            </div>
             <% if (encounters && encounters.size() > 0) { %>
                 <ul>
                     <% encounters.each { %>
                     <li class="clear">
-                        ${ ui.formatDatePretty(it.encounterDatetime) }
-                        <% if (!config.encounterType) { %>
-                        ${ ui.format(encounterType) }
-                        <% } %>
+                        <a class="visit-link" href="${ ui.pageLink("htmlformentryui", "htmlform/viewEncounterWithHtmlForm", [ encounter: it.uuid, returnUrl: ui.thisUrl() ]) }">
+                            ${ ui.formatDatetimePretty(it.encounterDatetime) }
+                            <% if (!config.encounterType) { %>
+                                ${ ui.format(encounterType) }
+                            <% } %>
+                        </a>
                     </li>
                     <% } %>
                 </ul>

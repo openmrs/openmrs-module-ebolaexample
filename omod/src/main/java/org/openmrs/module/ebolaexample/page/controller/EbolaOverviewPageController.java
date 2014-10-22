@@ -15,7 +15,9 @@ import org.openmrs.module.emrapi.adt.AdtService;
 import org.openmrs.module.emrapi.event.ApplicationEventService;
 import org.openmrs.module.emrapi.patient.PatientDomainWrapper;
 import org.openmrs.module.emrapi.visit.VisitDomainWrapper;
+import org.openmrs.module.htmlformentry.HtmlFormEntryService;
 import org.openmrs.module.metadatadeploy.MetadataUtils;
+import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.annotation.InjectBeans;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.page.PageModel;
@@ -23,7 +25,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class EbolaOverviewPageController {
 
@@ -32,7 +37,9 @@ public class EbolaOverviewPageController {
                     @SpringBean AdtService adtService,
                     @SpringBean AppFrameworkService appFrameworkService,
                     @SpringBean("applicationEventService") ApplicationEventService applicationEventService,
+                    @SpringBean HtmlFormEntryService htmlFormEntryService,
                     UiSessionContext sessionContext,
+                    UiUtils ui,
                     PageModel model) {
 
         patientDomainWrapper.setPatient(patient);
@@ -42,8 +49,18 @@ public class EbolaOverviewPageController {
         Program program = MetadataUtils.existing(Program.class, EbolaMetadata._Program.EBOLA_PROGRAM);
         EncounterType followupEncounterType = MetadataUtils.existing(EncounterType.class, EbolaMetadata._EncounterType.EBOLA_INPATIENT_FOLLOWUP);
 
+        Map<String, Object> formParams = new HashMap<String, Object>();
+        formParams.put("patientId", patient.getUuid());
+        formParams.put("visitId", activeVisit == null ? null : activeVisit.getVisit().getUuid());
+        formParams.put("definitionUiResource", "ebolaexample:htmlforms/inpatientObservationsAndTreatment.xml");
+        // TODO breadcrumbOverride, returnUrl
+
+        Map<String, String> followupForms = new LinkedHashMap<String, String>();
+        followupForms.put("Add", ui.pageLink("htmlformentryui", "htmlform/enterHtmlFormWithStandardUi", formParams));
+
         model.addAttribute("program", program);
         model.addAttribute("followupEncounterType", followupEncounterType);
+        model.addAttribute("followupForms", followupForms);
         model.addAttribute("patient", patientDomainWrapper);
         model.addAttribute("activeVisit", activeVisit);
 

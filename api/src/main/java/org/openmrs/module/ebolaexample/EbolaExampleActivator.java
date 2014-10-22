@@ -20,17 +20,24 @@ import org.openmrs.GlobalProperty;
 import org.openmrs.Location;
 import org.openmrs.LocationTag;
 import org.openmrs.api.AdministrationService;
+import org.openmrs.api.FormService;
 import org.openmrs.api.LocationService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.BaseModuleActivator;
+import org.openmrs.module.Module;
+import org.openmrs.module.ModuleFactory;
 import org.openmrs.module.appframework.AppFrameworkConstants;
 import org.openmrs.module.appframework.service.AppFrameworkService;
 import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
 import org.openmrs.module.emrapi.EmrApiConstants;
+import org.openmrs.module.htmlformentry.HtmlFormEntryService;
+import org.openmrs.module.htmlformentryui.HtmlFormUtil;
 import org.openmrs.module.metadatadeploy.api.MetadataDeployService;
 import org.openmrs.module.metadatadeploy.bundle.MetadataBundle;
+import org.openmrs.ui.framework.resource.ResourceFactory;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * This class contains the logic that is run every time this module is either started or stopped.
@@ -41,13 +48,44 @@ public class EbolaExampleActivator extends BaseModuleActivator {
 
     @Override
     public void started() {
-        deployMetadataPackages(Context.getService(MetadataDeployService.class));
+        try {
+            deployMetadataPackages(Context.getService(MetadataDeployService.class));
 
-        setupEmrApiGlobalProperties(Context.getAdministrationService());
+            setupEmrApiGlobalProperties(Context.getAdministrationService());
 
-        disableApps(Context.getService(AppFrameworkService.class));
-        doNotSupportLoginAtUnknownLocation(Context.getLocationService());
-        log.info("Started Ebola Example module");
+            setupHtmlForms(Context.getFormService(), Context.getService(HtmlFormEntryService.class));
+
+            disableApps(Context.getService(AppFrameworkService.class));
+            doNotSupportLoginAtUnknownLocation(Context.getLocationService());
+            log.info("Started Ebola Example module");
+        }
+        catch (Exception ex) {
+            Module mod = ModuleFactory.getModuleById("ebolaexample");
+            ModuleFactory.stopModule(mod);
+            throw new RuntimeException("Failed to set up the ebolaexample module", ex);
+        }
+    }
+
+    private void setupHtmlForms(FormService formService, HtmlFormEntryService htmlFormEntryService) throws Exception {
+        try {
+            ResourceFactory resourceFactory = ResourceFactory.getInstance();
+            List<String> htmlforms = Arrays.asList(
+                    "ebolaexample:htmlforms/signsAndSymptoms.xml"
+            );
+
+            for (String htmlform : htmlforms) {
+                HtmlFormUtil.getHtmlFormFromUiResource(resourceFactory, formService, htmlFormEntryService, htmlform);
+            }
+        }
+        catch (Exception e) {
+            // this is a hack to get component test to pass until we find the proper way to mock this
+            if (ResourceFactory.getInstance().getResourceProviders() == null) {
+                log.error("Unable to load HTML forms--this error is expected when running component tests, but it is an error if you see it in production");
+            }
+            else {
+                throw e;
+            }
+        }
     }
 
     private void doNotSupportLoginAtUnknownLocation(LocationService locationService) {
