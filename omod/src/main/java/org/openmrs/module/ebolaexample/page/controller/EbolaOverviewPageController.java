@@ -53,7 +53,8 @@ public class EbolaOverviewPageController {
         formParams.put("patientId", patient.getUuid());
         formParams.put("visitId", activeVisit == null ? null : activeVisit.getVisit().getUuid());
         formParams.put("definitionUiResource", "ebolaexample:htmlforms/inpatientObservationsAndTreatment.xml");
-        // TODO breadcrumbOverride, returnUrl
+        formParams.put("returnUrl", ui.thisUrl());
+        // TODO breadcrumbOverride
 
         Map<String, String> followupForms = new LinkedHashMap<String, String>();
         followupForms.put("Add", ui.pageLink("htmlformentryui", "htmlform/enterHtmlFormWithStandardUi", formParams));

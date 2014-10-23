@@ -34,6 +34,9 @@
         <require_module version="${referenceapplicationVersion}">
             org.openmrs.module.referenceapplication
         </require_module>
+        <require_module version="${webservices.restVersion}">
+            org.openmrs.module.webservices.rest
+        </require_module>
     </require_modules>
 	
 	<!-- Module Activator -->
