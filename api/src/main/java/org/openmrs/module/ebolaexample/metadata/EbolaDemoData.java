@@ -97,11 +97,14 @@ public class EbolaDemoData extends AbstractMetadataBundle {
         installBeds(_Location.SUSPECT_WARD_1, 10, tagsForInpatientBed);
         installBeds(_Location.SUSPECT_WARD_2, 10, tagsForInpatientBed);
         installBeds(_Location.SUSPECT_WARD_3, 5, tagsForInpatientBed);
+        installBeds(_Location.CONFIRMED_WARD_1, 10, tagsForInpatientBed);
+        installBeds(_Location.CONFIRMED_WARD_2, 10, tagsForInpatientBed);
+        installBeds(_Location.CONFIRMED_WARD_3, 5, tagsForInpatientBed);
     }
 
     private void installBeds(String parentLocation, int numBeds, Collection<String> tags) {
         Location parent = MetadataUtils.existing(Location.class, parentLocation);
-        if (parent.getChildLocations().size() == 0) {
+        if (parent.getChildLocations() == null || parent.getChildLocations().size() == 0) {
             for (int i = 1; i <= numBeds; ++i) {
                 install(location("Bed #" + i, null, UUID.randomUUID().toString(), parentLocation, tags));
             }
