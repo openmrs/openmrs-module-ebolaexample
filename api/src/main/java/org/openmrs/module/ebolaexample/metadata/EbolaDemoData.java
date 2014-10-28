@@ -82,7 +82,7 @@ public class EbolaDemoData extends AbstractMetadataBundle {
         install(location("Suspect Ward 2", null, _Location.SUSPECT_WARD_2, _Location.INPATIENT_WARDS,
                 tagsForSuspectWard));
         install(location("Suspect Ward 3", null, _Location.SUSPECT_WARD_3, _Location.INPATIENT_WARDS,
-                tagsForConfirmedWard));
+                tagsForSuspectWard));
 
         install(location("Confirmed Ward 1", null, _Location.CONFIRMED_WARD_1, _Location.INPATIENT_WARDS,
                 tagsForConfirmedWard));
