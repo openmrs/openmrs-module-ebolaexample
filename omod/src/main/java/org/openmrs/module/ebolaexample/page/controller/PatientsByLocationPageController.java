@@ -3,10 +3,8 @@ package org.openmrs.module.ebolaexample.page.controller;
 import org.openmrs.Location;
 import org.openmrs.LocationTag;
 import org.openmrs.api.LocationService;
-import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
 import org.openmrs.module.ebolaexample.reporting.EbolaCohortDefinitionLibrary;
 import org.openmrs.module.ebolaexample.reporting.EbolaPatientDataDefinitionLibrary;
-import org.openmrs.module.metadatadeploy.MetadataUtils;
 import org.openmrs.module.reporting.cohort.definition.CohortDefinition;
 import org.openmrs.module.reporting.data.patient.definition.PatientDataDefinition;
 import org.openmrs.module.reporting.data.patient.library.BuiltInPatientDataLibrary;
@@ -21,12 +19,18 @@ import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.page.PageModel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.openmrs.module.ebolaexample.metadata.EbolaMetadata._LocationTag.EBOLA_CONFIRMED_WARD;
+import static org.openmrs.module.ebolaexample.metadata.EbolaMetadata._LocationTag.EBOLA_RECOVERY_WARD;
+import static org.openmrs.module.ebolaexample.metadata.EbolaMetadata._LocationTag.EBOLA_SUSPECT_WARD;
 import static org.openmrs.module.ebolaexample.reporting.EbolaCohortDefinitionLibrary.IN_PROGRAM_NOW;
 import static org.openmrs.module.ebolaexample.reporting.EbolaPatientDataDefinitionLibrary.INPATIENT_LOCATION;
+import static org.openmrs.module.metadatadeploy.MetadataUtils.existing;
 
 public class PatientsByLocationPageController {
 
@@ -69,10 +73,13 @@ public class PatientsByLocationPageController {
 
         model.addAttribute("byLocation", byLocation);
 
-        LocationTag observationAreaTag = MetadataUtils.existing(LocationTag.class, EbolaMetadata._LocationTag.EBOLA_OBSERVATION_AREA);
-        LocationTag hotZoneAreaTag = MetadataUtils.existing(LocationTag.class, EbolaMetadata._LocationTag.EBOLA_HOT_ZONE_AREA);
-        model.addAttribute("observationAreas", locationService.getLocationsByTag(observationAreaTag));
-        model.addAttribute("hotZoneAreas", locationService.getLocationsByTag(hotZoneAreaTag));
+        Map<LocationTag, List<Location>> locationsByGroup = new LinkedHashMap<LocationTag, List<Location>>();
+        for (LocationTag locationTag : Arrays.asList(existing(LocationTag.class, EBOLA_SUSPECT_WARD),
+                existing(LocationTag.class, EBOLA_CONFIRMED_WARD),
+                existing(LocationTag.class, EBOLA_RECOVERY_WARD))) {
+            locationsByGroup.put(locationTag, locationService.getLocationsByTag(locationTag));
+        }
+        model.addAttribute("locationsByGroup", locationsByGroup);
     }
 
 }

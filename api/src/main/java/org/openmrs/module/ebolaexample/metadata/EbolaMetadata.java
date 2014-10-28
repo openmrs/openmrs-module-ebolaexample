@@ -32,8 +32,12 @@ public class EbolaMetadata extends AbstractMetadataBundle {
     }
 
     public static class _LocationTag {
-        public static final String EBOLA_HOT_ZONE_AREA = "18789832-582a-11e4-af12-660e112eb3f5";
-        public static final String EBOLA_OBSERVATION_AREA = "2e78a6e0-582a-11e4-af12-660e112eb3f5";
+        public static final String EBOLA_SUSPECT_WARD = "2e78a6e0-582a-11e4-af12-660e112eb3f5";
+        public static final String EBOLA_CONFIRMED_WARD = "18789832-582a-11e4-af12-660e112eb3f5";
+        public static final String EBOLA_RECOVERY_WARD = "16250bf4-5e71-11e4-9305-df58197607bd";
+
+        public static final String INPATIENT_BED = "c8bb459c-5e7d-11e4-9305-df58197607bd";
+
         public static final String VISIT_LOCATION = "a971992a-5838-11e4-af12-660e112eb3f5";
     }
 
@@ -46,8 +50,10 @@ public class EbolaMetadata extends AbstractMetadataBundle {
     public void install() throws Exception {
         install(program("Ebola", "Treatment of Ebola patients and observation of suspects", _Concept.EBOLA_PROGRAM, _Program.EBOLA_PROGRAM));
 
-        install(locationTag("Ebola Hot Zone Area", "Area where patients known to have Ebola Virus Disease are quarantined and isolated", _LocationTag.EBOLA_HOT_ZONE_AREA));
-        install(locationTag("Ebola Observation Area", "Area where patients suspected to possibly have Ebola Virus Disease are quarantined while awaiting test results", _LocationTag.EBOLA_OBSERVATION_AREA));
+        install(locationTag("Ebola Confirmed Ward", "Area where patients known to have Ebola Virus Disease are quarantined and isolated", _LocationTag.EBOLA_CONFIRMED_WARD));
+        install(locationTag("Ebola Suspect Ward", "Area where patients suspected to possibly have Ebola Virus Disease are quarantined while awaiting test results", _LocationTag.EBOLA_SUSPECT_WARD));
+        install(locationTag("Ebola Recovery Ward", "Area where patients who have cleared their Ebola Virus infection stay before being discharged", _LocationTag.EBOLA_RECOVERY_WARD));
+        install(locationTag("Inpatient Bed", "Bed in an inpatient ward where a patient may be assigned", _LocationTag.INPATIENT_BED));
         install(locationTag(EmrApiConstants.LOCATION_TAG_SUPPORTS_VISITS, "Top-level location that a visit is attached to", _LocationTag.VISIT_LOCATION));
 
         install(encounterRole("Clinician", "Clinician", _EncounterRole.CLINICIAN));

@@ -11,8 +11,8 @@
 </script>
 
 <%
-    def groups = [ observationAreas, hotZoneAreas ]
-    groups.each { group ->
+    locationsByGroup.each {
+    def group = it.value
 %>
     <div class="column">
         <% group.each { location ->
@@ -34,10 +34,12 @@
                                 ${ row.getColumnValue("identifier") }
                             </a>
                         </td>
-                        <td>${ row.getColumnValue("familyName") }</td>
-                        <td>${ row.getColumnValue("givenName") }</td>
-                        <td>${ row.getColumnValue("birthdate") }</td>
-                        <td>${ row.getColumnValue("gender") }</td>
+                        <td>
+                            ${ row.getColumnValue("familyName") },
+                            ${ row.getColumnValue("givenName") } <br/>
+                            ${ row.getColumnValue("birthdate") },
+                            ${ row.getColumnValue("gender") }
+                        </td>
                     </tr>
                 <% } %>
                 </tbody>

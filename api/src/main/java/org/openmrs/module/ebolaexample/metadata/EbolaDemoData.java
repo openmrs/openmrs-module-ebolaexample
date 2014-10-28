@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @Component("ebolaDemoData")
 @Requires(EbolaMetadata.class)
@@ -24,13 +25,18 @@ public class EbolaDemoData extends AbstractMetadataBundle {
 
     public static class _Location {
         public static final String EBOLA_TREATMENT_UNIT = "c035d67e-5830-11e4-af12-660e112eb3f5";
-        public static final String OBSERVATION_AREA_1 = "534fed82-5831-11e4-af12-660e112eb3f5";
-        public static final String OBSERVATION_AREA_2 = "56a6886a-5831-11e4-af12-660e112eb3f5";
-        public static final String HOT_ZONE_AREA_1 = "ed5c93e0-5830-11e4-af12-660e112eb3f5";
-        public static final String HOT_ZONE_AREA_2 = "05b6cc12-5831-11e4-af12-660e112eb3f5";
-        public static final String HOT_ZONE_AREA_3 = "0fd9102e-5831-11e4-af12-660e112eb3f5";
-        public static final String HOT_ZONE_AREA_4 = "1ef1761e-5831-11e4-af12-660e112eb3f5";
-        public static final String HOT_ZONE_AREA_5 = "22e1204e-5831-11e4-af12-660e112eb3f5";
+
+        public static final String INPATIENT_WARDS = "b6739628-5e82-11e4-9305-df58197607bd";
+
+        public static final String SUSPECT_WARD_1 = "534fed82-5831-11e4-af12-660e112eb3f5";
+        public static final String SUSPECT_WARD_2 = "56a6886a-5831-11e4-af12-660e112eb3f5";
+        public static final String SUSPECT_WARD_3 = "1ef1761e-5831-11e4-af12-660e112eb3f5";
+
+        public static final String CONFIRMED_WARD_1 = "ed5c93e0-5830-11e4-af12-660e112eb3f5";
+        public static final String CONFIRMED_WARD_2 = "05b6cc12-5831-11e4-af12-660e112eb3f5";
+        public static final String CONFIRMED_WARD_3 = "22e1204e-5831-11e4-af12-660e112eb3f5";
+
+        public static final String RECOVERY_WARD_1 = "0fd9102e-5831-11e4-af12-660e112eb3f5";
     }
 
     @Override
@@ -39,38 +45,67 @@ public class EbolaDemoData extends AbstractMetadataBundle {
         String supportsTransfer = locationService.getLocationTagByName(EmrApiConstants.LOCATION_TAG_SUPPORTS_TRANSFER).getUuid();
 
         List<String> tagsForRootLocation = Arrays.asList(
-                EbolaMetadata._LocationTag.VISIT_LOCATION,
+                EbolaMetadata._LocationTag.VISIT_LOCATION
+        );
+        List<String> tagsForInpatientRoot = Arrays.asList(
                 AppFrameworkConstants.LOCATION_TAG_SUPPORTS_LOGIN_UUID
         );
-        List<String> tagsForObservationArea = Arrays.asList(
+        List<String> tagsForSuspectWard = Arrays.asList(
                 supportsAdmission,
                 supportsTransfer,
-                EbolaMetadata._LocationTag.EBOLA_OBSERVATION_AREA
+                EbolaMetadata._LocationTag.EBOLA_SUSPECT_WARD
         );
-        List<String> tagsForHotZone = Arrays.asList(
+        List<String> tagsForConfirmedWard = Arrays.asList(
                 supportsAdmission,
                 supportsTransfer,
-                EbolaMetadata._LocationTag.EBOLA_HOT_ZONE_AREA
+                EbolaMetadata._LocationTag.EBOLA_CONFIRMED_WARD
+        );
+        List<String> tagsForRecoveryWard = Arrays.asList(
+                supportsAdmission,
+                supportsTransfer,
+                EbolaMetadata._LocationTag.EBOLA_RECOVERY_WARD
+        );
+        List<String> tagsForInpatientBed = Arrays.asList(
+                supportsAdmission,
+                supportsTransfer,
+                EbolaMetadata._LocationTag.INPATIENT_BED
         );
 
         install(location("Ebola Treatment Unit", "Top level demo location", _Location.EBOLA_TREATMENT_UNIT, null,
                 tagsForRootLocation));
 
-        install(location("Observation Area 1", null, _Location.OBSERVATION_AREA_1, _Location.EBOLA_TREATMENT_UNIT,
-                tagsForObservationArea));
-        install(location("Observation Area 2", null, _Location.OBSERVATION_AREA_2, _Location.EBOLA_TREATMENT_UNIT,
-                tagsForObservationArea));
+        install(location("Inpatient Wards", "Area within which all Inpatient Wards are contained", _Location.INPATIENT_WARDS, _Location.EBOLA_TREATMENT_UNIT,
+                tagsForInpatientRoot));
 
-        install(location("Hot Zone Area 1", null, _Location.HOT_ZONE_AREA_1, _Location.EBOLA_TREATMENT_UNIT,
-                tagsForHotZone));
-        install(location("Hot Zone Area 2", null, _Location.HOT_ZONE_AREA_2, _Location.EBOLA_TREATMENT_UNIT,
-                tagsForHotZone));
-        install(location("Hot Zone Area 3", null, _Location.HOT_ZONE_AREA_3, _Location.EBOLA_TREATMENT_UNIT,
-                tagsForHotZone));
-        install(location("Hot Zone Area 4", null, _Location.HOT_ZONE_AREA_4, _Location.EBOLA_TREATMENT_UNIT,
-                tagsForHotZone));
-        install(location("Hot Zone Area 5", null, _Location.HOT_ZONE_AREA_5, _Location.EBOLA_TREATMENT_UNIT,
-                tagsForHotZone));
+        install(location("Suspect Ward 1", null, _Location.SUSPECT_WARD_1, _Location.INPATIENT_WARDS,
+                tagsForSuspectWard));
+        install(location("Suspect Ward 2", null, _Location.SUSPECT_WARD_2, _Location.INPATIENT_WARDS,
+                tagsForSuspectWard));
+        install(location("Suspect Ward 3", null, _Location.SUSPECT_WARD_3, _Location.INPATIENT_WARDS,
+                tagsForConfirmedWard));
+
+        install(location("Confirmed Ward 1", null, _Location.CONFIRMED_WARD_1, _Location.INPATIENT_WARDS,
+                tagsForConfirmedWard));
+        install(location("Confirmed Ward 2", null, _Location.CONFIRMED_WARD_2, _Location.INPATIENT_WARDS,
+                tagsForConfirmedWard));
+        install(location("Confirmed Ward 3", null, _Location.CONFIRMED_WARD_3, _Location.INPATIENT_WARDS,
+                tagsForConfirmedWard));
+
+        install(location("Recovery Ward 1", null, _Location.RECOVERY_WARD_1, _Location.INPATIENT_WARDS,
+                tagsForRecoveryWard));
+
+        installBeds(_Location.SUSPECT_WARD_1, 10, tagsForInpatientBed);
+        installBeds(_Location.SUSPECT_WARD_2, 10, tagsForInpatientBed);
+        installBeds(_Location.SUSPECT_WARD_3, 5, tagsForInpatientBed);
+    }
+
+    private void installBeds(String parentLocation, int numBeds, Collection<String> tags) {
+        Location parent = MetadataUtils.existing(Location.class, parentLocation);
+        if (parent.getChildLocations().size() == 0) {
+            for (int i = 1; i <= numBeds; ++i) {
+                install(location("Bed #" + i, null, UUID.randomUUID().toString(), parentLocation, tags));
+            }
+        }
     }
 
     // will go in CoreConstructors in a newer version of Metadata Deploy than we depend on now

@@ -30,14 +30,15 @@ public class ManageWardsPageController {
         );
 
         List<LocationTag> tags = Arrays.asList(
-                MetadataUtils.existing(LocationTag.class, EbolaMetadata._LocationTag.EBOLA_OBSERVATION_AREA),
-                MetadataUtils.existing(LocationTag.class, EbolaMetadata._LocationTag.EBOLA_HOT_ZONE_AREA)
+                MetadataUtils.existing(LocationTag.class, EbolaMetadata._LocationTag.EBOLA_SUSPECT_WARD),
+                MetadataUtils.existing(LocationTag.class, EbolaMetadata._LocationTag.EBOLA_CONFIRMED_WARD),
+                MetadataUtils.existing(LocationTag.class, EbolaMetadata._LocationTag.EBOLA_RECOVERY_WARD)
         );
 
         Object existing = ConversionUtil.convertToRepresentation(locationService.getAllLocations(), Representation.FULL);
 
         model.addAttribute("tagsForAllJson", ui.toJson(tagsForAll));
-        model.addAttribute("parentLocation", MetadataUtils.existing(Location.class, EbolaDemoData._Location.EBOLA_TREATMENT_UNIT));
+        model.addAttribute("parentLocation", MetadataUtils.existing(Location.class, EbolaDemoData._Location.INPATIENT_WARDS));
         model.addAttribute("tags", tags);
         model.addAttribute("locationsJson", ui.toJson(existing));
     }
