@@ -29,11 +29,8 @@
         </tr>
     </table>
 
-    <fieldset>
-        <!-- <legend><uimessage code="ebola.signsandobs.title"/></legend> -->
-        <h3>
-            <label>Signs and Observations</label>
-        </h3>
+    <section id="signsAndObs" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="Signs and Observations">
 
         <p>
             <label>Consciousness</label>
@@ -42,8 +39,10 @@
 
         <p>
             <label>Temperature</label>
-            <obs conceptId="CIEL:5088" id="temperature_c" showUnits="emr.units.degreesCelsius"
-                 unitsCssClass="append-to-value"/>
+            <span class="small">
+                <obs conceptId="CIEL:5088" showUnits="emr.units.degreesCelsius"/>
+            </span>
+            <!-- or this?  <obs conceptId="CIEL:5088" id="temperature_c" showUnits="emr.units.degreesCelsius" unitsCssClass="append-to-value"/> -->
         </p>
 
         <p>
@@ -97,15 +96,11 @@
                 <!-- <obs conceptId="CIEL:162642" answerConceptIds="CIEL:1107,CIEL:1498,CIEL:1499,CIEL:1500" answerLabels="none,mild,moderate,severe" /> -->
             </obsgroup>
         </p>
-    </fieldset>
+    </section>
 
     <p></p>
 
-    <fieldset>
-        <!-- <legend><uimessage code="ebola.hydration.title"/></legend> -->
-        <h3>
-            <label>Hydration</label>
-        </h3>
+    <section id="hydration" sectionTag="fieldset" headerTag="legend" headerStyle="title" headerCode="Hydration">
 
         <p>
             <label>Oral fluids in past 24h</label>
@@ -144,7 +139,99 @@
             <!-- <obs conceptId="CIEL:162654" answerConceptIds="CIEL:162655,CIEL:162656,CIEL:162657,CIEL:1107" answerLabels="formed,semi-formed,liquid,none" /> -->
         </p>
 
-    </fieldset>
+    </section>
+
+    <section id="symptoms" sectionTag="fieldset" headerTag="legend" headerStyle="title" headerCode="Symptoms">
+
+        <p>
+            <label>Overall symptoms</label>
+            <!-- <obs conceptId="CIEL:?" answerConceptIds="CIEL:?,CIEL:?,CIEL:?" answerLabels="same,better,worse" /> -->
+        </p>
+
+        <table>
+            <repeat>
+                <template>
+                    <obsgroup groupingConceptId="CIEL:1727">
+                        <tr>
+                            <td class="symptom">
+                                <obs conceptId="CIEL:1728" answerConceptId="{concept}" labelText=""/>
+                            </td>
+                            <td>
+                                <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
+                                     answerLabels="yes,no,unknown"/>
+                            </td>
+                        </tr>
+                    </obsgroup>
+                </template>
+                <render concept="CIEL:140501" labelText="Fatigue"/>
+                <render concept="CIEL:139084" labelText="Headache"/>
+                <render concept="CIEL:133632" labelText="Muscle pain"/>
+                <render concept="CIEL:80" labelText="Joint pain"/>
+                <render concept="CIEL:1983" labelText="Unable to drink"/>
+                <!-- <render concept="CIEL:?" labelText="Unable to eat"/> -->
+                <render concept="CIEL:118789" labelText="Difficult to swallow"/>
+                <render concept="CIEL:138662" labelText="Hiccups"/>
+                <render concept="CIEL:143264" labelText="Cough"/>
+                <render concept="CIEL:122496" labelText="Difficult to breathe"/>
+                <render concept="CIEL:512" labelText="Rash"/>
+                <render concept="CIEL:151" labelText="Abdominal pain"/>
+                <render concept="CIEL:118771" labelText="Urine pain"/>
+                <render concept="CIEL:147241" labelText="Bleeding"/>
+            </repeat>
+        </table>
+
+        <p>
+            <label>If yes for bleeding, which sites?</label>
+            <!-- Free text or coded sites?  <obs conceptId="CIEL:162668" />
+                    answerConceptIds="CIEL:?,CIEL:?,CIEL:?,CIEL:?,CIEL:?,CIEL:5622"
+                    answerLabels="nose/oral,cough,vomit,stool,vaginal (not menstrual),other" /> -->
+        </p>
+
+        <p>
+            <label>Other symptoms (list)</label>
+            <obs conceptId="CIEL:1728" answerClasses="Symptom,Diagnosis,Finding" style="autocomplete"/>
+        </p>
+    </section>
+
+    <section id="plan" sectionTag="fieldset" headerTag="legend" headerStyle="title" headerCode="Daily management plan">
+        <p>
+            <label>Fluid management</label>
+            <!-- <obs conceptId="CIEL:162653" answerConceptIds="CIEL:351,CIEL:162649,CIEL:162651,CIEL:162650,CIEL:1063,CIEL:?"
+                    answerLabels="ORS,Jelly water,IV management,IV/IO Resuscitate,Blood transfusion,Fluid restrict" /> -->
+        </p>
+
+        <p>
+            <label>Target volume in next 24h</label>
+            <!-- <obs conceptId="CIEL:?" showUnits="true"/> -->
+        </p>
+
+        <p>
+            <label>Antimalarials</label>
+            <!-- <obs conceptId="CIEL:?" labelText="Antimalarials" style="checkbox"
+                    answerConceptIds="CIEL:162674,CIEL:71561,CIEL:83023"  answerLabels="Artemether-Lumefantrine (ACT),Artesunate,Quinine" /> -->
+        </p>
+
+        <p>
+            <label>Antibiotics</label>
+            <!-- <obs conceptId="CIEL:?" labelText="Antibiotics" style="checkbox"
+                    answerConceptIds="CIEL:73041,CIEL:73006,CIEL:79782"  answerLabels="Ceftriaxone,Cefixime,Metronidazole" /> -->
+        </p>
+
+        <p>
+            <label>Other medication (specify)</label>
+            <!-- <obs conceptId="CIEL:?" labelText="Other ETU medication"  /> -->
+        </p>
+
+        <p>
+            <label>Clinical impression</label>
+            <obs conceptId="CIEL:159395" style="textarea"/>
+        </p>
+
+        <p>
+            <label>Problem list</label>
+            <!-- TBD <obs conceptId="CIEL:?"/> -->
+        </p>
+    </section>
 
     <submit/>
 
