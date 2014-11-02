@@ -218,6 +218,12 @@
         </p>
 
         <p>
+            <label>Analgesics / Antipyretics</label>
+            <!-- <obs conceptId="CIEL:?" labelText="Analgesics/Antipyretics" style="checkbox"
+                    answerConceptIds="CIEL:70116,CIEL:85275,CIEL:80106"  answerLabels="Paracetamol,Tramadol,Morphine" /> -->
+        </p>
+
+        <p>
             <label>Other medication (specify)</label>
             <!-- <obs conceptId="CIEL:?" labelText="Other ETU medication"  /> -->
         </p>
