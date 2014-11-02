@@ -37,7 +37,7 @@
 
         <p>
             <label>Consciousness</label>
-            <!-- Add concept conceptId="CIEL:162643" showUnits="true" -->
+            <!-- <obs conceptId="CIEL:162643" answerConceptIds="CIEL:160282,CIEL:162645,CIEL:162644,CIEL:159508", answerLabels="A,V,P,U"  /> -->
         </p>
 
         <p>
@@ -74,12 +74,12 @@
 
         <p>
             <label>Raised JVP</label>
-            <!-- Add concept conceptId="CIEL:162646" showUnits="true" -->
+            <!-- <obs conceptId="CIEL:162646" showUnits="true" />-->
         </p>
 
         <p>
             <label>Capillary refill time</label>
-            <!-- Add concept conceptId="CIEL:?" showUnits="true" -->
+            <!-- <obs conceptId="CIEL:162513" showUnits="true" /> -->
         </p>
 
         <p>
@@ -94,7 +94,7 @@
             <label>Pale</label>
             <obsgroup groupingConceptId="CIEL:1727">
                 <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:131004"/>
-                <!-- <obs conceptId="CIEL:?" answerConceptIds="CIEL:1107,CIEL:1498,CIEL:1499,CIEL:1500" answerLabels="none,mild,moderate,severe" /> -->
+                <!-- <obs conceptId="CIEL:162642" answerConceptIds="CIEL:1107,CIEL:1498,CIEL:1499,CIEL:1500" answerLabels="none,mild,moderate,severe" /> -->
             </obsgroup>
         </p>
     </fieldset>
@@ -116,7 +116,7 @@
             <label>Dehydration</label>
             <obsgroup groupingConceptId="CIEL:1727">
                 <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:142630"/>
-                <!-- <obs conceptId="CIEL:?" answerConceptIds="CIEL:1107,CIEL:1498,CIEL:1499,CIEL:1500" answerLabels="none,mild,moderate,severe" /> -->
+                <!-- <obs conceptId="CIEL:162642" answerConceptIds="CIEL:1107,CIEL:1498,CIEL:1499,CIEL:1500" answerLabels="none,mild,moderate,severe" /> -->
             </obsgroup>
         </p>
 
@@ -129,7 +129,7 @@
             <label>Vomiting</label>
             <obsgroup groupingConceptId="CIEL:1727">
                 <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:122983"/>
-                <!-- <obs conceptId="CIEL:?" answerConceptIds="CIEL:1107,CIEL:1498,CIEL:1499,CIEL:1500" answerLabels="none,mild,moderate,severe" /> -->
+                <!-- <obs conceptId="CIEL:162642" answerConceptIds="CIEL:1107,CIEL:1498,CIEL:1499,CIEL:1500" answerLabels="none,mild,moderate,severe" /> -->
             </obsgroup>
         </p>
 
@@ -141,7 +141,7 @@
 
         <p>
             <label>Main stool type</label>
-            <!-- <obs conceptId="CIEL:162654" answerConceptIds=",CIEL:162655,CIEL:162656,CIEL:162657,CIEL:1107" answerLabels="formed,semi-formed,liquid,none" /> -->
+            <!-- <obs conceptId="CIEL:162654" answerConceptIds="CIEL:162655,CIEL:162656,CIEL:162657,CIEL:1107" answerLabels="formed,semi-formed,liquid,none" /> -->
         </p>
 
     </fieldset>
