@@ -1,6 +1,7 @@
-<htmlform formUuid="ab215dd2-59ff-11e4-af12-660e112eb3f5" formName="Ebola Inpatient Observations and Treatment" formEncounterType="83413734-587d-11e4-af12-660e112eb3f5" formVersion="0.1">
+<htmlform formUuid="ab215dd2-59ff-11e4-af12-660e112eb3f5" formName="Ebola Inpatient Observations and Treatment"
+          formEncounterType="83413734-587d-11e4-af12-660e112eb3f5" formVersion="0.1">
 
-    <h1>Inpatient Daily Observations and Treatment</h1>
+    <h1>Inpatient</h1>
 
     <table>
         <tr>
@@ -28,25 +29,122 @@
         </tr>
     </table>
 
-    <p>
-        <label>Temperature</label>
-        <obs conceptId="CIEL:5088"/>
-    </p>
+    <fieldset>
+        <!-- <legend><uimessage code="ebola.signsandobs.title"/></legend> -->
+        <h3>
+            <label>Signs and Observations</label>
+        </h3>
 
-    <p>
-        <label>SaO2</label>
-        <obs conceptId="CIEL:5092"/>
-    </p>
+        <p>
+            <label>Consciousness</label>
+            <!-- Add concept conceptId="CIEL:162643" showUnits="true" -->
+        </p>
 
-    <p>
-        <label>Respiratory Rate</label>
-        <obs conceptId="CIEL:5242"/>
-    </p>
+        <p>
+            <label>Temperature</label>
+            <obs conceptId="CIEL:5088" id="temperature_c" showUnits="emr.units.degreesCelsius"
+                 unitsCssClass="append-to-value"/>
+        </p>
 
-    <p>
-        <label>Pulse</label>
-        <obs conceptId="CIEL:5087"/>
-    </p>
+        <p>
+            <label>Oxygen saturation</label>
+            <obs conceptId="CIEL:5092" id="o2_sat" showUnits="emr.units.percent" unitsCssClass="append-to-value"/>
+        </p>
+
+        <p>
+            <label>Respiratory rate</label>
+            <obs conceptId="CIEL:5242" id="respiratory_rate" showUnits="emr.units.perMinute"
+                 unitsCssClass="append-to-value"/>
+        </p>
+
+        <p>
+            <label>Heart rate</label>
+            <obs conceptId="CIEL:5087" id="heart_rate" showUnits="emr.units.perMinute" unitsCssClass="append-to-value"/>
+        </p>
+
+        <p>
+            <label>Systolic BP</label>
+            <obs conceptId="CIEL:5085" showUnits="true" id="bp_systolic"/>
+        </p>
+
+        <p>
+            <label>Diastolic BP</label>
+            <obs conceptId="CIEL:5086" showUnits="true" id="bp_diastolic"/>
+        </p>
+
+        <p>
+            <label>Raised JVP</label>
+            <!-- Add concept conceptId="CIEL:162646" showUnits="true" -->
+        </p>
+
+        <p>
+            <label>Capillary refill time</label>
+            <!-- Add concept conceptId="CIEL:?" showUnits="true" -->
+        </p>
+
+        <p>
+            <label>Abdomen tender</label>
+            <obsgroup groupingConceptId="CIEL:1727">
+                <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:5105"/>
+                <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066" answerLabels="yes,no"/>
+            </obsgroup>
+        </p>
+
+        <p>
+            <label>Pale</label>
+            <obsgroup groupingConceptId="CIEL:1727">
+                <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:131004"/>
+                <!-- <obs conceptId="CIEL:?" answerConceptIds="CIEL:1107,CIEL:1498,CIEL:1499,CIEL:1500" answerLabels="none,mild,moderate,severe" /> -->
+            </obsgroup>
+        </p>
+    </fieldset>
+
+    <p></p>
+
+    <fieldset>
+        <!-- <legend><uimessage code="ebola.hydration.title"/></legend> -->
+        <h3>
+            <label>Hydration</label>
+        </h3>
+
+        <p>
+            <label>Oral fluids in past 24h</label>
+            <!-- <obs conceptId="CIEL:162658" showUnits="true"/> -->
+        </p>
+
+        <p>
+            <label>Dehydration</label>
+            <obsgroup groupingConceptId="CIEL:1727">
+                <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:142630"/>
+                <!-- <obs conceptId="CIEL:?" answerConceptIds="CIEL:1107,CIEL:1498,CIEL:1499,CIEL:1500" answerLabels="none,mild,moderate,severe" /> -->
+            </obsgroup>
+        </p>
+
+        <p>
+            <label>Urine output</label>
+            <!-- <obs conceptId="CIEL:162647" answerConceptIds="CIEL:1115,CIEL:?,CIEL:1107,CIEL:1067" answerLabels="normal,reduced,none,unknown" /> -->
+        </p>
+
+        <p>
+            <label>Vomiting</label>
+            <obsgroup groupingConceptId="CIEL:1727">
+                <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:122983"/>
+                <!-- <obs conceptId="CIEL:?" answerConceptIds="CIEL:1107,CIEL:1498,CIEL:1499,CIEL:1500" answerLabels="none,mild,moderate,severe" /> -->
+            </obsgroup>
+        </p>
+
+        <p>
+            <label>Stool frequency</label>
+            <obs conceptId="CIEL:1837"/>
+            <label>/ 24h</label>
+        </p>
+
+        <p>
+            <label>Main stool type</label>
+            <!-- <obs conceptId="CIEL:162654" answerConceptIds=",CIEL:162655,CIEL:162656,CIEL:162657,CIEL:1107" answerLabels="formed,semi-formed,liquid,none" /> -->
+        </p>
+
+    </fieldset>
 
     <submit/>
 
