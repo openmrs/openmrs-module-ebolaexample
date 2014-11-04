@@ -1,41 +1,65 @@
 <div id="vital-signs">
-	<div>
-		<label for="currentConsciousness">Current Consciousness</label>
+  <div>
+    <label for="currentConsciousness">Current Consciousness</label>
 
-		<label>
-			<input type="radio" name="currentConsciousness" ng-model="viewModel.currentConsciousness" value="a">
-		</label>
+    <label>
+      <input type="radio" name="currentConsciousness" ng-model="viewModel.currentConsciousness" value="a">
+    </label>
 
-		<label>
-			<input type="radio" name="currentConsciousness" ng-model="viewModel.currentConsciousness" value="v">
-		</label>
+    <label>
+      <input type="radio" name="currentConsciousness" ng-model="viewModel.currentConsciousness" value="v">
+    </label>
 
-		<label>
-			<input type="radio" name="currentConsciousness" ng-model="viewModel.currentConsciousness" value="p">
-		</label>
+    <label>
+      <input type="radio" name="currentConsciousness" ng-model="viewModel.currentConsciousness" value="p">
+    </label>
 
-		<label>
-			<input type="radio" name="currentConsciousness" ng-model="viewModel.currentConsciousness" value="u">
-		</label>
-	</div>
+    <label>
+      <input type="radio" name="currentConsciousness" ng-model="viewModel.currentConsciousness" value="u">
+    </label>
+  </div>
 
-	<div>
-		<label for="temperature">Temperature</label>
-		<input type="number" name="temperature" ng-model="viewModel.temperature">
-	</div>
+  <div>
+    <div>
+      <label for="temperature">Temperature</label>
+      <input type="number" name="temperature" ng-model="viewModel.temperature">
+    </div>
 
-	<div>
-		<label for="oxygenSaturation">Oxygen Saturation</label>
-		<input type="number" name="oxygenSaturation" ng-model="viewModel.oxygenSaturation">
-	</div>
+    <div>
+      <label for="oxygenSaturation">Oxygen Saturation</label>
+      <input type="number" name="oxygenSaturation" ng-model="viewModel.oxygenSaturation">
+    </div>
 
-	<div>
-		<label for="respiratoryRate">Respiratory Rate</label>
-		<input type="number" name="respiratoryRate" ng-model="viewModel.respiratoryRate">
-	</div>
+    <div>
+      <label for="respiratoryRate">Respiratory Rate</label>
+      <input type="number" name="respiratoryRate" ng-model="viewModel.respiratoryRate">
+    </div>
 
-	<div>
-		<label for="heartRate">Heart Rate</label>
-		<input type="number" name="heartRate" ng-model="viewModel.heartRate">
-	</div>
+    <div>
+      <label for="heartRate">Heart Rate</label>
+      <input type="number" name="heartRate" ng-model="viewModel.heartRate">
+    </div>
+  </div>
+
+  <div>
+    <div>
+      <label for="systolicBP">Systolic BP</label>
+      <input type="number" name="systolicBP" ng-model="viewModel.systolicBP">
+    </div>
+
+    <div>
+      <label for="diastolicBP">Diastolic BP</label>
+      <input type="number" name="diastolicBP" ng-model="viewModel.diastolicBP">
+    </div>
+
+    <div>
+      <label for="raisedJVP">Raised JVP</label>
+      <input type="number" name="raisedJVP" ng-model="viewModel.raisedJVP">
+    </div>
+
+    <div>
+      <label for="capillaryRefillTime">Capillary refill time</label>
+      <input type="number" name="capillaryRefillTime" ng-model="viewModel.capillaryRefillTime">
+    </div>
+  </div>
 </div>
