@@ -1,7 +1,7 @@
-var module = angular.module('inpatientForm')
+var module = angular.module('inpatientForm');
 
-module.controller('mainController', function() {
+module.controller('MainController', function() {
 
-    $scope.activeView = 'vitalSigns';
+    $scope.activeView = 'symptoms';
 
 });
