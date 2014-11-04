@@ -34,13 +34,17 @@
 
         <p>
             <label>Consciousness</label>
-            <!-- <obs conceptId="CIEL:162643" answerConceptIds="CIEL:160282,CIEL:162645,CIEL:162644,CIEL:159508", answerLabels="A,V,P,U"  /> -->
+            <obs conceptId="CIEL:162643" answerConceptIds="CIEL:160282,CIEL:162645,162644,CIEL:159508"
+                 answerLabels="A,V,P,U"/>
         </p>
 
         <p>
             <label>Temperature</label>
-            <obs conceptId="CIEL:5088" showUnits="emr.units.degreesCelsius"/>
-         </p>
+            <span class="small">
+                <obs conceptId="CIEL:5088" showUnits="emr.units.degreesCelsius"/>
+            </span>
+            <!-- or this?  <obs conceptId="CIEL:5088" id="temperature_c" showUnits="emr.units.degreesCelsius" unitsCssClass="append-to-value"/> -->
+        </p>
 
         <p>
             <label>Oxygen saturation</label>
@@ -70,12 +74,12 @@
 
         <p>
             <label>Raised JVP</label>
-            <!-- <obs conceptId="CIEL:162646" showUnits="true" />-->
+            <obs conceptId="CIEL:162646" showUnits="true"/>
         </p>
 
         <p>
             <label>Capillary refill time</label>
-            <!-- <obs conceptId="CIEL:162513" showUnits="true" /> -->
+            <obs conceptId="CIEL:162513" showUnits="true"/>
         </p>
 
         <p>
@@ -90,7 +94,8 @@
             <label>Pale</label>
             <obsgroup groupingConceptId="CIEL:1727">
                 <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:131004"/>
-                <!-- <obs conceptId="CIEL:162642" answerConceptIds="CIEL:1107,CIEL:1498,CIEL:1499,CIEL:1500" answerLabels="none,mild,moderate,severe" /> -->
+                <obs conceptId="CIEL:162642" answerConceptIds="CIEL:1107,CIEL:1498,CIEL:1499,CIEL:1500"
+                     answerLabels="none,mild,moderate,severe"/>
             </obsgroup>
         </p>
     </section>
@@ -101,27 +106,30 @@
 
         <p>
             <label>Oral fluids in past 24h</label>
-            <!-- <obs conceptId="CIEL:162658" showUnits="true"/> -->
+            <obs conceptId="CIEL:162658" showUnits="true"/>
         </p>
 
         <p>
             <label>Dehydration</label>
             <obsgroup groupingConceptId="CIEL:1727">
                 <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:142630"/>
-                <!-- TBA <obs conceptId="CIEL:162642" answerConceptIds="CIEL:1107,CIEL:1498,CIEL:1499,CIEL:1500" answerLabels="none,mild,moderate,severe" /> -->
+                <obs conceptId="CIEL:162642" answerConceptIds="CIEL:1107,CIEL:1498,CIEL:1499,CIEL:1500"
+                     answerLabels="none,mild,moderate,severe"/>
             </obsgroup>
         </p>
 
         <p>
             <label>Urine output</label>
-            <!-- TBA <obs conceptId="CIEL:162647" answerConceptIds="CIEL:1115,CIEL:162648,CIEL:1107,CIEL:1067" answerLabels="normal,reduced,none,unknown" /> -->
+            <obs conceptId="CIEL:162647" answerConceptIds="CIEL:1115,CIEL:162648,CIEL:1107,CIEL:1067"
+                 answerLabels="normal,reduced,none,unknown"/>
         </p>
 
         <p>
             <label>Vomiting</label>
             <obsgroup groupingConceptId="CIEL:1727">
                 <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:122983"/>
-                <!-- TBA <obs conceptId="CIEL:162642" answerConceptIds="CIEL:1107,CIEL:1498,CIEL:1499,CIEL:1500" answerLabels="none,mild,moderate,severe" /> -->
+                <obs conceptId="CIEL:162642" answerConceptIds="CIEL:1107,CIEL:1498,CIEL:1499,CIEL:1500"
+                     answerLabels="none,mild,moderate,severe"/>
             </obsgroup>
         </p>
 
@@ -133,7 +141,8 @@
 
         <p>
             <label>Main stool type</label>
-            <!-- <obs conceptId="CIEL:162654" answerConceptIds="CIEL:162655,CIEL:162656,CIEL:162657,CIEL:1107" answerLabels="formed,semi-formed,liquid,none" /> -->
+            <obs conceptId="CIEL:162654" answerConceptIds="CIEL:162655,CIEL:162656,CIEL:162657,CIEL:1107"
+                 answerLabels="formed,semi-formed,liquid,none"/>
         </p>
 
     </section>
@@ -142,7 +151,8 @@
 
         <p>
             <label>Overall symptoms</label>
-            <!-- TBA <obs conceptId="CIEL:162676" answerConceptIds="CIEL:?,CIEL:?,CIEL:?" answerLabels="same,better,worse" /> -->
+            <obs conceptId="162676" answerConceptIds="CIEL:162679,CIEL:162677,CIEL:162678"
+                 answerLabels="same,better,worse"/>
         </p>
 
         <table>
@@ -151,7 +161,7 @@
                     <obsgroup groupingConceptId="CIEL:1727">
                         <tr>
                             <td class="symptom">
-                                <obs conceptId="CIEL:1728" answerConceptId="{concept}" labelText="{label}"/>
+                                <obs conceptId="CIEL:1728" answerConceptId="{concept}" labelText=""/>
                             </td>
                             <td>
                                 <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
@@ -160,28 +170,28 @@
                         </tr>
                     </obsgroup>
                 </template>
-                <render concept="CIEL:140501" label="Fatigue"/>
-                <render concept="CIEL:139084" label="Headache"/>
-                <render concept="CIEL:133632" label="Muscle pain"/>
-                <render concept="CIEL:80" label="Joint pain"/>
-                <render concept="CIEL:1983" label="Unable to drink"/>
-                <!-- <render concept="CIEL:?" label="Unable to eat"/> -->
-                <render concept="CIEL:118789" label="Difficult to swallow"/>
-                <render concept="CIEL:138662" label="Hiccups"/>
-                <render concept="CIEL:143264" label="Cough"/>
-                <render concept="CIEL:122496" label="Difficult to breathe"/>
-                <render concept="CIEL:512" label="Rash"/>
-                <render concept="CIEL:151" label="Abdominal pain"/>
-                <render concept="CIEL:118771" label="Urine pain"/>
-                <render concept="CIEL:147241" label="Bleeding"/>
+                <render concept="CIEL:140501" labelText="Fatigue"/>
+                <render concept="CIEL:139084" labelText="Headache"/>
+                <render concept="CIEL:133632" labelText="Muscle pain"/>
+                <render concept="CIEL:80" labelText="Joint pain"/>
+                <render concept="CIEL:1983" labelText="Unable to drink"/>
+                <!-- <render concept="CIEL:?" labelText="Unable to eat"/> -->
+                <render concept="CIEL:118789" labelText="Difficult to swallow"/>
+                <render concept="CIEL:138662" labelText="Hiccups"/>
+                <render concept="CIEL:143264" labelText="Cough"/>
+                <render concept="CIEL:122496" labelText="Difficult to breathe"/>
+                <render concept="CIEL:512" labelText="Rash"/>
+                <render concept="CIEL:151" labelText="Abdominal pain"/>
+                <render concept="CIEL:118771" labelText="Urine pain"/>
+                <render concept="CIEL:147241" labelText="Bleeding"/>
             </repeat>
         </table>
 
         <p>
             <label>If yes for bleeding, which sites?</label>
-            <!-- Free text or coded sites?  <obs conceptId="CIEL:162668" />
-                    answerConceptIds="CIEL:160494,CIEL:143264,CIEL:122983,CIEL:159993,CIEL:?,CIEL:5622"
-                    answerLabels="nose/oral,cough,vomit,stool,vaginal (not menstrual),other" /> -->
+            <obs conceptId="CIEL:162668"
+                 answerConceptIds="CIEL:160495,CIEL:162669,CIEL:162670,CIEL:162671,CIEL:162673,CIEL:5622"
+                 answerLabels="nose/oral,cough (lung),vomit (stomach),stool (intestine),vaginal (not menstrual),other"/>
         </p>
 
         <p>
@@ -193,35 +203,37 @@
     <section id="plan" sectionTag="fieldset" headerTag="legend" headerStyle="title" headerCode="Daily management plan">
         <p>
             <label>Fluid management</label>
-            <!-- TBD <obs conceptId="CIEL:162653" answerConceptIds="CIEL:351,CIEL:162649,CIEL:162651,CIEL:162650,CIEL:1063,CIEL:?"
-                    answerLabels="ORS,Jelly water,IV management,IV/IO Resuscitate,Blood transfusion,Fluid restrict" /> -->
+            <obs conceptId="CIEL:162653"
+                 answerConceptIds="CIEL:351,CIEL:162649,CIEL:162651,CIEL:162650,CIEL:1063,CIEL:162652"
+                 answerLabels="ORS,Jelly water,IV management,IV/IO Resuscitate,Blood transfusion,Fluid restrict"/>
         </p>
 
         <p>
             <label>Target volume in next 24h</label>
-            <!-- TBA Target volume <obs conceptId="CIEL:162675" showUnits="true"/> -->
+            <obs conceptId="CIEL:162675" showUnits="true"/>
         </p>
 
         <p>
             <label>Antimalarials</label>
-            <!-- <obs conceptId="CIEL:?" labelText="Antimalarials" style="checkbox"
-                    answerConceptIds="CIEL:162674,CIEL:71561,CIEL:83023"  answerLabels="Artemether-Lumefantrine (ACT),Artesunate,Quinine" /> -->
+            <obs conceptId="CIEL:162686" labelText="Antimalarials" style="checkbox"
+                 answerConceptIds="CIEL:162674,CIEL:71561,CIEL:83023"
+                 answerLabels="Artemether-Lumefantrine (ACT),Artesunate,Quinine"/>
         </p>
 
         <p>
             <label>Antibiotics</label>
-            <!-- <obs conceptId="CIEL:?" labelText="Antibiotics" style="checkbox"
-                    answerConceptIds="CIEL:73041,CIEL:73006,CIEL:79782"  answerLabels="Ceftriaxone,Cefixime,Metronidazole" /> -->
+            <obs conceptId="CIEL:162687" labelText="Antibiotics" style="checkbox"
+                 answerConceptIds="CIEL:73041,CIEL:73006,CIEL:79782" answerLabels="Ceftriaxone,Cefixime,Metronidazole"/>
         </p>
 
         <p>
             <label>Analgesics / Antipyretics</label>
-            <!-- <obs conceptId="CIEL:?" labelText="Analgesics/Antipyretics" style="checkbox"
-                    answerConceptIds="CIEL:70116,CIEL:85275,CIEL:80106"  answerLabels="Paracetamol,Tramadol,Morphine" /> -->
+            <obs conceptId="CIEL:162688" labelText="Analgesics/Antipyretics" style="checkbox"
+                 answerConceptIds="CIEL:70116,CIEL:85275,CIEL:80106" answerLabels="Paracetamol,Tramadol,Morphine"/>
         </p>
 
         <p>
-            <label>Other medication (specify)</label>
+            <label>Other medication (specify) [TBD]</label>
             <!-- <obs conceptId="CIEL:?" labelText="Other ETU medication"  /> -->
         </p>
 
@@ -231,8 +243,8 @@
         </p>
 
         <p>
-            <label>Problem list</label>
-            <!-- TBD Problem list <obs conceptId="CIEL:?"/> -->
+            <label>Problem list [TBD]</label>
+            <!-- TBD <obs conceptId="CIEL:?"/> -->
         </p>
     </section>
 
