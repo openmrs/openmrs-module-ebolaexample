@@ -1,6 +1,6 @@
 var module = angular.module('inpatientForm')
 
-module.controller("vitalSignsController", function($scope) {
+module.controller("vitalSignsController", function($scope, $location) {
   $scope.viewModel = {
     currentConsciouness: "",
     temperature: "",
@@ -13,5 +13,11 @@ module.controller("vitalSignsController", function($scope) {
     capillaryRefillTime: "",
     abdomenTender: "",
     paleAnaemia: ""
+  };
+
+  $scope.sendData = function() {
+    console.log("potato");
+    $scope.emit("vital-sign-data", $scope.viewModel);
+    $location.url('/hydratation');
   };
 });
