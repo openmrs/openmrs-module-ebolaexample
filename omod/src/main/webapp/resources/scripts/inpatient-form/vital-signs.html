@@ -1,9 +1,29 @@
 <div id="vital-signs">
 	<div>
-		<span>Current Consciousness</span>
-		<input type="radio" ng-model="viewModel.currentConsciousness" value="a">
-		<input type="radio" ng-model="viewModel.currentConsciousness" value="v">
-		<input type="radio" ng-model="viewModel.currentConsciousness" value="p">
-		<input type="radio" ng-model="viewModel.currentConsciousness" value="u">
+		<label for="currentConsciousness">Current Consciousness</label>
+		<input type="radio" name="currentConsciousness" ng-model="viewModel.currentConsciousness" value="a">
+		<input type="radio" name="currentConsciousness" ng-model="viewModel.currentConsciousness" value="v">
+		<input type="radio" name="currentConsciousness" ng-model="viewModel.currentConsciousness" value="p">
+		<input type="radio" name="currentConsciousness" ng-model="viewModel.currentConsciousness" value="u">
+	</div>
+
+	<div>
+		<label for="temperature">Temperature</label>
+		<input type="number" name="temperature" ng-model="viewModel.temperature">
+	</div>
+
+	<div>
+		<label for="oxygenSaturation">Oxygen Saturation</label>
+		<input type="number" name="oxygenSaturation" ng-model="viewModel.oxygenSaturation">
+	</div>
+
+	<div>
+		<label for="respiratoryRate">Respiratory Rate</label>
+		<input type="number" name="respiratoryRate" ng-model="viewModel.respiratoryRate">
+	</div>
+
+	<div>
+		<label for="heartRate">Heart Rate</label>
+		<input type="number" name="heartRate" ng-model="viewModel.heartRate">
 	</div>
 </div>
