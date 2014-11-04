@@ -1,5 +1,5 @@
 var module = angular.module('inpatientForm')
 
-module.controller("clientServerService", function() {
+module.service("clientServerService", function() {
 
 });
