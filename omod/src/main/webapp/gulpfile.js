@@ -4,7 +4,7 @@ var gulp = require('gulp');
 
 gulp.task('scripts', function() {
 
-    gulp.src('./bower_components/**/*.min.js').pipe(gulp.dest('./pages/js'));
+    gulp.src('./bower_components/**/*.min.js').pipe(gulp.dest('./resources/scripts/lib'));
 });
 
 
