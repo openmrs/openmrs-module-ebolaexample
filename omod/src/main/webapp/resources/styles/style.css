@@ -39,6 +39,39 @@
     font-style: normal;
 }
 
+body {
+	margin: 0;
+	padding: 0;
+}
+
+.ebola-form {
+	padding: 2em;
+}
+
+.patient-header {
+	background: #595959;
+	padding: 0.5em;
+	color: #ffcc00;
+	font-family: "OpenSansBold";
+	font-size: 3.5em;
+	overflow: hidden;
+}
+
+small {
+	color: white;
+	display: block;
+	font-size: 0.45em;
+}
+
+.patient-id {
+	float: left;
+}
+
+.patient-info {
+	float: right;
+	margin-right: 1em;
+}
+
 .one-column {
 	width: 100%;
 }

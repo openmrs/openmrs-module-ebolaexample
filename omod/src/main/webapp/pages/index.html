@@ -8,10 +8,26 @@
 </head>
 
 <body ng-app="inpatientForm">
-  <div>
-    <ng-include src="'vital-signs.html'" ></ng-include>
-    <ng-include src="'symptoms.html'" ></ng-include>
-  </div>
+	<div>
+		<div class="patient-header">
+			<span class="patient-id">
+				<small>PATIENT ID NUMBER</small>
+			KT-1-29360
+			</span>
+			<span class="patient-info">
+				<small>WARD</small>
+			12
+			</span>
+			<span class="patient-info">
+				<small>BED</small>
+			27
+			</span>
+		</div>
+		<div class="ebola-form">
+			<ng-include src="'vital-signs.html'" ></ng-include>
+			<ng-include src="'symptoms.html'" ></ng-include>
+		</div>
+	</div>
 </body>
 
 </html>
