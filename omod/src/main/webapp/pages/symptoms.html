@@ -1,36 +1,38 @@
 <div id="symptoms">
   <div>
     <div>
-      <label>Overall symptoms</label>
-      <label>Same
-        <input type="radio" value="same" name="overallSymptoms" ng-model="viewModel.overallSymptoms" />
-      </label>
-      <label>Worse
-        <input type="radio" value="worse" name="overallSymptoms" ng-model="viewModel.overallSymptoms" />
-      </label>
-      <label>Better
-        <input type="radio" value="better" name="overallSymptoms" ng-model="viewModel.overallSymptoms" />
-      </label>
+      <span class="question-title">Overall symptoms</span>
+      
+      <input id="symptons_1" type="radio" value="same" name="overallSymptoms" ng-model="viewModel.overallSymptoms" />
+      <label for="symptons_1" class="radio-button">Same</label>
+      
+      <input id="symptons_2" type="radio" value="worse" name="overallSymptoms" ng-model="viewModel.overallSymptoms" />
+      <label for="symptons_2" class="radio-button">Worse</label>
+      
+      <input id="symptons_3" type="radio" value="better" name="overallSymptoms" ng-model="viewModel.overallSymptoms" />
+      <label for="symptons_3" class="radio-button">Better</label>
     </div>
+
     <div>
-      <label>Fatigue</label>
-      <label>None
-        <input type="radio" value="none" name="fatigue" ng-model="viewModel.fatigue" />
-      </label>
-      <label>Mild
-        <input type="radio" value="mild" name="fatigue" ng-model="viewModel.fatigue" />
-      </label>
-      <label>Mod
-        <input type="radio" value="mod" name="fatigue" ng-model="viewModel.fatigue" />
-      </label>
-      <label>Sev
-        <input type="radio" value="sev" name="fatigue" ng-model="viewModel.fatigue" />
-      </label>
+      <span class="question-title">Fatigue</span>      
+      
+      <input id="fatique_1" type="radio" value="none" name="fatigue" ng-model="viewModel.fatigue" />
+      <label for="fatique_1" class="radio-button">None</label>
+  
+      <input id="fatique_2" type="radio" value="mild" name="fatigue" ng-model="viewModel.fatigue" />
+      <label for="fatique_2" class="radio-button">Mild</label>
+
+      <input id="fatique_3" type="radio" value="mod" name="fatigue" ng-model="viewModel.fatigue" />
+      <label for="fatique_3" class="radio-button">Mod</label>
+        
+      <input id="fatique_4" type="radio" value="sev" name="fatigue" ng-model="viewModel.fatigue" />
+      <label for="fatique_4" class="radio-button">Sev</label>
     </div>
   </div>
+
   <div>
     <div>
-      <label>Bleeding</label>
+      <span class="question-title">Bleeding</span>
       <label>No
         <input type="radio" value="no" name="bleeding" ng-model="viewModel.bleeding" />
       </label>
