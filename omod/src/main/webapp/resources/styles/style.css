@@ -39,6 +39,15 @@
     font-style: normal;
 }
 
+.one-column {
+	width: 100%;
+}
+
+.two-column {
+	width: 49%;
+	display: inline-block;
+}
+
 .radio-button {
 	width: 210px;
 	height: 150px;
