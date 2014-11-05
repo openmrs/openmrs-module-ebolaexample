@@ -147,6 +147,52 @@ module.factory("conceptMappingFactory", function() {
     return question;
   }
 
+  function createFluidManagement(){ 
+    var question = createQuestion("fluidManagement", "coded", "162653AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerORS = createAnswer("ORS", "351AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerIVMaintenance = createAnswer("IVMaintenance", "162649AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerIVIORessucitate = createAnswer("IVIORessucitate", "162651AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerJelly = createAnswer("jelly", "162650AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerBloodTransfusion = createAnswer("bloodTransfusion", "1063AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerFluidRestrict = createAnswer("fluidRestrict", "162652AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    question.answers = [answerORS, answerIVMaintenance, answerIVIORessucitate, answerJelly, answerBloodTransfusion, answerFluidRestrict];
+    return question;  
+
+  }
+
+  function createTargetVolume(){
+    var question = createQuestion("targetVolumeInNext24h", "non-coded", "162675AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    question.answers = [];
+    return question;  
+  }
+
+  function createAntiMalarials(){
+    var question = createQuestion("antiMalarials", "coded", "162686AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerALACT = createAnswer("ALACT", "162674AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerArtesunate = createAnswer("artesunate", "71561AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerQuinine = createAnswer("quinine", "83023AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    question.answers = [answerALACT, answerArtesunate, answerQuinine];
+    return question;  
+  }
+
+  function createAntibiotics(){
+    var question = createQuestion("antibiotics", "coded", "162687AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerCeftriaxone = createAnswer("ceftriaxone", "73041AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerCefixime = createAnswer("cefixime", "73006AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerMetronidazole = createAnswer("metronidazole", "79782AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    question.answers = [answerCeftriaxone, answerCefixime, answerMetronidazole];
+    return question;  
+  }
+
+  function createAnalgesicsAntipyretics(){
+    var question = createQuestion("analgesicsAntipyretics", "coded", "162688AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerParacetamol = createAnswer("paracetamol", "70116AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerTramadol = createAnswer("tramadol", "85275AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerMorphine = createAnswer("morphine", "80106AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    question.answers = [answerParacetamol, answerTramadol, answerMorphine];
+    return question;  
+  }
+
   function loadMapping() {
     var conceptMapping = [];
     conceptMapping.push(createCurrentConsciousness());
@@ -166,6 +212,11 @@ module.factory("conceptMappingFactory", function() {
     conceptMapping.push(createVomiting());
     conceptMapping.push(createStoolType());
     conceptMapping.push(createStoolFrequency());
+    conceptMapping.push(createFluidManagement());
+    conceptMapping.push(createTargetVolume());
+    conceptMapping.push(createAntiMalarials());
+    conceptMapping.push(createAntibiotics());
+    conceptMapping.push(createAnalgesicsAntipyretics());
 
     return conceptMapping;
   }
