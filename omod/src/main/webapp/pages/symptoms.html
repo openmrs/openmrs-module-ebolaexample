@@ -1,20 +1,20 @@
 <div id="symptoms">
   <div>
     <div>
-      <span class="question-title">Overall symptoms</span>
+      <span class="question-title">OVERALL SYMPTONS</span>
       
       <input id="symptons_1" type="radio" value="same" name="overallSymptoms" ng-model="viewModel.overallSymptoms" />
-      <label for="symptons_1" class="radio-button">Same</label>
+      <label for="symptons_1" class="radio-button medium">Same</label>
       
       <input id="symptons_2" type="radio" value="worse" name="overallSymptoms" ng-model="viewModel.overallSymptoms" />
-      <label for="symptons_2" class="radio-button">Worse</label>
+      <label for="symptons_2" class="radio-button medium">Worse</label>
       
       <input id="symptons_3" type="radio" value="better" name="overallSymptoms" ng-model="viewModel.overallSymptoms" />
-      <label for="symptons_3" class="radio-button">Better</label>
+      <label for="symptons_3" class="radio-button medium">Better</label>
     </div>
 
     <div>
-      <span class="question-title">Fatigue</span>      
+      <span class="question-title">FATIGUE</span>      
       
       <input id="fatique_1" type="radio" value="none" name="fatigue" ng-model="viewModel.fatigue" />
       <label for="fatique_1" class="radio-button">None</label>
@@ -32,130 +32,130 @@
 
   <div>
     <div>
-      <span class="question-title">Bleeding</span>
+      <span class="question-title">BLEEDING</span>
       
       <input id="bleeding_1" type="radio" value="no" name="bleeding" ng-model="viewModel.bleeding" />
-      <label for="bleeding_1" class="radio-button">No</label>
+      <label for="bleeding_1" class="radio-button medium">No</label>
 
       <input id="bleeding_2" type="radio" value="nose/oral" name="bleeding" ng-model="viewModel.bleeding" />
-      <label for="bleeding_2" class="radio-button">Nose/Oral</label>
+      <label for="bleeding_2" class="radio-button small">Nose/Oral</label>
 
       <input id="bleeding_3" type="radio" value="cough" name="bleeding" ng-model="viewModel.bleeding" />
-      <label for="bleeding_3" class="radio-button">Cought</label>
+      <label for="bleeding_3" class="radio-button medium">Cought</label>
 
       <input id="bleeding_4" type="radio" value="vomit" name="bleeding" ng-model="viewModel.bleeding" />
-      <label for="bleeding_4" class="radio-button">Vomit</label>
+      <label for="bleeding_4" class="radio-button medium">Vomit</label>
 
       <input id="bleeding_5" type="radio" value="stool" name="bleeding" ng-model="viewModel.bleeding" />
-      <label for="bleeding_5" class="radio-button">Stool</label>
+      <label for="bleeding_5" class="radio-button medium">Stool</label>
 
       <input id="bleeding_6" type="radio" value="vaginal" name="bleeding" ng-model="viewModel.bleeding" />
-      <label for="bleeding_6" class="radio-button">Vaginal</label>
+      <label for="bleeding_6" class="radio-button medium">Vaginal</label>
     </div>
   </div>
   <div>
     <div>
-      <span class="question-title">Headache</span>
+      <span class="question-title">HEADACHE</span>
       
-      <input type="radio" value="yes" name="headache" ng-model="viewModel.headache" />
-      <label class="radio-button">Yes</label>
+      <input id="headache_1" type="radio" value="yes" name="headache" ng-model="viewModel.headache" />
+      <label for="headache_1" class="radio-button">Yes</label>
 
-      <input type="radio" value="no" name="headache" ng-model="viewModel.headache" />
-      <label class="radio-button">No</label>
+      <input id="headache_2" type="radio" value="no" name="headache" ng-model="viewModel.headache" />
+      <label for="headache_2" class="radio-button">No</label>
     </div>
     <div>
-      <span class="question-title">Joint/muscle pain</span>
-      <label class="radio-button">Yes
-        <input type="radio" value="yes" name="jointMusclePain" ng-model="viewModel.jointMusclePain" />
-      </label>
-      <label class="radio-button">No
-        <input type="radio" value="no" name="jointMusclePain" ng-model="viewModel.jointMusclePain" />
-      </label>
+      <span class="question-title">JOINT/MUSCLE PAIN</span>
+      
+      <input id="joint_1" type="radio" value="yes" name="jointMusclePain" ng-model="viewModel.jointMusclePain" />
+      <label for="joint_1" class="radio-button">Yes</label>
+
+      <input id="joint_2" type="radio" value="no" name="jointMusclePain" ng-model="viewModel.jointMusclePain" />
+      <label for="joint_2" class="radio-button">No</label>
     </div>
     <div>
-      <span class="question-title">Unable to drink</span>
-      <label class="radio-button">Yes
-        <input type="radio" value="yes" name="unableToDrink" ng-model="viewModel.unableToDrink" />
-      </label>
-      <label class="radio-button">No
-        <input type="radio" value="no" name="unableToDrink" ng-model="viewModel.unableToDrink" />
-      </label>
+      <span class="question-title">UNABLE TO DRINK</span>
+      
+      <input id="drink_1" type="radio" value="yes" name="unableToDrink" ng-model="viewModel.unableToDrink" />
+      <label for="drink_1" class="radio-button">Yes</label>
+      
+      <input id="drink_2" type="radio" value="no" name="unableToDrink" ng-model="viewModel.unableToDrink" />
+      <label for="drink_2" class="radio-button">No</label>
     </div>
     <div>
-      <span class="question-title">Unable to eat</span>
-      <label class="radio-button">Yes
-        <input type="radio" value="yes" name="unableToEat" ng-model="viewModel.unableToEat" />
-      </label>
-      <label class="radio-button">No
-        <input type="radio" value="no" name="unableToEat" ng-model="viewModel.unableToEat" />
-      </label>
-    </div>
-  </div>
-  <div>
-    <div>
-      <span class="question-title">Difficult To Swallow</span>
-      <label class="radio-button">Yes
-        <input type="radio" value="yes" name="difficultToSwallow" ng-model="viewModel.difficultToSwallow" />
-      </label>
-      <label class="radio-button">No
-        <input type="radio" value="no" name="difficultToSwallow" ng-model="viewModel.difficultToSwallow" />
-      </label>
-    </div>
-    <div>
-      <span class="question-title">Hiccups</span>
-      <label class="radio-button">Yes
-        <input type="radio" value="yes" name="hiccups" ng-model="viewModel.hiccups" />
-      </label>
-      <label class="radio-button">No
-        <input type="radio" value="no" name="hiccups" ng-model="viewModel.hiccups" />
-      </label>
-    </div>
-    <div>
-      <span class="question-title">Cought</span>
-      <label class="radio-button">Yes
-        <input type="radio" value="yes" name="cought" ng-model="viewModel.cought" />
-      </label>
-      <label class="radio-button">No
-        <input type="radio" value="no" name="cought" ng-model="viewModel.cought" />
-      </label>
-    </div>
-    <div>
-      <span class="question-title">Difficult To Breathe</span>
-      <label class="radio-button">Yes
-        <input type="radio" value="yes" name="difficultToBreathe" ng-model="viewModel.difficultToBreathe" />
-      </label>
-      <label class="radio-button">No
-        <input type="radio" value="no" name="difficultToBreathe" ng-model="viewModel.difficultToBreathe" />
-      </label>
+      <span class="question-title">INABLE TO EAT</span>
+      
+      <input id="eat_1" type="radio" value="yes" name="unableToEat" ng-model="viewModel.unableToEat" />
+      <label for="eat_1" class="radio-button">Yes</label>
+      
+      <input id="eat_2" type="radio" value="no" name="unableToEat" ng-model="viewModel.unableToEat" />
+      <label for="eat_2" class="radio-button">No</label>
     </div>
   </div>
   <div>
     <div>
-      <span class="question-title">Rash</span>
-      <label class="radio-button">Yes
-        <input type="radio" value="yes" name="rash" ng-model="viewModel.rash" />
-      </label>
-      <label class="radio-button">No
-        <input type="radio" value="no" name="rash" ng-model="viewModel.rash" />
-      </label>
+      <span class="question-title">DIFFICULT TO SWALLOW</span>
+      
+      <input id="swallow_1" type="radio" value="yes" name="difficultToSwallow" ng-model="viewModel.difficultToSwallow" />
+      <label for="swallow_1" class="radio-button">Yes</label>
+      
+      <input id="swallow_2" type="radio" value="no" name="difficultToSwallow" ng-model="viewModel.difficultToSwallow" />
+      <label for="swallow_2" class="radio-button">No</label>
     </div>
     <div>
-      <span class="question-title">Abdominal pain</span>
-      <label class="radio-button">Yes
-        <input type="radio" value="yes" name="abdominalPain" ng-model="viewModel.abdominalPain" />
-      </label>
-      <label class="radio-button">No
-        <input type="radio" value="no" name="abdominalPain" ng-model="viewModel.abdominalPain" />
-      </label>
+      <span class="question-title">HICCUPS</span>
+      
+      <input id="hiccups_1" type="radio" value="yes" name="hiccups" ng-model="viewModel.hiccups" />
+      <label for="hiccups_1" class="radio-button">Yes</label>
+      
+      <input id="hiccups_2" type="radio" value="no" name="hiccups" ng-model="viewModel.hiccups" />
+      <label for="hiccups_2" class="radio-button">No</label>
     </div>
     <div>
-      <span class="question-title">Urine pain</span>
-      <label class="radio-button">Yes
-        <input type="radio" value="yes" name="urinePain" ng-model="viewModel.urinePain" />
-      </label>
-      <label class="radio-button">No
-        <input type="radio" value="no" name="urinePain" ng-model="viewModel.urinePain" />
-      </label>
+      <span class="question-title">COUGHT</span>
+      
+      <input id="cought_1" type="radio" value="yes" name="cought" ng-model="viewModel.cought" />
+      <label for="cought_1" class="radio-button">Yes</label>
+      
+      <input id="cought_2" type="radio" value="no" name="cought" ng-model="viewModel.cought" />
+      <label for="cought_2" class="radio-button">No</label>
+    </div>
+    <div>
+      <span class="question-title">DIFFICULT TO BREATHE</span>
+      
+      <input id="breathe_1" type="radio" value="yes" name="difficultToBreathe" ng-model="viewModel.difficultToBreathe" />
+      <label for="breathe_1" class="radio-button">Yes</label>
+
+      <input id="breathe_2" type="radio" value="no" name="difficultToBreathe" ng-model="viewModel.difficultToBreathe" />
+      <label for="breathe_2" class="radio-button">No</label>
+    </div>
+  </div>
+  <div>
+    <div>
+      <span class="question-title">RASH</span>
+      
+      <input id="rash_1" type="radio" value="yes" name="rash" ng-model="viewModel.rash" />
+      <label for="rash_1" class="radio-button">Yes</label>
+
+      <input id="rash_2" type="radio" value="no" name="rash" ng-model="viewModel.rash" />
+      <label for="rash_2" class="radio-button">No</label>
+    </div>
+    <div>
+      <span class="question-title">ABDOMINAL PAIN</span>
+      
+      <input id="abdominal_1" type="radio" value="yes" name="abdominalPain" ng-model="viewModel.abdominalPain" />
+      <label for="abdominal_1" class="radio-button">Yes</label>
+
+      <input id="abdominal_2" type="radio" value="no" name="abdominalPain" ng-model="viewModel.abdominalPain" />
+      <label for="abdominal_2" class="radio-button">No</label>
+    </div>
+    <div>
+      <span class="question-title">URINE PAIN</span>
+
+      <input id="urine_1" type="radio" value="yes" name="urinePain" ng-model="viewModel.urinePain" />
+      <label for="urine_1" class="radio-button">Yes</label>
+
+      <input id="urine_2" type="radio" value="no" name="urinePain" ng-model="viewModel.urinePain" />
+      <label for="urine_2" class="radio-button">No</label>
     </div>
   </div>
   <div>
