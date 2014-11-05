@@ -1,97 +1,89 @@
 <div id="vital-signs">
   <div>
-    <label for="currentConsciousness">Current Consciousness</label>
+    <label class="question-title">Current Consciousness</label>
 
-    <label>
-      <input type="radio" name="currentConsciousness" ng-model="viewModel.currentConsciousness" value="a" />a
-    </label>
+    <input id="consci_1" type="radio" name="currentConsciousness" ng-model="viewModel.currentConsciousness" value="a" />
+    <label for="consci_1" class="radio-button">A</label>
 
-    <label>
-      <input type="radio" name="currentConsciousness" ng-model="viewModel.currentConsciousness" value="v" />v
-    </label>
+    <input id="consci_2" type="radio" name="currentConsciousness" ng-model="viewModel.currentConsciousness"/>
+    <label for="consci_2" class="radio-button">V</label>
 
-    <label>
-      <input type="radio" name="currentConsciousness" ng-model="viewModel.currentConsciousness" value="p" />p
-    </label>
+    <input id="consci_3" type="radio" name="currentConsciousness" ng-model="viewModel.currentConsciousness" value="p" />
+    <label for="consci_3" class="radio-button">P</label>
 
-    <label>
-      <input type="radio" name="currentConsciousness" ng-model="viewModel.currentConsciousness" value="u" />u
-    </label>
+    <input id="consci_4" type="radio" name="currentConsciousness" ng-model="viewModel.currentConsciousness" value="u" />
+    <label for="consci_4" class="radio-button">U</label>
   </div>
 
   <div>
     <div>
-      <label for="temperature">temperature</label>
+      <label class="question-title" for="temperature">TEMPERATURE</label>
       <input type="number" name="temperature" ng-model="viewModel.temperature" />
     </div>
 
     <div>
-      <label for="oxygenSaturation">Oxygen Saturation</label>
+      <label class="question-title" for="oxygenSaturation">OXUGEN SATURATION</label>
       <input type="number" name="oxygenSaturation" ng-model="viewModel.oxygenSaturation" />
     </div>
 
     <div>
-      <label for="respiratoryRate">Respiratory Rate</label>
+      <label class="question-title" for="respiratoryRate">RESPIRATORY RATE</label>
       <input type="number" name="respiratoryRate" ng-model="viewModel.respiratoryRate" />
     </div>
 
     <div>
-      <label for="heartRate">Heart Rate</label>
+      <label class="question-title" for="heartRate">HEART RATE</label>
       <input type="number" name="heartRate" ng-model="viewModel.heartRate" />
     </div>
   </div>
 
   <div>
     <div>
-      <label for="systolicBP">Systolic BP</label>
+      <label class="question-title" for="systolicBP">SYSTOLIC BP</label>
       <input type="number" name="systolicBP" ng-model="viewModel.systolicBP" />
     </div>
 
     <div>
-      <label for="diastolicBP">Diastolic BP</label>
+      <label class="question-title" for="diastolicBP">DIASTOLIC BP</label>
       <input type="number" name="diastolicBP" ng-model="viewModel.diastolicBP" />
     </div>
 
     <div>
-      <label for="raisedJVP">Raised JVP</label>
+      <label class="question-title" for="raisedJVP">RAISED JVP</label>
       <input type="number" name="raisedJVP" ng-model="viewModel.raisedJVP" />
     </div>
 
     <div>
-      <label for="capillaryRefillTime">Capillary refill time</label>
+      <label class="question-title" for="capillaryRefillTime">CAPILLARY REFILL TIME</label>
       <input type="number" name="capillaryRefillTime" ng-model="viewModel.capillaryRefillTime" />
     </div>
   </div>
 
   <div>
     <div>
-      <label>Abdomen tender</label>
-      <label>
-        <input type="radio" name="abdomenTender" ng-model="viewModel.abdomenTender" value="yes" />Yes
-      </label>
+      <label class="question-title">ABDOMEN TENDER</label>
+      
+      <input id="abdomen_1" type="radio" name="abdomenTender" ng-model="viewModel.abdomenTender" value="yes" />
+      <label for="abdomen_1" class="radio-button">Yes</label>
 
-      <label>
-        <input type="radio" name="abdomenTender" ng-model="viewModel.abdomenTender" value="no" />No
-      </label>
+      <input id="abdomen_2" type="radio" name="abdomenTender" ng-model="viewModel.abdomenTender" value="no" />
+      <label for="abdomen_2" class="radio-button">No</label>
     </div>
 
     <div>
-      <label>Pale/Anaemia</label>
-      <label>
-        <input type="radio" name="paleAnaemia" ng-model="viewModel.paleAnaemia" value="none" />None
-      </label>
+      <label class="question-title">PALE/ANAEMIA</label>
+      
+      <input id="pale_1" type="radio" name="paleAnaemia" ng-model="viewModel.paleAnaemia" value="none" />
+      <label for="pale_1" class="radio-button">None</label>
 
-      <label>
-        <input type="radio" name="paleAnaemia" ng-model="viewModel.paleAnaemia" value="mild" />Mild
-      </label>
+      <input id="pale_2" type="radio" name="paleAnaemia" ng-model="viewModel.paleAnaemia" value="mild" />
+      <label for="pale_2" class="radio-button">Mild</label>
 
-      <label>
-        <input type="radio" name="paleAnaemia" ng-model="viewModel.paleAnaemia" value="mod" />Mod
-      </label>
+      <input id="pale_3" type="radio" name="paleAnaemia" ng-model="viewModel.paleAnaemia" value="mod" />
+      <label for="pale_3" class="radio-button">Mod</label>
 
-      <label>
-        <input type="radio" name="paleAnaemia" ng-model="viewModel.paleAnaemia" value="sev" />Sev
-      </label>
+      <input id="pale_4" type="radio" name="paleAnaemia" ng-model="viewModel.paleAnaemia" value="sev" />
+      <label for="pale_4" class="radio-button">Sev</label>
     </div>
   </div>
 </div>
