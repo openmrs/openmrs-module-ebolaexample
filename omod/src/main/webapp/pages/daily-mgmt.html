@@ -1,0 +1,72 @@
+<div class="section" id="daily-mgmt">
+  <div>
+    <label class="question-title">FLUID MANAGEMENT</label>
+
+    <input id="fluid_1" type="radio" value="ORS" ng-model="viewModel.fluidManagement" />
+    <label for="fluid_1" class="radio-button small">ORS</label>
+
+    <input id="fluid_2" type="radio" value="Jelly Water" ng-model="viewModel.fluidManagement" />
+    <label for="fluid_2" class="radio-button small">Jelly Water</label>
+
+    <input id="fluid_3" type="radio" value="IV Maintenance" ng-model="viewModel.fluidManagement" />
+    <label for="fluid_3" class="radio-button small">IV Maintenance</label>
+
+    <input id="fluid_4" type="radio" value="IV/IO Resuscitate" ng-model="viewModel.fluidManagement" />
+    <label for="fluid_4" class="radio-button small">IV/IO Resuscitate</label>
+
+    <input id="fluid_5" type="radio" value="Blood transfusion" ng-model="viewModel.fluidManagement" />
+    <label for="fluid_5" class="radio-button small">Blood transfusion</label>
+
+    <input id="fluid_6" type="radio" value="Fluid Restrict" ng-model="viewModel.fluidManagement" />
+    <label for="fluid_6" class="radio-button small">Fluid Restrict</label>
+  </div>
+
+  <div>
+      <label class="question-title" for="temperature">TARGET VOLUME</label>
+      <input type="number" name="volume" ng-model="viewModel.volume" min="0" max="9999" />
+  </div>
+
+  <div>
+    <label class="question-title">ANTIMALARIALS</label>
+
+    <input id="malarial_1" type="radio" value="ORS" ng-model="viewModel.antimalarials" />
+    <label for="malarial_1" class="radio-button small">AL (ACT)</label>
+
+    <input id="malarial_2" type="radio" value="Jelly Water" ng-model="viewModel.antimalarials" />
+    <label for="malarial_2" class="radio-button small">Artesunate</label>
+
+    <input id="malarial_3" type="radio" value="IV Maintenance" ng-model="viewModel.antimalarials" />
+    <label for="malarial_3" class="radio-button small">Quinine</label>
+  </div>
+
+  <div>
+    <label class="question-title">ANTIBIOTICS</label>
+
+    <input id="antibiotics_1" type="radio" value="ORS" ng-model="viewModel.antibiotics" />
+    <label for="antibiotics_1" class="radio-button small">Ceftriaxone</label>
+
+    <input id="antibiotics_2" type="radio" value="Jelly Water" ng-model="viewModel.antibiotics" />
+    <label for="antibiotics_2" class="radio-button small">Cefixime</label>
+
+    <input id="antibiotics_3" type="radio" value="IV Maintenance" ng-model="viewModel.antibiotics" />
+    <label for="antibiotics_3" class="radio-button small">Metronidazole</label>
+  </div>
+
+  <div>
+    <label class="question-title">ANALGESICS/ANTIPYRETICS</label>
+
+    <input id="analgesics_1" type="radio" value="ORS" ng-model="viewModel.analgesics" />
+    <label for="analgesics_1" class="radio-button small">Paracetamol</label>
+
+    <input id="analgesics_2" type="radio" value="Jelly Water" ng-model="viewModel.analgesics" />
+    <label for="analgesics_2" class="radio-button small">Tramadol</label>
+
+    <input id="analgesics_3" type="radio" value="IV Maintenance" ng-model="viewModel.analgesics" />
+    <label for="analgesics_3" class="radio-button small">Morphine</label>
+  </div>
+
+  <div class="actions">
+    <button>BACK</button>
+    <button>FINISH</button>
+  </div>
+</div>
