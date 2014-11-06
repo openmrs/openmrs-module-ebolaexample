@@ -56,8 +56,6 @@ module.controller('MainController', function ($scope, conceptMappingFactory) {
 
     initialize();
 
-  var activeView = 'vital-signs';
-
   $scope.viewModel = {
     oralFluids: '',
     dehydration: '',
