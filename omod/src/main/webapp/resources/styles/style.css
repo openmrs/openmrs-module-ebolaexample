@@ -116,6 +116,12 @@ small {
 	display: inline-block;
 }
 
+.three-column {
+	width: 31%;
+	margin-right: 1%;
+	display: inline-block;
+}
+
 .radio-button {
 	width: 160px;
 	height: 110px;
@@ -154,9 +160,13 @@ small {
 }
 
 .section .actions {
-	padding: 2.5em;
+	padding: 1em;
 	margin-top: 3em;
 	background: #595959;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
 }
 
 button {
