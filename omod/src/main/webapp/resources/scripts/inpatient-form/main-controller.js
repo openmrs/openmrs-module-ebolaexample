@@ -47,14 +47,12 @@ module.controller('MainController', function ($scope, conceptMappingFactory) {
     oralFluids: '',
     dehydration: '',
     urineOutput: '',
-    vomiting: 'mild',
+    vomiting: '',
     stoolFreq: '',
     mainStool: '',
-    respiratoryRate: '45'
+    respiratoryRate: ''
   };
 
-
-  console.table(conceptMappingFactory);
 
   var postList = [];
   var conceptList = conceptMappingFactory;
@@ -65,7 +63,6 @@ module.controller('MainController', function ($scope, conceptMappingFactory) {
 
     angular.forEach(conceptMappingFactory, function(concept) {
       var post = {};
-
 
       if(concept.type === "symptom"){
          var answerValue;
