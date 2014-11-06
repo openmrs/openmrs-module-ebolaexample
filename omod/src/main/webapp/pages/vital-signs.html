@@ -1,4 +1,4 @@
-<div class="section" id="vital-signs">
+<div class="section" id="vital-signs" ng-controller='vitalSignsController'>
   <div>
     <label class="question-title">CURRENT CONSCIOUSNESS</label>
 
@@ -70,7 +70,7 @@
   <div>
     <div>
       <label class="question-title">ABDOMEN TENDER</label>
-      
+
       <input tabindex="1" id="abdomen_1" type="radio" name="abdomenTender" ng-model="viewModel.abdomenTender" value="yes" />
       <label for="abdomen_1" class="radio-button">Yes</label>
 
@@ -80,7 +80,7 @@
 
     <div>
       <label class="question-title">PALE/ANAEMIA</label>
-      
+
       <input id="pale_1" type="radio" name="paleAnaemia" ng-model="viewModel.paleAnaemia" value="none" />
       <label for="pale_1" class="radio-button medium">None</label>
 
@@ -95,6 +95,6 @@
     </div>
   </div>
   <div class="actions">
-    <button>NEXT</button>
+    <button ng-click="sendData();">NEXT</button>
   </div>
 </div>
