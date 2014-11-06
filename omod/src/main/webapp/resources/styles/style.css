@@ -83,15 +83,18 @@ small {
 
 .unit {
 	font-family: "OpenSansBold";
-	font-size: 2.5em;
+	font-size: 2em;
 	color: #595959;
 	padding-left: 0.2em;
+	position: relative;
+	left: -70px;
 }
 
 .unit.small {
-	font-size: 1.7em;
+	font-size: 1.3em;
 	width: 80px;
 	display: inline-block;
+	left: -105px;
 }
 
 .patient-id {
@@ -187,9 +190,10 @@ input[type="number"] {
 	color: #595959;
 	border: 4px solid #595959;
 	padding: 0.15em;
-	width: 3.7em;
-	text-align: center;
+	width: 5em;
+	text-align: left;
 	margin-bottom: 15px;
+	padding-right: 75px;
 }
 
 input[type="number"]:focus {
