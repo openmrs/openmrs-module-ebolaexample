@@ -29,24 +29,15 @@
 				</span>
 			</div>
 			<div class="navigation">
-				<span class="category">
-					<h3 ng-click="display('vital-signs')">VITAL SIGNS</h3>
+				<span class="category" ng-repeat="view in views">
+					<h3 ng-click="display(view)">{{view.description}}</h3>
 				</span>
-				<span class="category">
-					<h3 ng-click="display('hydration')">HYDRATION</h3>
-				</span>
-				<span class="category">
-					<h3 ng-click="display('symptoms')">SYMPTOMS</h3>
-				</span>
-				<span class="category">
-					<h3 ng-click="display('daily-management')">DAILY MGMT</h3>
-				</span>
+
 			</div>
 			<div class="ebola-form">
-				<ng-include ng-show="shouldDisplay('vital-signs')" src="'vital-signs.html'" ></ng-include>
-				<ng-include ng-show="shouldDisplay('hydration')" src="'hydration.html'" ></ng-include>
-				<ng-include ng-show="shouldDisplay('symptoms')" src="'symptoms.html'" ></ng-include>
-				<ng-include ng-show="shouldDisplay('daily-management')" src="'daily-management.html'" ></ng-include>
+                <div ng-repeat="view in views" >
+                    <ng-include ng-show="shouldDisplay(view)" src="view.file" ></ng-include>
+                </div>
 			</div>
 		</div>
 	</body>
