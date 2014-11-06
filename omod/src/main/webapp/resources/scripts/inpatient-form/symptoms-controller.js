@@ -3,7 +3,11 @@ var module = angular.module('inpatientForm');
 module.controller('symptomsController', function($scope) {
   $scope.viewModel = {
     overallSymptoms: '',
-    bleeding: '',
+    noseOral: '',
+    cough: '',
+    vomit: '',
+    stool: '',
+    vaginal: '',
     musclePain: '',
     headache: '',
     urinePain: '',
