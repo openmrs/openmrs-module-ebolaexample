@@ -21,10 +21,10 @@ module.factory("observationsFactory", function(conceptMappingFactory) {
 
           post.concept = "1727AAAAAAAAAAAAAAAAAAAAAAAAAAAA";
           post.groupMembers = [{
-            concept: "",
+            concept: "1728AAAAAAAAAAAAAAAAAAAAAAAAAAAA",
             value: concept.conceptId
           }, {
-            concept: "",
+            concept: "1729AAAAAAAAAAAAAAAAAAAAAAAAAAAA",
             value: answerValue
           }];
         }
