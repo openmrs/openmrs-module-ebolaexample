@@ -15,7 +15,7 @@ module.controller('symptomsController', function() {
     difficultToBreathe: '',
     fatigue: '',
     hiccups: '',
-    cought: '',
+    cough: '',
     rash: ''
   };
 });
