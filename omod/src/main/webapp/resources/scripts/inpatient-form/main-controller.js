@@ -10,6 +10,9 @@ module.controller('MainController', function ($scope, conceptMappingFactory) {
         }, activeView = undefined,
         initialize = function () {
             activeView = $scope.views[0];
+        },
+        getActiveViewIndex = function () {
+            return _.indexOf($scope.views, activeView);
         };
 
     $scope.views = [
@@ -24,15 +27,27 @@ module.controller('MainController', function ($scope, conceptMappingFactory) {
     };
 
     $scope.shouldDisplayBackButton = function () {
-        return _.indexOf($scope.views, activeView) !== 0;
+        return getActiveViewIndex() !== 0;
     };
 
     $scope.shouldDisplayNextButton = function () {
-        return _.indexOf($scope.views, activeView) !== $scope.views.length-1;
+        return getActiveViewIndex() !== $scope.views.length-1;
     };
 
     $scope.shouldDisplayFinishButton = function () {
-        return _.indexOf($scope.views, activeView) === $scope.views.length-1;
+        return getActiveViewIndex() === $scope.views.length-1;
+    };
+
+    $scope.next = function () {
+        activeView = $scope.views[getActiveViewIndex() + 1];
+    };
+
+    $scope.back = function () {
+        activeView = $scope.views[getActiveViewIndex() - 1];
+    };
+
+    $scope.finish= function () {
+        alert('Not there yet!');
     };
 
     $scope.display = function (view) {
