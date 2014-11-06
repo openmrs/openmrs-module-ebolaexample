@@ -1,36 +1,56 @@
 <html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../resources/styles/style.css">
+		<script src="../resources/scripts/lib/angular/angular.min.js"></script>
+		<script src="../resources/scripts/lib/angular-route/angular-route.min.js"></script>
+		<script src="../resources/scripts/inpatient-form/inpatient-form-module.js"></script>
+	</head>
 
-<head>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-	<link rel="stylesheet" type="text/css" href="../resources/styles/style.css">
-	<script src="../resources/scripts/lib/angular/angular.min.js"></script>
-	<script src="../resources/scripts/lib/angular-route/angular-route.min.js"></script>
-	<script src="../resources/scripts/inpatient-form/inpatient-form-module.js"></script>
-</head>
-
-<body ng-app="inpatientForm">
-	<div>
-		<div class="patient-header">
-			<span class="patient-id">
-				<small>PATIENT ID NUMBER</small>
-				KT-1-29360
-			</span>
-			<span class="patient-info">
-				<small>WARD</small>
-				12
-			</span>
-			<span class="patient-info">
-				<small>BED</small>
-				27
-			</span>
+	<body ng-app="inpatientForm">
+		<div>
+			<div class="patient-header">
+				<span class="patient-id">
+					<small>PATIENT ID NUMBER</small>
+					KT-1-29360
+				</span>
+				<span class="patient-info">
+					<small>WARD</small>
+					12
+				</span>
+				<span class="patient-info">
+					<small>BED</small>
+					27
+				</span>
+			</div>
+			<div class="navigation">
+				<span class="category">
+					<h3>VITAL SIGNS</h3>
+					<number>1</number>
+					<number>2</number>
+				</span>
+				<span class="category">
+					<h3>HYDRATION</h3>
+					<number>1</number>
+					<number>2</number>
+				</span>
+				<span class="category">
+					<h3>SYMPTOMS</h3>
+					<number>1</number>
+					<number>2</number>
+				</span>
+				<span class="category">
+					<h3>DAILY MGMT</h3>
+					<number>1</number>
+					<number>2</number>
+				</span>
+			</div>
+			<div class="ebola-form">
+				<ng-include src="'vital-signs.html'" ></ng-include>
+				<ng-include src="'hydration.html'" ></ng-include>
+				<ng-include src="'symptoms.html'" ></ng-include>
+				<ng-include src="'daily-mgmt.html'" ></ng-include>
+			</div>
 		</div>
-		<div class="ebola-form">
-			<ng-include src="'vital-signs.html'" ></ng-include>
-			<ng-include src="'hydration.html'" ></ng-include>
-			<ng-include src="'symptoms.html'" ></ng-include>
-			<ng-include src="'daily-mgmt.html'" ></ng-include>
-		</div>
-	</div>
-</body>
-
+	</body>
 </html>

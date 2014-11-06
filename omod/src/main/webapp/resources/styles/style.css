@@ -57,6 +57,36 @@ body {
 	overflow: hidden;
 }
 
+.navigation {
+	background: #d7d7d7;
+	font-family: "OpenSans";
+	color: #595959;
+	padding: 0.7em 0.5em;
+}
+
+.navigation number {
+	color: #595959;
+	background: white;
+	border-radius: 50%;
+	width: 24px;
+	height: 24px;
+	display: inline-block;
+	text-align: center;
+	line-height: 1.5em;
+	font-family: "OpenSansBold";
+}
+
+.navigation h3 {
+	display: block;
+	margin: 5px;
+}
+
+.category {
+	width: 24%;
+	display: inline-block;
+	text-align: center;
+}
+
 small {
 	color: white;
 	display: block;
@@ -157,12 +187,12 @@ input[type="radio"], input[type="checkbox"] {
 
 input[type="number"] {
 	font-family: "OpenSansBold";
-	font-size: 4em;
+	font-size: 3.5em;
 	border-radius: 7px;
 	color: #595959;
 	border: 4px solid #595959;
 	padding: 0.2em;
-	width: 3.5em;
+	width: 3.7em;
 	text-align: center;
 	margin-bottom: 30px;
 }
