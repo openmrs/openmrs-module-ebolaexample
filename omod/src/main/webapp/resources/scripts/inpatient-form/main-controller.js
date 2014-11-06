@@ -6,4 +6,8 @@ module.controller('MainController', function($scope) {
     $scope.shouldDisplay = function (target) {
         return activeView === target;
     };
+
+    $scope.display = function (target) {
+        activeView = target;
+    };
 });
