@@ -19,21 +19,25 @@
     <div class="two-column">
       <label class="question-title" for="temperature">TEMPERATURE</label>
       <input type="number" name="temperature" ng-model="viewModel.temperature" min="0" max="9999" />
+      <span class="unit">˚C</span>
     </div>
 
     <div class="two-column">
       <label class="question-title" for="oxygenSaturation">OXYGEN SATURATION</label>
       <input type="number" name="oxygenSaturation" ng-model="viewModel.oxygenSaturation" min="0" max="9999" />
+      <span class="unit">%</span>
     </div>
 
     <div class="two-column">
       <label class="question-title" for="respiratoryRate">RESPIRATORY RATE</label>
       <input type="number" name="respiratoryRate" ng-model="viewModel.respiratoryRate" min="0" max="9999" />
+      <span class="unit small">breaths/ min</span>
     </div>
 
     <div class="two-column">
       <label class="question-title" for="heartRate">HEART RATE</label>
       <input type="number" name="heartRate" ng-model="viewModel.heartRate" min="0" max="9999" />
+      <span class="unit small">beats/ min</span>
     </div>
   </div>
 
@@ -41,21 +45,25 @@
     <div class="two-column">
       <label class="question-title" for="systolicBP">SYSTOLIC BP</label>
       <input type="number" name="systolicBP" ng-model="viewModel.systolicBP" min="0" max="9999" />
+      <span class="unit small">mmHg</span>
     </div>
 
     <div class="two-column">
       <label class="question-title" for="diastolicBP">DIASTOLIC BP</label>
       <input type="number" name="diastolicBP" ng-model="viewModel.diastolicBP" min="0" max="9999" />
+      <span class="unit small">mmHg</span>
     </div>
 
     <div class="two-column">
       <label class="question-title" for="raisedJVP">RAISED JVP</label>
       <input type="number" name="raisedJVP" ng-model="viewModel.raisedJVP" min="0" max="9999" />
+      <span class="unit">cm</span>
     </div>
 
     <div class="two-column">
       <label class="question-title" for="capillaryRefillTime">CAPILLARY REFILL TIME</label>
       <input type="number" name="capillaryRefillTime" ng-model="viewModel.capillaryRefillTime" min="0" max="9999" />
+      <span class="unit">sec</span>
     </div>
   </div>
 

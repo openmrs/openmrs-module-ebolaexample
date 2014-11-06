@@ -1,10 +1,9 @@
 <div class="section" id="hydration">
   <div>
     <div>
-      <span class="question-title">ORAL FLUIDS IN PAST 24 H</span>
-      
-      <input id="fluids_1" type="number" value="none" name="fluids" ng-model="viewModel.fluids" min="0" max="9999" />
-      <label for="fluids_1" class="question-title">mL</label>
+      <label class="question-title" for="fluids">ORAL FLUIDS IN PAST 24 H</label>
+      <input type="number" value="none" name="fluids" ng-model="viewModel.fluids" min="0" max="9999" />
+      <span class="unit">mL</span>
     </div>
   
     <div>
@@ -56,10 +55,9 @@
     </div>
 	
 	<div>
-      <span class="question-title">STOOL FREQ</span>
-      
-      <input id="stoolFreq_1" type="number" value="none" name="stoolFreq" ng-model="viewModel.stoolFreq" min="0" max="9999" />
-	    <label for="stoolFreq_1" class="question-title">(#/24 HR)</label>
+      <label for="stoolFreq" class="question-title">STOOL FREQ</label>
+      <input type="number" value="none" name="stoolFreq" ng-model="viewModel.stoolFreq" min="0" max="9999" />
+      <label class="unit">#/24H</label>
     </div>
 	
 	<div>
