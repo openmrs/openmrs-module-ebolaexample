@@ -2,7 +2,7 @@
   <div>
     <div>
       <label class="question-title" for="fluids">ORAL FLUIDS IN PAST 24H</label>
-      <input type="number" value="none" name="fluids" ng-model="viewModel.fluids" min="0" max="9999" />
+      <input type="number" value="none" name="oralFluids" ng-model="viewModel.oralFluids" min="0" max="9999" />
       <span class="unit">mL</span>
     </div>
 
@@ -24,16 +24,16 @@
 
     <div>
       <span class="question-title">URINE OUTPUT</span>
-      <input id="urine_2" type="radio" value="none" name="urine" ng-model="viewModel.urine" />
+      <input id="urine_2" type="radio" value="none" name="urineOutput" ng-model="viewModel.urineOutput" />
       <label for="urine_2" class="radio-button medium">None</label>
 
-      <input id="urine_1" type="radio" value="normal" name="urine" ng-model="viewModel.urine" />
+      <input id="urine_1" type="radio" value="normal" name="urineOutput" ng-model="viewModel.urineOutput" />
       <label for="urine_1" class="radio-button medium">Normal</label>
 
-      <input id="urine_3" type="radio" value="Reduced" name="urine" ng-model="viewModel.urine" />
+      <input id="urine_3" type="radio" value="Reduced" name="urineOutput" ng-model="viewModel.urineOutput" />
       <label for="urine_3" class="radio-button medium">Reduced</label>
 
-      <input id="urine_4" type="radio" value="unk" name="urine" ng-model="viewModel.urine" />
+      <input id="urine_4" type="radio" value="unk" name="urineOutput" ng-model="viewModel.urineOutput" />
       <label for="urine_4" class="radio-button medium">Unk</label>
     </div>
 
@@ -62,16 +62,16 @@
 	<div>
       <span class="question-title">MAIN STOOL TYPE</span>
 
-      <input id="stool_4" type="radio" value="none" name="stool" ng-model="viewModel.stool" />
+      <input id="stool_4" type="radio" value="none" name="mainStool" ng-model="viewModel.mainStool" />
       <label for="stool_4" class="radio-button medium">None</label>
 
-      <input id="stool_1" type="radio" value="formed" name="stool" ng-model="viewModel.stool" />
+      <input id="stool_1" type="radio" value="formed" name="mainStool" ng-model="viewModel.mainStool" />
       <label for="stool_1" class="radio-button medium">Formed</label>
 
-      <input id="stool_2" type="radio" value="semi-formed" name="stool" ng-model="viewModel.stool" />
+      <input id="stool_2" type="radio" value="semi-formed" name="mainStool" ng-model="viewModel.mainStool" />
       <label for="stool_2" class="radio-button medium">Semi-Formed</label>
 
-      <input id="stool_3" type="radio" value="liquid" name="stool" ng-model="viewModel.stool" />
+      <input id="stool_3" type="radio" value="liquid" name="mainStool" ng-model="viewModel.mainStool" />
       <label for="stool_3" class="radio-button medium">Liquid</label>
     </div>
   </div>
