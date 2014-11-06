@@ -1,4 +1,4 @@
-var module = angular.module('inpatientForm')
+var module = angular.module('inpatientForm');
 
 module.controller("vitalSignsController", function($scope, $location) {
   $scope.viewModel = {

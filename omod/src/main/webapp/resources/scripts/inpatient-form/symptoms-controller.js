@@ -1,6 +1,6 @@
-var module = angular.module('inpatientForm')
+var module = angular.module('inpatientForm');
 
-module.controller('symptomsController', function() {
+module.controller('symptomsController', function($scope) {
   $scope.viewModel = {
     overallSymptoms: '',
     bleeding: '',

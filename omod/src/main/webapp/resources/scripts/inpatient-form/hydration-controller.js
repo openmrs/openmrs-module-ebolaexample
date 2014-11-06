@@ -1,6 +1,6 @@
-var module = angular.module('inpatientForm')
+var module = angular.module('inpatientForm');
 
-module.controller("hydrationController", function() {
+module.controller("hydrationController", function($scope) {
   $scope.viewModel = {
     oralFluids: '',
     dehydration: '',

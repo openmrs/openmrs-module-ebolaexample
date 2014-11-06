@@ -1,7 +1,10 @@
 var module = angular.module('inpatientForm');
 
-module.controller('MainController', function() {
+module.controller('MainController', function($scope) {
+    var activeView = 'vital-signs';
 
-    $scope.activeView = 'symptoms';
+    $scope.shouldDisplay = function (target) {
+        return activeView === target;
+    };
 
 });

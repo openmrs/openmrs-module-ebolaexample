@@ -9,10 +9,11 @@
 		<script src="../resources/scripts/inpatient-form/hydration-controller.js"></script>
 		<script src="../resources/scripts/inpatient-form/symptoms-controller.js"></script>
 		<script src="../resources/scripts/inpatient-form/daily-management-controller.js"></script>
+        <script src="../resources/scripts/inpatient-form/main-controller.js"></script>
 	</head>
 
 	<body ng-app="inpatientForm">
-		<div>
+		<div ng-controller = "MainController">
 			<div class="patient-header">
 				<span class="patient-id">
 					<small>PATIENT ID NUMBER</small>
@@ -50,10 +51,10 @@
 				</span>
 			</div>
 			<div class="ebola-form">
-				<ng-include src="'vital-signs.html'" ></ng-include>
-				<ng-include src="'hydration.html'" ></ng-include>
-				<ng-include src="'symptoms.html'" ></ng-include>
-				<ng-include src="'daily-mgmt.html'" ></ng-include>
+				<ng-include ng-show="shouldDisplay('vital-signs')" src="'vital-signs.html'" ></ng-include>
+				<ng-include ng-show="shouldDisplay('hydration')" src="'hydration.html'" ></ng-include>
+				<ng-include ng-show="shouldDisplay('symptoms')" src="'symptoms.html'" ></ng-include>
+				<ng-include ng-show="shouldDisplay('daily-mgmt')" src="'daily-mgmt.html'" ></ng-include>
 			</div>
 		</div>
 	</body>
