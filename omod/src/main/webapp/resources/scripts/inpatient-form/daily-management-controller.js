@@ -4,8 +4,14 @@ module.controller("dailyManagementController", function($scope) {
   $scope.viewModel = {
     fluidManagement: '',
     volume: '',
-    antimalarials: '',
-    antibiotics: '',
-    analgesics: ''
+    alAct: '',
+    artesunate: '',
+    quinine: '',
+    ceftriaxone: '',
+    cefixime: '',
+    metronidazole: '',
+    paracetamol: '',
+    tramadol: '',
+    morphine: ''
   };
 });
