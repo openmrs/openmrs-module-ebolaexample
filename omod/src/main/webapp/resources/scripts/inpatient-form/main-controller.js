@@ -23,6 +23,18 @@ module.controller('MainController', function ($scope) {
         return activeView === view;
     };
 
+    $scope.shouldDisplayBackButton = function () {
+        return _.indexOf($scope.views, activeView) !== 0;
+    };
+
+    $scope.shouldDisplayNextButton = function () {
+        return _.indexOf($scope.views, activeView) !== $scope.views.length-1;
+    };
+
+    $scope.shouldDisplayFinishButton = function () {
+        return _.indexOf($scope.views, activeView) === $scope.views.length-1;
+    };
+
     $scope.display = function (view) {
         activeView = view;
     };

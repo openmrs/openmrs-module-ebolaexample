@@ -1,20 +1,21 @@
 <html>
-	<head>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-		<link rel="stylesheet" type="text/css" href="../resources/styles/style.css">
-		<script src="../resources/scripts/lib/angular/angular.min.js"></script>
-		<script src="../resources/scripts/lib/angular-route/angular-route.min.js"></script>
-		<script src="../resources/scripts/inpatient-form/inpatient-form-module.js"></script>
-		<script src="../resources/scripts/inpatient-form/vital-signs-controller.js"></script>
-		<script src="../resources/scripts/inpatient-form/hydration-controller.js"></script>
-		<script src="../resources/scripts/inpatient-form/symptoms-controller.js"></script>
-		<script src="../resources/scripts/inpatient-form/daily-management-controller.js"></script>
-        <script src="../resources/scripts/inpatient-form/main-controller.js"></script>
-	</head>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link rel="stylesheet" type="text/css" href="../resources/styles/style.css">
+    <script src="../resources/scripts/lib/angular/angular.min.js"></script>
+    <script src="../resources/scripts/lib/lodash/dist/lodash.min.js"></script>
+    <script src="../resources/scripts/lib/angular-route/angular-route.min.js"></script>
+    <script src="../resources/scripts/inpatient-form/inpatient-form-module.js"></script>
+    <script src="../resources/scripts/inpatient-form/vital-signs-controller.js"></script>
+    <script src="../resources/scripts/inpatient-form/hydration-controller.js"></script>
+    <script src="../resources/scripts/inpatient-form/symptoms-controller.js"></script>
+    <script src="../resources/scripts/inpatient-form/daily-management-controller.js"></script>
+    <script src="../resources/scripts/inpatient-form/main-controller.js"></script>
+</head>
 
-	<body ng-app="inpatientForm">
-		<div ng-controller = "MainController">
-			<div class="patient-header">
+<body ng-app="inpatientForm">
+<div ng-controller="MainController">
+    <div class="patient-header">
 				<span class="patient-id">
 					<small>PATIENT ID NUMBER</small>
 					KT-1-29360
@@ -27,18 +28,24 @@
 					<small>BED</small>
 					27
 				</span>
-			</div>
-			<div class="navigation">
+    </div>
+    <div class="navigation">
 				<span class="category" ng-repeat="view in views">
 					<h3 ng-click="display(view)">{{view.description}}</h3>
 				</span>
 
-			</div>
-			<div class="ebola-form">
-                <div ng-repeat="view in views" >
-                    <ng-include ng-show="shouldDisplay(view)" src="view.file" ></ng-include>
-                </div>
-			</div>
-		</div>
-	</body>
+    </div>
+    <div class="ebola-form">
+        <div class="section">
+            <div ng-repeat="view in views">
+                <ng-include ng-show="shouldDisplay(view)" src="view.file"></ng-include>
+            </div>
+            <div class="actions">
+                <button ng-show="shouldDisplayBackButton()">BACK</button>
+                <button ng-show="shouldDisplayNextButton()">NEXT</button>
+                <button ng-show="shouldDisplayFinishButton()">FINISH</button>
+            </div>
+        </div>
+    </div></div>
+</body>
 </html>
