@@ -19,6 +19,10 @@ module.factory("conceptMappingFactory", function() {
     return answer;
   }
 
+  var answerYes = createAnswer("yes", "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+  var answerNo = createAnswer("no", "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+  var answerUnknown = createAnswer("unknown", "1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+
   function createCurrentConsciousness() {
     var question = createQuestion("currentConsciousness", "coded", "162643AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     var answerA = createAnswer("A", "160282AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
@@ -147,7 +151,7 @@ module.factory("conceptMappingFactory", function() {
     return question;
   }
 
-  function createFluidManagement(){ 
+  function createFluidManagement(){
     var question = createQuestion("fluidManagement", "coded", "162653AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     var answerORS = createAnswer("ORS", "351AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     var answerIVMaintenance = createAnswer("IVMaintenance", "162649AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
@@ -156,14 +160,14 @@ module.factory("conceptMappingFactory", function() {
     var answerBloodTransfusion = createAnswer("bloodTransfusion", "1063AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     var answerFluidRestrict = createAnswer("fluidRestrict", "162652AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     question.answers = [answerORS, answerIVMaintenance, answerIVIORessucitate, answerJelly, answerBloodTransfusion, answerFluidRestrict];
-    return question;  
+    return question;
 
   }
 
   function createTargetVolume(){
     var question = createQuestion("targetVolumeInNext24h", "non-coded", "162675AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     question.answers = [];
-    return question;  
+    return question;
   }
 
   function createAntiMalarials(){
@@ -172,7 +176,7 @@ module.factory("conceptMappingFactory", function() {
     var answerArtesunate = createAnswer("artesunate", "71561AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     var answerQuinine = createAnswer("quinine", "83023AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     question.answers = [answerALACT, answerArtesunate, answerQuinine];
-    return question;  
+    return question;
   }
 
   function createAntibiotics(){
@@ -181,7 +185,7 @@ module.factory("conceptMappingFactory", function() {
     var answerCefixime = createAnswer("cefixime", "73006AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     var answerMetronidazole = createAnswer("metronidazole", "79782AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     question.answers = [answerCeftriaxone, answerCefixime, answerMetronidazole];
-    return question;  
+    return question;
   }
 
   function createAnalgesicsAntipyretics(){
@@ -190,7 +194,103 @@ module.factory("conceptMappingFactory", function() {
     var answerTramadol = createAnswer("tramadol", "85275AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     var answerMorphine = createAnswer("morphine", "80106AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     question.answers = [answerParacetamol, answerTramadol, answerMorphine];
-    return question;  
+    return question;
+  }
+
+  function createOverallSymptoms() {
+    var question = createQuestion("overallSymptoms", "symptom", "162676AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerSame = createAnswer("same", "162679AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerWorse = createAnswer("worse", "162678AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerBetter = createAnswer("better", "162677AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    question.answers = [answerSame, answerWorse, answerBetter];
+    return question;
+  }
+
+  function createFatigue() {
+    var question = createQuestion("fatigue", "symptom", "140501AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    question.answers = [answerYes, answerNo, answerUnknown];
+    return question;
+  }
+
+  //don't use Join/Muscle Pain
+  function createMusclePain() {
+    var question = createQuestion("musclePain", "symptom", "133632AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    question.answers = [answerYes, answerNo, answerUnknown];
+    return question;
+  }
+
+  function createUrinePain() {
+    var question = createQuestion("urinePain", "symptom", "118771AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    question.answers = [answerYes, answerNo, answerUnknown];
+    return question;
+  }
+
+  function createAbdominalPain() {
+    var question = createQuestion("abdominalPain", "symptom", "151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    question.answers = [answerYes, answerNo, answerUnknown];
+    return question;
+  }
+
+  //there is no concept id for this one
+  function createUnableToEat() {
+    var question = createQuestion("unableToEat", "symptom", "??????AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    question.answers = [answerYes, answerNo, answerUnknown];
+    return question;
+  }
+
+  function createUnableToDrink() {
+    var question = createQuestion("unableToDrink", "symptom", "1983AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    question.answers = [answerYes, answerNo, answerUnknown];
+    return question;
+  }
+
+  function createDifficultToSwallow() {
+    var question = createQuestion("difficultToSwallow", "symptom", "118789AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    question.answers = [answerYes, answerNo, answerUnknown];
+    return question;
+  }
+
+  function createDifficultToBreathe() {
+    var question = createQuestion("difficultToBreathe", "symptom", "122496AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    question.answers = [answerYes, answerNo, answerUnknown];
+    return question;
+  }
+
+  function createRash() {
+    var question = createQuestion("rash", "symptom", "512AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    question.answers = [answerYes, answerNo, answerUnknown];
+    return question;
+  }
+
+  function createHiccups() {
+    var question = createQuestion("hiccups", "symptom", "138662AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    question.answers = [answerYes, answerNo, answerUnknown];
+    return question;
+  }
+
+  function createCough() {
+    var question = createQuestion("cough", "symptom", "104224AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    question.answers = [answerYes, answerNo, answerUnknown];
+    return question;
+  }
+
+  function createBleedingFirstQuestion() {
+    var question = createQuestion("bleeding", "symptom", "147241AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    question.answers = [answerYes, answerNo, answerUnknown];
+    return question;
+  }
+
+  function createBleedingSecondQuestion() {
+    var question = createQuestion("bleeding", "coded", "162668AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerNoseOral = createAnswer("noseOral", "160495AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerCough = createAnswer("cough", "162669AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerVomit = createAnswer("vomit", "162670AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerStool = createAnswer("stool", "162671AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerVaginal = createAnswer("vaginal", "162673AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerOther = createAnswer("other", "5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    question.answers = [answerNoseOral, answerCough, answerVomit, answerStool, answerVaginal, answerOther];
+    return question;
+
   }
 
   function loadMapping() {
@@ -217,6 +317,19 @@ module.factory("conceptMappingFactory", function() {
     conceptMapping.push(createAntiMalarials());
     conceptMapping.push(createAntibiotics());
     conceptMapping.push(createAnalgesicsAntipyretics());
+    conceptMapping.push(createOverallSymptoms());
+    conceptMapping.push(createFatigue());
+    conceptMapping.push(createMusclePain());
+    conceptMapping.push(createUrinePain());
+    conceptMapping.push(createAbdominalPain());
+    conceptMapping.push(createUnableToEat());
+    conceptMapping.push(createUnableToDrink());
+    conceptMapping.push(createDifficultToSwallow());
+    conceptMapping.push(createDifficultToBreathe());
+    conceptMapping.push(createRash());
+    conceptMapping.push(createHiccups());
+    conceptMapping.push(createBleedingFirstQuestion());
+    conceptMapping.push(createBleedingSecondQuestion());
 
     return conceptMapping;
   }
