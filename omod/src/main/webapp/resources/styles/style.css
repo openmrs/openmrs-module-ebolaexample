@@ -64,18 +64,6 @@ body {
 	padding: 0.7em 0.5em;
 }
 
-.navigation number {
-	color: #595959;
-	background: white;
-	border-radius: 50%;
-	width: 24px;
-	height: 24px;
-	display: inline-block;
-	text-align: center;
-	line-height: 1.5em;
-	font-family: "OpenSansBold";
-}
-
 .navigation h3 {
 	display: block;
 	margin: 5px;
