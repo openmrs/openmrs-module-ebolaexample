@@ -1,30 +1,30 @@
-<div class="section" id="symptoms">
+<div class="section" id="symptoms" ng-show="false" ng-controller="symptomsController">
   <div>
     <div>
       <span class="question-title">OVERALL SYMPTOMS</span>
-      
+
       <input id="symptons_1" type="radio" value="same" name="overallSymptoms" ng-model="viewModel.overallSymptoms" />
       <label for="symptons_1" class="radio-button medium">Same</label>
-      
+
       <input id="symptons_2" type="radio" value="worse" name="overallSymptoms" ng-model="viewModel.overallSymptoms" />
       <label for="symptons_2" class="radio-button medium">Worse</label>
-      
+
       <input id="symptons_3" type="radio" value="better" name="overallSymptoms" ng-model="viewModel.overallSymptoms" />
       <label for="symptons_3" class="radio-button medium">Better</label>
     </div>
 
     <div>
-      <span class="question-title">FATIGUE</span>      
-      
+      <span class="question-title">FATIGUE</span>
+
       <input id="fatique_1" type="radio" value="none" name="fatigue" ng-model="viewModel.fatigue" />
       <label for="fatique_1" class="radio-button medium">None</label>
-  
+
       <input id="fatique_2" type="radio" value="mild" name="fatigue" ng-model="viewModel.fatigue" />
       <label for="fatique_2" class="radio-button medium">Mild</label>
 
       <input id="fatique_3" type="radio" value="mod" name="fatigue" ng-model="viewModel.fatigue" />
       <label for="fatique_3" class="radio-button medium">Mod</label>
-        
+
       <input id="fatique_4" type="radio" value="sev" name="fatigue" ng-model="viewModel.fatigue" />
       <label for="fatique_4" class="radio-button medium">Sev</label>
     </div>
@@ -33,7 +33,7 @@
   <div>
     <div>
       <span class="question-title">BLEEDING</span>
-      
+
       <input id="bleeding_2" type="checkbox" value="nose/oral" name="bleeding" />
       <label for="bleeding_2" class="radio-button small">Nose/Oral</label>
 
@@ -53,6 +53,7 @@
   <div>
   <span class="question-title">SYMPTONS</span>
     <div class="two-column">
+
       <input id="headache_1" type="checkbox" value="yes" name="headache" ng-model="viewModel.headache" />
       <label for="headache_1" class="radio-button medium long">HEADACHE</label>
     </div>

@@ -1,30 +1,29 @@
-<div class="section" id="hydration">
+<div class="section" id="hydration" ng-show="false" ng-controller="hydrationController">
   <div>
     <div>
       <label class="question-title" for="fluids">ORAL FLUIDS IN PAST 24 H</label>
       <input type="number" value="none" name="fluids" ng-model="viewModel.fluids" min="0" max="9999" />
       <span class="unit">mL</span>
     </div>
-  
+
     <div>
       <span class="question-title">DEHYDRATION</span>
-      
+
       <input id="dehydration_1" type="radio" value="none" name="dehydration" ng-model="viewModel.dehydration" />
       <label for="dehydration_1" class="radio-button medium">None</label>
-  
+
       <input id="dehydration_2" type="radio" value="mild" name="dehydration" ng-model="viewModel.dehydration" />
       <label for="dehydration_2" class="radio-button medium">Mild</label>
 
       <input id="dehydration_3" type="radio" value="mod" name="dehydration" ng-model="viewModel.dehydration" />
       <label for="dehydration_3" class="radio-button medium">Mod</label>
-        
+
       <input id="dehydration_4" type="radio" value="sev" name="dehydration" ng-model="viewModel.dehydration" />
       <label for="dehydration_4" class="radio-button medium">Sev</label>
     </div>
 
     <div>
-      <span class="question-title">URINE OUTPUT</span>      
-      
+      <span class="question-title">URINE OUTPUT</span>
       <input id="urine_2" type="radio" value="none" name="urine" ng-model="viewModel.urine" />
       <label for="urine_2" class="radio-button medium">None</label>
 
@@ -33,42 +32,42 @@
 
       <input id="urine_3" type="radio" value="Reduced" name="urine" ng-model="viewModel.urine" />
       <label for="urine_3" class="radio-button medium">Reduced</label>
-        
+
       <input id="urine_4" type="radio" value="unk" name="urine" ng-model="viewModel.urine" />
       <label for="urine_4" class="radio-button medium">Unk</label>
     </div>
-	
+
 	<div>
       <span class="question-title">VOMITING</span>
-      
+
       <input id="vomiting_1" type="radio" value="none" name="vomiting" ng-model="viewModel.vomiting" />
       <label for="vomiting_1" class="radio-button medium">None</label>
-  
+
       <input id="vomiting_2" type="radio" value="mild" name="vomiting" ng-model="viewModel.vomiting" />
       <label for="vomiting_2" class="radio-button medium">Mild</label>
 
       <input id="vomiting_3" type="radio" value="mod" name="vomiting" ng-model="viewModel.vomiting" />
       <label for="vomiting_3" class="radio-button medium">Mod</label>
-        
+
       <input id="vomiting_4" type="radio" value="sev" name="vomiting" ng-model="viewModel.vomiting" />
       <label for="vomiting_4" class="radio-button medium">Sev</label>
     </div>
-	
+
 	<div>
       <label for="stoolFreq" class="question-title">STOOL FREQ</label>
       <input type="number" value="none" name="stoolFreq" ng-model="viewModel.stoolFreq" min="0" max="9999" />
       <label class="unit">#/24H</label>
     </div>
-	
+
 	<div>
       <span class="question-title">MAIN STOOL TYPE</span>
-        
+
       <input id="stool_4" type="radio" value="none" name="stool" ng-model="viewModel.stool" />
       <label for="stool_4" class="radio-button medium">None</label>
-      
+
       <input id="stool_1" type="radio" value="formed" name="stool" ng-model="viewModel.stool" />
       <label for="stool_1" class="radio-button medium">Formed</label>
-  
+
       <input id="stool_2" type="radio" value="semi-formed" name="stool" ng-model="viewModel.stool" />
       <label for="stool_2" class="radio-button medium">Semi-Formed</label>
 
