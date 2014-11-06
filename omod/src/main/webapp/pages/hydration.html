@@ -16,7 +16,7 @@
       <label for="dehydration_2" class="radio-button medium">Mild</label>
 
       <input id="dehydration_3" type="radio" value="mod" name="dehydration" ng-model="viewModel.dehydration" />
-      <label for="fatique_3" class="radio-button medium">Mod</label>
+      <label for="dehydration_3" class="radio-button medium">Mod</label>
         
       <input id="dehydration_4" type="radio" value="sev" name="dehydration" ng-model="viewModel.dehydration" />
       <label for="dehydration_4" class="radio-button medium">Sev</label>
@@ -25,11 +25,11 @@
     <div>
       <span class="question-title">URINE OUTPUT</span>      
       
-      <input id="urine_1" type="radio" value="normal" name="urine" ng-model="viewModel.urine" />
-      <label for="urine_1" class="radio-button medium">Normal</label>
-  
       <input id="urine_2" type="radio" value="none" name="urine" ng-model="viewModel.urine" />
       <label for="urine_2" class="radio-button medium">None</label>
+
+      <input id="urine_1" type="radio" value="normal" name="urine" ng-model="viewModel.urine" />
+      <label for="urine_1" class="radio-button medium">Normal</label>
 
       <input id="urine_3" type="radio" value="Reduced" name="urine" ng-model="viewModel.urine" />
       <label for="urine_3" class="radio-button medium">Reduced</label>
@@ -62,6 +62,9 @@
 	
 	<div>
       <span class="question-title">MAIN STOOL TYPE</span>
+        
+      <input id="stool_4" type="radio" value="none" name="stool" ng-model="viewModel.stool" />
+      <label for="stool_4" class="radio-button medium">None</label>
       
       <input id="stool_1" type="radio" value="formed" name="stool" ng-model="viewModel.stool" />
       <label for="stool_1" class="radio-button medium">Formed</label>
@@ -71,9 +74,6 @@
 
       <input id="stool_3" type="radio" value="liquid" name="stool" ng-model="viewModel.stool" />
       <label for="stool_3" class="radio-button medium">Liquid</label>
-        
-      <input id="stool_4" type="radio" value="none" name="stool" ng-model="viewModel.stool" />
-      <label for="stool_4" class="radio-button medium">None</label>
     </div>
   </div>
   <div class="actions">

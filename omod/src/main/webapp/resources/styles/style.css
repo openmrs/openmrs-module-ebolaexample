@@ -120,7 +120,8 @@ small {
 }
 
 .two-column {
-	width: 49%;
+	width: 47.5%;
+	margin-right: 2%;
 	display: inline-block;
 }
 
@@ -145,6 +146,12 @@ small {
 	margin-bottom: 30px;
 	vertical-align: top;
 	word-wrap: break-word;
+}
+
+.radio-button.long {
+	width: auto;
+	max-width: 100%;
+	padding: 0 15px;
 }
 
 .radio-button.medium {
