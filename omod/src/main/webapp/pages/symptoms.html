@@ -1,101 +1,49 @@
-<div class="section" id="symptoms">
+<div>
   <div>
-    <div>
-      <span class="question-title">OVERALL SYMPTOMS</span>
+    <span class="question-title">OVERALL SYMPTOMS</span>
 
-      <input id="symptons_1" type="radio" value="same" name="overallSymptoms" ng-model="viewModel.overallSymptoms" />
-      <label for="symptons_1" class="radio-button medium">Same</label>
+    <input id="symptons_1" type="radio" value="same" name="overallSymptoms" ng-model="viewModel.overallSymptoms" />
+    <label for="symptons_1" class="radio-button medium">Same</label>
 
-      <input id="symptons_2" type="radio" value="worse" name="overallSymptoms" ng-model="viewModel.overallSymptoms" />
-      <label for="symptons_2" class="radio-button medium">Worse</label>
+    <input id="symptons_2" type="radio" value="worse" name="overallSymptoms" ng-model="viewModel.overallSymptoms" />
+    <label for="symptons_2" class="radio-button medium">Worse</label>
 
-      <input id="symptons_3" type="radio" value="better" name="overallSymptoms" ng-model="viewModel.overallSymptoms" />
-      <label for="symptons_3" class="radio-button medium">Better</label>
-    </div>
-
-    <div>
-      <span class="question-title">FATIGUE</span>
-
-      <input id="fatique_1" type="radio" value="none" name="fatigue" ng-model="viewModel.fatigue" />
-      <label for="fatique_1" class="radio-button medium">None</label>
-
-      <input id="fatique_2" type="radio" value="mild" name="fatigue" ng-model="viewModel.fatigue" />
-      <label for="fatique_2" class="radio-button medium">Mild</label>
-
-      <input id="fatique_3" type="radio" value="mod" name="fatigue" ng-model="viewModel.fatigue" />
-      <label for="fatique_3" class="radio-button medium">Mod</label>
-
-      <input id="fatique_4" type="radio" value="sev" name="fatigue" ng-model="viewModel.fatigue" />
-      <label for="fatique_4" class="radio-button medium">Sev</label>
-    </div>
+    <input id="symptons_3" type="radio" value="better" name="overallSymptoms" ng-model="viewModel.overallSymptoms" />
+    <label for="symptons_3" class="radio-button medium">Better</label>
   </div>
 
   <div>
-    <div>
-      <span class="question-title">BLEEDING</span>
+    <span class="question-title">FATIGUE</span>
 
-      <input id="bleeding_2" type="checkbox" value="nose/oral" name="bleeding" ng-model="viewModel.noseOral"/>
-      <label for="bleeding_2" class="radio-button small">Nose/Oral</label>
+    <input id="fatique_1" type="radio" value="none" name="fatigue" ng-model="viewModel.fatigue" />
+    <label for="fatique_1" class="radio-button medium">None</label>
 
-      <input id="bleeding_3" type="checkbox" value="cough" name="bleeding" ng-model="viewModel.cough"/>
-      <label for="bleeding_3" class="radio-button small">Cough</label>
+    <input id="fatique_2" type="radio" value="mild" name="fatigue" ng-model="viewModel.fatigue" />
+    <label for="fatique_2" class="radio-button medium">Mild</label>
 
-      <input id="bleeding_4" type="checkbox" value="vomit" name="bleeding" ng-model="viewModel.vomit"/>
-      <label for="bleeding_4" class="radio-button small">Vomit</label>
+    <input id="fatique_3" type="radio" value="mod" name="fatigue" ng-model="viewModel.fatigue" />
+    <label for="fatique_3" class="radio-button medium">Mod</label>
 
-      <input id="bleeding_5" type="checkbox" value="stool" name="bleeding" ng-model="viewModel.stoll"/>
-      <label for="bleeding_5" class="radio-button small">Stool</label>
-
-      <input id="bleeding_6" type="checkbox" value="vaginal" name="bleeding" ng-model="viewModel.vaginal"/>
-      <label for="bleeding_6" class="radio-button small">Vaginal (not menstrual)</label>
-    </div>
+    <input id="fatique_4" type="radio" value="sev" name="fatigue" ng-model="viewModel.fatigue" />
+    <label for="fatique_4" class="radio-button medium">Sev</label>
   </div>
-  <div>
-    <span class="question-title">SYMPTOMS</span>
-    <div class="two-column">
+</div>
 
-      <input id="headache_1" type="checkbox" value="yes" name="headache" ng-model="viewModel.headache" />
-      <label for="headache_1" class="radio-button medium long">Headache</label>
-    </div>
-    <div class="two-column">
-      <input id="muscle_1" type="checkbox" value="yes" name="musclePain" ng-model="viewModel.musclePain" />
-      <label for="muscle_1" class="radio-button medium long">Muscle Pain</label>
-    </div>
-    <div class="two-column">
-      <input id="drink_1" type="checkbox" value="yes" name="unableToDrink" ng-model="viewModel.unableToDrink" />
-      <label for="drink_1" class="radio-button medium long">Unable to Drink</label>
-    </div>
-    <div class="two-column">
-      <input id="eat_1" type="checkbox" value="yes" name="unableToEat" ng-model="viewModel.unableToEat" />
-      <label for="eat_1" class="radio-button medium long">Unable to Eat</label>
-    </div>
-    <div class="two-column">
-      <input id="swallow_1" type="checkbox" value="yes" name="difficultToSwallow" ng-model="viewModel.difficultToSwallow" />
-      <label for="swallow_1" class="radio-button medium long">Difficult to Swallow</label>
-    </div>
-    <div class="two-column">
-      <input id="breathe_1" type="checkbox" value="yes" name="difficultToBreathe" ng-model="viewModel.difficultToBreathe" />
-      <label for="breathe_1" class="radio-button medium long">Difficult to Breathe</label>
-    </div>
-    <div class="two-column">
-      <input id="abdominal_1" type="checkbox" value="yes" name="abdominalPain" ng-model="viewModel.abdominalPain" />
-      <label for="abdominal_1" class="radio-button medium long">Abdominal Pain</label>
-    </div>
-    <div class="two-column">
-      <input id="hiccups_1" type="checkbox" value="yes" name="hiccups" ng-model="viewModel.hiccups" />
-      <label for="hiccups_1" class="radio-button medium long">Hiccups</label>
-    </div>
-    <div class="two-column">
-      <input id="urine_pain_1" type="checkbox" value="yes" name="urinePain" ng-model="viewModel.urinePain" />
-      <label for="urine_pain_1" class="radio-button medium long">Urine Pain</label>
-    </div>
-    <div class="two-column">
-      <input id="cough_1" type="checkbox" value="yes" name="cough" ng-model="viewModel.cough" />
-      <label for="cough_1" class="radio-button medium long">Cough</label>
-    </div>
-    <div class="two-column">
-      <input id="rash_1" type="checkbox" value="yes" name="rash" ng-model="viewModel.rash" />
-      <label for="rash_1" class="radio-button medium long">Rash</label>
-    </div>
-  </div>
+<div>
+  <span class="question-title">BLEEDING</span>
+
+  <input id="bleeding_2" type="checkbox" value="nose/oral" name="bleeding" ng-model="viewModel.noseOral"/>
+  <label for="bleeding_2" class="radio-button small">Nose/Oral</label>
+
+  <input id="bleeding_3" type="checkbox" value="cough" name="bleeding" ng-model="viewModel.cough"/>
+  <label for="bleeding_3" class="radio-button small">Cough</label>
+
+  <input id="bleeding_4" type="checkbox" value="vomit" name="bleeding" ng-model="viewModel.vomit"/>
+  <label for="bleeding_4" class="radio-button small">Vomit</label>
+
+  <input id="bleeding_5" type="checkbox" value="stool" name="bleeding" ng-model="viewModel.stoll"/>
+  <label for="bleeding_5" class="radio-button small">Stool</label>
+
+  <input id="bleeding_6" type="checkbox" value="vaginal" name="bleeding" ng-model="viewModel.vaginal"/>
+  <label for="bleeding_6" class="radio-button small">Vaginal (not menstrual)</label>
 </div>

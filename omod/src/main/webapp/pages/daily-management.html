@@ -1,69 +1,40 @@
-<div class="section" id="daily-mgmt" >
-  <div>
-    <label class="question-title">FLUID MANAGEMENT</label>
+<div>
+  <label class="question-title">FLUID MANAGEMENT</label>
 
-    <input id="fluid_1" type="radio" value="ORS" ng-model="viewModel.fluidManagement" />
-    <label for="fluid_1" class="radio-button small">ORS</label>
+  <input id="fluid_1" type="radio" value="ORS" ng-model="viewModel.fluidManagement" />
+  <label for="fluid_1" class="radio-button small">ORS</label>
 
-    <input id="fluid_2" type="radio" value="Jelly Water" ng-model="viewModel.fluidManagement" />
-    <label for="fluid_2" class="radio-button small">Jelly Water</label>
+  <input id="fluid_2" type="radio" value="Jelly Water" ng-model="viewModel.fluidManagement" />
+  <label for="fluid_2" class="radio-button small">Jelly Water</label>
 
-    <input id="fluid_3" type="radio" value="IV Maintenance" ng-model="viewModel.fluidManagement" />
-    <label for="fluid_3" class="radio-button small">IV Maintenance</label>
+  <input id="fluid_3" type="radio" value="IV Maintenance" ng-model="viewModel.fluidManagement" />
+  <label for="fluid_3" class="radio-button small">IV Maintenance</label>
 
-    <input id="fluid_4" type="radio" value="IV/IO Resuscitate" ng-model="viewModel.fluidManagement" />
-    <label for="fluid_4" class="radio-button small">IV/IO Resuscitate</label>
+  <input id="fluid_4" type="radio" value="IV/IO Resuscitate" ng-model="viewModel.fluidManagement" />
+  <label for="fluid_4" class="radio-button small">IV/IO Resuscitate</label>
 
-    <input id="fluid_5" type="radio" value="Blood transfusion" ng-model="viewModel.fluidManagement" />
-    <label for="fluid_5" class="radio-button small">Blood Transfusion</label>
+  <input id="fluid_5" type="radio" value="Blood transfusion" ng-model="viewModel.fluidManagement" />
+  <label for="fluid_5" class="radio-button small">Blood Transfusion</label>
 
-    <input id="fluid_6" type="radio" value="Fluid Restrict" ng-model="viewModel.fluidManagement" />
-    <label for="fluid_6" class="radio-button small">Fluid Restrict</label>
-  </div>
+  <input id="fluid_6" type="radio" value="Fluid Restrict" ng-model="viewModel.fluidManagement" />
+  <label for="fluid_6" class="radio-button small">Fluid Restrict</label>
+</div>
 
-  <div>
-      <label class="question-title" for="temperature">TARGET VOLUME IN NEXT 24H</label>
-      <input type="number" name="volume" ng-model="viewModel.volume" min="0" max="9999" />
-      <span class="unit">mL</span>
-  </div>
+<div>
+    <label class="question-title" for="temperature">TARGET VOLUME IN NEXT 24H</label>
+    <input type="number" name="volume" ng-model="viewModel.volume" min="0" max="9999" />
+    <span class="unit">mL</span>
+</div>
 
-  <div>
-    <label class="question-title">ANTIMALARIALS</label>
+<div>
+  <label class="question-title">ANTIMALARIALS</label>
 
-    <input id="malarial_1" type="checkbox" name="antimalarials" value="alAct" ng-model="viewModel.alAct" />
-    <label for="malarial_1" class="radio-button small">AL (ACT)</label>
+  <input id="malarial_1" type="checkbox" name="antimalarials" value="alAct" ng-model="viewModel.alAct" />
+  <label for="malarial_1" class="radio-button small">AL (ACT)</label>
 
-    <input id="malarial_2" type="checkbox" name="antimalarials" value="artesunate" ng-model="viewModel.artesunate" />
-    <label for="malarial_2" class="radio-button small">Artesunate</label>
+  <input id="malarial_2" type="checkbox" name="antimalarials" value="artesunate" ng-model="viewModel.artesunate" />
+  <label for="malarial_2" class="radio-button small">Artesunate</label>
 
-    <input id="malarial_3" type="checkbox" name="antimalarials" value="quinine" ng-model="viewModel.quinine" />
-    <label for="malarial_3" class="radio-button small">Quinine</label>
-  </div>
-
-  <div>
-    <label class="question-title">ANTIBIOTICS</label>
-
-    <input id="antibiotics_1" type="checkbox" name="antibiotics" value="ceftriaxone" ng-model="viewModel.ceftriaxone" />
-    <label for="antibiotics_1" class="radio-button small">Ceftriaxone</label>
-
-    <input id="antibiotics_2" type="checkbox" name="antibiotics" value="cefixime" ng-model="viewModel.cefixime" />
-    <label for="antibiotics_2" class="radio-button small">Cefixime</label>
-
-    <input id="antibiotics_3" type="checkbox" name="antibiotics" value="metronidazole" ng-model="viewModel.metronidazole" />
-    <label for="antibiotics_3" class="radio-button small">Metronidazole</label>
-  </div>
-
-  <div>
-    <label class="question-title">ANALGESICS/ANTIPYRETICS</label>
-
-    <input id="analgesics_1" type="checkbox" name="analgesics" value="paracetamol" ng-model="viewModel.paracetamol" />
-    <label for="analgesics_1" class="radio-button small">Paracetamol</label>
-
-    <input id="analgesics_2" type="checkbox" name="analgesics" value="tramadol" ng-model="viewModel.tramadol" />
-    <label for="analgesics_2" class="radio-button small">Tramadol</label>
-
-    <input id="analgesics_3" type="checkbox" name="analgesics" value="morphine" ng-model="viewModel.morphine" />
-    <label for="analgesics_3" class="radio-button small">Morphine</label>
-  </div>
-
+  <input id="malarial_3" type="checkbox" name="antimalarials" value="quinine" ng-model="viewModel.quinine" />
+  <label for="malarial_3" class="radio-button small">Quinine</label>
 </div>

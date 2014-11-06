@@ -54,44 +54,4 @@
       <span class="unit small">mmHg</span>
     </div>
 
-    <div class="two-column">
-      <label class="question-title" for="raisedJVP">RAISED JVP</label>
-      <input type="number" name="raisedJVP" ng-model="viewModel.raisedJVP" min="0" max="9999" />
-      <span class="unit">cm</span>
-    </div>
-
-    <div class="two-column">
-      <label class="question-title" for="capillaryRefillTime">CAPILLARY REFILL</label>
-      <input type="number" name="capillaryRefillTime" ng-model="viewModel.capillaryRefillTime" min="0" max="9999" />
-      <span class="unit">sec</span>
-    </div>
   </div>
-
-  <div>
-    <div>
-      <label class="question-title">ABDOMEN TENDER</label>
-
-      <input tabindex="1" id="abdomen_1" type="radio" name="abdomenTender" ng-model="viewModel.abdomenTender" value="yes" />
-      <label for="abdomen_1" class="radio-button">Yes</label>
-
-      <input id="abdomen_2" type="radio" name="abdomenTender" ng-model="viewModel.abdomenTender" value="no" />
-      <label for="abdomen_2" class="radio-button">No</label>
-    </div>
-
-    <div>
-      <label class="question-title">PALE/ANAEMIA</label>
-
-      <input id="pale_1" type="radio" name="paleAnaemia" ng-model="viewModel.paleAnaemia" value="none" />
-      <label for="pale_1" class="radio-button medium">None</label>
-
-      <input id="pale_2" type="radio" name="paleAnaemia" ng-model="viewModel.paleAnaemia" value="mild" />
-      <label for="pale_2" class="radio-button medium">Mild</label>
-
-      <input id="pale_3" type="radio" name="paleAnaemia" ng-model="viewModel.paleAnaemia" value="mod" />
-      <label for="pale_3" class="radio-button medium">Mod</label>
-
-      <input id="pale_4" type="radio" name="paleAnaemia" ng-model="viewModel.paleAnaemia" value="sev" />
-      <label for="pale_4" class="radio-button medium">Sev</label>
-    </div>
-  </div>
-
