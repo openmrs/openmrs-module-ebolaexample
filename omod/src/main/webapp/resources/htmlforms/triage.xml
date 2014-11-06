@@ -1,0 +1,55 @@
+<htmlform formUuid="787608c8-512d-44fe-b793-fe54b660987a" formName="Ebola Triage"
+          formEncounterType="4a8da825-2896-4f3f-be07-2c3d9214c040" formVersion="2.0">
+
+    <h1>Triage</h1>
+
+    <table>
+        <tr>
+            <td>
+                <p>
+                    <label>Date</label>
+                    (automatic timestamp)
+                    <span style="display: none">
+                        <encounterDate showTime="true" default="now"/>
+                    </span>
+                </p>
+            </td>
+            <td>
+                <p>
+                    <label>Location</label>
+                    <encounterLocation default="SessionAttribute:emrContext.sessionLocationId"/>
+                </p>
+            </td>
+            <td>
+                <p>
+                    <label>Provider</label>
+                    <encounterProvider default="currentUser" required="true"/>
+                </p>
+            </td>
+        </tr>
+    </table>
+
+    <section id="symptomAndCaseDef" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="Symptom and case definition">
+
+        <p>
+            <label>Does the patient meet the case definition?</label>
+            <!-- <obs conceptId="CIEL:5088" /> -->
+        </p>
+    </section>
+
+    <p></p>
+
+    <section id="additionalInfo" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="Additional information">
+
+        <p>
+            <label>Oral fluids in past 24h</label>
+            <obs conceptId="CIEL:162658" showUnits="true"/>
+        </p>
+
+    </section>
+
+    <submit/>
+
+</htmlform>
