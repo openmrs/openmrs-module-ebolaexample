@@ -44,6 +44,10 @@ body {
 	padding: 0;
 }
 
+header {
+	background: #aaa;
+}
+
 .section > div {
 	padding: 0 20px;
 }
@@ -58,9 +62,16 @@ body {
 }
 
 .navigation {
-	background: #d7d7d7;
+	background: repeating-linear-gradient(
+	  45deg,
+	  #6E8F26,
+	  #6E8F26 10px,
+	  #64851B 10px,
+	  #64851B 20px
+	);
+	background-repeat: no-repeat;
 	font-family: "OpenSans";
-	color: #595959;
+	color: white;
 	padding: 0.7em 0.5em;
 }
 

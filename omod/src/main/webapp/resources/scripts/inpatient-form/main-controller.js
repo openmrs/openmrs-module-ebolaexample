@@ -36,6 +36,10 @@ module.controller('MainController', function ($scope, observationsFactory) {
         return activeView === view;
     };
 
+    $scope.getProgress = function () {
+        return $scope.views.indexOf(activeView) * 100 / 8;
+    }
+
     $scope.shouldDisplayBackButton = function () {
         return getActiveViewIndex() !== 0;
     };

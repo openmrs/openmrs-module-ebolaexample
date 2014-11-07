@@ -14,26 +14,28 @@
 
 <body ng-app="inpatientForm">
 <div ng-controller="MainController">
-    <div class="patient-header">
-				<span class="patient-id">
-					<small>PATIENT ID NUMBER</small>
-					KT-1-29360
-				</span>
-				<span class="patient-info">
-					<small>WARD</small>
-					12
-				</span>
-				<span class="patient-info">
-					<small>BED</small>
-					27
-				</span>
-    </div>
-    <div class="navigation">
-				<span ng-if="view.shouldShow" class="category" ng-repeat="view in views">
-					<h3>{{view.description}}</h3>
-				</span>
+    <header>
+	    <div class="patient-header">
+			<span class="patient-id">
+				<small>PATIENT ID NUMBER</small>
+				KT-1-29360
+			</span>
+			<span class="patient-info">
+				<small>WARD</small>
+				12
+			</span>
+			<span class="patient-info">
+				<small>BED</small>
+				27
+			</span>
+	    </div>
 
-    </div>
+	    <div class="navigation" style="background-size: {{ getProgress() }}% 100%;">
+			<span ng-if="view.shouldShow" class="category" ng-repeat="view in views">
+				<h3>{{view.description}}</h3>
+			</span>
+	    </div>
+    </header>
     <div class="ebola-form">
         <div class="section">
             <div ng-repeat="view in views">
