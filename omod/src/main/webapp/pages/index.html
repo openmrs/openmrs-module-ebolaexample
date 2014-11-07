@@ -32,8 +32,8 @@
 				</span>
     </div>
     <div class="navigation">
-				<span class="category" ng-repeat="view in views">
-					<h3 ng-click="display(view)">{{view.description}}</h3>
+				<span ng-if="view.shouldShow" class="category" ng-repeat="view in views">
+					<h3>{{view.description}}</h3>
 				</span>
 
     </div>
