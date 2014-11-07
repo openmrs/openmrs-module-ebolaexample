@@ -3,6 +3,7 @@ package org.openmrs.module.ebolaexample.fragment.controller.overview;
 import org.openmrs.Encounter;
 import org.openmrs.EncounterRole;
 import org.openmrs.Location;
+import org.openmrs.LocationTag;
 import org.openmrs.Patient;
 import org.openmrs.Provider;
 import org.openmrs.module.appui.UiSessionContext;
@@ -28,13 +29,33 @@ import java.util.Set;
 public class InpatientLocationFragmentController {
 
     public void controller(@FragmentParam(value = "activeVisit", required = false) VisitDomainWrapper activeVisit,
-                           @SpringBean AdtService adtService,
                            FragmentModel model) {
         Location currentLocation = null;
         if (activeVisit != null) {
             currentLocation = activeVisit.getInpatientLocation(new Date());
         }
-        model.addAttribute("currentLocation", currentLocation);
+        Location currentWard = closestLocationWithTag(currentLocation,
+                MetadataUtils.existing(LocationTag.class, EbolaMetadata._LocationTag.EBOLA_SUSPECT_WARD),
+                MetadataUtils.existing(LocationTag.class, EbolaMetadata._LocationTag.EBOLA_CONFIRMED_WARD),
+                MetadataUtils.existing(LocationTag.class, EbolaMetadata._LocationTag.EBOLA_RECOVERY_WARD));
+
+        Location currentBed = closestLocationWithTag(currentLocation,
+                MetadataUtils.existing(LocationTag.class, EbolaMetadata._LocationTag.INPATIENT_BED));
+
+        model.addAttribute("currentWard", currentWard);
+        model.addAttribute("currentBed", currentBed);
+    }
+
+    private Location closestLocationWithTag(Location location, LocationTag... tags) {
+        if (location == null) {
+            return null;
+        }
+        for (LocationTag tag : tags) {
+            if (location.hasTag(tag.getName())) {
+                return location;
+            }
+        }
+        return closestLocationWithTag(location.getParentLocation(), tags);
     }
 
     public Object startOutpatientVisit(@RequestParam("patient") Patient patient,
