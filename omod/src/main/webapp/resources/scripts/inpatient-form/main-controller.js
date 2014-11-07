@@ -10,12 +10,15 @@ module.controller('MainController', function ($scope, observationsFactory) {
             }
         },
         activeView = undefined,
+        receivedResponses = 0,
+        completeData = {},
         initialize = function () {
             activeView = $scope.views[0];
         },
         getActiveViewIndex = function () {
             return _.indexOf($scope.views, activeView);
         };
+
 
     $scope.views = [
         createView('vital-signs', 'vital-signs.html', 'VITAL SIGNS', true),
@@ -54,8 +57,19 @@ module.controller('MainController', function ($scope, observationsFactory) {
     };
 
     $scope.finish = function () {
-        alert('Not there yet!');
+        receivedResponses = 0;
+        $scope.$broadcast('request-patient-info');
     };
+
+    $scope.$on('response-patient-info', function (event, data) {
+        receivedResponses = receivedResponses + 1;
+        completeData = _.merge(completeData, data);
+        if (receivedResponses === $scope.views.length) {
+            console.log('all data received');
+            console.log(completeData);
+            //TODO: Post to openMRS magic
+        }
+    });
 
     $scope.display = function (view) {
         activeView = view;
