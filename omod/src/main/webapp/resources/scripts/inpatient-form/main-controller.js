@@ -1,6 +1,6 @@
 var module = angular.module('inpatientForm');
 
-module.controller('MainController', function ($scope, observationsFactory) {
+module.controller('MainController', function ($scope, observationsFactory, $http) {
     var createView = function (name, file, description, shouldShow) {
             return {
                 name: name,
@@ -70,8 +70,11 @@ module.controller('MainController', function ($scope, observationsFactory) {
         completeData = _.merge(completeData, data);
         if (receivedResponses === $scope.views.length) {
             console.log('all data received');
-            console.log(completeData);
+            console.table(completeData);
             //TODO: Post to openMRS magic
+            console.log(observationsFactory.get(completeData));
+
+           $http.post("/openmrs/ws/rest/v1/encounter", observationsFactory.get(completeData));
         }
     });
 
@@ -81,14 +84,6 @@ module.controller('MainController', function ($scope, observationsFactory) {
 
     initialize();
 
-    console.table(observationsFactory.get({
-        oralFluids: '',
-        dehydration: '',
-        urineOutput: '',
-        vomiting: '',
-        stoolFreq: '',
-        mainStool: '',
-        respiratoryRate: ''
-    }));
+    
 
 });

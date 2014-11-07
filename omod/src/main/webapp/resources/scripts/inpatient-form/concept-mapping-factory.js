@@ -19,8 +19,8 @@ module.factory("conceptMappingFactory", function() {
     return answer;
   }
 
-  var answerYes = createAnswer("yes", "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-  var answerNo = createAnswer("no", "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+  var answerYes = createAnswer(true, "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+  var answerNo = createAnswer(false, "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
   var answerUnknown = createAnswer("unknown", "1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 
   function createCurrentConsciousness() {
@@ -165,7 +165,7 @@ module.factory("conceptMappingFactory", function() {
   }
 
   function createTargetVolume(){
-    var question = createQuestion("targetVolumeInNext24h", "non-coded", "162675AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var question = createQuestion("volume", "non-coded", "162675AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     question.answers = [];
     return question;
   }

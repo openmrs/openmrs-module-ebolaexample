@@ -7,10 +7,10 @@ module.factory("observationsFactory", function(conceptMappingFactory) {
 
     var postList = [];
 
-    var symptomGrpup = {
-     concept: "1727AAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-     conceptQuestion: "1728AAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-     conceptAnswer: "1729AAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    var symptom = {
+      concept: "1727AAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      conceptQuestion: "1728AAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      conceptAnswer: "1729AAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     }
 
     angular.forEach(modelQuestions, function(modelQuestionValue, modelQuestionKey) {
@@ -19,7 +19,7 @@ module.factory("observationsFactory", function(conceptMappingFactory) {
 
 
         if (concept.id === modelQuestionKey) {
-          post.concept = concept.id;
+          post.concept = concept.conceptId;
 
           if (that.isSymptom(concept.type)) {
             post.concept = symptom.concept;
@@ -28,17 +28,19 @@ module.factory("observationsFactory", function(conceptMappingFactory) {
               value: concept.conceptId
             }, {
               concept: symptom.conceptAnswer,
-              value: that.findAnswer(answers, modelQuestionValue)
+              value: that.findAnswer(concept.answers, modelQuestionValue)
             }];
-
+            postList.push(post);
           } else if (that.isNonCode(concept.type)) {
             post.value = modelQuestionValue;
+            postList.push(post);
           } else if (that.isCode(concept.type)) {
-            post.value = that.findAnswer(answers, modelQuestionValue);
+            console.log(that.findAnswer(concept.answers, modelQuestionValue));
+            post.value = that.findAnswer(concept.answers, modelQuestionValue);
+            postList.push(post);
           }
         }
 
-        postList.push(post);
       });
 
     });
@@ -52,7 +54,7 @@ module.factory("observationsFactory", function(conceptMappingFactory) {
   };
 
   this.isCode = function(type) {
-    return type === "non-coded";
+    return type === "coded";
   };
 
   this.isNonCode = function(type) {
@@ -60,17 +62,25 @@ module.factory("observationsFactory", function(conceptMappingFactory) {
   };
 
   this.findAnswer = function(answers, value) {
+    var response;
     angular.forEach(answers, function(answer) {
       if (answer.id === value) {
-        return answer.conceptId;
+        response = answer.conceptId;
       }
     });
-
+    return response;
   };
 
   return {
     get: function(modelQuestions) {
-      return that.createObservations(modelQuestions);
+      var post = {};
+      post.obs = that.createObservations(modelQuestions);
+      post.patient = "45068f61-ee74-4117-80b0-b2450da58d0e";
+      post.encounterType = "e22e39fd-7db2-45e7-80f1-60fa0d5a4378";
+      post.location = "7f65d926-57d6-4402-ae10-a5b3bcbf7986";
+      post.provider = "9badd80-ab76-11e2-9e96-0800200c9a66";
+      post.visit = "42c29d76-62fa-4816-aa51-17d6ce63b122";
+      return post;
     }
   }
 });
