@@ -2,7 +2,7 @@
 
     <div class="info-header">
         <i class="icon-medkit"></i>
-        <h3>${ ui.format(config.program) }</h3>
+        <h3>${ config.title ?: ui.format(config.program) }</h3>
     </div>
 
     <div class="info-body">
