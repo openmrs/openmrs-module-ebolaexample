@@ -32,7 +32,9 @@
 
         <% } else if (!currentWard) { %>
 
-            Outpatient <br/>
+            <p class="current-ward">Not yet admitted</p>
+
+            <em>(To Do: Triage form should automatically admit.)</em>
 
             <form method="POST" action="${ ui.actionLink("ebolaexample", "overview/inpatientLocation", "admit",
                                             [ patient: patient.patient.uuid ]) }">
@@ -42,7 +44,7 @@
                         withTag: EmrApiConstants.LOCATION_TAG_SUPPORTS_ADMISSION
                 ]) }
                 <button type="submit">
-                    <i class="icon-hospital"></i>
+                    Admit
                 </button>
             </form>
 

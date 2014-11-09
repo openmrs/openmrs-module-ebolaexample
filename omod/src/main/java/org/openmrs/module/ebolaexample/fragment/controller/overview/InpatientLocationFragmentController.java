@@ -39,6 +39,10 @@ public class InpatientLocationFragmentController {
                 MetadataUtils.existing(LocationTag.class, EbolaMetadata._LocationTag.EBOLA_CONFIRMED_WARD),
                 MetadataUtils.existing(LocationTag.class, EbolaMetadata._LocationTag.EBOLA_RECOVERY_WARD));
 
+        if (currentWard == null) {
+            currentWard = currentLocation;
+        }
+
         Location currentBed = closestLocationWithTag(currentLocation,
                 MetadataUtils.existing(LocationTag.class, EbolaMetadata._LocationTag.INPATIENT_BED));
 
