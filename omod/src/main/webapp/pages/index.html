@@ -42,9 +42,9 @@
                 <ng-include ng-show="shouldDisplay(view)" src="view.file" ng-controller="SimpleFormController"></ng-include>
             </div>
             <div class="actions">
-                <button ng-show="shouldDisplayBackButton()" ng-click="back()">BACK</button>
-                <button ng-show="shouldDisplayNextButton()" ng-click="next()">NEXT</button>
-                <button ng-show="shouldDisplayFinishButton()" ng-click="finish()">FINISH</button>
+                <button class="left" ng-show="shouldDisplayBackButton()" ng-click="back()">BACK</button>
+                <button class="right" ng-show="shouldDisplayNextButton()" ng-click="next()">NEXT</button>
+                <button class="right" ng-show="shouldDisplayFinishButton()" ng-click="finish()">FINISH</button>
             </div>
         </div>
     </div>
