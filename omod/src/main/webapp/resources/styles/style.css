@@ -257,6 +257,7 @@ input[type="number"] {
 	width: 5em;
 	text-align: left;
 	padding-right: 75px;
+	padding-left: 12px;
 }
 
 input[type="number"]:focus {
