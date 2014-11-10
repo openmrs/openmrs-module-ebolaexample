@@ -2,7 +2,7 @@
   "name": "ebola hackaton",
   "version": "0.0.0",
   "homepage": "https://github.com/mario-areias/openmrs-module-ebolaexample",
-  "description": "hacky hacked hack",
+  "description": "OpenMRS module to Ebola",
   "license": "MIT",
   "ignore": [
     "**/.*",

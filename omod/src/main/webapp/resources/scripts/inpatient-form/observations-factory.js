@@ -8,9 +8,9 @@ module.factory("observationsFactory", function(conceptMappingFactory) {
     var postList = [];
 
     var symptom = {
-      concept: "1727AAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-      conceptQuestion: "1728AAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-      conceptAnswer: "1729AAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+      concept: "1727AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      conceptQuestion: "1728AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      conceptAnswer: "1729AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     }
 
     angular.forEach(modelQuestions, function(modelQuestionValue, modelQuestionKey) {
@@ -75,11 +75,10 @@ module.factory("observationsFactory", function(conceptMappingFactory) {
     get: function(modelQuestions) {
       var post = {};
       post.obs = that.createObservations(modelQuestions);
-      post.patient = "45068f61-ee74-4117-80b0-b2450da58d0e";
-      post.encounterType = "e22e39fd-7db2-45e7-80f1-60fa0d5a4378";
-      post.location = "7f65d926-57d6-4402-ae10-a5b3bcbf7986";
-      post.provider = "9badd80-ab76-11e2-9e96-0800200c9a66";
-      post.visit = "42c29d76-62fa-4816-aa51-17d6ce63b122";
+      post.patient="abc1469f-7274-4f29-8753-2dbca1fbf670";
+      post.encounterType="e22e39fd-7db2-45e7-80f1-60fa0d5a4378";
+      post.location="b1a8b05e-3542-4037-bbd3-998ee9c40574";
+      post.visit="dfa4c24a-ba02-4d47-92a7-f45d2eb0b1e7";
       return post;
     }
   }
