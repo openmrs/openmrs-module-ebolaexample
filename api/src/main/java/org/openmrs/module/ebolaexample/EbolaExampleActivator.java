@@ -30,6 +30,7 @@ import org.openmrs.module.appframework.AppFrameworkConstants;
 import org.openmrs.module.appframework.service.AppFrameworkService;
 import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
 import org.openmrs.module.emrapi.EmrApiConstants;
+import org.openmrs.module.emrapi.EmrApiProperties;
 import org.openmrs.module.htmlformentry.HtmlFormEntryService;
 import org.openmrs.module.htmlformentryui.HtmlFormUtil;
 import org.openmrs.module.metadatadeploy.api.MetadataDeployService;
@@ -49,14 +50,23 @@ public class EbolaExampleActivator extends BaseModuleActivator {
     @Override
     public void started() {
         try {
-            deployMetadataPackages(Context.getService(MetadataDeployService.class));
+            MetadataDeployService metadataDeployService = Context.getService(MetadataDeployService.class);
+            AdministrationService administrationService = Context.getAdministrationService();
+            FormService formService = Context.getFormService();
+            HtmlFormEntryService htmlFormEntryService = Context.getService(HtmlFormEntryService.class);
+            LocationService locationService = Context.getLocationService();
+            EmrApiProperties emrApiProperties = Context.getRegisteredComponents(EmrApiProperties.class).get(0);
 
-            setupEmrApiGlobalProperties(Context.getAdministrationService());
+            deployMetadataPackages(metadataDeployService);
 
-            setupHtmlForms(Context.getFormService(), Context.getService(HtmlFormEntryService.class));
+            setupEmrApiGlobalProperties(administrationService);
+
+            setupHtmlForms(formService, htmlFormEntryService);
 
             disableApps(Context.getService(AppFrameworkService.class));
-            doNotSupportLoginAtUnknownLocation(Context.getLocationService());
+
+            removeTagsFromUnknownLocation(locationService, emrApiProperties);
+
             log.info("Started Ebola Example module");
         }
         catch (Exception ex) {
@@ -88,11 +98,13 @@ public class EbolaExampleActivator extends BaseModuleActivator {
         }
     }
 
-    private void doNotSupportLoginAtUnknownLocation(LocationService locationService) {
+    private void removeTagsFromUnknownLocation(LocationService locationService, EmrApiProperties emrApiProperties) {
         Location location = locationService.getLocation("Unknown Location");
         if (location != null) {
             LocationTag supportsLogin = locationService.getLocationTagByName(AppFrameworkConstants.LOCATION_TAG_SUPPORTS_LOGIN);
             location.removeTag(supportsLogin);
+            location.removeTag(emrApiProperties.getSupportsAdmissionLocationTag());
+            location.removeTag(emrApiProperties.getSupportsTransferLocationTag());
             locationService.saveLocation(location);
         }
     }
