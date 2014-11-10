@@ -66,17 +66,21 @@ module.controller('MainController', function ($scope, observationsFactory, $http
     };
 
     $scope.$on('response-patient-info', function (event, data) {
+        var post = {};
+
+        post.patient="abc1469f-7274-4f29-8753-2dbca1fbf670";
+        post.encounterType="e22e39fd-7db2-45e7-80f1-60fa0d5a4378";
+        post.location="b1a8b05e-3542-4037-bbd3-998ee9c40574";
+        post.visit="dfa4c24a-ba02-4d47-92a7-f45d2eb0b1e7";
+
         receivedResponses = receivedResponses + 1;
         completeData = _.merge(completeData, data);
         if (receivedResponses === $scope.views.length) {
-            console.log('all data received');
-            console.table(completeData);
-            //TODO: Post to openMRS magic
-            console.log(observationsFactory.get(completeData));
-
-           $http.post("/openmrs/ws/rest/v1/encounter", observationsFactory.get(completeData));
+           post.obs = observationsFactory.get(completeData);
+           $http.post("/openmrs/ws/rest/v1/encounter", post);
         }
     });
+
 
     $scope.display = function (view) {
         activeView = view;
@@ -84,6 +88,6 @@ module.controller('MainController', function ($scope, observationsFactory, $http
 
     initialize();
 
-    
+
 
 });

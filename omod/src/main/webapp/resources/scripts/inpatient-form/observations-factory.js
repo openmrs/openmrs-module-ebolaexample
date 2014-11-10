@@ -35,7 +35,6 @@ module.factory("observationsFactory", function(conceptMappingFactory) {
             post.value = modelQuestionValue;
             postList.push(post);
           } else if (that.isCode(concept.type)) {
-            console.log(that.findAnswer(concept.answers, modelQuestionValue));
             post.value = that.findAnswer(concept.answers, modelQuestionValue);
             postList.push(post);
           }
@@ -73,13 +72,7 @@ module.factory("observationsFactory", function(conceptMappingFactory) {
 
   return {
     get: function(modelQuestions) {
-      var post = {};
-      post.obs = that.createObservations(modelQuestions);
-      post.patient="abc1469f-7274-4f29-8753-2dbca1fbf670";
-      post.encounterType="e22e39fd-7db2-45e7-80f1-60fa0d5a4378";
-      post.location="b1a8b05e-3542-4037-bbd3-998ee9c40574";
-      post.visit="dfa4c24a-ba02-4d47-92a7-f45d2eb0b1e7";
-      return post;
+      return that.createObservations(modelQuestions);
     }
   }
 });
