@@ -25,6 +25,8 @@
 
 <div>
     <label class="question-title" for="temperature">TARGET VOLUME IN NEXT 24H</label>
-    <input type="number" name="volume" ng-model="viewModel.volume" min="0" max="9999" />
-    <span class="unit">mL</span>
+    <div class="input-container">
+      <input ng-focus="focusInput($event)" ng-blur="blurInput($event)" type="number" name="volume" ng-model="viewModel.volume" min="0" max="9999" />
+      <span class="unit">mL</span>
+    </div>
 </div>

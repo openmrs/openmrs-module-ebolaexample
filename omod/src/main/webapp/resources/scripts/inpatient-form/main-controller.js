@@ -7,7 +7,7 @@ module.controller('MainController', function ($scope, observationsFactory, $http
     this.getParameterByName = function (name) {
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
+            results = regex.exec(location.search);
         return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     }
 
@@ -29,7 +29,7 @@ module.controller('MainController', function ($scope, observationsFactory, $http
             return _.indexOf($scope.views, activeView);
         };
 
-    function loadData(){
+    function loadData() {
         var patientUuid = that.getParameterByName("patientUuid");
         var visitUuid = that.getParameterByName("visitUuid");
         var locationUuid = that.getParameterByName("locationUuid");
@@ -42,9 +42,13 @@ module.controller('MainController', function ($scope, observationsFactory, $http
         $scope.patient.providerUuid = providerUuid;
 
 
-        $http.get("/openmrs/ws/rest/v1/patient/" + patientUuid, {params:{ v: "full"}}).success(function(result){
-            var patientId = _.filter(result.identifiers, function(id) {
-              return id.preferred;
+        $http.get("/openmrs/ws/rest/v1/patient/" + patientUuid, {
+            params: {
+                v: "full"
+            }
+        }).success(function (result) {
+            var patientId = _.filter(result.identifiers, function (id) {
+                return id.preferred;
             });
             $scope.patient.identifier = patientId[0].identifier;
         });
@@ -61,6 +65,14 @@ module.controller('MainController', function ($scope, observationsFactory, $http
         createView('daily-management', 'daily-management2.html', 'DAILY MGMT2', false)
 
     ];
+
+    $scope.focusInput = function ($event) {
+        angular.element($event.target).parent().addClass('highlight');
+    };
+
+    $scope.blurInput = function ($event) {
+        angular.element($event.target).parent().removeClass('highlight');
+    };
 
     $scope.shouldDisplay = function (view) {
         return activeView === view;
@@ -98,19 +110,19 @@ module.controller('MainController', function ($scope, observationsFactory, $http
     $scope.$on('response-patient-info', function (event, data) {
         var post = {};
 
-        post.encounterType="e22e39fd-7db2-45e7-80f1-60fa0d5a4378";
+        post.encounterType = "e22e39fd-7db2-45e7-80f1-60fa0d5a4378";
 
         receivedResponses = receivedResponses + 1;
         completeData = _.merge(completeData, data);
         if (receivedResponses === $scope.views.length) {
-           post.patient = $scope.patient.patientUuid;
-           post.visit = $scope.patient.visitUuid;
-           post.location = $scope.patient.locationUuid;
-           post.provider = $scope.patient.providerUuid;
-           post.obs = observationsFactory.get(completeData);
-           $http.post("/openmrs/ws/rest/v1/encounter", post).success(function(result){
-             alert("Success \o/");
-           });
+            post.patient = $scope.patient.patientUuid;
+            post.visit = $scope.patient.visitUuid;
+            post.location = $scope.patient.locationUuid;
+            post.provider = $scope.patient.providerUuid;
+            post.obs = observationsFactory.get(completeData);
+            $http.post("/openmrs/ws/rest/v1/encounter", post).success(function (result) {
+                alert("Success \o/");
+            });
         }
     });
 
