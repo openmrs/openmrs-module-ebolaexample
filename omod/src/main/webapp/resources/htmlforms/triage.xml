@@ -110,7 +110,7 @@
                  answerLabels="Yes - admit to ETU,No - patient leaves ETU"/>
         </p>
 
-        <ebolaTriageAction/>
+        <postSubmissionAction class="org.openmrs.module.ebolaexample.htmlformentry.EbolaTriagePostSubmissionAction"/>
 
     </section>
 
