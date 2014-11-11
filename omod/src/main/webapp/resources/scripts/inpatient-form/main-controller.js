@@ -3,6 +3,7 @@ var module = angular.module('inpatientForm');
 module.controller('MainController', function ($scope, observationsFactory, $http, $location) {
     var that = this;
 
+    $scope.viewModel = {};
     $scope.patient = {};
     $scope.patient.visitUuid = $location.search().visitUuid;
     $scope.patient.patientUuid = $location.search().patientUuid;
