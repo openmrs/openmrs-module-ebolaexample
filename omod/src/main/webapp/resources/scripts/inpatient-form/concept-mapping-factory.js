@@ -119,8 +119,8 @@ module.factory("conceptMappingFactory", function() {
   function createUrineOutput() {
     var question = createQuestion("urineOutput", "coded", "162647AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     var answerNormal = createAnswer("normal", "1115AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    var answerNone = createAnswer("none", "162648AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    var answerReduced = createAnswer("reduced", "1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerNone = createAnswer("none", "1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerReduced = createAnswer("reduced", "162648AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     var answerUnknown = createAnswer("unknown", "1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     question.answers = [answerNormal, answerNone, answerReduced, answerUnknown];
     return question;
