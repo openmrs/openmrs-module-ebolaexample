@@ -13,17 +13,20 @@ module.factory("observationsFactory", function(conceptMappingFactory) {
       conceptAnswer: "1729AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     }
 
+
     angular.forEach(modelQuestions, function(modelQuestionValue, modelQuestionKey) {
       angular.forEach(conceptMappingFactory, function(concept) {
 
-        if (!modelQuestionValue){
+        if (!modelQuestionValue || !(_.contains(modelQuestionValue, true))){
           return;
         }
         
         var post = {};
 
         if (concept.id === modelQuestionKey) {
-          if (that.isSymptom(concept.type)) {
+          if (that.isBleeding(concept.type) && _.contains(modelQuestionValue, true)) {
+            post = that.createSymptomPost(symptom, concept, modelQuestionValue);
+          } else if (that.isSymptom(concept.type)) {
             post = that.createSymptomPost(symptom, concept, modelQuestionValue);
           } else if (that.isNonCode(concept.type) && modelQuestionValue) {
             post = that.createNonCodedPost(concept, modelQuestionValue);
@@ -86,6 +89,10 @@ module.factory("observationsFactory", function(conceptMappingFactory) {
   // Yeah, I know!
   this.isSymptom = function(type) {
     return type === "symptom";
+  };
+
+  this.isBleeding = function(type) {
+    return type === "bleeding";
   };
 
   this.isCode = function(type) {

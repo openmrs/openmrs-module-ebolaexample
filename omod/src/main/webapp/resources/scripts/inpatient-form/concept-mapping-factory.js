@@ -286,7 +286,7 @@ module.factory("conceptMappingFactory", function() {
   }
 
   function createBleedingFirstQuestion() {
-    var question = createQuestion("bleeding", "symptom", "147241AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var question = createQuestion("bleeding", "bleeding", "147241AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     question.answers = [answerYes, answerNo, answerUnknown];
     return question;
   }
