@@ -186,6 +186,10 @@ small {
 	padding: 0 15px;
 }
 
+.radio-button.long span {
+	padding-top: 22px;
+}
+
 .radio-button.medium {
 	font-size: 2.2em;
 }
@@ -194,20 +198,20 @@ small {
 	font-size: 1.6em;
 }
 
-* {
-  margin: 0;
-}
 html, body {
   height: 100%;
 }
+
 .page-wrap {
   min-height: 100%;
   margin-bottom: -110px; 
 }
+
 .page-wrap:after {
   content: "";
   display: block;
 }
+
 .page-wrap:after {
   height: 110px; 
 }
