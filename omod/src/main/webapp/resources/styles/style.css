@@ -116,8 +116,8 @@ em {
 	font-size: 1.8em;
 	color: rgb(207, 207, 207);
 	font-family: "OpenSansBold";
-	position: relative;
-	left: 34%;
+	position: absolute;
+	left: 45%;
 	display: inline-block;
 	margin-top: 17px;
 }
