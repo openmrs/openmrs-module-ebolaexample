@@ -186,7 +186,11 @@ small {
 	padding: 0 15px;
 }
 
-.radio-button.long span {
+.radio-button.medium.long span {
+	padding-top: 7px;
+}
+
+.radio-button.small.long span {
 	padding-top: 22px;
 }
 
