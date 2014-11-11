@@ -1,15 +1,7 @@
 var module = angular.module('inpatientForm');
 
-
-module.controller('MainController', function ($scope, observationsFactory, $http) {
+module.controller('MainController', function ($scope, observationsFactory, $http, $location) {
     var that = this;
-
-    this.getParameterByName = function (name) {
-        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-            results = regex.exec(location.search);
-        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-    }
 
     var createView = function (name, file, description, shouldShow) {
             return {
@@ -30,10 +22,10 @@ module.controller('MainController', function ($scope, observationsFactory, $http
         };
 
     function loadData() {
-        var patientUuid = that.getParameterByName("patientUuid");
-        var visitUuid = that.getParameterByName("visitUuid");
-        var locationUuid = that.getParameterByName("locationUuid");
-        var providerUuid = that.getParameterByName("providerUuid");
+        var patientUuid = $location.search().patientUuid;
+        var visitUuid = $location.search().visitUuid;
+        var locationUuid = $location.search().locationUuid;
+        var providerUuid = $location.search().providerUuid;
 
         $scope.patient = {};
         $scope.patient.visitUuid = visitUuid;
