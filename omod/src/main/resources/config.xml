@@ -37,6 +37,9 @@
         <require_module version="${webservices.restVersion}">
             org.openmrs.module.webservices.rest
         </require_module>
+        <require_module version="${htmlformentryVersion}">
+            org.openmrs.module.htmlformentry
+        </require_module>
     </require_modules>
 	
 	<!-- Module Activator -->
