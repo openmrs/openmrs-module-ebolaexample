@@ -2,16 +2,23 @@ $(function(){
 
 
   $(".ebola-form .section").on("click", ".radio-button", function(event){
-    var $radio = $("#" + $(this).attr("for"));
+    var $input = $("#" + $(this).attr("for"));
 
-    var previousValue = $radio.attr("check");
+    var type = $input.attr("type");
+
+    if (type !== "radio"){
+      return;
+    }
+
+
+    var previousValue = $input.attr("check");
 
     if(previousValue === "true"){
-      $radio.prop("checked", false);
-      $radio.attr("check", false);
+      $input.prop("checked", false);
+      $input.attr("check", false);
       event.preventDefault();
     } else {
-      $radio.attr("check", true);
+      $input.attr("check", true);
     }
 
     event.stopPropagation();
