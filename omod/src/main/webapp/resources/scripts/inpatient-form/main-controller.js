@@ -1,6 +1,16 @@
 var module = angular.module('inpatientForm');
 
 module.controller('MainController', function ($scope, observationsFactory, $http) {
+
+    this.getParameterByName = function (name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+    console.log(this.getParameterByName("patientUuid"));
+
     var createView = function (name, file, description, shouldShow) {
             return {
                 name: name,
