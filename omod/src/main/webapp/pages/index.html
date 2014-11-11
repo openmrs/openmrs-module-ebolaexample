@@ -15,12 +15,12 @@
     </head>
 
     <body ng-app="inpatientForm" ng-controller="MainController">
-        <div class="page-wrap">
+        <div class="page-wrap" ng-show="patient">
             <header>
         	    <div class="patient-header">
         			<span class="patient-id">
         				<small>PATIENT ID NUMBER</small>
-        				KT-1-29360
+        				{{ patient.identifier }}
         			</span>
         			<span class="patient-info">
         				<small>WARD</small>

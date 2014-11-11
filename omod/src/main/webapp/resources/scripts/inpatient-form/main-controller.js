@@ -1,6 +1,8 @@
 var module = angular.module('inpatientForm');
 
+
 module.controller('MainController', function ($scope, observationsFactory, $http) {
+    var that = this;
 
     this.getParameterByName = function (name) {
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -8,8 +10,6 @@ module.controller('MainController', function ($scope, observationsFactory, $http
         results = regex.exec(location.search);
         return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     }
-
-    console.log(this.getParameterByName("patientUuid"));
 
     var createView = function (name, file, description, shouldShow) {
             return {
@@ -29,6 +29,26 @@ module.controller('MainController', function ($scope, observationsFactory, $http
             return _.indexOf($scope.views, activeView);
         };
 
+    function loadData(){
+        var patientUuid = that.getParameterByName("patientUuid");
+        var visitUuid = that.getParameterByName("visitUuid");
+        var locationUuid = that.getParameterByName("locationUuid");
+        var providerUuid = that.getParameterByName("providerUuid");
+
+        $scope.patient = {};
+        $scope.patient.visitUuid = visitUuid;
+        $scope.patient.patientUuid = patientUuid;
+        $scope.patient.locationUuid = locationUuid;
+        $scope.patient.providerUuid = providerUuid;
+
+
+        $http.get("/openmrs/ws/rest/v1/patient/" + patientUuid, {params:{ v: "full"}}).success(function(result){
+            var patientId = _.filter(result.identifiers, function(id) {
+              return id.preferred;
+            });
+            $scope.patient.identifier = patientId[0].identifier;
+        });
+    }
 
     $scope.views = [
         createView('vital-signs', 'vital-signs.html', 'VITAL SIGNS', true),
@@ -78,16 +98,19 @@ module.controller('MainController', function ($scope, observationsFactory, $http
     $scope.$on('response-patient-info', function (event, data) {
         var post = {};
 
-        post.patient="abc1469f-7274-4f29-8753-2dbca1fbf670";
         post.encounterType="e22e39fd-7db2-45e7-80f1-60fa0d5a4378";
-        post.location="b1a8b05e-3542-4037-bbd3-998ee9c40574";
-        post.visit="dfa4c24a-ba02-4d47-92a7-f45d2eb0b1e7";
 
         receivedResponses = receivedResponses + 1;
         completeData = _.merge(completeData, data);
         if (receivedResponses === $scope.views.length) {
+           post.patient = $scope.patient.patientUuid;
+           post.visit = $scope.patient.visitUuid;
+           post.location = $scope.patient.locationUuid;
+           post.provider = $scope.patient.providerUuid;
            post.obs = observationsFactory.get(completeData);
-           $http.post("/openmrs/ws/rest/v1/encounter", post);
+           $http.post("/openmrs/ws/rest/v1/encounter", post).success(function(result){
+             alert("Success \o/");
+           });
         }
     });
 
@@ -97,7 +120,7 @@ module.controller('MainController', function ($scope, observationsFactory, $http
     };
 
     initialize();
-
+    loadData();
 
 
 });
