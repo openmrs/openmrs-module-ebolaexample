@@ -15,6 +15,11 @@ module.factory("observationsFactory", function(conceptMappingFactory) {
 
     angular.forEach(modelQuestions, function(modelQuestionValue, modelQuestionKey) {
       angular.forEach(conceptMappingFactory, function(concept) {
+
+        if (!modelQuestionValue){
+          return;
+        }
+        
         var post = {};
 
         if (concept.id === modelQuestionKey) {
