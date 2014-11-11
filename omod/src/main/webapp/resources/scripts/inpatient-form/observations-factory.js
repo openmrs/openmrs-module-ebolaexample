@@ -20,10 +20,8 @@ module.factory("observationsFactory", function(conceptMappingFactory) {
         if (concept.id === modelQuestionKey) {
           if (that.isSymptom(concept.type)) {
             post = that.createSymptomPost(symptom, concept, modelQuestionValue);
-            postList.push(post);
           } else if (that.isNonCode(concept.type)) {
             post = that.createNonCodedPost(concept, modelQuestionValue);
-            postList.push(post);
           } else if (that.isCode(concept.type)) {
             post = that.createCodedPosts(concept, modelQuestionValue);
           }
