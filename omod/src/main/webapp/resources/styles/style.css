@@ -106,6 +106,12 @@ small {
 	font-size: 0.45em;
 }
 
+em {
+	font-family: "OpenSansLight";
+	font-size: 0.65em;
+	padding-left: 10px; 
+}
+
 .unit {
 	font-family: "OpenSansBold";
 	font-size: 1.8em;
