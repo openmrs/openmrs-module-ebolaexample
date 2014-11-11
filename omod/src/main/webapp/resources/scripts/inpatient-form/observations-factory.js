@@ -15,9 +15,12 @@ module.factory("observationsFactory", function(conceptMappingFactory) {
 
 
     angular.forEach(modelQuestions, function(modelQuestionValue, modelQuestionKey) {
+       if (!modelQuestionValue){
+        return;
+       }
       angular.forEach(conceptMappingFactory, function(concept) {
 
-        if (!modelQuestionValue || !(_.contains(modelQuestionValue, true))){
+        if (that.isBleeding(concept.type) && !(_.contains(modelQuestionValue, true))){
           return;
         }
         
