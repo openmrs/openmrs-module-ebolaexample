@@ -29,25 +29,15 @@ module.controller('MainController', function ($scope, observationsFactory, $http
             return _.indexOf($scope.views, activeView);
         };
 
-    function loadData() {
-        var patientUuid = that.getParameterByName("patientUuid");
-        var visitUuid = that.getParameterByName("visitUuid");
-        var locationUuid = that.getParameterByName("locationUuid");
-        var providerUuid = that.getParameterByName("providerUuid");
+    $scope.init = function() {
+        $scope.patient = angular.extend({ }, $window.inpatientFormConfig);
 
-        $scope.patient = {};
-        $scope.patient.visitUuid = visitUuid;
-        $scope.patient.patientUuid = patientUuid;
-        $scope.patient.locationUuid = locationUuid;
-        $scope.patient.providerUuid = providerUuid;
-
-
-        $http.get("/openmrs/ws/rest/v1/patient/" + patientUuid, {
+        $http.get("/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/patient/" + $scope.patient.patientUuid, {
             params: {
                 v: "full"
             }
-        }).success(function (result) {
-            var patientId = _.filter(result.identifiers, function (id) {
+        }).success(function(result){
+            var patientId = _.filter(result.identifiers, function(id) {
                 return id.preferred;
             });
             $scope.patient.identifier = patientId[0].identifier;
@@ -55,14 +45,14 @@ module.controller('MainController', function ($scope, observationsFactory, $http
     }
 
     $scope.views = [
-        createView('vital-signs', 'vital-signs.html', 'VITAL SIGNS', true),
-        createView('vital-signs', 'vital-signs2.html', 'VITAL SIGNS 2', false),
-        createView('hydration', 'hydration.html', 'HYDRATION', true),
-        createView('hydration', 'hydration2.html', 'HYDRATION 2', false),
-        createView('symptoms', 'symptoms.html', 'SYMPTOMS', true),
-        createView('symptoms', 'symptoms2.html', 'SYMPTOMS 2', false),
-        createView('daily-management', 'daily-management.html', 'DAILY MGMT', true),
-        createView('daily-management', 'daily-management2.html', 'DAILY MGMT2', false)
+        createView('vital-signs', 'vital-signs.page', 'VITAL SIGNS', true),
+        createView('vital-signs', 'vital-signs2.page', 'VITAL SIGNS 2', false),
+        createView('hydration', 'hydration.page', 'HYDRATION', true),
+        createView('hydration', 'hydration2.page', 'HYDRATION 2', false),
+        createView('symptoms', 'symptoms.page', 'SYMPTOMS', true),
+        createView('symptoms', 'symptoms2.page', 'SYMPTOMS 2', false),
+        createView('daily-management', 'daily-management.page', 'DAILY MGMT', true),
+        createView('daily-management', 'daily-management2.page', 'DAILY MGMT2', false)
 
     ];
 
@@ -124,7 +114,7 @@ module.controller('MainController', function ($scope, observationsFactory, $http
             post.location = $scope.patient.locationUuid;
             post.provider = $scope.patient.providerUuid;
             post.obs = observationsFactory.get(completeData);
-            $http.post("/openmrs/ws/rest/v1/encounter", post).success(function (result) {
+            $http.post("/openmrs/ws/rest/v1/encounter", post).success(function(result) {
                 alert("Success \o/");
             });
         }
@@ -136,7 +126,5 @@ module.controller('MainController', function ($scope, observationsFactory, $http
     };
 
     initialize();
-    loadData();
-
 
 });
