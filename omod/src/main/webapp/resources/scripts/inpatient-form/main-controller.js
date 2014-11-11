@@ -3,6 +3,12 @@ var module = angular.module('inpatientForm');
 module.controller('MainController', function ($scope, observationsFactory, $http, $location) {
     var that = this;
 
+    $scope.patient = {};
+    $scope.patient.visitUuid = $location.search().visitUuid;
+    $scope.patient.patientUuid = $location.search().patientUuid;
+    $scope.patient.locationUuid = $location.search().locationUuid;
+    $scope.patient.providerUuid = $location.search().providerUuid;
+    
     var createView = function (name, file, description, shouldShow) {
             return {
                 name: name,
@@ -22,17 +28,6 @@ module.controller('MainController', function ($scope, observationsFactory, $http
         };
 
     function loadData() {
-        var patientUuid = $location.search().patientUuid;
-        var visitUuid = $location.search().visitUuid;
-        var locationUuid = $location.search().locationUuid;
-        var providerUuid = $location.search().providerUuid;
-
-        $scope.patient = {};
-        $scope.patient.visitUuid = visitUuid;
-        $scope.patient.patientUuid = patientUuid;
-        $scope.patient.locationUuid = locationUuid;
-        $scope.patient.providerUuid = providerUuid;
-
 
         $http.get("/openmrs/ws/rest/v1/patient/" + patientUuid, {
             params: {
