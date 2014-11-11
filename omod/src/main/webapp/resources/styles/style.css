@@ -112,6 +112,16 @@ em {
 	padding-left: 10px; 
 }
 
+.progress {
+	font-size: 1.8em;
+	color: rgb(207, 207, 207);
+	font-family: "OpenSansBold";
+	position: relative;
+	left: 34%;
+	display: inline-block;
+	margin-top: 17px;
+}
+
 .unit {
 	font-family: "OpenSansBold";
 	font-size: 1.8em;
