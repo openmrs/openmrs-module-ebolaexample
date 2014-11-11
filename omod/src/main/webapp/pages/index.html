@@ -40,7 +40,7 @@
             <div class="ebola-form">
                 <div class="section">
                     <div ng-repeat="view in views">
-                        <ng-include ng-show="shouldDisplay(view)" src="view.file" ng-controller="SimpleFormController"></ng-include>
+                        <ng-include id="simpleController" ng-show="shouldDisplay(view)" src="view.file" ng-controller="SimpleFormController"></ng-include>
                     </div>
                 </div>
             </div>

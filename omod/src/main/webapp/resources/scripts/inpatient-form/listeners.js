@@ -10,23 +10,27 @@ $(function() {
       return;
     }
 
-
+     var scope = angular.element($("#simpleController")).scope();
     var previousValue = $input.attr("check");
 
     if (previousValue === "true") {
       $input.prop("checked", false);
       $input.attr("check", false);
 
-      var scope = angular.element($("body")).scope();
+     
       scope.$apply(function() {
-        console.log(scope.viewModel);
-        scope.viewModel[$input.attr("ng-model")] = "";
+        scope.viewModel[$input.attr("name")] = "";
       });
 
       event.preventDefault();
     } else {
       $input.attr("check", true);
+      scope.$apply(function() {
+        scope.viewModel[$input.attr("name")] = $input.val();
+      });
     }
+
+    console.log(scope.viewModel);
 
     event.stopPropagation();
 
