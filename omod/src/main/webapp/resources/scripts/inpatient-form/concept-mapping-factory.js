@@ -155,9 +155,9 @@ module.factory("conceptMappingFactory", function() {
   function createFluidManagement(){
     var question = createQuestion("fluidManagement", "coded", "162653AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     var answerORS = createAnswer("ORS", "351AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    var answerIVMaintenance = createAnswer("IVMaintenance", "162649AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerIVMaintenance = createAnswer("IVMaintenance", "162650AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     var answerIVIORessucitate = createAnswer("IVIORessucitate", "162651AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    var answerJelly = createAnswer("jelly", "162650AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerJelly = createAnswer("jelly", "162649AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     var answerBloodTransfusion = createAnswer("bloodTransfusion", "1063AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     var answerFluidRestrict = createAnswer("fluidRestrict", "162652AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     question.answers = [answerORS, answerIVMaintenance, answerIVIORessucitate, answerJelly, answerBloodTransfusion, answerFluidRestrict];
@@ -340,6 +340,7 @@ module.factory("conceptMappingFactory", function() {
     conceptMapping.push(createDifficultToBreathe());
     conceptMapping.push(createRash());
     conceptMapping.push(createHiccups());
+    conceptMapping.push(createCough());
     conceptMapping.push(createBleedingFirstQuestion());
     conceptMapping.push(createBleedingSecondQuestion());
 
