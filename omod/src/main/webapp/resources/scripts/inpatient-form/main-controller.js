@@ -29,7 +29,7 @@ module.controller('MainController', function ($scope, observationsFactory, $http
 
     function loadData() {
 
-        $http.get("/openmrs/ws/rest/v1/patient/" + patientUuid, {
+        $http.get("/openmrs/ws/rest/v1/patient/" + $scope.patient.patientUuid, {
             params: {
                 v: "full"
             }
