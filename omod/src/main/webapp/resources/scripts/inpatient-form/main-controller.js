@@ -1,7 +1,16 @@
 var module = angular.module('inpatientForm');
 
+module.config(function($locationProvider) {
+    $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+    });
+});
+
 module.controller('MainController', function ($scope, observationsFactory, $http, $location) {
     var that = this;
+
+    var CONTEXT_PATH = $location.path().substring(0, $location.path().indexOf("/", 1));
 
     $scope.patient = {};
     $scope.patient.visitUuid = $location.search().visitUuid;
@@ -29,7 +38,7 @@ module.controller('MainController', function ($scope, observationsFactory, $http
 
     function loadData() {
 
-        $http.get("/openmrs/ws/rest/v1/patient/" + $scope.patient.patientUuid, {
+        $http.get(CONTEXT_PATH + "/ws/rest/v1/patient/" + $scope.patient.patientUuid, {
             params: {
                 v: "full"
             }
@@ -101,7 +110,7 @@ module.controller('MainController', function ($scope, observationsFactory, $http
     $scope.$on('response-patient-info', function (event, data) {
         var post = {};
 
-        post.encounterType = "e22e39fd-7db2-45e7-80f1-60fa0d5a4378";
+        post.encounterType = "83413734-587d-11e4-af12-660e112eb3f5";
 
         receivedResponses = receivedResponses + 1;
         completeData = _.merge(completeData, data);
@@ -111,8 +120,8 @@ module.controller('MainController', function ($scope, observationsFactory, $http
             post.location = $scope.patient.locationUuid;
             post.provider = $scope.patient.providerUuid;
             post.obs = observationsFactory.get(completeData);
-            $http.post("/openmrs/ws/rest/v1/encounter", post).success(function (result) {
-                alert("Success \o/");
+            $http.post(CONTEXT_PATH + "/ws/rest/v1/encounter", post).success(function (result) {
+                location.href = CONTEXT_PATH + "/ebolaexample/ebolaOverview.page?patient=" + $scope.patient.patientUuid;
             });
         }
     });
