@@ -10,14 +10,16 @@ module.config(function($locationProvider) {
 module.controller('MainController', function ($scope, observationsFactory, $http, $location) {
     var that = this;
 
-    var CONTEXT_PATH = $location.path().substring(0, $location.path().indexOf("/", 1));
+    var path = $location.path().substring(0, $location.path().indexOf("/", 1));
+
+    var CONTEXT_PATH = (path === "/openmrs-module-ebolaexample") ? "/openmrs" : path;
 
     $scope.patient = {};
     $scope.patient.visitUuid = $location.search().visitUuid;
     $scope.patient.patientUuid = $location.search().patientUuid;
     $scope.patient.locationUuid = $location.search().locationUuid;
     $scope.patient.providerUuid = $location.search().providerUuid;
-    
+
     var createView = function (name, file, description, shouldShow) {
             return {
                 name: name,
