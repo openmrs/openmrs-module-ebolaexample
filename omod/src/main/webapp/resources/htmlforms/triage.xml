@@ -17,7 +17,7 @@
             <td>
                 <p>
                     <label>Location</label>
-                    <encounterLocation default="SessionAttribute:emrContext.sessionLocationId"/>
+                    <encounterLocation default="e0e18fea-6860-11e4-9305-df58197607bd"/>
                 </p>
             </td>
             <td>
@@ -32,7 +32,7 @@
     <section id="symptomAndCaseDef" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Symptom and case definition">
 
-        <p>
+        <p class="symptom">
             <label>1. Sudden onset of a high fever?</label>
             <!-- TBD:  Need sudden fever, not fever -->
             <obsgroup groupingConceptId="CIEL:1727">
@@ -42,7 +42,7 @@
             </obsgroup>
         </p>
 
-        <p>
+        <p class="symptom">
             <label>2. Contact with a suspect/probable/known Ebola case?</label>
             <obsgroup groupingConceptId="CIEL:1727">
                 <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:162633"/>
@@ -51,7 +51,7 @@
             </obsgroup>
         </p>
 
-        <p>
+        <p class="symptom">
             <label>3. Inexplicable bleeding?</label>
             <obsgroup groupingConceptId="CIEL:1727">
                 <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:162628"/>
@@ -135,6 +135,17 @@
         </p>
     </section>
 
-    <submit/>
+    <ifMode mode="VIEW" include="false">
+        <div id="buttons">
+            <submit submitClass="confirm right"/>
+            <button type="button" class="cancel"><uimessage code="general.cancel"/></button>
+        </div>
+
+        <script type="text/javascript">
+            jQuery(function() {
+                jQuery('.symptom input[type=checkbox]').prop('checked', true).hide();
+            });
+        </script>
+    </ifMode>
 
 </htmlform>

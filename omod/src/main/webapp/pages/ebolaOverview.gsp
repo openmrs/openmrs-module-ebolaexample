@@ -1,6 +1,16 @@
 <%
     ui.includeJavascript("uicommons", "handlebars/handlebars.min.js")
     ui.decorateWith("appui", "standardEmrPage")
+
+    def triageEntry = [
+            label: "Triage",
+            link: ui.pageLink("htmlformentryui", "htmlform/enterHtmlFormWithStandardUi", [
+                    patientId: patient.patient.uuid,
+                    visitId: activeVisit?.visit?.uuid,
+                    definitionUiResource: "ebolaexample:htmlforms/triage.xml",
+                    returnUrl: ui.thisUrl()
+            ])
+    ]
 %>
 <script type="text/template" id="last-encounter-template">
     <!-- TO DO: do not make this template more complex! We need to provide a better representation, e.g. that knows about symptoms  -->
@@ -36,10 +46,10 @@
     var patient = { id: ${ patient.id } };
 
     Handlebars.registerHelper('display', function(obj) {
-        return obj.display ? obj.display : obj;
+        return obj ? (obj.display ? obj.display : obj) : "";
     });
     Handlebars.registerHelper('date', function(obj) {
-        return new Date(obj).toLocaleString();
+        return obj ? new Date(obj).toLocaleString() : "";
     });
 
     var lastEncounterTemplate = Handlebars.compile(jq('#last-encounter-template').html());
@@ -61,7 +71,11 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient, a
         <div class="info-container column">
 
             ${ ui.includeFragment("ebolaexample", "overview/program",
-                    [ patient: patient, program: program, title: ui.message("ebolaexample.ebolaOverview.title") ]) }
+                    [ patient: patient,
+                      program: program,
+                      enrollmentForm: triageEntry,
+                      oneTimeEncounterTypes: [ triageEncounterType ],
+                      title: ui.message("ebolaexample.ebolaOverview.title") ]) }
 
             ${ ui.includeFragment("ebolaexample", "overview/inpatientLocation",
                     [ patient: patient, activeVisit: activeVisit ]) }

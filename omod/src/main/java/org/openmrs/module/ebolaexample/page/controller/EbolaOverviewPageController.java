@@ -47,6 +47,7 @@ public class EbolaOverviewPageController {
 
         Program program = MetadataUtils.existing(Program.class, EbolaMetadata._Program.EBOLA_PROGRAM);
         EncounterType followupEncounterType = MetadataUtils.existing(EncounterType.class, EbolaMetadata._EncounterType.EBOLA_INPATIENT_FOLLOWUP);
+        EncounterType triageEncounterType = MetadataUtils.existing(EncounterType.class, EbolaMetadata._EncounterType.EBOLA_TRIAGE);
 
         Map<String, Object> formParams = new HashMap<String, Object>();
         formParams.put("patientId", patient.getUuid());
@@ -61,6 +62,7 @@ public class EbolaOverviewPageController {
         model.addAttribute("program", program);
         model.addAttribute("followupEncounterType", followupEncounterType);
         //model.addAttribute("followupForms", followupForms);
+        model.addAttribute("triageEncounterType", triageEncounterType);
         model.addAttribute("patient", patientDomainWrapper);
         model.addAttribute("activeVisit", activeVisit);
 

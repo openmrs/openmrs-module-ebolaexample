@@ -8,12 +8,21 @@
     <div class="info-body">
         <% if (currentEnrollment == null) { %>
 
-            Not currently enrolled
-            <a class="big button" href="${ ui.actionLink("ebolaexample", "overview/program", "enroll", [ patient: patient.patient.uuid, program: program.uuid ]) }">
-                <i class="icon-plus"></i>
-                Enroll in program
-            </a>
+            <p>Not currently enrolled</p>
 
+            <% if (enrollmentForm) { %>
+                <a class="big button" href="${ enrollmentForm.link }">
+                    <% if (enrollmentForm.icon) { %>
+                        <i class="${ enrollmentForm.icon }"></i>
+                    <% } %>
+                    ${ enrollmentForm.label }
+                </a>
+            <% } else { %>
+                <a class="big button" href="${ ui.actionLink("ebolaexample", "overview/program", "enroll", [ patient: patient.patient.uuid, program: program.uuid ]) }">
+                    <i class="icon-plus"></i>
+                    Enroll in program
+                </a>
+            <% } %>
         <% } else { %>
 
             Enrolled since ${ ui.format(currentEnrollment.dateEnrolled) }

@@ -19,6 +19,7 @@ public class ProgramFragmentController {
 
     public void controller(@FragmentParam("patient") PatientDomainWrapper patient,
                            @FragmentParam("program") Program program,
+                           @FragmentParam(value = "enrollmentForm", required = false) Object enrollmentForm,
                            @SpringBean("programWorkflowService") ProgramWorkflowService programWorkflowService,
                            FragmentModel model) {
         List<PatientProgram> enrollments = programWorkflowService.getPatientPrograms(patient.getPatient(), program, null, null, null, null, false);
@@ -31,6 +32,7 @@ public class ProgramFragmentController {
         }
 
         model.addAttribute("currentEnrollment", currentEnrollment);
+        model.addAttribute("enrollmentForm", enrollmentForm);
     }
 
     public Object enroll(@RequestParam("patient") Patient patient,
