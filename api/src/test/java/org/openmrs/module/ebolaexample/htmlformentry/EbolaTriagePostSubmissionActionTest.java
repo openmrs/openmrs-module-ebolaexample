@@ -52,6 +52,7 @@ public class EbolaTriagePostSubmissionActionTest {
         patient = new Patient();
 
         encounter = new Encounter();
+        encounter.setEncounterDatetime(new Date());
         encounter.setPatient(patient);
         encounter.setLocation(triage);
 
@@ -125,7 +126,7 @@ public class EbolaTriagePostSubmissionActionTest {
             @Override
             public boolean matches(Object o) {
                 PatientProgram actual = (PatientProgram) o;
-                return actual.getPatient().equals(patient) && actual.getProgram().equals(ebolaProgram);
+                return actual.getPatient().equals(patient) && actual.getProgram().equals(ebolaProgram) && actual.getDateEnrolled() != null;
             }
         };
     }

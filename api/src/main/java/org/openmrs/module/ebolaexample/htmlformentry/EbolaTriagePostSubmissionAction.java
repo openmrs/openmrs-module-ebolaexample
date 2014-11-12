@@ -20,6 +20,8 @@ import org.openmrs.module.htmlformentry.FormEntrySession;
 import org.openmrs.module.htmlformentry.HtmlFormEntryUtil;
 import org.openmrs.module.metadatadeploy.MetadataUtils;
 
+import java.util.Date;
+
 public class EbolaTriagePostSubmissionAction implements CustomFormSubmissionAction {
 
     @Override
@@ -42,13 +44,16 @@ public class EbolaTriagePostSubmissionAction implements CustomFormSubmissionActi
     void doApplyAction(Encounter encounter, Concept admitQuestion, Concept yes, Concept no,
                        AdtService adtService, Location assessment, Program ebolaProgram,
                        ProgramWorkflowService programWorkflowService) {
+
+        adtService.ensureActiveVisit(encounter.getPatient(), assessment);
+
         Boolean shouldAdmit = shouldAdmit(encounter, admitQuestion, yes, no);
         if (shouldAdmit == null) {
             return;
         }
         else if (shouldAdmit) {
             admit(adtService, encounter, assessment);
-            enroll(programWorkflowService, encounter.getPatient(), ebolaProgram);
+            enroll(programWorkflowService, encounter.getPatient(), ebolaProgram, encounter.getEncounterDatetime());
         }
         else {
             // send the patient home => close the active visit
@@ -56,7 +61,7 @@ public class EbolaTriagePostSubmissionAction implements CustomFormSubmissionActi
         }
     }
 
-    private void enroll(ProgramWorkflowService service, Patient patient, Program ebolaProgram) {
+    private void enroll(ProgramWorkflowService service, Patient patient, Program ebolaProgram, Date enrollmentDate) {
         for (PatientProgram candidate : service.getPatientPrograms(patient, ebolaProgram, null, null, null, null, false)) {
             if (candidate.getActive()) {
                 return;
@@ -65,6 +70,7 @@ public class EbolaTriagePostSubmissionAction implements CustomFormSubmissionActi
         PatientProgram enrollment = new PatientProgram();
         enrollment.setProgram(ebolaProgram);
         enrollment.setPatient(patient);
+        enrollment.setDateEnrolled(enrollmentDate);
         service.savePatientProgram(enrollment);
     }
 
@@ -76,7 +82,9 @@ public class EbolaTriagePostSubmissionAction implements CustomFormSubmissionActi
 
     private void closeVisit(AdtService adtService, Patient patient, Location encounterLocation) {
         VisitDomainWrapper activeVisit = adtService.getActiveVisit(patient, encounterLocation);
-        adtService.closeAndSaveVisit(activeVisit.getVisit());
+        if (activeVisit != null) {
+            adtService.closeAndSaveVisit(activeVisit.getVisit());
+        }
     }
 
     private Boolean shouldAdmit(Encounter encounter, Concept admitQuestion, Concept yes, Concept no) {
