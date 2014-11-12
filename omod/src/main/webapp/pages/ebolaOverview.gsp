@@ -1,16 +1,6 @@
 <%
     ui.includeJavascript("uicommons", "handlebars/handlebars.min.js")
     ui.decorateWith("appui", "standardEmrPage")
-
-    def triageEntry = [
-            label: "Triage",
-            link: ui.pageLink("htmlformentryui", "htmlform/enterHtmlFormWithStandardUi", [
-                    patientId: patient.patient.uuid,
-                    visitId: activeVisit?.visit?.uuid,
-                    definitionUiResource: "ebolaexample:htmlforms/triage.xml",
-                    returnUrl: ui.thisUrl()
-            ])
-    ]
 %>
 <script type="text/template" id="last-encounter-template">
     <!-- TO DO: do not make this template more complex! We need to provide a better representation, e.g. that knows about symptoms  -->
@@ -70,12 +60,8 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient, a
     <div class="dashboard clear">
         <div class="info-container column">
 
-            ${ ui.includeFragment("ebolaexample", "overview/program",
-                    [ patient: patient,
-                      program: program,
-                      enrollmentForm: triageEntry,
-                      oneTimeEncounterTypes: [ triageEncounterType ],
-                      title: ui.message("ebolaexample.ebolaOverview.title") ]) }
+            ${ ui.includeFragment("ebolaexample", "overview/ebolaProgram",
+                    [ patient: patient ]) }
 
             ${ ui.includeFragment("ebolaexample", "overview/inpatientLocation",
                     [ patient: patient, activeVisit: activeVisit ]) }
