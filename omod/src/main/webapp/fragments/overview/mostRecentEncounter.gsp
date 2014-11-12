@@ -26,7 +26,7 @@
     </div>
 </div>
 
-<% if (config.handlebarsTemplate) { %>
+<% if (lastEncounter && config.handlebarsTemplate) { %>
     <script type="text/javascript">
         jq(function() {
             var html = ${ config.handlebarsTemplate }(${ lastEncounterJson });
