@@ -18,11 +18,11 @@ import java.util.List;
 public class InpatientFollowupsFragmentController {
 
     public void get(@FragmentParam("patient") PatientDomainWrapper patient,
-                    @FragmentParam("activeVisit") VisitDomainWrapper visit,
+                    @FragmentParam(value = "activeVisit", required = false) VisitDomainWrapper visit,
                     UiSessionContext sessionContext,
                     FragmentModel model) {
 
-        Location assignedLocation = visit.getInpatientLocation(new Date());
+        Location assignedLocation = visit == null ? null : visit.getInpatientLocation(new Date());
 
         model.addAttribute("patient", patient);
         model.addAttribute("visit", visit);

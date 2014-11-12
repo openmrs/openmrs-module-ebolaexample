@@ -1,8 +1,8 @@
 <%
     def entryLink = "/${ contextPath }/ms/uiframework/resource/ebolaexample/html/inpatientfollowup/index.html?" +
             "patientUuid=${ patient.patient.uuid }&" +
-            "visitUuid=${ visit.visit.uuid }&" +
-            "locationUuid=${ location.uuid }&" +
+            "visitUuid=${ visit?.visit?.uuid }&" +
+            "locationUuid=${ location?.uuid }&" +
             "providerUuid=${ provider.person.uuid }"
 %>
 <div class="info-section">
@@ -15,7 +15,7 @@
     </div>
 
     <div class="info-body">
-        <% if (!config.activeVisit) { %>
+        <% if (!visit) { %>
             No active visit
         <% } else { %>
             <div>
