@@ -1,6 +1,31 @@
 <%
+    ui.includeJavascript("uicommons", "handlebars/handlebars.min.js")
     ui.decorateWith("appui", "standardEmrPage")
 %>
+<script type="text/template" id="last-encounter-template">
+    <!-- TO DO: do not make this template more complex! We need to provide a better representation, e.g. that knows about symptoms  -->
+    <ul>
+        <li>
+            <em>
+                {{display location}}
+                -
+                {{date encounterDatetime}}
+            </em>
+        </li>
+        {{#each obs}}
+            <li>
+            {{#if this.value}}
+                {{display this.concept}}: {{display this.value}}
+            {{else}}
+                {{#each this.groupMembers}}
+                    {{display this.value}}
+                {{/each}}
+            {{/if}}
+            </li>
+        {{/each}}
+    </ul>
+</script>
+
 <script type="text/javascript">
     var breadcrumbs = [
         { icon: "icon-home", link: '/' + OPENMRS_CONTEXT_PATH + '/index.htm' },
@@ -9,6 +34,15 @@
         { label: "${ ui.escapeJs(ui.message("ebolaexample.ebolaOverview.title")) }" }
     ]
     var patient = { id: ${ patient.id } };
+
+    Handlebars.registerHelper('display', function(obj) {
+        return obj.display ? obj.display : obj;
+    });
+    Handlebars.registerHelper('date', function(obj) {
+        return new Date(obj).toLocaleString();
+    });
+
+    var lastEncounterTemplate = Handlebars.compile(jq('#last-encounter-template').html());
 </script>
 
 <% if (includeFragments) {
@@ -38,13 +72,11 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient, a
 
         <div class="info-container column">
 
-            ${ ui.includeFragment("ebolaexample", "overview/encountersInActiveVisit",
-                    [ patient: patient, activeVisit: activeVisit,
-                      encounterType: followupEncounterType,
-                      entryLinks: followupForms ]) }
+            ${ ui.includeFragment("ebolaexample", "overview/inpatientFollowups",
+                    [ patient: patient, activeVisit: activeVisit ]) }
 
             ${ ui.includeFragment("ebolaexample", "overview/mostRecentEncounter",
-                    [ patient: patient, encounterType: followupEncounterType]) }
+                    [ patient: patient, encounterType: followupEncounterType, handlebarsTemplate: "lastEncounterTemplate"]) }
 
         </div>
 
