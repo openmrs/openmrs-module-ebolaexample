@@ -32,29 +32,35 @@
     <section id="symptomAndCaseDef" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Symptom and case definition">
 
-        <p class="symptom">
+        <p>
             <label>1. Sudden onset of a high fever?</label>
             <!-- TBD:  Need sudden fever, not fever -->
             <obsgroup groupingConceptId="CIEL:1727">
-                <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:140238"/>
+                <span class="symptom">
+                    <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:140238"/>
+                </span>
                 <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
                      answerLabels="yes,no,unknown"/>
             </obsgroup>
         </p>
 
-        <p class="symptom">
+        <p>
             <label>2. Contact with a suspect/probable/known Ebola case?</label>
             <obsgroup groupingConceptId="CIEL:1727">
-                <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:162633"/>
+                <span class="symptom">
+                    <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:162633"/>
+                </span>
                 <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
                      answerLabels="yes,no,unknown"/>
             </obsgroup>
         </p>
 
-        <p class="symptom">
+        <p>
             <label>3. Inexplicable bleeding?</label>
             <obsgroup groupingConceptId="CIEL:1727">
-                <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:162628"/>
+                <span class="symptom">
+                    <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:162628"/>
+                </span>
                 <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
                      answerLabels="yes,no,unknown"/>
             </obsgroup>
@@ -70,7 +76,12 @@
                     <obsgroup groupingConceptId="CIEL:1727">
                         <tr>
                             <td class="symptom">
-                                <obs conceptId="CIEL:1728" answerConceptId="{concept}" labelText=""/>
+                                <ifMode mode="VIEW" include="true">
+                                    <lookup expression="fn.getConcept('{concept}').name"/>
+                                </ifMode>
+                                <ifMode mode="VIEW" include="false">
+                                    <obs conceptId="CIEL:1728" answerConceptId="{concept}" labelText=""/>
+                                </ifMode>
                             </td>
                             <td>
                                 <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066"
