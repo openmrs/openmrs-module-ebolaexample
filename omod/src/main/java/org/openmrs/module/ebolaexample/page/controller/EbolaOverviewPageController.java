@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -56,12 +55,12 @@ public class EbolaOverviewPageController {
         formParams.put("returnUrl", ui.thisUrl());
         // TODO breadcrumbOverride
 
-        Map<String, String> followupForms = new LinkedHashMap<String, String>();
-        followupForms.put("Add", ui.pageLink("htmlformentryui", "htmlform/enterHtmlFormWithStandardUi", formParams));
+        //Map<String, String> followupForms = new LinkedHashMap<String, String>();
+        //followupForms.put("Add", ui.pageLink("htmlformentryui", "htmlform/enterHtmlFormWithStandardUi", formParams));
 
         model.addAttribute("program", program);
         model.addAttribute("followupEncounterType", followupEncounterType);
-        model.addAttribute("followupForms", followupForms);
+        //model.addAttribute("followupForms", followupForms);
         model.addAttribute("patient", patientDomainWrapper);
         model.addAttribute("activeVisit", activeVisit);
 

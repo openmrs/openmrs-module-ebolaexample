@@ -4,6 +4,9 @@ import org.openmrs.Encounter;
 import org.openmrs.EncounterType;
 import org.openmrs.api.EncounterService;
 import org.openmrs.module.emrapi.patient.PatientDomainWrapper;
+import org.openmrs.module.webservices.rest.web.ConversionUtil;
+import org.openmrs.module.webservices.rest.web.representation.Representation;
+import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.annotation.FragmentParam;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.fragment.FragmentModel;
@@ -17,7 +20,9 @@ public class MostRecentEncounterFragmentController {
 
     public void controller(@FragmentParam("patient") PatientDomainWrapper patient,
                            @FragmentParam(value = "encounterType", required = false) EncounterType encounterType,
+                           @FragmentParam(value = "handlebarsTemplate", required = false) String handlebarsTemplate,
                            @SpringBean("encounterService") EncounterService encounterService,
+                           UiUtils ui,
                            FragmentModel model) {
 
         Collection<EncounterType> encounterTypes = encounterType == null ? null : Collections.singleton(encounterType);
@@ -35,6 +40,10 @@ public class MostRecentEncounterFragmentController {
             // TODO: switch on lastEncounter.getForm() to decide how to display
         }
         model.addAttribute("lastEncounter", lastEncounter);
+
+        if (handlebarsTemplate != null) {
+            model.addAttribute("lastEncounterJson", ui.toJson(ConversionUtil.convertToRepresentation(lastEncounter, Representation.FULL)));
+        }
     }
 
 }

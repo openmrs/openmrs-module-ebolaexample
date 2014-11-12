@@ -11,11 +11,13 @@
         </h3>
     </div>
 
-    <div class="info-body">
+    <div class="info-body" id="most-recent-encounter-info-body">
         <% if (lastEncounter) { %>
-
-            ${ ui.includeFragment("htmlformentryui", "htmlform/viewEncounterWithHtmlForm", [ encounter: lastEncounter ]) }
-
+            <% if (config.handlebarsTemplate) { %>
+                ...
+            <% } else { %>
+                ${ ui.includeFragment("htmlformentryui", "htmlform/viewEncounterWithHtmlForm", [ encounter: lastEncounter ]) }
+            <% } %>
         <% } else { %>
 
             ${ui.message("coreapps.none")}
@@ -23,3 +25,12 @@
         <% } %>
     </div>
 </div>
+
+<% if (config.handlebarsTemplate) { %>
+    <script type="text/javascript">
+        jq(function() {
+            var html = ${ config.handlebarsTemplate }(${ lastEncounterJson });
+            jq('#most-recent-encounter-info-body').html(html);
+        });
+    </script>
+<% } %>
