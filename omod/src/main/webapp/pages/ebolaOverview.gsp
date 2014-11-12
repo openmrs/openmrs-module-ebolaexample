@@ -54,8 +54,6 @@
 
 ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient, activeVisit: activeVisit, appContextModel: appContextModel ]) }
 
-<h2>${ ui.message("ebolaexample.ebolaOverview.title") }</h2>
-
 <div class="clear"></div>
 
 <div class="container">
@@ -63,7 +61,7 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient, a
         <div class="info-container column">
 
             ${ ui.includeFragment("ebolaexample", "overview/program",
-                    [ patient: patient, program: program ]) }
+                    [ patient: patient, program: program, title: ui.message("ebolaexample.ebolaOverview.title") ]) }
 
             ${ ui.includeFragment("ebolaexample", "overview/inpatientLocation",
                     [ patient: patient, activeVisit: activeVisit ]) }

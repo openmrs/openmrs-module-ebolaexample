@@ -1,0 +1,24 @@
+.center {
+  text-align: center;
+}
+
+button.selected {
+  background: yellow !important;
+}
+
+#next-screen, #prev-screen {
+  height: 200px;
+}
+
+#main-content {
+  min-height: 200px;
+}
+
+.display-value {
+  padding: 0px 5px;
+  font-size: 3em;
+  min-width: 250px;
+  min-height: 64px;
+  display: inline-block;
+  border: 1px lightgray solid;
+}

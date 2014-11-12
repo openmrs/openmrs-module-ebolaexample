@@ -26,6 +26,9 @@ public class EbolaDemoData extends AbstractMetadataBundle {
     public static class _Location {
         public static final String EBOLA_TREATMENT_UNIT = "c035d67e-5830-11e4-af12-660e112eb3f5";
 
+        public static final String TRIAGE = "e0e18fea-6860-11e4-9305-df58197607bd";
+        public static final String ASSESSMENT = "d4da0286-6860-11e4-9305-df58197607bd";
+
         public static final String INPATIENT_WARDS = "b6739628-5e82-11e4-9305-df58197607bd";
 
         public static final String SUSPECT_WARD_1 = "534fed82-5831-11e4-af12-660e112eb3f5";
@@ -47,32 +50,39 @@ public class EbolaDemoData extends AbstractMetadataBundle {
         List<String> tagsForRootLocation = Arrays.asList(
                 EbolaMetadata._LocationTag.VISIT_LOCATION
         );
+        List<String> tagsForTriage = Arrays.asList();
+        List<String> tagsForAssessment = Arrays.asList(
+                supportsAdmission,
+                AppFrameworkConstants.LOCATION_TAG_SUPPORTS_LOGIN_UUID
+        );
         List<String> tagsForInpatientRoot = Arrays.asList(
                 AppFrameworkConstants.LOCATION_TAG_SUPPORTS_LOGIN_UUID
         );
         List<String> tagsForSuspectWard = Arrays.asList(
-                supportsAdmission,
                 supportsTransfer,
                 EbolaMetadata._LocationTag.EBOLA_SUSPECT_WARD
         );
         List<String> tagsForConfirmedWard = Arrays.asList(
-                supportsAdmission,
                 supportsTransfer,
                 EbolaMetadata._LocationTag.EBOLA_CONFIRMED_WARD
         );
         List<String> tagsForRecoveryWard = Arrays.asList(
-                supportsAdmission,
                 supportsTransfer,
                 EbolaMetadata._LocationTag.EBOLA_RECOVERY_WARD
         );
         List<String> tagsForInpatientBed = Arrays.asList(
-                supportsAdmission,
                 supportsTransfer,
                 EbolaMetadata._LocationTag.INPATIENT_BED
         );
 
         install(location("Ebola Treatment Unit", "Top level demo location", _Location.EBOLA_TREATMENT_UNIT, null,
                 tagsForRootLocation));
+
+        install(location("Triage", "To determine if they should be admitted or sent home", _Location.TRIAGE, _Location.EBOLA_TREATMENT_UNIT,
+                tagsForTriage));
+
+        install(location("Assessment", "Patients admitted at triage are sent to this location to determine what ward to send them to", _Location.ASSESSMENT, _Location.EBOLA_TREATMENT_UNIT,
+                tagsForAssessment));
 
         install(location("Inpatient Wards", "Area within which all Inpatient Wards are contained", _Location.INPATIENT_WARDS, _Location.EBOLA_TREATMENT_UNIT,
                 tagsForInpatientRoot));
@@ -104,7 +114,8 @@ public class EbolaDemoData extends AbstractMetadataBundle {
 
     private void installBeds(String parentLocation, int numBeds, Collection<String> tags) {
         Location parent = MetadataUtils.existing(Location.class, parentLocation);
-        if (parent.getChildLocations() == null || parent.getChildLocations().size() == 0) {
+        List<Location> existingChildren = locationService.getLocations(null, parent, null, false, null, null);
+        if (existingChildren.size() == 0) {
             for (int i = 1; i <= numBeds; ++i) {
                 install(location("Bed #" + i, null, UUID.randomUUID().toString(), parentLocation, tags));
             }
