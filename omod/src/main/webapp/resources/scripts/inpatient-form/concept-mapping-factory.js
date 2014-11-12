@@ -155,8 +155,8 @@ module.factory("conceptMappingFactory", function() {
   function createFluidManagement(){
     var question = createQuestion("fluidManagement", "coded", "162653AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     var answerORS = createAnswer("ORS", "351AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    var answerIVMaintenance = createAnswer("IVMaintenance", "162650AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    var answerIVIORessucitate = createAnswer("IVIOResuscitate", "162651AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerIVMaintenance = createAnswer("IVMaintenance", "162651AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var answerIVIORessucitate = createAnswer("IVIOResuscitate", "162650AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     var answerJelly = createAnswer("jelly", "162649AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     var answerBloodTransfusion = createAnswer("bloodTransfusion", "1063AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     var answerFluidRestrict = createAnswer("fluidRestrict", "162652AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
