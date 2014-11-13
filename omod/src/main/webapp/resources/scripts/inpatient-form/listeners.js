@@ -10,7 +10,7 @@ $(function() {
       return;
     }
 
-    var scope = angular.element($("#simpleController")).scope();
+    var scope = angular.element($(this).parents("ng-include")).scope();
     var previousValue = $input.attr("check");
 
     if (previousValue === "true") {

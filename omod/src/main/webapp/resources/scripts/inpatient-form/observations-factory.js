@@ -23,7 +23,7 @@ module.factory("observationsFactory", function(conceptMappingFactory) {
         if (that.isBleeding(concept.type) && !(_.contains(modelQuestionValue, true))){
           return;
         }
-        
+
         var post = {};
 
         if (concept.id === modelQuestionKey) {
@@ -31,9 +31,9 @@ module.factory("observationsFactory", function(conceptMappingFactory) {
             post = that.createSymptomPost(symptom, concept, modelQuestionValue);
           } else if (that.isSymptom(concept.type)) {
             post = that.createSymptomPost(symptom, concept, modelQuestionValue);
-          } else if (that.isNonCode(concept.type) && modelQuestionValue) {
+          } else if (that.isNonCoded(concept.type) && modelQuestionValue) {
             post = that.createNonCodedPost(concept, modelQuestionValue);
-          } else if (that.isCode(concept.type)) {
+          } else if (that.isCoded(concept.type)) {
             post = that.createCodedPosts(concept, modelQuestionValue);
           }
 
@@ -98,11 +98,11 @@ module.factory("observationsFactory", function(conceptMappingFactory) {
     return type === "bleeding";
   };
 
-  this.isCode = function(type) {
+  this.isCoded = function(type) {
     return type === "coded";
   };
 
-  this.isNonCode = function(type) {
+  this.isNonCoded = function(type) {
     return type === "non-coded";
   };
 
