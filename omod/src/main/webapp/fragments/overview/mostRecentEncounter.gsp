@@ -15,8 +15,10 @@
         <% if (lastEncounter) { %>
             <% if (config.handlebarsTemplate) { %>
                 ...
-            <% } else { %>
+            <% } else if (encounter.form) { %>
                 ${ ui.includeFragment("htmlformentryui", "htmlform/viewEncounterWithHtmlForm", [ encounter: lastEncounter ]) }
+            <% } else { %>
+                Programming error: cannot display encounter because no form or template is provided
             <% } %>
         <% } else { %>
 
