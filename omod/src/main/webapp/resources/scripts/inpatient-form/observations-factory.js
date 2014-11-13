@@ -15,32 +15,12 @@ module.factory("observationsFactory", function(conceptMappingFactory) {
 
 
     angular.forEach(modelQuestions, function(modelQuestionValue, modelQuestionKey) {
-       if (!modelQuestionValue){
-        return;
-       }
       angular.forEach(conceptMappingFactory, function(concept) {
-
-        if (that.isBleeding(concept.type) && !(_.contains(modelQuestionValue, true))){
-          return;
-        }
-
-        var post = {};
-
         if (concept.id === modelQuestionKey) {
-          if (that.isBleeding(concept.type) && _.contains(modelQuestionValue, true)) {
-            post = that.createSymptomPost(symptom, concept, modelQuestionValue);
-          } else if (that.isSymptom(concept.type)) {
-            post = that.createSymptomPost(symptom, concept, modelQuestionValue);
-          } else if (that.isNonCoded(concept.type) && modelQuestionValue) {
-            post = that.createNonCodedPost(concept, modelQuestionValue);
-          } else if (that.isCoded(concept.type)) {
-            post = that.createCodedPosts(concept, modelQuestionValue);
-          }
-
+          var post = that.createPost(concept, modelQuestionValue, symptom);
           postList.push(post);
-          postList = _.flatten(postList);
+          postList = _.compact(_.flatten(postList));
         }
-
       });
 
     });
@@ -48,6 +28,17 @@ module.factory("observationsFactory", function(conceptMappingFactory) {
     return postList;
   }
 
+  this.createPost = function (concept, modelQuestionValue, symptom) {
+    if (that.isBleeding(concept.type) && _.contains(modelQuestionValue, true)) {
+      return that.createSymptomPost(symptom, concept, modelQuestionValue);
+    } else if (that.isSymptom(concept.type)) {
+      return that.createSymptomPost(symptom, concept, modelQuestionValue);
+    } else if (that.isNonCoded(concept.type) && modelQuestionValue) {
+      return that.createNonCodedPost(concept, modelQuestionValue);
+    } else if (that.isCoded(concept.type)) {
+      return that.createCodedPosts(concept, modelQuestionValue);
+    }
+  }
 
   this.createCodedPosts = function(concept, value) {
     var codedPostList = [];
