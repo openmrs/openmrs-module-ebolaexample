@@ -1,5 +1,7 @@
 $(function() {
 
+  screen.orientation.lock("portrait-primary");
+
   var IS_CHECKED = "is-checked";
 
   $(".ebola-form .section").on("click", ".radio-button", function(event) {
