@@ -32,6 +32,7 @@ public class EbolaTriagePostSubmissionActionTest {
     private EbolaTriagePostSubmissionAction ebolaTriagePostSubmissionAction;
     private Patient patient;
     private Visit activeVisit;
+    private VisitDomainWrapper visitDomainWrapper;
     private Encounter encounter;
     private Concept admitQuestion;
     private Concept yes;
@@ -66,8 +67,11 @@ public class EbolaTriagePostSubmissionActionTest {
 
         ebolaProgram = new Program();
 
+        visitDomainWrapper = mock(VisitDomainWrapper.class);
+        when(visitDomainWrapper.getVisit()).thenReturn(activeVisit);
+
         adtService = mock(AdtService.class);
-        when(adtService.getActiveVisit(patient, triage)).thenReturn(new VisitDomainWrapper(activeVisit));
+        when(adtService.getActiveVisit(patient, triage)).thenReturn(visitDomainWrapper);
 
         programWorkflowService = mock(ProgramWorkflowService.class);
     }
@@ -119,6 +123,17 @@ public class EbolaTriagePostSubmissionActionTest {
 
         ebolaTriagePostSubmissionAction.doApplyAction(encounter, admitQuestion, yes, no, adtService, assessment, ebolaProgram, programWorkflowService);
         verify(programWorkflowService, never()).savePatientProgram(any(PatientProgram.class));
+    }
+
+    @Test
+    public void testDoesNotAdmitWhenAlreadyAdmitted() throws Exception {
+        Obs admit = new Obs(patient, admitQuestion, new Date(), triage);
+        admit.setValueCoded(yes);
+        encounter.addObs(admit);
+        when(visitDomainWrapper.isAdmitted()).thenReturn(true);
+
+        ebolaTriagePostSubmissionAction.doApplyAction(encounter, admitQuestion, yes, no, adtService, assessment, ebolaProgram, programWorkflowService);
+        verify(adtService, never()).createAdtEncounterFor(any(AdtAction.class));
     }
 
     private ArgumentMatcher<PatientProgram> enrollsPatientInEbolaProgram() {

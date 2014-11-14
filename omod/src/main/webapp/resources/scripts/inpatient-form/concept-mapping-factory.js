@@ -19,9 +19,13 @@ module.factory("conceptMappingFactory", function() {
     return answer;
   }
 
-  var answerYes = createAnswer(true, "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-  var answerNo = createAnswer(false, "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+  var answerYes = createAnswer("yes", "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+  var answerNo = createAnswer("no", "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+  var answerTrue = createAnswer(true, "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+  var answerFalse = createAnswer(false, "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
   var answerUnknown = createAnswer("unknown", "1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+
+  var booleanAnswers = [answerYes, answerNo, answerTrue, answerFalse, answerUnknown];
 
   function createCurrentConsciousness() {
     var question = createQuestion("currentConsciousness", "coded", "162643AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
@@ -219,75 +223,75 @@ module.factory("conceptMappingFactory", function() {
 
   function createHeadache() {
     var question = createQuestion("headache", "symptom", "139084AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    question.answers = [answerYes, answerNo, answerUnknown];
+    question.answers = booleanAnswers;
     return question;
   }
 
   //don't use Join/Muscle Pain
   function createMusclePain() {
     var question = createQuestion("musclePain", "symptom", "133632AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    question.answers = [answerYes, answerNo, answerUnknown];
+    question.answers = booleanAnswers;
     return question;
   }
 
   function createUrinePain() {
     var question = createQuestion("urinePain", "symptom", "118771AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    question.answers = [answerYes, answerNo, answerUnknown];
+    question.answers = booleanAnswers;
     return question;
   }
 
   function createAbdominalPain() {
     var question = createQuestion("abdominalPain", "symptom", "151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    question.answers = [answerYes, answerNo, answerUnknown];
+    question.answers = booleanAnswers;
     return question;
   }
 
   //there is no concept id for this one
   function createUnableToEat() {
     var question = createQuestion("unableToEat", "symptom", "??????AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    question.answers = [answerYes, answerNo, answerUnknown];
+    question.answers = booleanAnswers;
     return question;
   }
 
   function createUnableToDrink() {
     var question = createQuestion("unableToDrink", "symptom", "1983AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    question.answers = [answerYes, answerNo, answerUnknown];
+    question.answers = booleanAnswers;
     return question;
   }
 
   function createDifficultToSwallow() {
     var question = createQuestion("difficultToSwallow", "symptom", "118789AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    question.answers = [answerYes, answerNo, answerUnknown];
+    question.answers = booleanAnswers;
     return question;
   }
 
   function createDifficultToBreathe() {
     var question = createQuestion("difficultToBreathe", "symptom", "122496AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    question.answers = [answerYes, answerNo, answerUnknown];
+    question.answers = booleanAnswers;
     return question;
   }
 
   function createRash() {
     var question = createQuestion("rash", "symptom", "512AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    question.answers = [answerYes, answerNo, answerUnknown];
+    question.answers = booleanAnswers;
     return question;
   }
 
   function createHiccups() {
     var question = createQuestion("hiccups", "symptom", "138662AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    question.answers = [answerYes, answerNo, answerUnknown];
+    question.answers = booleanAnswers;
     return question;
   }
 
   function createCough() {
     var question = createQuestion("cough", "symptom", "104224AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    question.answers = [answerYes, answerNo, answerUnknown];
+    question.answers = booleanAnswers;
     return question;
   }
 
   function createBleedingFirstQuestion() {
     var question = createQuestion("bleeding", "bleeding", "147241AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    question.answers = [answerYes, answerNo, answerUnknown];
+    question.answers = booleanAnswers;
     return question;
   }
 

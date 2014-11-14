@@ -76,8 +76,10 @@ public class EbolaTriagePostSubmissionAction implements CustomFormSubmissionActi
 
     private void admit(AdtService adtService, Encounter encounter, Location toLocation) {
         VisitDomainWrapper activeVisit = adtService.getActiveVisit(encounter.getPatient(), encounter.getLocation());
-        AdtAction adtAction = new AdtAction(activeVisit.getVisit(), toLocation, encounter.getProvidersByRoles(), AdtAction.Type.ADMISSION);
-        adtService.createAdtEncounterFor(adtAction);
+        if (!activeVisit.isAdmitted()) {
+            AdtAction adtAction = new AdtAction(activeVisit.getVisit(), toLocation, encounter.getProvidersByRoles(), AdtAction.Type.ADMISSION);
+            adtService.createAdtEncounterFor(adtAction);
+        }
     }
 
     private void closeVisit(AdtService adtService, Patient patient, Location encounterLocation) {

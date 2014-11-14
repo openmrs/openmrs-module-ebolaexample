@@ -103,7 +103,7 @@ public class EbolaExampleActivator extends BaseModuleActivator {
         try {
             ResourceFactory resourceFactory = ResourceFactory.getInstance();
             List<String> htmlforms = Arrays.asList(
-                    "ebolaexample:htmlforms/signsAndSymptoms.xml"
+                    "ebolaexample:htmlforms/triage.xml"
             );
 
             for (String htmlform : htmlforms) {

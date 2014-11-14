@@ -1,39 +1,59 @@
 $(function() {
 
+  document.onfullscreenchange = function() {
+      screen.orientation.lock("portrait-primary");
+  }
+
+   document.documentElement.webkitRequestFullscreen();
+
+  var IS_CHECKED = "is-checked";
 
   $(".ebola-form .section").on("click", ".radio-button", function(event) {
-    var $input = $("#" + $(this).attr("for"));
-    var $inputList = $("input[name='"+$input.attr("name")+"']");
-    var type = $input.attr("type");
 
-    if (type !== "radio") {
-      return;
+    var scope = getScopeFromLabel($(this));
+    var input = $("#" + $(this).attr("for"));
+    var inputList = $("input[name='" + input.attr("name") + "']");
+
+    if (isRadio(input)) {
+      toggleRadio(input, scope, inputList);
     }
-
-    var scope = angular.element($("#simpleController")).scope();
-    var previousValue = $input.attr("check");
-
-    if (previousValue === "true") {
-      $input.prop("checked", false);
-      $input.attr("check", false);
-
-      scope.$apply(function() {
-        scope.viewModel[$input.attr("name")] = "";
-      });
-
-      event.preventDefault();
-    } else {
-      $inputList.attr("check", false); //make everything unchecked
-      $input.attr("check", true);
-      scope.$apply(function() {
-        scope.viewModel[$input.attr("name")] = $input.val();
-      });
-    }
-
-   console.log(scope.viewModel);
-
-    event.stopPropagation();
 
   });
+
+  function toggleRadio(input, scope, inputList) {
+    if (input.attr(IS_CHECKED) === "true") {
+      uncheckRadio(input, scope, event);
+    } else {
+      checkRadio(inputList, input, scope);
+    }
+  }
+
+
+  function getScopeFromLabel(label) {
+    return angular.element(label.parents("ng-include")).scope();
+  }
+
+  function isRadio(input) {
+    return input.attr("type") === "radio";
+  }
+
+  function uncheckRadio(input, scope, event) {
+    input.prop("checked", false);
+    input.attr(IS_CHECKED, false);
+
+    scope.$apply(function() {
+      scope.viewModel[input.attr("name")] = "";
+    });
+
+    event.preventDefault();
+  }
+
+  function checkRadio(inputList, input, scope) {
+    inputList.attr(IS_CHECKED, false); //make all radios unchecked
+    input.attr(IS_CHECKED, true);
+    scope.$apply(function() {
+      scope.viewModel[input.attr("name")] = input.val();
+    });
+  }
 
 });
