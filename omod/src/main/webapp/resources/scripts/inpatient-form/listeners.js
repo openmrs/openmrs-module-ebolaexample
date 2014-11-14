@@ -1,6 +1,10 @@
 $(function() {
 
-  screen.orientation.lock("portrait-primary");
+  document.onfullscreenchange = function() {
+      screen.orientation.lock("portrait-primary");
+  }
+
+   document.documentElement.webkitRequestFullscreen();
 
   var IS_CHECKED = "is-checked";
 
