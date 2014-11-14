@@ -9,7 +9,7 @@
                 "id": "ebolaexample.registrationapp.registerPatient.homepageLink",
                 "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
                 "type": "link",
-                "label": "referenceapplication.app.registerPatient.label",
+                "label": "ebolaexample.app.registerPatient.label",
                 "url": "registrationapp/registerPatient.page?appId=ebolaexample.registrationapp.registerPatient",
                 "icon": "icon-user",
                 "order": 1,
@@ -33,23 +33,6 @@
                                         "providerName": "uicommons",
                                         "fragmentId": "field/personAddress"
                                     }
-                                }
-                            ]
-                        },
-                        {
-                            "legend": "registrationapp.patient.phone.label",
-                            "id": "phoneNumberLabel",
-                            "fields": [
-                                {
-                                    "type": "personAttribute",
-                                    "label": "registrationapp.patient.phone.question",
-                                    "formFieldName": "phoneNumber",
-                                    "uuid": "14d4f066-15f5-102d-96e4-000c29c2a5d7",
-                                    "widget": {
-                                        "providerName": "uicommons",
-                                        "fragmentId": "field/text"
-                                    },
-                                    "cssClasses": ["number"]
                                 }
                             ]
                         }
