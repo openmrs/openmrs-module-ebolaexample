@@ -1,8 +1,6 @@
 <htmlform formUuid="787608c8-512d-44fe-b793-fe54b660987a" formName="Ebola Triage"
           formEncounterType="4a8da825-2896-4f3f-be07-2c3d9214c040" formVersion="2.0">
 
-    <h1>Triage</h1>
-
     <div class="hidden" id="encounter-details" sectionTag="section" headerStyle="title" headerLabel="Encounter Details">
         <fieldset>
             <legend>When?</legend>
@@ -28,29 +26,27 @@
     <section id="symptomAndCaseDef" sectionTag="section" headerStyle="title" headerCode="Symptom and case definition">
         <fieldset>
             <legend>1</legend>
-            <h3>1. Sudden onset of a high fever?</h3>
 
             <p class="left">
+                <label>1. Sudden onset of a high fever?</label>
                 <obsgroup groupingConceptId="CIEL:1727">
+                    <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
+                         answerLabels="yes,no,unknown" size="3"/>
                     <span class="symptom">
                         <!-- TBD:  Need sudden fever, not fever -->
                         <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:140238"/>
                     </span>
-                    <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
-                         answerLabels="yes,no,unknown"/>
                 </obsgroup>
             </p>
-
         </fieldset>
 
 
         <fieldset>
             <legend>2</legend>
-            <h3>2. Contact with a suspect/probable/known Ebola case?</h3>
-
             <p class="left">
+                <label>2. Contact with a suspect/probable/known Ebola case?</label>
                 <obs conceptId="CIEL:162633" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
-                     answerLabels="yes,no,unknown"/>
+                     answerLabels="yes,no,unknown" size="3"/>
             </p>
 
         </fieldset>
@@ -58,15 +54,15 @@
 
         <fieldset>
             <legend>3</legend>
-            <h3>3. Inexplicable bleeding?</h3>
 
             <p class="left">
+                <label>3. Inexplicable bleeding?</label>
                 <obsgroup groupingConceptId="CIEL:1727">
+                    <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
+                         answerLabels="yes,no,unknown" size="3"/>
                     <span class="symptom">
                         <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:162628"/>
                     </span>
-                    <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
-                         answerLabels="yes,no,unknown"/>
                 </obsgroup>
             </p>
 
@@ -74,44 +70,45 @@
 
         <fieldset>
             <legend>4</legend>
-            <h3>4. Any of the following symptoms (check all that apply)?</h3>
 
-            <table>
-                <repeat>
-                    <template>
-                        <obsgroup groupingConceptId="CIEL:1727">
-                            <tr>
-                                <td class="symptom">
-                                    <ifMode mode="VIEW" include="true">
-                                        <lookup expression="fn.getConcept('{concept}').name"/>
-                                    </ifMode>
-                                    <ifMode mode="VIEW" include="false">
-                                        <obs conceptId="CIEL:1728" answerConceptId="{concept}" labelText=""/>
-                                    </ifMode>
-                                </td>
-                                <td>
-                                    <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066"
-                                         answerLabels="yes,no"/>
-                                </td>
-                            </tr>
-                        </obsgroup>
-                    </template>
-                    <render concept="CIEL:139084" labelText="Headache"/>
-                    <render concept="CIEL:135595" labelText="Loss of appetite"/>
-                    <render concept="CIEL:116334" labelText="Lethargy"/>
-                    <render concept="CIEL:140501" labelText="Fatigue"/>
-                    <render concept="CIEL:133632" labelText="Muscle pain"/>
-                    <render concept="CIEL:80" labelText="Joint pain"/>
-                    <render concept="CIEL:122496" labelText="Difficult to breathe"/>
+            <p>
+                <label>4. Any of the following symptoms (check all that apply)?</label>
+                <table>
+                    <repeat>
+                        <template>
+                            <obsgroup groupingConceptId="CIEL:1727">
+                                <tr>
+                                    <td class="symptom">
+                                        <ifMode mode="VIEW" include="true">
+                                            <lookup expression="fn.getConcept('{concept}').name"/>
+                                        </ifMode>
+                                        <ifMode mode="VIEW" include="false">
+                                            <obs conceptId="CIEL:1728" answerConceptId="{concept}" labelText=""/>
+                                        </ifMode>
+                                    </td>
+                                    <td>
+                                        <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066"
+                                             answerLabels="yes,no"/>
+                                    </td>
+                                </tr>
+                            </obsgroup>
+                        </template>
+                        <render concept="CIEL:139084" labelText="Headache"/>
+                        <render concept="CIEL:135595" labelText="Loss of appetite"/>
+                        <render concept="CIEL:116334" labelText="Lethargy"/>
+                        <render concept="CIEL:140501" labelText="Fatigue"/>
+                        <render concept="CIEL:133632" labelText="Muscle pain"/>
+                        <render concept="CIEL:80" labelText="Joint pain"/>
+                        <render concept="CIEL:122496" labelText="Difficult to breathe"/>
 
-                    <render concept="CIEL:122983" labelText="Vomiting"/>
-                    <render concept="CIEL:142412" labelText="Diarrhea"/>
-                    <render concept="CIEL:151" labelText="Abdominal pain"/>
-                    <render concept="CIEL:118789" labelText="Difficult to swallow"/>
-                    <render concept="CIEL:138662" labelText="Hiccups"/>
-                </repeat>
-            </table>
-
+                        <render concept="CIEL:122983" labelText="Vomiting"/>
+                        <render concept="CIEL:142412" labelText="Diarrhea"/>
+                        <render concept="CIEL:151" labelText="Abdominal pain"/>
+                        <render concept="CIEL:118789" labelText="Difficult to swallow"/>
+                        <render concept="CIEL:138662" labelText="Hiccups"/>
+                    </repeat>
+                </table>
+            </p>
         </fieldset>
 
 
@@ -137,14 +134,11 @@
     </section>
 
 
-    <section id="additionalInfo" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="Additional information">
-
+    <section id="additionalInfo" sectionTag="section" headerStyle="title" headerCode="Additional information">
         <fieldset>
             <legend>Infant</legend>
-            <h3>Is estimated age under 12 months (1 year)?</h3>
             <p>
-                <label>Currently breastfed?</label>
+                <label>If estimated age is under 12 months (1 year): Currently breastfed?</label>
                 <obs conceptId="CIEL:5632" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
                      answerLabels="yes,no,unknown"/>
             </p>
@@ -152,13 +146,6 @@
     </section>
 
     <ifMode mode="VIEW" include="false">
-        <div id="buttons">
-            <submit submitClass="confirm right"/>
-            <button type="button" class="cancel">
-                <uimessage code="general.cancel"/>
-            </button>
-        </div>
-
         <script type="text/javascript">
             jQuery(function() {
             jQuery('.symptom input[type=checkbox]').prop('checked', true).hide();
