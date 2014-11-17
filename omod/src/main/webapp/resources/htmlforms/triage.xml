@@ -21,8 +21,7 @@
         <fieldset>
             <legend>Where?</legend>
             <label>Where?</label>
-
-            <encounterLocation default="SessionAttribute:emrContext.sessionLocationId"/>
+            <encounterLocation default="e0e18fea-6860-11e4-9305-df58197607bd"/>
         </fieldset>
     </div>
 
