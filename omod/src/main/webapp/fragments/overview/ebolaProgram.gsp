@@ -1,5 +1,5 @@
 <%
-    def triageEntryLink = ui.pageLink("htmlformentryui", "htmlform/enterHtmlFormWithStandardUi", [
+    def triageEntryLink = ui.pageLink("htmlformentryui", "htmlform/enterHtmlFormWithSimpleUi", [
             patientId: patient.patient.uuid,
             visitId: activeVisit?.visit?.uuid,
             definitionUiResource: "ebolaexample:htmlforms/triage.xml",
