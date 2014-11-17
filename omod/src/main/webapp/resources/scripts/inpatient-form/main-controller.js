@@ -49,6 +49,9 @@ module.controller('MainController', function ($scope, observationsFactory, $http
                 return id.preferred;
             });
             $scope.patient.identifier = patientId[0].identifier;
+            $scope.patient.name = result.person.preferredName.display;
+            $scope.patient.gender = result.person.gender;
+            $scope.patient.age = result.person.age;
         });
     }
 

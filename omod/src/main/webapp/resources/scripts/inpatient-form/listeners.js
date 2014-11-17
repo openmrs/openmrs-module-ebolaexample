@@ -1,11 +1,5 @@
 $(function() {
 
-  document.onfullscreenchange = function() {
-      screen.orientation.lock("portrait-primary");
-  }
-
-   document.documentElement.webkitRequestFullscreen();
-
   var IS_CHECKED = "is-checked";
 
   $(".ebola-form .section").on("click", ".radio-button", function(event) {
