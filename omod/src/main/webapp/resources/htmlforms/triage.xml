@@ -3,158 +3,166 @@
 
     <h1>Triage</h1>
 
-    <table>
-        <tr>
-            <td>
-                <p>
-                    <label>Date</label>
-                    (automatic timestamp)
-                    <span style="display: none">
-                        <encounterDate showTime="true" default="now"/>
+    <div class="hidden" id="encounter-details" sectionTag="section" headerStyle="title" headerLabel="Encounter Details">
+        <fieldset>
+            <legend>When?</legend>
+            <label>When?</label>
+
+            <encounterDate default="now" showTime="false"/>
+        </fieldset>
+
+        <fieldset>
+            <legend>Who?</legend>
+            <label>Who?</label>
+
+            <encounterProvider default="currentUser" required="true"/>
+        </fieldset>
+
+        <fieldset>
+            <legend>Where?</legend>
+            <label>Where?</label>
+
+            <encounterLocation default="SessionAttribute:emrContext.sessionLocationId"/>
+        </fieldset>
+    </div>
+
+    <section id="symptomAndCaseDef" sectionTag="section" headerStyle="title" headerCode="Symptom and case definition">
+        <fieldset>
+            <legend>1</legend>
+            <h3>1. Sudden onset of a high fever?</h3>
+
+            <p class="left">
+                <obsgroup groupingConceptId="CIEL:1727">
+                    <span class="symptom">
+                        <!-- TBD:  Need sudden fever, not fever -->
+                        <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:140238"/>
                     </span>
-                </p>
-            </td>
-            <td>
-                <p>
-                    <label>Location</label>
-                    <encounterLocation default="e0e18fea-6860-11e4-9305-df58197607bd"/>
-                </p>
-            </td>
-            <td>
-                <p>
-                    <label>Provider</label>
-                    <encounterProvider default="currentUser" required="true"/>
-                </p>
-            </td>
-        </tr>
-    </table>
+                    <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
+                         answerLabels="yes,no,unknown"/>
+                </obsgroup>
+            </p>
 
-    <section id="symptomAndCaseDef" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="Symptom and case definition">
+        </fieldset>
 
-        <p>
-            <label>1. Sudden onset of a high fever?</label>
-            <!-- TBD:  Need sudden fever, not fever -->
-            <obsgroup groupingConceptId="CIEL:1727">
-                <span class="symptom">
-                    <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:140238"/>
-                </span>
-                <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
+
+        <fieldset>
+            <legend>2</legend>
+            <h3>2. Contact with a suspect/probable/known Ebola case?</h3>
+
+            <p class="left">
+                <obs conceptId="CIEL:162633" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
                      answerLabels="yes,no,unknown"/>
-            </obsgroup>
-        </p>
+            </p>
 
-        <p>
-            <label>2. Contact with a suspect/probable/known Ebola case?</label>
-            <obsgroup groupingConceptId="CIEL:1727">
-                <span class="symptom">
-                    <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:162633"/>
-                </span>
-                <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
-                     answerLabels="yes,no,unknown"/>
-            </obsgroup>
-        </p>
+        </fieldset>
 
-        <p>
-            <label>3. Inexplicable bleeding?</label>
-            <obsgroup groupingConceptId="CIEL:1727">
-                <span class="symptom">
-                    <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:162628"/>
-                </span>
-                <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
-                     answerLabels="yes,no,unknown"/>
-            </obsgroup>
-        </p>
 
-        <p>
-            <label>4. Any of the following symptoms (check all that apply)?</label>
-        </p>
+        <fieldset>
+            <legend>3</legend>
+            <h3>3. Inexplicable bleeding?</h3>
 
-        <table>
-            <repeat>
-                <template>
-                    <obsgroup groupingConceptId="CIEL:1727">
-                        <tr>
-                            <td class="symptom">
-                                <ifMode mode="VIEW" include="true">
-                                    <lookup expression="fn.getConcept('{concept}').name"/>
-                                </ifMode>
-                                <ifMode mode="VIEW" include="false">
-                                    <obs conceptId="CIEL:1728" answerConceptId="{concept}" labelText=""/>
-                                </ifMode>
-                            </td>
-                            <td>
-                                <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066"
-                                     answerLabels="yes,no"/>
-                            </td>
-                        </tr>
-                    </obsgroup>
-                </template>
-                <render concept="CIEL:139084" labelText="Headache"/>
-                <render concept="CIEL:135595" labelText="Loss of appetite"/>
-                <render concept="CIEL:116334" labelText="Lethargy"/>
-                <render concept="CIEL:140501" labelText="Fatigue"/>
-                <render concept="CIEL:133632" labelText="Muscle pain"/>
-                <render concept="CIEL:80" labelText="Joint pain"/>
-                <render concept="CIEL:122496" labelText="Difficult to breathe"/>
+            <p class="left">
+                <obsgroup groupingConceptId="CIEL:1727">
+                    <span class="symptom">
+                        <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:162628"/>
+                    </span>
+                    <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
+                         answerLabels="yes,no,unknown"/>
+                </obsgroup>
+            </p>
 
-                <render concept="CIEL:122983" labelText="Vomiting"/>
-                <render concept="CIEL:142412" labelText="Diarrhea"/>
-                <render concept="CIEL:151" labelText="Abdominal pain"/>
-                <render concept="CIEL:118789" labelText="Difficult to swallow"/>
-                <render concept="CIEL:138662" labelText="Hiccups"/>
-            </repeat>
-        </table>
+        </fieldset>
 
-        <p>
-            Case definition met if yes for
-            <b>#1 &amp; #2</b>
-            OR
-            <b>#3</b>
-            OR
-            <b>#1 &amp; three from #4</b>
-        </p>
+        <fieldset>
+            <legend>4</legend>
+            <h3>4. Any of the following symptoms (check all that apply)?</h3>
 
-        <p>
-            <label>Does the patient meet the case definition?</label>
-            <obs conceptId="CIEL:162620" answerConceptIds="CIEL:1065,CIEL:1066"
-                 answerLabels="Yes - admit to ETU,No - patient leaves ETU"/>
-        </p>
+            <table>
+                <repeat>
+                    <template>
+                        <obsgroup groupingConceptId="CIEL:1727">
+                            <tr>
+                                <td class="symptom">
+                                    <ifMode mode="VIEW" include="true">
+                                        <lookup expression="fn.getConcept('{concept}').name"/>
+                                    </ifMode>
+                                    <ifMode mode="VIEW" include="false">
+                                        <obs conceptId="CIEL:1728" answerConceptId="{concept}" labelText=""/>
+                                    </ifMode>
+                                </td>
+                                <td>
+                                    <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066"
+                                         answerLabels="yes,no"/>
+                                </td>
+                            </tr>
+                        </obsgroup>
+                    </template>
+                    <render concept="CIEL:139084" labelText="Headache"/>
+                    <render concept="CIEL:135595" labelText="Loss of appetite"/>
+                    <render concept="CIEL:116334" labelText="Lethargy"/>
+                    <render concept="CIEL:140501" labelText="Fatigue"/>
+                    <render concept="CIEL:133632" labelText="Muscle pain"/>
+                    <render concept="CIEL:80" labelText="Joint pain"/>
+                    <render concept="CIEL:122496" labelText="Difficult to breathe"/>
 
+                    <render concept="CIEL:122983" labelText="Vomiting"/>
+                    <render concept="CIEL:142412" labelText="Diarrhea"/>
+                    <render concept="CIEL:151" labelText="Abdominal pain"/>
+                    <render concept="CIEL:118789" labelText="Difficult to swallow"/>
+                    <render concept="CIEL:138662" labelText="Hiccups"/>
+                </repeat>
+            </table>
+
+        </fieldset>
+
+
+        <fieldset>
+            <legend>Case definition</legend>
+            <h3>
+                Case definition met if yes for
+                <b>#1 &amp; #2</b>
+                OR
+                <b>#3</b>
+                OR
+                <b>#1 &amp; three from #4</b>
+            </h3>
+
+            <p class="left">
+                <label>Does the patient meet the case definition?</label>
+                <obs conceptId="CIEL:162620" answerConceptIds="CIEL:1065,CIEL:1066"
+                     answerLabels="Yes - admit to ETU,No - patient leaves ETU"/>
+            </p>
+        </fieldset>
         <postSubmissionAction class="org.openmrs.module.ebolaexample.htmlformentry.EbolaTriagePostSubmissionAction"/>
 
     </section>
 
-    <p></p>
 
     <section id="additionalInfo" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Additional information">
 
-        <p>
-            <label>Can patient eat?</label>
-            <!-- TBD obs conceptId="CIEL:" /> -->
-        </p>
-
-        <p>
-            <label>If estimated age is under 12 months (1 year):</label>
-        </p>
-
-        <p>
-            <label>Currently breastfed?</label>
-            <obs conceptId="CIEL:5632" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
-                 answerLabels="yes,no,unknown"/>
-        </p>
+        <fieldset>
+            <legend>Infant</legend>
+            <h3>Is estimated age under 12 months (1 year)?</h3>
+            <p>
+                <label>Currently breastfed?</label>
+                <obs conceptId="CIEL:5632" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
+                     answerLabels="yes,no,unknown"/>
+            </p>
+        </fieldset>
     </section>
 
     <ifMode mode="VIEW" include="false">
         <div id="buttons">
             <submit submitClass="confirm right"/>
-            <button type="button" class="cancel"><uimessage code="general.cancel"/></button>
+            <button type="button" class="cancel">
+                <uimessage code="general.cancel"/>
+            </button>
         </div>
 
         <script type="text/javascript">
             jQuery(function() {
-                jQuery('.symptom input[type=checkbox]').prop('checked', true).hide();
+            jQuery('.symptom input[type=checkbox]').prop('checked', true).hide();
             });
         </script>
     </ifMode>
