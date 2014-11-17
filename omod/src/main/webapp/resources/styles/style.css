@@ -71,7 +71,7 @@ header {
 	padding: 0.3em;
 	color: #ffcc00;
 	font-family: "OpenSansBold";
-	font-size: 2.8em;
+	font-size: 2.5em;
 	overflow: hidden;
 }
 
@@ -141,11 +141,12 @@ em {
 
 .patient-id {
 	float: left;
+	margin-right: 0.5em;
 }
 
 .patient-info {
 	float: right;
-	margin-right: 1em;
+	margin-left: 0.5em;
 }
 
 .one-column {
