@@ -25,7 +25,7 @@
 
     <section id="symptomAndCaseDef" sectionTag="section" headerStyle="title" headerCode="Symptom and case definition">
         <fieldset>
-            <legend>1</legend>
+            <legend>1: Fever</legend>
 
             <p class="left">
                 <label>1. Sudden onset of a high fever?</label>
@@ -42,7 +42,7 @@
 
 
         <fieldset>
-            <legend>2</legend>
+            <legend>2: Contact</legend>
             <p class="left">
                 <label>2. Contact with a suspect/probable/known Ebola case?</label>
                 <obs conceptId="CIEL:162633" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
@@ -53,7 +53,7 @@
 
 
         <fieldset>
-            <legend>3</legend>
+            <legend>3: Bleeding</legend>
 
             <p class="left">
                 <label>3. Inexplicable bleeding?</label>
@@ -69,45 +69,73 @@
         </fieldset>
 
         <fieldset>
-            <legend>4</legend>
+            <legend>4: Symptoms</legend>
 
             <p>
-                <label>4. Any of the following symptoms (check all that apply)?</label>
-                <table>
-                    <repeat>
-                        <template>
-                            <obsgroup groupingConceptId="CIEL:1727">
-                                <tr>
-                                    <td class="symptom">
-                                        <ifMode mode="VIEW" include="true">
-                                            <lookup expression="fn.getConcept('{concept}').name"/>
-                                        </ifMode>
-                                        <ifMode mode="VIEW" include="false">
-                                            <obs conceptId="CIEL:1728" answerConceptId="{concept}" labelText=""/>
-                                        </ifMode>
-                                    </td>
-                                    <td>
-                                        <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066"
-                                             answerLabels="yes,no"/>
-                                    </td>
-                                </tr>
-                            </obsgroup>
-                        </template>
-                        <render concept="CIEL:139084" labelText="Headache"/>
-                        <render concept="CIEL:135595" labelText="Loss of appetite"/>
-                        <render concept="CIEL:116334" labelText="Lethargy"/>
-                        <render concept="CIEL:140501" labelText="Fatigue"/>
-                        <render concept="CIEL:133632" labelText="Muscle pain"/>
-                        <render concept="CIEL:80" labelText="Joint pain"/>
-                        <render concept="CIEL:122496" labelText="Difficult to breathe"/>
+                <label>4a. Any of the following symptoms (check all that apply)?</label>
+                <repeat>
+                    <template>
+                        <obsgroup groupingConceptId="CIEL:1727">
+                            <ifMode mode="VIEW" include="true">
+                                <lookup expression="fn.getConcept('{concept}').name"/>
+                            </ifMode>
+                            <ifMode mode="VIEW" include="false">
+                                <obs conceptId="CIEL:1728" answerConceptId="{concept}" labelText=""/>
+                            </ifMode>
+                            <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066"
+                                 answerLabels="yes,no" size="2" />
+                        </obsgroup>
+                    </template>
+                    <render concept="CIEL:139084" labelText="Headache"/>
+                    <render concept="CIEL:135595" labelText="Loss of appetite"/>
+                    <render concept="CIEL:116334" labelText="Lethargy"/>
+                    <render concept="CIEL:140501" labelText="Fatigue"/>
+                </repeat>
+            </p>
 
-                        <render concept="CIEL:122983" labelText="Vomiting"/>
-                        <render concept="CIEL:142412" labelText="Diarrhea"/>
-                        <render concept="CIEL:151" labelText="Abdominal pain"/>
-                        <render concept="CIEL:118789" labelText="Difficult to swallow"/>
-                        <render concept="CIEL:138662" labelText="Hiccups"/>
-                    </repeat>
-                </table>
+            <p>
+                <label>4b. Any of the following symptoms (check all that apply)?</label>
+                <repeat>
+                    <template>
+                        <obsgroup groupingConceptId="CIEL:1727">
+                            <ifMode mode="VIEW" include="true">
+                                <lookup expression="fn.getConcept('{concept}').name"/>
+                            </ifMode>
+                            <ifMode mode="VIEW" include="false">
+                                <obs conceptId="CIEL:1728" answerConceptId="{concept}" labelText=""/>
+                            </ifMode>
+                            <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066"
+                                 answerLabels="yes,no" size="2" />
+                        </obsgroup>
+                    </template>
+                    <render concept="CIEL:133632" labelText="Muscle pain"/>
+                    <render concept="CIEL:80" labelText="Joint pain"/>
+                    <render concept="CIEL:122496" labelText="Difficult to breathe"/>
+                </repeat>
+            </p>
+
+
+            <p>
+                <label>4c. Any of the following symptoms (check all that apply)?</label>
+                <repeat>
+                    <template>
+                        <obsgroup groupingConceptId="CIEL:1727">
+                            <ifMode mode="VIEW" include="true">
+                                <lookup expression="fn.getConcept('{concept}').name"/>
+                            </ifMode>
+                            <ifMode mode="VIEW" include="false">
+                                <obs conceptId="CIEL:1728" answerConceptId="{concept}" labelText=""/>
+                            </ifMode>
+                            <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066"
+                                 answerLabels="yes,no" size="2" />
+                        </obsgroup>
+                    </template>
+                    <render concept="CIEL:122983" labelText="Vomiting"/>
+                    <render concept="CIEL:142412" labelText="Diarrhea"/>
+                    <render concept="CIEL:151" labelText="Abdominal pain"/>
+                    <render concept="CIEL:118789" labelText="Difficult to swallow"/>
+                    <render concept="CIEL:138662" labelText="Hiccups"/>
+                </repeat>
             </p>
         </fieldset>
 
