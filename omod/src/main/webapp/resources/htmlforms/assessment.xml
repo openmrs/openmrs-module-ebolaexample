@@ -1,0 +1,263 @@
+<htmlform formUuid="230af74f-f1b5-4e43-ae6a-27208ed46540" formName="Ebola Assessment"
+          formEncounterType="181820aa-88c9-479b-9077-af92f5364329" formVersion="2.0">
+
+    <table>
+        <tr>
+            <td>
+                <p>
+                    <label>Date</label>
+                    (automatic timestamp)
+                    <span style="display: none">
+                        <encounterDate showTime="true" default="now"/>
+                    </span>
+                </p>
+            </td>
+            <td>
+                <p>
+                    <label>Location</label>
+                    <encounterLocation default="SessionAttribute:emrContext.sessionLocationId"/>
+                </p>
+            </td>
+            <td>
+                <p>
+                    <label>Provider</label>
+                    <encounterProvider default="currentUser" required="true"/>
+                </p>
+            </td>
+        </tr>
+    </table>
+
+    <section id="obs" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="Observations">
+
+        <p>
+            <label>Consciousness</label>
+            <obs conceptId="CIEL:162643" answerConceptIds="CIEL:160282,CIEL:162645,162644,CIEL:159508"
+                 answerLabels="A,V,P,U"/>
+        </p>
+
+        <p>
+            <label>Temperature</label>
+            <span class="small">
+                <obs conceptId="CIEL:5088" showUnits="emr.units.degreesCelsius"/>
+            </span>
+        </p>
+
+        <p>
+            <label>Heart rate</label>
+            <obs conceptId="CIEL:5087" id="heart_rate" showUnits="emr.units.perMinute" unitsCssClass="append-to-value"/>
+        </p>
+
+        <p>
+            <label>Respiratory rate</label>
+            <obs conceptId="CIEL:5242" id="respiratory_rate" showUnits="emr.units.perMinute"
+                 unitsCssClass="append-to-value"/>
+        </p>
+
+        <fieldset>
+            <legend>
+                <lookup expression="fn.getConcept('CIEL:5089').name"/>
+            </legend>
+            <h3>
+                <lookup expression="fn.getConcept('CIEL:5089').name"/>
+            </h3>
+
+            <p class="left">
+                <obs conceptId="CIEL:5089" id="weight" showUnits="uicommons.units.kilograms"
+                     unitsCssClass="append-to-value"/>
+            </p>
+
+        </fieldset>
+
+        <!-- only show BMI if patient is less than 13 years old (on the encounterDate) -->
+        <includeIf velocityTest="13 > $patient.getAge($encounter.getEncounterDatetime())">
+            <fieldset>
+                <legend>
+                    <lookup expression="fn.getConcept('CIEL:1343').name"/>
+                </legend>
+                <h3>
+                    <lookup expression="fn.getConcept('CIEL:1343').name"/>
+                </h3>
+
+                <p>
+                    <obs conceptId="CIEL:1343" id="muac" showUnits="uicommons.units.millimeters"
+                         unitsCssClass="append-to-value"/>
+                </p>
+            </fieldset>
+        </includeIf>
+
+        <p>
+            <label>Systolic BP</label>
+            <obs conceptId="CIEL:5085" showUnits="true" id="bp_systolic"/>
+        </p>
+
+        <p>
+            <label>Diastolic BP</label>
+            <obs conceptId="CIEL:5086" showUnits="true" id="bp_diastolic"/>
+        </p>
+
+        <p>
+            <label>Capillary refill time</label>
+            <obs conceptId="CIEL:162513" showUnits="true"/>
+        </p>
+
+        <p>
+            <label>O2 saturation</label>
+            <obs conceptId="CIEL:5092" id="o2_sat" showUnits="emr.units.percent" unitsCssClass="append-to-value"/>
+        </p>
+
+        <p>
+            <label>Abdomen tender</label>
+            <obsgroup groupingConceptId="CIEL:1727">
+                <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:5105"/>
+                <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066" answerLabels="yes,no"/>
+            </obsgroup>
+        </p>
+
+    </section>
+
+    <section id="symptoms" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="Additional symptoms">
+
+        <table>
+            <repeat>
+                <template>
+                    <obsgroup groupingConceptId="CIEL:1727">
+                        <tr>
+                            <td class="symptom">
+                                <obs conceptId="CIEL:1728" answerConceptId="{concept}" labelText=""/>
+                            </td>
+                            <td>
+                                <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
+                                     answerLabels="yes,no,unknown"/>
+                            </td>
+                        </tr>
+                    </obsgroup>
+                </template>
+                <render concept="CIEL:5978" labelText="Nausea"/>
+                <render concept="CIEL:148035" labelText="Back pain"/>
+                <render concept="CIEL:120749" labelText="Chest pain"/>
+                <render concept="CIEL:158843" labelText="Sore throat"/>
+                <!-- render concept="CIEL:?" labelText="Decreased urine output"/ -->
+                <render concept="CIEL:143264" labelText="Cough"/>
+                <render concept="CIEL:206" labelText="Seizures"/>
+                <render concept="CIEL:147241" labelText="Bleeding"/>
+            </repeat>
+        </table>
+
+        <p>
+            <label>If yes for bleeding, which sites?</label>
+            <obs conceptId="CIEL:162668"
+                 answerConceptIds="CIEL:160495,CIEL:162669,CIEL:162670,CIEL:162671,CIEL:162673,CIEL:5622"
+                 answerLabels="nose/oral,cough (lung),vomit (stomach),stool (intestine),vaginal (not menstrual),other"/>
+        </p>
+
+        <p>
+            <label>Other symptoms (list)</label>
+            <obs conceptId="CIEL:1728" answerClasses="Symptom,Diagnosis,Finding" style="autocomplete"/>
+        </p>
+    </section>
+
+    <section id="exposure" sectionTag="fieldset" headerTag="legend" headerStyle="title" headerCode="Exposure">
+
+        <repeat with="['162618','Did patient attend a funeral in the past 30 days?'],
+                               ['162619','Did patient recently traveled outside of home town'],
+                               ['162633','Did patient have contact with an ebola case?']">
+            <obs conceptId="CIEL:{0}" labelText="{1}" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
+                 answerLabels="yes,no,unknown"/>
+            <br/>
+        </repeat>
+    </section>
+
+    <section id="medicalHistory" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="Other medical history">
+    </section>
+
+    <section id="preMeds" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="Pre-existing medications">
+    </section>
+
+    <section id="signs" sectionTag="fieldset" headerTag="legend" headerStyle="title" headerCode="Signs">
+        <table>
+            <repeat>
+                <template>
+                    <obsgroup groupingConceptId="CIEL:1727">
+                        <tr>
+                            <td class="symptom">
+                                <obs conceptId="CIEL:1728" answerConceptId="{concept}" labelText=""/>
+                            </td>
+                            <td>
+                                <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066"
+                                     answerLabels="yes,no"/>
+                            </td>
+                        </tr>
+                    </obsgroup>
+                </template>
+                <render concept="CIEL:119868" labelText="Bruising"/>
+                <render concept="CIEL:131004" labelText="Pale"/>
+                <render concept="CIEL:136443" labelText="Jaundice"/>
+                <render concept="CIEL:512" labelText="Rash"/>
+                <render concept="CIEL:517" labelText="Conjunctival injection"/>
+                <render concept="CIEL:127918" labelText="Elevated JVP"/>
+                <!-- render concept="CIEL:" labelText="Lower chest wall indrawing" / -->
+                <render concept="CIEL:5105" labelText="Abdominal tenderness"/>
+                <render concept="CIEL:5008" labelText="Hepatomegaly"/>
+                <!-- TBD:  Add measurements for hepatomegaly and splenomegaly / -->
+                <render concept="CIEL:5009" labelText="Splenomegaly"/>
+                <render concept="CIEL:135488" labelText="Lymphadenopathy"/>
+            </repeat>
+        </table>
+    </section>
+
+    <section id="impression" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="Clinical impression">
+    </section>
+
+    <section id="management" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="Clinical management plan">
+        <p>
+            <label>Fluid management</label>
+            <obs conceptId="CIEL:162653"
+                 answerConceptIds="CIEL:351,CIEL:162649,CIEL:162651,CIEL:162650,CIEL:1063,CIEL:162652"
+                 answerLabels="ORS,Jelly water,IV management,IV/IO Resuscitate,Blood transfusion,Fluid restrict"/>
+        </p>
+
+        <p>
+            <label>Target volume in next 24h</label>
+            <obs conceptId="CIEL:162675" showUnits="true"/>
+        </p>
+
+        <p>
+            <label>Antimalarials</label>
+            <obs conceptId="CIEL:162686" labelText="Antimalarials" style="checkbox"
+                 answerConceptIds="CIEL:162674,CIEL:71561,CIEL:83023"
+                 answerLabels="Artemether-Lumefantrine (ACT),Artesunate,Quinine"/>
+        </p>
+
+        <p>
+            <label>Antibiotics</label>
+            <obs conceptId="CIEL:162687" labelText="Antibiotics" style="checkbox"
+                 answerConceptIds="CIEL:73041,CIEL:73006,CIEL:79782" answerLabels="Ceftriaxone,Cefixime,Metronidazole"/>
+        </p>
+
+        <p>
+            <label>Analgesics / Antipyretics</label>
+            <obs conceptId="CIEL:162688" labelText="Analgesics/Antipyretics" style="checkbox"
+                 answerConceptIds="CIEL:70116,CIEL:85275,CIEL:80106" answerLabels="Paracetamol,Tramadol,Morphine"/>
+        </p>
+
+        <p>
+            <label>Other medication (specify) [TBD]</label>
+            <!-- <obs conceptId="CIEL:?" labelText="Other ETU medication"  /> -->
+        </p>
+
+        <p>
+            <label>Clinical impression</label>
+            <obs conceptId="CIEL:159395" style="textarea"/>
+        </p>
+
+    </section>
+
+    <submit/>
+
+</htmlform>
