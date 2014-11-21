@@ -17,7 +17,7 @@
             }
         ],
         "config": {
-            "afterCreatedUrl": "htmlformentryui/htmlform/enterHtmlFormWithStandardUi.page?patientId={{patientId}}&visitId=&definitionUiResource=ebolaexample%3Ahtmlforms%2Ftriage.xml&returnUrl=%2Fopenmrs%2Febolaexample%2FebolaOverview.page%3Fpatient%3D8%26&",
+            "afterCreatedUrl": "htmlformentryui/htmlform/enterHtmlFormWithSimpleUi.page?patientId={{patientId}}&visitId=&definitionUiResource=ebolaexample%3Ahtmlforms%2Ftriage.xml&returnUrl=%2Fopenmrs%2Febolaexample%2FebolaOverview.page%3Fpatient%3D8%26&",
             "sections": [
                 {
                     "id": "contactInfo",
