@@ -195,9 +195,9 @@
 
     <section id="exposure" sectionTag="fieldset" headerTag="legend" headerStyle="title" headerCode="Exposure">
 
-        <repeat with="['162618','Did patient attend a funeral in the past 30 days?'],
-                               ['162619','Did patient recently traveled outside of home town'],
-                               ['162633','Did patient have contact with an ebola case?']">
+        <repeat with="['162618','Did patient attend a funeral in the past 3 weeks?'],
+                        ['159549','Did patient visit traditional healer?'],
+                        ['162633','Did patient have contact with a suspected or confirmed ebola case?']">
             <obs conceptId="CIEL:{0}" labelText="{1}" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
                  answerLabels="yes,no,unknown"/>
             <br/>
@@ -206,10 +206,61 @@
 
     <section id="medicalHistory" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Other medical history">
+        <fieldset>
+            <legend>Allergy</legend>
+
+            <p class="left">
+                <label>Allergies?</label>
+                <obsgroup groupingConceptId="CIEL:1727">
+                    <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
+                         answerLabels="yes,no,unknown" size="3"/>
+                    <span class="symptom">
+                        <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:121689"/>
+                    </span>
+                </obsgroup>
+            </p>
+
+            <p class="left">
+                <label>List allergies?</label>
+                <obs conceptId="CIEL:162141"/>
+            </p>
+        </fieldset>
+
+        <!-- only show if patient is female and > than 13 years old (on the encounterDate) -->
+        <includeIf velocityTest="($patient.gender == 'F') || ($patient.age > 10)">
+            <fieldset>
+                <legend>Female</legend>
+                <label>Currently breastfeeding?</label>
+                <p class="left">
+                    <obs conceptId="CIEL:5632" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
+                         answerLabels="yes,no,unknown"/>
+                </p>
+                <label>Pregnancy?</label>
+                <p class="left">
+                    <!-- TBD:  Add postpartum -->
+                    <obs conceptId="CIEL:5272" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
+                         answerLabels="yes,no,unknown"/>
+                </p>
+
+                <label>Gestational age of fetus?</label>
+                <p class="left">
+                    <obs conceptId="CIEL:1438" showUnits="true"/>
+                </p>
+            </fieldset>
+        </includeIf>
     </section>
 
     <section id="preMeds" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Pre-existing medications">
+        <fieldset>
+            <legend>Medications</legend>
+            <label>Medications prior to admission?</label>
+            <p class="left">
+                <!-- TBD:  List of medications with dose and frequency -->
+                <obs conceptId="CIEL:162165"/>
+            </p>
+        </fieldset>
+
     </section>
 
     <section id="signs" sectionTag="fieldset" headerTag="legend" headerStyle="title" headerCode="Signs">
@@ -246,16 +297,18 @@
 
     <section id="impression" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Clinical impression">
+        <!-- TBD:  Critically ill upon arrival -->
+        <fieldset>
+            <legend>Clinical impressions</legend>
+            <label>Notes?</label>
+            <p class="left">
+                <obs conceptId="CIEL:159395" style="textarea"/>
+            </p>
+        </fieldset>
     </section>
 
     <section id="management" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Clinical management plan">
-        <p>
-            <label>Fluid management</label>
-            <obs conceptId="CIEL:162653"
-                 answerConceptIds="CIEL:351,CIEL:162649,CIEL:162651,CIEL:162650,CIEL:1063,CIEL:162652"
-                 answerLabels="ORS,Jelly water,IV management,IV/IO Resuscitate,Blood transfusion,Fluid restrict"/>
-        </p>
 
         <p>
             <label>Target volume in next 24h</label>
