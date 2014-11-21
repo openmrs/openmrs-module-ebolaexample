@@ -30,37 +30,52 @@
     <section id="obs" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Observations">
 
-        <p>
-            <label>Consciousness</label>
-            <obs conceptId="CIEL:162643" answerConceptIds="CIEL:160282,CIEL:162645,162644,CIEL:159508"
-                 answerLabels="A,V,P,U"/>
-        </p>
+        <fieldset>
+            <legend>Conscious</legend>
+            <p class="left">
+                <label>Consciousness</label>
+                <obs conceptId="CIEL:162643" answerConceptIds="CIEL:160282,CIEL:162645,162644,CIEL:159508"
+                     answerLabels="A,V,P,U"/>
+            </p>
+            <p class="left">
+                <label>Confused?</label>
+                <obsgroup groupingConceptId="CIEL:1727">
+                    <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066"
+                         answerLabels="yes,no" size="2"/>
+                    <span class="symptom">
+                        <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:120345"/>
+                    </span>
+                </obsgroup>
+            </p>
 
-        <p>
-            <label>Temperature</label>
-            <span class="small">
-                <obs conceptId="CIEL:5088" showUnits="emr.units.degreesCelsius"/>
-            </span>
-        </p>
+        </fieldset>
 
-        <p>
-            <label>Heart rate</label>
-            <obs conceptId="CIEL:5087" id="heart_rate" showUnits="emr.units.perMinute" unitsCssClass="append-to-value"/>
-        </p>
+        <fieldset>
+            <legend>Vitals</legend>
+            <p class="left">
+                <label>Temperature</label>
+                <span class="small">
+                    <obs conceptId="CIEL:5088" showUnits="emr.units.degreesCelsius"/>
+                </span>
+            </p>
 
-        <p>
-            <label>Respiratory rate</label>
-            <obs conceptId="CIEL:5242" id="respiratory_rate" showUnits="emr.units.perMinute"
-                 unitsCssClass="append-to-value"/>
-        </p>
+            <p class="left">
+                <label>Heart rate</label>
+                <obs conceptId="CIEL:5087" id="heart_rate" showUnits="emr.units.perMinute"
+                     unitsCssClass="append-to-value"/>
+            </p>
+
+            <p class="left">
+                <label>Respiratory rate</label>
+                <obs conceptId="CIEL:5242" id="respiratory_rate" showUnits="emr.units.perMinute"
+                     unitsCssClass="append-to-value"/>
+            </p>
+        </fieldset>
 
         <fieldset>
             <legend>
                 <lookup expression="fn.getConcept('CIEL:5089').name"/>
             </legend>
-            <h3>
-                <lookup expression="fn.getConcept('CIEL:5089').name"/>
-            </h3>
 
             <p class="left">
                 <obs conceptId="CIEL:5089" id="weight" showUnits="uicommons.units.kilograms"
@@ -86,72 +101,92 @@
             </fieldset>
         </includeIf>
 
-        <p>
-            <label>Systolic BP</label>
-            <obs conceptId="CIEL:5085" showUnits="true" id="bp_systolic"/>
-        </p>
+        <fieldset>
+            <legend>Blood</legend>
+            <p class="left">
+                <label>Systolic blood pressure</label>
+                <obs conceptId="CIEL:5085" showUnits="true" id="bp_systolic"/>
+            </p>
 
-        <p>
-            <label>Diastolic BP</label>
-            <obs conceptId="CIEL:5086" showUnits="true" id="bp_diastolic"/>
-        </p>
+            <p class="left">
+                <label>Diastolic blood pressure</label>
+                <obs conceptId="CIEL:5086" showUnits="true" id="bp_diastolic"/>
+            </p>
 
-        <p>
-            <label>Capillary refill time</label>
-            <obs conceptId="CIEL:162513" showUnits="true"/>
-        </p>
+            <p class="left">
+                <label>Capillary refill time</label>
+                <obs conceptId="CIEL:162513" showUnits="true"/>
+            </p>
+        </fieldset>
 
-        <p>
-            <label>O2 saturation</label>
-            <obs conceptId="CIEL:5092" id="o2_sat" showUnits="emr.units.percent" unitsCssClass="append-to-value"/>
-        </p>
+        <fieldset>
+            <legend>Oxygen</legend>
+            <p class="left">
+                <label>O2 saturation</label>
+                <obs conceptId="CIEL:5092" id="o2_sat" showUnits="emr.units.percent" unitsCssClass="append-to-value"/>
+            </p>
+            <p class="left">
+                <label>Air supply</label>
+                <!--obs conceptId="CIEL:?" answerConceptIds="CIEL:?,CIEL:?,CIEL:1067"
+                     answerLabels="Room air,Supplemental Oxygen,unknown" size="3"/-->
+            </p>
+        </fieldset>
 
-        <p>
-            <label>Abdomen tender</label>
-            <obsgroup groupingConceptId="CIEL:1727">
-                <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:5105"/>
-                <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066" answerLabels="yes,no"/>
-            </obsgroup>
-        </p>
+        <fieldset>
+            <legend>Shock</legend>
+
+            <p class="left">
+                <label>Clinically shocked?</label>
+                <obsgroup groupingConceptId="CIEL:1727">
+                    <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
+                         answerLabels="yes,no,unknown" size="3"/>
+                    <span class="symptom">
+                        <obs conceptId="CIEL:1728" answerLabel="" answerConceptId="CIEL:112989"/>
+                    </span>
+                </obsgroup>
+            </p>
+
+        </fieldset>
 
     </section>
 
     <section id="symptoms" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="Additional symptoms">
 
-        <table>
+        <fieldset>
+            <legend>Symptoms</legend>
             <repeat>
                 <template>
                     <obsgroup groupingConceptId="CIEL:1727">
-                        <tr>
-                            <td class="symptom">
+                        <p class="left">
+                            <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066"
+                                 answerLabels="yes,no" size="2"/>
+                            <span class="symptom">
                                 <obs conceptId="CIEL:1728" answerConceptId="{concept}" labelText=""/>
-                            </td>
-                            <td>
-                                <obs conceptId="CIEL:1729" answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
-                                     answerLabels="yes,no,unknown"/>
-                            </td>
-                        </tr>
+                            </span>
+                        </p>
                     </obsgroup>
                 </template>
                 <render concept="CIEL:5978" labelText="Nausea"/>
                 <render concept="CIEL:148035" labelText="Back pain"/>
                 <render concept="CIEL:120749" labelText="Chest pain"/>
                 <render concept="CIEL:158843" labelText="Sore throat"/>
-                <!-- render concept="CIEL:?" labelText="Decreased urine output"/ -->
+                <render concept="CIEL:132418" labelText="Decreased urine output"/>
                 <render concept="CIEL:143264" labelText="Cough"/>
                 <render concept="CIEL:206" labelText="Seizures"/>
                 <render concept="CIEL:147241" labelText="Bleeding"/>
             </repeat>
-        </table>
+        </fieldset>
 
-        <p>
-            <label>If yes for bleeding, which sites?</label>
-            <obs conceptId="CIEL:162668"
-                 answerConceptIds="CIEL:160495,CIEL:162669,CIEL:162670,CIEL:162671,CIEL:162673,CIEL:5622"
-                 answerLabels="nose/oral,cough (lung),vomit (stomach),stool (intestine),vaginal (not menstrual),other"/>
-        </p>
-
+        <fieldset>
+            <legend>Bleeding</legend>
+            <p class="left">
+                <label>If yes for bleeding, which sites?</label>
+                <obs conceptId="CIEL:162668"
+                     answerConceptIds="CIEL:160495,CIEL:162669,CIEL:162670,CIEL:162671,CIEL:162673,CIEL:5622"
+                     answerLabels="nose/oral,cough (lung),vomit (stomach),stool (intestine),vaginal (not menstrual),other"/>
+            </p>
+        </fieldset>
         <p>
             <label>Other symptoms (list)</label>
             <obs conceptId="CIEL:1728" answerClasses="Symptom,Diagnosis,Finding" style="autocomplete"/>

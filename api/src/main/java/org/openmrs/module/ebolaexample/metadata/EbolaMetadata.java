@@ -69,9 +69,9 @@ public class EbolaMetadata extends AbstractMetadataBundle {
         install(encounterType("ETU Assessment", "Assessment of patients at Ebola Treatment Unit (ETU)",  _EncounterType.EBOLA_ASSESSMENT));
 
         install(form("Ebola Inpatient Observations and Treatment", "", _EncounterType.EBOLA_INPATIENT_FOLLOWUP, "0.1", _Form.INPATIENT_OBSERVATIONS_AND_TREATMENT));
-        install(form("Ebola clinical signs and symptoms", "", _EncounterType.EBOLA_CASE_INVESTIGATION, "0.1", _Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS));
+        install(form("Ebola Clinical Signs and Symptoms", "", _EncounterType.EBOLA_CASE_INVESTIGATION, "0.1", _Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS));
         install(form("Ebola Triage", "", _EncounterType.EBOLA_TRIAGE, "2.0", _Form.EBOLA_TRIAGE_FORM));
-        install(form("Ebola Triage", "", _EncounterType.EBOLA_ASSESSMENT, "2.0", _Form.EBOLA_ASSESSMENT_FORM));
+        install(form("Ebola Assessment", "", _EncounterType.EBOLA_ASSESSMENT, "2.0", _Form.EBOLA_ASSESSMENT_FORM));
     }
 
 }
