@@ -248,7 +248,7 @@ module.factory("conceptMappingFactory", function() {
 
   //there is no concept id for this one
   function createUnableToEat() {
-    var question = createQuestion("unableToEat", "symptom", "??????AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var question = createQuestion("unableToEat", "symptom", "162706AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     question.answers = booleanAnswers;
     return question;
   }
@@ -284,7 +284,7 @@ module.factory("conceptMappingFactory", function() {
   }
 
   function createCough() {
-    var question = createQuestion("cough", "symptom", "104224AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    var question = createQuestion("cough", "symptom", "143264AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     question.answers = booleanAnswers;
     return question;
   }
