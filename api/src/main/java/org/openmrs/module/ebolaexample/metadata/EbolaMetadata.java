@@ -1,5 +1,6 @@
 package org.openmrs.module.ebolaexample.metadata;
 
+import org.openmrs.module.ebolaexample.customdatatype.datatype.LocationDatatype;
 import org.openmrs.module.emrapi.EmrApiConstants;
 import org.openmrs.module.metadatadeploy.bundle.AbstractMetadataBundle;
 import org.springframework.stereotype.Component;
@@ -9,6 +10,7 @@ import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.encounte
 import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.form;
 import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.locationTag;
 import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.program;
+import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.visitAttributeType;
 
 @Component("ebolaMetadata")
 public class EbolaMetadata extends AbstractMetadataBundle {
@@ -50,6 +52,11 @@ public class EbolaMetadata extends AbstractMetadataBundle {
         public static final String EBOLA_ASSESSMENT_FORM = "230af74f-f1b5-4e43-ae6a-27208ed46540";
     }
 
+	public static class _VisitAttributeType {
+		public static final String ASSIGNED_WARD = "c7d117f0-6ff4-11e4-9803-0800200c9a66";
+		public static final String ASSIGNED_BED = "c7d117f1-6ff4-11e4-9803-0800200c9a66";
+	}
+
     @Override
     public void install() throws Exception {
         install(program("Ebola", "Treatment of Ebola patients and observation of suspects", _Concept.EBOLA_PROGRAM, _Program.EBOLA_PROGRAM));
@@ -72,6 +79,9 @@ public class EbolaMetadata extends AbstractMetadataBundle {
         install(form("Ebola Clinical Signs and Symptoms", "", _EncounterType.EBOLA_CASE_INVESTIGATION, "0.1", _Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS));
         install(form("Ebola Triage", "", _EncounterType.EBOLA_TRIAGE, "2.0", _Form.EBOLA_TRIAGE_FORM));
         install(form("Ebola Assessment", "", _EncounterType.EBOLA_ASSESSMENT, "2.0", _Form.EBOLA_ASSESSMENT_FORM));
+     		
+		install(visitAttributeType("Assigned ward", "", LocationDatatype.class, null, 0, 1, _VisitAttributeType.ASSIGNED_WARD));
+		install(visitAttributeType("Assigned bed", "", LocationDatatype.class, null, 0, 1, _VisitAttributeType.ASSIGNED_BED));
     }
 
 }

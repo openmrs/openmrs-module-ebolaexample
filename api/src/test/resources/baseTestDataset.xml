@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+	<global_property property="emr.admissionEncounterType" property_value="2c8c3ff2-b8eb-11e2-9426-3edb8e345d35"
+					 uuid="35c57674-b8eb-11e2-9426-3edb8e345d35"/>
+	<encounter_type encounter_type_id="11" name="Admission" description="" creator="1" date_created="2008-08-15 15:39:55.0" retired="false" uuid="2c8c3ff2-b8eb-11e2-9426-3edb8e345d35" />
+
+	<global_property property="emr.transferWithinHospitalEncounterType" property_value="2c8c3ff2-b8eb-11e2-9426-3edb8e345d36"
+					 uuid="35c57674-b8eb-11e2-9426-3edb8e345d36"/>
+	<encounter_type encounter_type_id="12" name="ATransfer withing hospital" description="" creator="1" date_created="2008-08-15 15:39:55.0" retired="false" uuid="2c8c3ff2-b8eb-11e2-9426-3edb8e345d36" />
+
+	<global_property property="emr.transferWithinHospitalEncounterType" property_value="2c8c3ff2-b8eb-11e2-9426-3edb8e345d36"
+					 uuid="35c57674-b8eb-11e2-9426-3edb8e345d36"/>
+	<encounter_type encounter_type_id="12" name="ATransfer withing hospital" description="" creator="1" date_created="2008-08-15 15:39:55.0" retired="false" uuid="2c8c3ff2-b8eb-11e2-9426-3edb8e345d36" />
+
+	<person_attribute_type person_attribute_type_id="33" name="Test person attribute type" description="" format="org.openmrs.Concept" searchable="false" creator="1" date_created="2008-08-15 15:53:36.0" retired="false" uuid="4f07985c-88a5-4abd-aa0c-f3ec8324d8e7" sort_weight="2"/>
+	
+	<concept concept_id="111" retired="false" datatype_id="4" class_id="3" is_set="false" creator="1" date_created="2008-08-15 15:27:51.0" version="" uuid="162637AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
+</dataset>

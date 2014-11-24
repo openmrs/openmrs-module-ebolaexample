@@ -4,7 +4,31 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
   		    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<!-- Add here beans related to the API context -->
+	<!-- Services accessible via Context.getService() -->
+	<bean id="bedAssignmentService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="target">
+			<bean class="${project.parent.groupId}.${project.parent.artifactId}.api.impl.BedAssignmentServiceImpl">
+				<property name="adtService" ref="adtService"/>
+			</bean>
+		</property>
+		<property name="preInterceptors">
+			<ref bean="serviceInterceptors" />
+		</property>
+		<property name="transactionAttributeSource">
+			<ref bean="transactionAttributeSource" />
+		</property>
+	</bean>
 
+	<bean parent="serviceContext">
+		<property name="moduleService">
+			<list merge="true">
+				<value>${project.parent.groupId}.${project.parent.artifactId}.api.BedAssignmentService</value>
+				<ref local="bedAssignmentService"/>
+			</list>
+		</property>
+	</bean>
 	
 </beans>
