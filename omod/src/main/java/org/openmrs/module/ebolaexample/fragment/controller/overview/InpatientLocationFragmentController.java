@@ -6,7 +6,9 @@ import org.openmrs.Location;
 import org.openmrs.LocationTag;
 import org.openmrs.Patient;
 import org.openmrs.Provider;
+import org.openmrs.api.APIException;
 import org.openmrs.module.appui.UiSessionContext;
+import org.openmrs.module.ebolaexample.api.BedAssignmentService;
 import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
 import org.openmrs.module.emrapi.EmrApiProperties;
 import org.openmrs.module.emrapi.adt.AdtAction;
@@ -18,6 +20,7 @@ import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.fragment.FragmentModel;
 import org.openmrs.ui.framework.fragment.action.FailureResult;
 import org.openmrs.ui.framework.fragment.action.SuccessResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collections;
@@ -27,6 +30,9 @@ import java.util.Map;
 import java.util.Set;
 
 public class InpatientLocationFragmentController {
+
+	@Autowired
+	BedAssignmentService bedAssignmentService;
 
     public void controller(@FragmentParam(value = "activeVisit", required = false) VisitDomainWrapper activeVisit,
                            FragmentModel model) {
@@ -91,18 +97,12 @@ public class InpatientLocationFragmentController {
                            @SpringBean EmrApiProperties emrApiProperties,
                            @SpringBean AdtService adtService) {
 
-        Map<EncounterRole, Set<Provider>> providers = new HashMap<EncounterRole, Set<Provider>>();
-        providers.put(MetadataUtils.existing(EncounterRole.class, EbolaMetadata._EncounterRole.CLINICIAN),
-                Collections.singleton(uiSessionContext.getCurrentProvider()));
-
-        VisitDomainWrapper activeVisit = adtService.getActiveVisit(patient, location);
-        if (!activeVisit.isAdmitted()) {
-            return new FailureResult("Not admitted (so cannot transfer)");
-        }
-        AdtAction adtAction = new AdtAction(activeVisit.getVisit(), location, providers, AdtAction.Type.TRANSFER);
-
-        Encounter created = adtService.createAdtEncounterFor(adtAction);
-        return new SuccessResult("Transferred");
+		try {
+			bedAssignmentService.assign(patient, location);
+			return new SuccessResult("Transferred");
+		} catch (APIException e) {
+			return new FailureResult(e.getMessage());
+		}
     }
 
 }
