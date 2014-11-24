@@ -31,11 +31,9 @@ import java.util.Set;
 
 public class InpatientLocationFragmentController {
 
-	@Autowired
-	BedAssignmentService bedAssignmentService;
-
     public void controller(@FragmentParam(value = "activeVisit", required = false) VisitDomainWrapper activeVisit,
-                           FragmentModel model) {
+			FragmentModel model) {
+
         Location currentLocation = null;
         if (activeVisit != null) {
             currentLocation = activeVisit.getInpatientLocation(new Date());
@@ -95,7 +93,8 @@ public class InpatientLocationFragmentController {
                            @RequestParam("location") Location location,
                            UiSessionContext uiSessionContext,
                            @SpringBean EmrApiProperties emrApiProperties,
-                           @SpringBean AdtService adtService) {
+                           @SpringBean AdtService adtService,
+						   @SpringBean BedAssignmentService bedAssignmentService) {
 
 		try {
 			bedAssignmentService.assign(patient, location);

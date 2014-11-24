@@ -12,6 +12,11 @@
 		<property name="target">
 			<bean class="${project.parent.groupId}.${project.parent.artifactId}.api.impl.BedAssignmentServiceImpl">
 				<property name="adtService" ref="adtService"/>
+				<property name="providerService" ref="providerService"/>
+				<property name="encounterService" ref="encounterService"/>
+				<property name="visitService" ref="visitService"/>
+				<property name="locationService" ref="locationService"/>
+				<property name="administrationService" ref="adminService"/>
 			</bean>
 		</property>
 		<property name="preInterceptors">
