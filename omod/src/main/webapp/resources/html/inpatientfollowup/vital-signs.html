@@ -19,7 +19,7 @@
     <div class="two-column">
       <label class="question-title" for="temperature">TEMPERATURE</label>
       <div class="input-container">
-        <input ng-focus="focusInput($event)" ng-blur="blurInput($event)" type="number" name="temperature" ng-model="viewModel.temperature" min="0" max="99" />
+        <input ng-focus="focusInput($event)" ng-blur="blurInput($event)" ng-keyup="keyupInput($event)" type="number" name="temperature" ng-model="viewModel.temperature" min="0" max="99" />
         <span class="unit">˚C</span>
       </div>
     </div>

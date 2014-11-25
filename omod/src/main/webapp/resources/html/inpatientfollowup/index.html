@@ -14,7 +14,7 @@
         <script src="../../scripts/inpatient-form/listeners.js"></script>
     </head>
 
-    <body ng-app="inpatientForm" ng-controller="MainController">
+    <body name="inpatientForm" ng-app="inpatientForm" ng-controller="MainController">
         <div class="page-wrap" ng-show="patient">
             <header>
         	    <div class="patient-header">
@@ -57,7 +57,7 @@
             <button class="left" ng-show="shouldDisplayBackButton()" ng-click="back()">BACK</button>
             <span class="progress">{{ getCurrentViewNumber() }} of 8</span>
             <button class="right" ng-show="shouldDisplayNextButton()" ng-click="next()">NEXT</button>
-            <button class="right" ng-show="shouldDisplayFinishButton()" ng-click="finish()">FINISH</button>
+            <button class="right" ng-show="shouldDisplayFinishButton()" ng-click="finish()" ng-disabled="!inpatientForm.$valid">FINISH</button>
         </div>
     </body>
 </html>

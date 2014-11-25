@@ -75,6 +75,11 @@ module.controller('MainController', function ($scope, observationsFactory, $http
         angular.element($event.target).parent().removeClass('highlight');
     };
 
+    $scope.keyupInput = function ($event) {
+        var $target = angular.element($event.target);
+        $target.hasClass("ng-invalid") ? $target.parent().addClass('error') : $target.parent().removeClass('error');
+    };
+
     $scope.shouldDisplay = function (view) {
         return activeView === view;
     };
