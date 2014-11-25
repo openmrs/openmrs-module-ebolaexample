@@ -14,50 +14,52 @@
         <script src="../../scripts/inpatient-form/listeners.js"></script>
     </head>
 
-    <body name="inpatientForm" ng-app="inpatientForm" ng-controller="MainController">
-        <div class="page-wrap" ng-show="patient">
-            <header>
-        	    <div class="patient-header">
-        			<span class="patient-id">
-        				<small>PATIENT ID NUMBER</small>
-        				{{ patient.identifier }}
-        			</span>
-              <span class="patient-id">
-                <small>NAME</small>
-                {{ patient.name }}
-              </span>
-              <span class="patient-id">
-                <small>GENDER / AGE</small>
-                {{ patient.gender }} - {{ patient.age }}
-              </span>
-        			<span class="patient-info">
-        				<small>WARD</small>
-        				12
-        			</span>
-        			<span class="patient-info">
-        				<small>BED</small>
-        				27
-        			</span>
-        	    </div>
-        	    <div class="navigation" style="background-size: {{ getProgress() }}% 100%;">
-        			<span ng-if="view.shouldShow" class="category" ng-repeat="view in views">
-        				<h3>{{view.description}}</h3>
-        			</span>
-        	    </div>
-            </header>
-            <div class="ebola-form">
-                <div class="section">
-                    <div ng-repeat="view in views">
-                        <ng-include id="simpleController" ng-show="shouldDisplay(view)" src="view.file" ng-controller="SimpleFormController"></ng-include>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="actions">
-            <button class="left" ng-show="shouldDisplayBackButton()" ng-click="back()">BACK</button>
-            <span class="progress">{{ getCurrentViewNumber() }} of 8</span>
-            <button class="right" ng-show="shouldDisplayNextButton()" ng-click="next()">NEXT</button>
-            <button class="right" ng-show="shouldDisplayFinishButton()" ng-click="finish()" ng-disabled="!inpatientForm.$valid">FINISH</button>
-        </div>
-    </body>
+    <body>
+      <form name="inpatientForm" ng-app="inpatientForm" ng-controller="MainController">
+          <div class="page-wrap" ng-show="patient">
+              <header>
+          	    <div class="patient-header">
+          			<span class="patient-id">
+          				<small>PATIENT ID NUMBER</small>
+          				{{ patient.identifier }}
+          			</span>
+                <span class="patient-id">
+                  <small>NAME</small>
+                  {{ patient.name }}
+                </span>
+                <span class="patient-id">
+                  <small>GENDER / AGE</small>
+                  {{ patient.gender }} - {{ patient.age }}
+                </span>
+          			<span class="patient-info">
+          				<small>WARD</small>
+          				12
+          			</span>
+          			<span class="patient-info">
+          				<small>BED</small>
+          				27
+          			</span>
+          	    </div>
+          	    <div class="navigation" style="background-size: {{ getProgress() }}% 100%;">
+          			<span ng-if="view.shouldShow" class="category" ng-repeat="view in views">
+          				<h3>{{view.description}}</h3>
+          			</span>
+          	    </div>
+              </header>
+              <div class="ebola-form">
+                  <div class="section">
+                      <div ng-repeat="view in views">
+                          <ng-include id="simpleController" ng-show="shouldDisplay(view)" src="view.file" ng-controller="SimpleFormController"></ng-include>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="actions">
+              <button class="left" ng-show="shouldDisplayBackButton()" ng-click="back()">BACK</button>
+              <span class="progress">{{ getCurrentViewNumber() }} of 8</span>
+              <button class="right" ng-show="shouldDisplayNextButton()" ng-click="next()">NEXT</button>
+              <button class="right" ng-show="shouldDisplayFinishButton()" ng-click="finish()" ng-disabled="!inpatientForm.$valid">FINISH</button>
+          </div>
+      </form>
+    <body>
 </html>
