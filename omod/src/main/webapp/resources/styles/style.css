@@ -315,5 +315,5 @@ input[type="number"]:focus {
 }
 
 .input-container.error {
-  border: 4px solid #ff0000;
+  border: 6px solid #ff0000;
 }

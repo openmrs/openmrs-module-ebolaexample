@@ -1,7 +1,7 @@
   <div>
     <label for="stoolFreq" class="question-title">STOOL FREQ</label>
     <div class="input-container">
-        <input ng-focus="focusInput($event)" ng-blur="blurInput($event)" type="number" value="none" name="stoolFreq" ng-model="viewModel.stoolFreq" min="0" max="9999" />
+        <input ng-focus="focusInput($event)" ng-blur="blurInput($event)" ng-keyup="keyupInput($event)" type="number" value="none" name="stoolFreq" ng-model="viewModel.stoolFreq" min="0" max="9999" />
         <label class="unit small">#/24H</label>
     </div>
   </div>

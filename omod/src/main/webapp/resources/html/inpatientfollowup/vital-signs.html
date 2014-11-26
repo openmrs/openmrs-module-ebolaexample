@@ -27,7 +27,7 @@
     <div class="two-column">
       <label class="question-title" for="oxygenSaturation">OXYGEN SATURATION</label>
       <div class="input-container">
-        <input ng-focus="focusInput($event)" ng-blur="blurInput($event)" type="number" name="oxygenSaturation" ng-model="viewModel.oxygenSaturation" min="0" max="99" />
+        <input ng-focus="focusInput($event)" ng-blur="blurInput($event)" ng-keyup="keyupInput($event)" type="number" name="oxygenSaturation" ng-model="viewModel.oxygenSaturation" min="0" max="99" />
         <span class="unit">%</span>
       </div>
     </div>
@@ -35,7 +35,7 @@
     <div class="two-column">
       <label class="question-title" for="respiratoryRate">RESPIRATORY RATE</label>
       <div class="input-container">
-        <input ng-focus="focusInput($event)" ng-blur="blurInput($event)" type="number" name="respiratoryRate" ng-model="viewModel.respiratoryRate" min="0" max="99" />
+        <input ng-focus="focusInput($event)" ng-blur="blurInput($event)" ng-keyup="keyupInput($event)" type="number" name="respiratoryRate" ng-model="viewModel.respiratoryRate" min="0" max="99" />
         <span class="unit small">breaths/ min</span>
       </div>
     </div>
@@ -43,7 +43,7 @@
     <div class="two-column">
       <label class="question-title" for="heartRate">HEART RATE</label>
       <div class="input-container">
-        <input ng-focus="focusInput($event)" ng-blur="blurInput($event)" type="number" name="heartRate" ng-model="viewModel.heartRate" min="0" max="999" />
+        <input ng-focus="focusInput($event)" ng-blur="blurInput($event)" ng-keyup="keyupInput($event)" type="number" name="heartRate" ng-model="viewModel.heartRate" min="0" max="999" />
         <span class="unit small">beats/ min</span>
       </div>
     </div>
@@ -53,7 +53,7 @@
     <div class="two-column">
       <label class="question-title" for="systolicBP">SYSTOLIC BP</label>
       <div class="input-container">
-        <input ng-focus="focusInput($event)" ng-blur="blurInput($event)" type="number" name="systolicBP" ng-model="viewModel.systolicBP" min="0" max="9999" />
+        <input ng-focus="focusInput($event)" ng-blur="blurInput($event)" ng-keyup="keyupInput($event)" type="number" name="systolicBP" ng-model="viewModel.systolicBP" min="0" max="9999" />
         <span class="unit small">mmHg</span>
       </div>
     </div>
@@ -61,7 +61,7 @@
     <div class="two-column">
       <label class="question-title" for="diastolicBP">DIASTOLIC BP</label>
       <div class="input-container">
-        <input ng-focus="focusInput($event)" ng-blur="blurInput($event)" type="number" name="diastolicBP" ng-model="viewModel.diastolicBP" min="0" max="9999" />
+        <input ng-focus="focusInput($event)" ng-blur="blurInput($event)" ng-keyup="keyupInput($event)" type="number" name="diastolicBP" ng-model="viewModel.diastolicBP" min="0" max="9999" />
         <span class="unit small">mmHg</span>
       </div>
     </div>
