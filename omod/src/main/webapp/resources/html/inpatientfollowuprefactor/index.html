@@ -1,0 +1,61 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link rel="stylesheet" type="text/css" href="../../styles/style.css">
+    <script src="../../scripts/lib/jquery/jquery-2.1.1.min.js"></script>
+    <script src="../../scripts/lib/lodash/dist/lodash.min.js"></script>
+    <script src="../../scripts/lib/angular/angular.min.js"></script>
+    <script src="../../../uicommons/scripts/emr.js"></script>
+    <script src="../../scripts/tablet-form-framework/tablet-form-framework.js"></script>
+    <script src="../../scripts/inpatient-form-refactor/form-design.js"></script>
+    <script src="../../scripts/tablet-form-framework/form-controller.js"></script>
+</head>
+
+<body ng-app="tabletFormFramework" ng-controller="FormController">
+<div class="page-wrap" ng-show="patient">
+    <header>
+        <div class="patient-header">
+            <span class="patient-id">
+                <small>PATIENT ID NUMBER</small>
+                {{ patient.identifier }}
+            </span>
+            <span class="patient-id">
+                <small>NAME</small>
+                {{ patient.name }}
+            </span>
+            <span class="patient-id">
+                <small>GENDER / AGE</small>
+                {{ patient.gender }} - {{ patient.age }}
+            </span>
+            <span class="patient-info">
+                <small>WARD</small>
+                12
+            </span>
+            <span class="patient-info">
+                <small>BED</small>
+                27
+            </span>
+        </div>
+        <div class="navigation" style="background-size: {{ getProgress() }}% 100%;">
+            <span ng-if="view.shouldShow" class="category" ng-repeat="view in views">
+                <h3>{{view.description}}</h3>
+            </span>
+        </div>
+    </header>
+    <div class="ebola-form">
+        <div class="section">
+            <div ng-repeat="view in views">
+                <ng-include id="simpleController" ng-show="shouldDisplay(view)" src="view.file"></ng-include>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="actions">
+    <button class="left" ng-show="shouldDisplayBackButton()" ng-click="back()">BACK</button>
+    <button>FullScreen</button>
+    <span class="progress">{{ getCurrentViewNumber() }} of {{ views.length }}</span>
+    <button class="right" ng-show="shouldDisplayNextButton()" ng-click="next()">NEXT</button>
+    <button class="right" ng-show="shouldDisplayFinishButton()" ng-click="finish()">FINISH</button>
+</div>
+</body>
+</html>
