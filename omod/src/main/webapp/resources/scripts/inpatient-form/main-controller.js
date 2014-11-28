@@ -104,6 +104,10 @@ module.controller('MainController', function ($scope, observationsFactory, $http
         return getActiveViewIndex() === $scope.views.length - 1;
     };
 
+    $scope.shouldDisplayCancelButton = function () {
+        return getActiveViewIndex() === 0;
+    };
+
     $scope.next = function () {
         activeView = $scope.views[getActiveViewIndex() + 1];
     };
@@ -115,6 +119,10 @@ module.controller('MainController', function ($scope, observationsFactory, $http
     $scope.finish = function () {
         receivedResponses = 0;
         $scope.$broadcast('request-patient-info');
+    };
+
+    $scope.cancel = function() {
+      location.href = CONTEXT_PATH + "/ebolaexample/ebolaOverview.page?patient=" + $scope.patient.patientUuid;
     };
 
     $scope.$on('response-patient-info', function (event, data) {
