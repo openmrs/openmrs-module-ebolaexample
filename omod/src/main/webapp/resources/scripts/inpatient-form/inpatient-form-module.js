@@ -1,4 +1,4 @@
-angular.module('inpatientForm', ['ngRoute']).config(function($routeProvider) {
+angular.module('tabletForm', ['ngRoute']).config(function($routeProvider) {
 
   $routeProvider.otherwise("/");
 

@@ -1,5 +1,5 @@
 <div>
-  <label class="question-title">FLUID MANAGEMENT<em>(Select one)</em></label>
+  <label class="question-title">(TO DO) FLUID MANAGEMENT<em>(Select one)</em></label>
 
   <input id="fluid_1" type="radio" value="ORS" name="fluidManagement" ng-model="viewModel.fluidManagement" />
   <label for="fluid_1" class="radio-button small long">ORS</label>
@@ -24,9 +24,5 @@
 </div>
 
 <div>
-    <label class="question-title" for="temperature">TARGET VOLUME IN NEXT 24H</label>
-    <div class="input-container">
-      <input ng-focus="focusInput($event)" ng-blur="blurInput($event)" ng-keyup="keyupInput($event)" type="number" name="volume" ng-model="viewModel.volume" min="0" max="9999" />
-      <span class="unit">mL</span>
-    </div>
+    <question question="questions.targetVolume"/>
 </div>

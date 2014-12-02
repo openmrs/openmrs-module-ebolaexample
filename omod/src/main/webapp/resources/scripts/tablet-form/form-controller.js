@@ -1,6 +1,6 @@
-angular.module('tabletFormFramework').
+angular.module('tabletForm')
 
-    controller('FormController', function ($scope, $http, $location, questions, views, encounterTypes) {
+    .controller('MainController', function ($scope, views, questions, encounterTypes, $http, $location) {
         var that = this;
 
         var path = $location.path().substring(0, $location.path().indexOf("/", 1));
@@ -14,17 +14,18 @@ angular.module('tabletFormFramework').
         $scope.patient.locationUuid = $location.search().locationUuid;
         $scope.patient.providerUuid = $location.search().providerUuid;
 
-        $scope.questions = questions;
         $scope.views = views;
+        $scope.questions = questions;
 
-        var activeView = undefined,
-            completeData = {},
-            initialize = function () {
-                activeView = $scope.views[0];
-            },
-            getActiveViewIndex = function () {
-                return _.indexOf($scope.views, activeView);
-            };
+        var activeView = undefined;
+        var receivedResponses = 0;
+        var completeData = {};
+        function initialize() {
+            activeView = $scope.views[0];
+        }
+        function getActiveViewIndex() {
+            return _.indexOf($scope.views, activeView);
+        };
 
         function loadData() {
 
@@ -43,14 +44,6 @@ angular.module('tabletFormFramework').
             });
         }
 
-        $scope.focusInput = function ($event) {
-            angular.element($event.target).parent().addClass('highlight');
-        };
-
-        $scope.blurInput = function ($event) {
-            angular.element($event.target).parent().removeClass('highlight');
-        };
-
         $scope.shouldDisplay = function (view) {
             return activeView === view;
         };
@@ -60,7 +53,7 @@ angular.module('tabletFormFramework').
         };
 
         $scope.getProgress = function () {
-            return $scope.views.indexOf(activeView) * 100 / $scope.views.length;
+            return $scope.views.indexOf(activeView) * 100 / 8;
         };
 
         $scope.shouldDisplayBackButton = function () {
@@ -73,6 +66,10 @@ angular.module('tabletFormFramework').
 
         $scope.shouldDisplayFinishButton = function () {
             return getActiveViewIndex() === $scope.views.length - 1;
+        };
+
+        $scope.shouldDisplayCancelButton = function () {
+            return getActiveViewIndex() === 0;
         };
 
         $scope.next = function () {
@@ -92,7 +89,6 @@ angular.module('tabletFormFramework').
                 else {
                     console.log("no handler for question: " + question);
                 }
-                if (question.value) { console.log(data); }
             });
             data.patient = $scope.patient.patientUuid;
             data.visit = $scope.patient.visitUuid;
@@ -105,11 +101,16 @@ angular.module('tabletFormFramework').
             });
         };
 
+        $scope.cancel = function() {
+            location.href = CONTEXT_PATH + "/ebolaexample/ebolaOverview.page?patient=" + $scope.patient.patientUuid;
+        };
+
         $scope.display = function (view) {
             activeView = view;
         };
 
         initialize();
         loadData();
+
 
     });

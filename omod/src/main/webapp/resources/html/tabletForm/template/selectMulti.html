@@ -1,0 +1,6 @@
+<label class="question-title">{{ question.label }} <em>(select one or more)</em></label>
+
+<span ng-repeat="option in question.options">
+    <input type="checkbox" id="{{ id }}{{ $index }}" name="{{ id }}" check-list="question.value" value="{{ option.value }}" />
+    <label for="{{ id }}{{ $index }}" class="radio-button" ng-class="question.buttonClass">{{ option.label }}</label>
+</span>

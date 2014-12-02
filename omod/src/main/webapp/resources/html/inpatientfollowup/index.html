@@ -5,16 +5,20 @@
         <script src="../../scripts/lib/angular/angular.min.js"></script>
         <script src="../../scripts/lib/jquery/jquery-2.1.1.min.js"></script>
         <script src="../../scripts/lib/lodash/dist/lodash.min.js"></script>
+        <script src="../../../uicommons/scripts/emr.js"></script>
         <script src="../../scripts/lib/angular-route/angular-route.min.js"></script>
-        <script src="../../scripts/inpatient-form/inpatient-form-module.js"></script>
-        <script src="../../scripts/inpatient-form/main-controller.js"></script>
-        <script src="../../scripts/inpatient-form/simple-form-controller.js"></script>
+        <script src="../../scripts/tablet-form/form-module.js"></script>
+        <script src="../../scripts/tablet-form/question-builder.js"></script>
+        <script src="../../scripts/tablet-form/form-controller.js"></script>
+        <script src="../../scripts/tablet-form/question-directive.js"></script>
+        <script src="../../scripts/tablet-form/common-metadata.js"></script>
+        <script src="../../scripts/inpatientfollowup/views.js"></script>
+        <script src="../../scripts/inpatientfollowup/questions.js"></script>
         <script src="../../scripts/inpatient-form/concept-mapping-factory.js"></script>
-        <script src="../../scripts/inpatient-form/observations-factory.js"></script>
         <script src="../../scripts/inpatient-form/listeners.js"></script>
     </head>
 
-    <body ng-app="inpatientForm">
+    <body ng-app="tabletForm">
       <form name="inpatientForm" ng-controller="MainController">
           <div class="page-wrap" ng-show="patient">
               <header>
@@ -49,7 +53,7 @@
               <div class="ebola-form">
                   <div class="section">
                       <div ng-repeat="view in views">
-                          <ng-include id="simpleController" ng-show="shouldDisplay(view)" src="view.file" ng-controller="SimpleFormController"></ng-include>
+                          <ng-include id="simpleController" ng-show="shouldDisplay(view)" src="view.file"></ng-include>
                       </div>
                   </div>
               </div>

@@ -1,51 +1,11 @@
 <div>
-  <div>
-    <span class="question-title">OVERALL SYMPTOMS<em>(Select one)</em></span>
-
-    <input id="symptons_1" type="radio" value="same" name="overallSymptoms" ng-model="viewModel.overallSymptoms" />
-    <label for="symptons_1" class="radio-button medium">Same</label>
-
-    <input id="symptons_2" type="radio" value="worse" name="overallSymptoms" ng-model="viewModel.overallSymptoms" />
-    <label for="symptons_2" class="radio-button medium">Worse</label>
-
-    <input id="symptons_3" type="radio" value="better" name="overallSymptoms" ng-model="viewModel.overallSymptoms" />
-    <label for="symptons_3" class="radio-button medium">Better</label>
-  </div>
-
-  <div>
-    <span class="question-title">FATIGUE<em>(Select one)</em></span>
-
-    <input id="fatique_1" type="radio" value="none" name="fatigue" ng-model="viewModel.fatigue" />
-    <label for="fatique_1" class="radio-button medium">None</label>
-
-    <input id="fatique_2" type="radio" value="mild" name="fatigue" ng-model="viewModel.fatigue" />
-    <label for="fatique_2" class="radio-button medium">Mild</label>
-
-    <input id="fatique_3" type="radio" value="moderate" name="fatigue" ng-model="viewModel.fatigue" />
-    <label for="fatique_3" class="radio-button medium">Mod</label>
-
-    <input id="fatique_4" type="radio" value="severe" name="fatigue" ng-model="viewModel.fatigue" />
-    <label for="fatique_4" class="radio-button medium">Sev</label>
-  </div>
+    <question question="questions.overallSymptoms"/>
 </div>
 
 <div>
-  <span class="question-title">BLEEDING<em>(Select one or more)</em></span>
+    <question question="questions.fatigue"/>
+</div>
 
-  <input id="bleeding_2" type="checkbox" value="noseOral" name="bleeding" ng-model="viewModel.bleeding.noseOral"/>
-  <label for="bleeding_2" class="radio-button small">Nose/Oral</label>
-
-  <input id="bleeding_3" type="checkbox" value="cough" name="bleeding" ng-model="viewModel.bleeding.cough"/>
-  <label for="bleeding_3" class="radio-button small">Cough</label>
-
-  <input id="bleeding_4" type="checkbox" value="vomit" name="bleeding" ng-model="viewModel.bleeding.vomit"/>
-  <label for="bleeding_4" class="radio-button small">Vomit</label>
-
-  <input id="bleeding_5" type="checkbox" value="stool" name="bleeding" ng-model="viewModel.bleeding.stool"/>
-  <label for="bleeding_5" class="radio-button small">Stool</label>
-  
-  <div class="separator">
-    <input id="bleeding_6" type="checkbox" value="vaginal" name="bleeding" ng-model="viewModel.bleeding.vaginal"/>
-    <label for="bleeding_6" class="radio-button small"><span>Vaginal (not menstrual)</span></label>
-  </div>
+<div>
+    <question question="questions.bleeding"/>
 </div>

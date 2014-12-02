@@ -1,23 +1,7 @@
-  <div>
-    <label for="stoolFreq" class="question-title">STOOL FREQ</label>
-    <div class="input-container">
-        <input ng-focus="focusInput($event)" ng-blur="blurInput($event)" ng-keyup="keyupInput($event)" type="number" value="none" name="stoolFreq" ng-model="viewModel.stoolFreq" min="0" max="9999" />
-        <label class="unit small">#/24H</label>
-    </div>
-  </div>
+<div>
+    <question question="questions.stoolFrequency"/>
+</div>
 
 <div>
-    <span class="question-title">MAIN STOOL TYPE<em>(Select one)</em></span>
-
-    <input id="stool_4" type="radio" value="none" name="mainStoolType" ng-model="viewModel.mainStoolType" />
-    <label for="stool_4" class="radio-button medium">None</label>
-
-    <input id="stool_1" type="radio" value="formed" name="mainStoolType" ng-model="viewModel.mainStoolType" />
-    <label for="stool_1" class="radio-button medium">Formed</label>
-
-    <input id="stool_2" type="radio" value="semiFormed" name="mainStoolType" ng-model="viewModel.mainStoolType" />
-    <label for="stool_2" class="radio-button medium"><span>Semi-Formed</span></label>
-
-    <input id="stool_3" type="radio" value="liquid" name="mainStoolType" ng-model="viewModel.mainStoolType" />
-    <label for="stool_3" class="radio-button medium">Liquid</label>
-  </div>
+    <question question="questions.mainStoolType"/>
+</div>

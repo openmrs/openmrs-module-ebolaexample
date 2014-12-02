@@ -35,19 +35,12 @@ $(function() {
     input.prop("checked", false);
     input.attr(IS_CHECKED, false);
 
-    scope.$apply(function() {
-      scope.viewModel[input.attr("name")] = "";
-    });
-
     event.preventDefault();
   }
 
   function checkRadio(inputList, input, scope) {
     inputList.attr(IS_CHECKED, false); //make all radios unchecked
     input.attr(IS_CHECKED, true);
-    scope.$apply(function() {
-      scope.viewModel[input.attr("name")] = input.val();
-    });
   }
 
 });
