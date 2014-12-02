@@ -1,0 +1,25 @@
+<div ng-controller="listWardsCtrl">
+
+    (Home) -> Wards
+
+    <h1>Suspect Wards</h1>
+    <ul>
+        <li ng-repeat="ward in suspectWards">
+            <a ui-sref="ward({uuid: ward.uuid})">{{ ward.display }}<a>
+        </li>
+    </ul>
+
+    <h1>Confirmed Wards</h1>
+    <ul>
+        <li ng-repeat="ward in confirmedWards">
+            {{ ward.display }}
+        </li>
+    </ul>
+
+    <h1>Recovery Wards</h1>
+    <ul>
+        <li ng-repeat="ward in recoveryWards">
+            {{ ward.display }}
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,11 @@
+<div ng-controller="WardController">
+
+    (Home) -> (Wards) -> Patients
+
+    <h1>Patients in Ward</h1>
+    <ul>
+        <li ng-repeat="patient in patients">
+            <a ui-sref="patient({id: patient.uuid})">{{ patient.display }}<a>
+        </li>
+    </ul>
+</div>
