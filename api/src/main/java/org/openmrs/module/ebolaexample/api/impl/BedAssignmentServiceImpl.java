@@ -2,7 +2,6 @@ package org.openmrs.module.ebolaexample.api.impl;
 
 import org.openmrs.Encounter;
 import org.openmrs.EncounterRole;
-import org.openmrs.EncounterType;
 import org.openmrs.Location;
 import org.openmrs.Patient;
 import org.openmrs.Provider;
@@ -20,7 +19,6 @@ import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.ebolaexample.WardBedAssignments;
 import org.openmrs.module.ebolaexample.api.BedAssignmentService;
 import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
-import org.openmrs.module.emrapi.EmrApiConstants;
 import org.openmrs.module.emrapi.adt.AdtAction;
 import org.openmrs.module.emrapi.adt.AdtService;
 import org.openmrs.module.emrapi.visit.VisitDomainWrapper;
@@ -66,7 +64,22 @@ public class BedAssignmentServiceImpl extends BaseOpenmrsService implements BedA
 		this.administrationService = administrationService;
 	}
 
-	@Override
+    @Override
+    @Transactional(readOnly = true)
+    public Patient getPatientAssignedTo(Location bed) {
+        VisitAttributeType assignedBed = MetadataUtils.existing(VisitAttributeType.class, EbolaMetadata._VisitAttributeType.ASSIGNED_BED);
+        Location visitLocation = adtService.getLocationThatSupportsVisits(bed);
+        for (VisitDomainWrapper visit : adtService.getActiveVisits(visitLocation)) {
+            for (VisitAttribute visitAttribute : visit.getVisit().getActiveAttributes(assignedBed)) {
+                if (bed.equals(visitAttribute.getValue())) {
+                    return visit.getVisit().getPatient();
+                }
+            }
+        }
+        return null;
+    }
+
+    @Override
 	@Transactional
 	public void assign(Patient patient, Location bed) {
 		Map<EncounterRole, Set<Provider>> providers = new HashMap<EncounterRole, Set<Provider>>();
@@ -85,12 +98,18 @@ public class BedAssignmentServiceImpl extends BaseOpenmrsService implements BedA
 		}  else if (bed.getParentLocation() == null) {
 			throw new APIException("The bed is not assigned to a ward");
 		}
-		EncounterType transferEncounterType = encounterService.getEncounterTypeByUuid(
-				administrationService.getGlobalProperty(EmrApiConstants.GP_TRANSFER_WITHIN_HOSPITAL_ENCOUNTER_TYPE));
-		if (encounterService.getEncounters(null, bed, null, null, null,
-				Arrays.asList(transferEncounterType), null, null, null, false).size() > 0) {
-			throw new APIException("The bed already has a patient assigned");
-		}
+
+        Patient currentlyAssignedPatient = getPatientAssignedTo(bed);
+        if (currentlyAssignedPatient != null) {
+            if (currentlyAssignedPatient.equals(patient)) {
+                // patient is already assigned to this bed, so we do nothing
+                return;
+            }
+            else {
+                throw new APIException("The bed already has a patient assigned");
+            }
+        }
+
 		Visit visit = activeVisit.getVisit();
 
 		VisitAttributeType assignedWardType = visitService.getVisitAttributeTypeByUuid(
