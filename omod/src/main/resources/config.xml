@@ -45,8 +45,9 @@
 	<!-- Module Activator -->
 	<activator>${project.parent.groupId}.${project.parent.artifactId}.EbolaExampleActivator</activator>
 
-	<mappingFiles>
-	</mappingFiles>
+    <packagesWithMappedClasses>
+        org.openmrs.module.ebolaexample.domain
+    </packagesWithMappedClasses>
 
 	<!-- Internationalization -->
 	<!-- All message codes should start with ${project.parent.artifactId}. -->
