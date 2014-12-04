@@ -1,6 +1,5 @@
 package org.openmrs.module.ebolaexample.api.impl;
 
-import org.openmrs.Encounter;
 import org.openmrs.EncounterRole;
 import org.openmrs.Location;
 import org.openmrs.Patient;
@@ -28,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -137,14 +137,31 @@ public class BedAssignmentServiceImpl extends BaseOpenmrsService implements BedA
 	@Override
 	@Transactional(readOnly=true)
 	public WardBedAssignments getBedAssignments(Location ward) {
-		Map<Location, Patient> bedAssignments = new HashMap<Location, Patient>();
-		for(VisitDomainWrapper visit : adtService.getActiveVisits(ward)) {
-			Encounter encounter = visit.getLatestAdtEncounter();
-			if (encounter != null) {
-				bedAssignments.put(encounter.getLocation(), encounter.getPatient());
-			}
-		}
+        VisitAttributeType assignedWard = visitService.getVisitAttributeTypeByUuid(
+                EbolaMetadata._VisitAttributeType.ASSIGNED_WARD);
+        VisitAttributeType assignedBed = visitService.getVisitAttributeTypeByUuid(
+                EbolaMetadata._VisitAttributeType.ASSIGNED_BED);
+
+        Map<Location, Patient> bedAssignments = new HashMap<Location, Patient>();
+
+        Location facility = adtService.getLocationThatSupportsVisits(ward);
+        for (VisitDomainWrapper visit : adtService.getActiveVisits(facility)) {
+            if (ward.equals(getAttribute(assignedWard, visit))) {
+                Location bed = getAttribute(assignedBed, visit);
+                Patient patient = getPatientAssignedTo(bed);
+                bedAssignments.put(bed, patient);
+            }
+        }
 		return new WardBedAssignments(ward, bedAssignments);
 	}
+
+    private Location getAttribute(VisitAttributeType assignedWardType, VisitDomainWrapper visit) {
+        Location assignedWard = null;
+        List<VisitAttribute> activeAttributes = visit.getVisit().getActiveAttributes(assignedWardType);
+        if (activeAttributes.size() > 0) {
+            assignedWard = (Location) activeAttributes.get(0).getValue();
+        }
+        return assignedWard;
+    }
 
 }
