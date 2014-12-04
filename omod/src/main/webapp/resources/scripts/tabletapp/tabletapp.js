@@ -1,10 +1,9 @@
-var OPENMRS_CONTEXT_PATH = 'ebola';
+var OPENMRS_CONTEXT_PATH = location.pathname.substring(1, location.pathname.indexOf('/', 1));
 
 angular.module("tabletapp", ['locationService', 'ui.router', 'ngResource', 'uicommons.widget.select-drug'])
 
 .config(function($stateProvider, $urlRouterProvider) {
 
-//    $urlRouterProvider.when(RegExp('/patients/*'), '/');
     $urlRouterProvider.otherwise('/wards');
 
     $stateProvider
