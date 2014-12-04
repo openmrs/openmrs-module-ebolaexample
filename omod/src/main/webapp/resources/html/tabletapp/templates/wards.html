@@ -5,21 +5,21 @@
     <h1>Suspect Wards</h1>
     <ul>
         <li ng-repeat="ward in suspectWards">
-            <a ui-sref="ward({uuid: ward.ward.uuid})">{{ ward.display }} ({{ ward.bedAssignments.length }})<a>
+            <a ui-sref="ward({uuid: ward.uuid})">{{ ward.display }} ({{ ward.bedAssignments.length }})<a>
         </li>
     </ul>
 
     <h1>Confirmed Wards</h1>
     <ul>
         <li ng-repeat="ward in confirmedWards">
-            <a ui-sref="ward({uuid: ward.ward.uuid})">{{ ward.display }} ({{ ward.bedAssignments.length }})<a>
+            <a ui-sref="ward({uuid: ward.uuid})">{{ ward.display }} ({{ ward.bedAssignments.length }})<a>
         </li>
     </ul>
 
     <h1>Recovery Wards</h1>
     <ul>
         <li ng-repeat="ward in recoveryWards">
-            <a ui-sref="ward({uuid: ward.ward.uuid})">{{ ward.display }} ({{ ward.bedAssignments.length }})<a>
+            <a ui-sref="ward({uuid: ward.uuid})">{{ ward.display }} ({{ ward.bedAssignments.length }})<a>
         </li>
     </ul>
 </div>
