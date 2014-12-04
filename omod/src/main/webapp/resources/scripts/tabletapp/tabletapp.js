@@ -1,9 +1,10 @@
 var OPENMRS_CONTEXT_PATH = 'ebola';
 
-angular.module("tabletapp", ['locationService', 'ui.router'])
+angular.module("tabletapp", ['locationService', 'ui.router', 'ngResource', 'uicommons.widget.select-drug'])
 
 .config(function($stateProvider, $urlRouterProvider) {
 
+//    $urlRouterProvider.when(RegExp('/patients/*'), '/');
     $urlRouterProvider.otherwise('/wards');
 
     $stateProvider
@@ -12,33 +13,83 @@ angular.module("tabletapp", ['locationService', 'ui.router'])
            templateUrl: 'templates/wards.html'
         })
         .state('ward', {
-            url: '/ward/:uuid',
+            url: '/wards/:uuid',
             templateUrl: 'templates/ward.html'
+        })
+        .state('patient', {
+            url: '/patients/:uuid',
+            templateUrl: 'templates/patient.html'
+        })
+        .state('patient.overview', {
+            url: '/overview',
+            templateUrl: 'templates/patient/overview.html'
+        })
+        .state('patient.addPrescription', {
+            url: '/addPrescription',
+            templateUrl: 'templates/patient/prescriptionForm.html'
         });
-})
+    })
 
-.controller("listWardsCtrl", [ '$scope', 'LocationService', function($scope, LocationService) {
+    .factory("WardResource", [ '$resource', function($resource) {
+        return $resource("/" + OPENMRS_CONTEXT_PATH  + "/ws/rest/v1/ebola/ward/:uuid", {
+            uuid: '@uuid'
+        },{
+            query: { method:'GET' }
+        });
+    }])
+
+    .factory("PatientResource", [ '$resource', function($resource) {
+        return $resource("/" + OPENMRS_CONTEXT_PATH  + "/ws/rest/v1/patient/:uuid", {
+            uuid: '@uuid'
+        },{
+            query: { method:'GET' }
+        });
+    }])
+
+    .factory("OrderResource", [ '$resource', function($resource) {
+        return $resource("/" + OPENMRS_CONTEXT_PATH  + "/ws/rest/v1/order/:uuid", {
+            uuid: '@uuid'
+        },{
+            query: { method:'GET' }
+        });
+    }])
+
+
+    .controller("ListWardsController", [ '$scope', 'WardResource', function($scope, WardResource) {
 
         $scope.suspectWards = [];
         $scope.confirmedWards = [];
         $scope.recoveryWards = [];
 
-        LocationService.getLocations({tag: "Ebola Suspect Ward"}).then(function(result) {
-            $scope.suspectWards = result;
+        WardResource.query({ v: 'default' }, function(response) {
+            var results = response.results;
+            $scope.suspectWards = _.where(results, { type: 'suspect'});
+            $scope.confirmedWards = _.where(results, { type: 'confirmed'});
+            $scope.recoveryWards = _.where(results, { type: 'recovery'});
         });
-        LocationService.getLocations({tag: "Ebola Confirmed Ward"}).then(function(result) {
-            $scope.confirmedWards = result;
-        });
-        LocationService.getLocations({tag: "Ebola Recovery Ward"}).then(function(result) {
-            $scope.recoveryWards = result;
-        });
-
     }])
 
-.controller("WardController", [ '$state', '$scope', 'LocationService', function($state, $scope, LocationService) {
+.controller("WardController", [ '$state', '$scope', 'WardResource', function($state, $scope, WardResource) {
     var wardId = $state.params.uuid;
+    $scope.ward = WardResource.get({ uuid: wardId });
 
-    PatientService.getPatients({ward: wardId}).then(function (patients) {
-        $scope.patients = patients.results;
-    })
-}]);
+}])
+
+.controller("PatientController", [ '$state', '$scope', 'PatientResource', 'OrderResource', function($state, $scope, PatientResource, OrderResource) {
+    var patientId = $state.params.uuid;
+
+    $scope.patient = PatientResource.get({ uuid: patientId });
+    OrderResource.query({ t: "drugorder", patient: patientId }, function(response) {
+        $scope.activeOrders = response.results;
+    });
+}])
+
+.controller("AddPrescriptionController", [ '$state', '$scope', 'OrderResource', function($state, $scope, OrderResource) {
+        $scope.addOrder = {
+            patient: $scope.patient
+        };
+
+        $scope.save = function(order) {
+            window.alert("Saving order for " + order.patient.display);
+        }
+    }]);

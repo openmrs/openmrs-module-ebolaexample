@@ -1,0 +1,10 @@
+<div ng-controller="AddPrescriptionController">
+
+    <h1>Adding new Prescription for {{ patient.display }}</h1>
+
+    <form>
+        <select-drug ng-model="addOrder.drug" placeholder="Other Drug" size="40"></select-drug>
+        <button type="submit" ng-show="addOrder.drug" ng-click="save(addOrder)">Save</button>
+    </form>
+
+</div>

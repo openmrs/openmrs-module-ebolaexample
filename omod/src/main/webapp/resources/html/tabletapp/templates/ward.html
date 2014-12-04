@@ -2,10 +2,10 @@
 
     (Home) -> (Wards) -> Patients
 
-    <h1>Patients in Ward</h1>
+    <h1>Patients in {{ ward.display }} ({{ ward.bedAssignments.length }})</h1>
     <ul>
-        <li ng-repeat="patient in patients">
-            <a ui-sref="patient({id: patient.uuid})">{{ patient.display }}<a>
+        <li ng-repeat="bedAssignment in ward.bedAssignments">
+            <a ui-sref="patient.overview({uuid: bedAssignment.patient.uuid})">{{ bedAssignment.patient.display }}<a>
         </li>
     </ul>
 </div>
