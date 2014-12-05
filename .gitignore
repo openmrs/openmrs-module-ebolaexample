@@ -25,3 +25,5 @@ omod/src/main/webapp/resources/styles/patientsByLocation.css
 
 omod/src/main/webapp/bower_components
 omod/src/main/webapp/node_modules/
+
+*.DS_Store
