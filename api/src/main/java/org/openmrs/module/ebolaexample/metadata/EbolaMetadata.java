@@ -1,8 +1,15 @@
 package org.openmrs.module.ebolaexample.metadata;
 
+import org.apache.commons.lang.StringUtils;
+import org.openmrs.*;
+import org.openmrs.api.AdministrationService;
+import org.openmrs.api.ConceptService;
+import org.openmrs.api.OrderService;
+import org.openmrs.api.context.Context;
 import org.openmrs.module.ebolaexample.customdatatype.datatype.LocationDatatype;
 import org.openmrs.module.emrapi.EmrApiConstants;
 import org.openmrs.module.metadatadeploy.bundle.AbstractMetadataBundle;
+import org.openmrs.util.OpenmrsConstants;
 import org.springframework.stereotype.Component;
 
 import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.encounterRole;
@@ -57,6 +64,32 @@ public class EbolaMetadata extends AbstractMetadataBundle {
 		public static final String ASSIGNED_BED = "c7d117f1-6ff4-11e4-9803-0800200c9a66";
 	}
 
+    private void maybeSetGP(AdministrationService service, String prop, String val) {
+        GlobalProperty gp = service.getGlobalPropertyObject(prop);
+        if (gp == null) {
+            service.saveGlobalProperty(new GlobalProperty(prop, val));
+        } else if (StringUtils.isEmpty(gp.getPropertyValue())) {
+            gp.setPropertyValue(val);
+            service.saveGlobalProperty(gp);
+        }
+    }
+
+    private void ensureOrderFrequencies(OrderService orderService, ConceptService conceptService, String uuid) {
+        if (orderService.getOrderFrequencies(true).size() == 0) {
+            Concept set = conceptService.getConceptByUuid(uuid);
+            if (set != null) {
+                for (ConceptAnswer conceptAnswer : set.getAnswers()) {
+                    Concept concept = conceptAnswer.getAnswerConcept();
+                    if (concept != null) {
+                        OrderFrequency frequency = new OrderFrequency();
+                        frequency.setConcept(concept);
+                        orderService.saveOrderFrequency(frequency);
+                    }
+                }
+            }
+        }
+    }
+
     @Override
     public void install() throws Exception {
         install(program("Ebola", "Treatment of Ebola patients and observation of suspects", _Concept.EBOLA_PROGRAM, _Program.EBOLA_PROGRAM));
@@ -82,6 +115,13 @@ public class EbolaMetadata extends AbstractMetadataBundle {
      		
 		install(visitAttributeType("Assigned ward", "", LocationDatatype.class, null, 0, 1, _VisitAttributeType.ASSIGNED_WARD));
 		install(visitAttributeType("Assigned bed", "", LocationDatatype.class, null, 0, 1, _VisitAttributeType.ASSIGNED_BED));
+
+        AdministrationService administrationService = Context.getAdministrationService();
+        maybeSetGP(administrationService, OpenmrsConstants.GP_DRUG_ROUTES_CONCEPT_UUID, "162394AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        maybeSetGP(administrationService, OpenmrsConstants.GP_DRUG_DOSING_UNITS_CONCEPT_UUID, "162384AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        maybeSetGP(administrationService, OpenmrsConstants.GP_DRUG_DISPENSING_UNITS_CONCEPT_UUID, "162402AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        maybeSetGP(administrationService, OpenmrsConstants.GP_DURATION_UNITS_CONCEPT_UUID, "1732AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        ensureOrderFrequencies(Context.getOrderService(), Context.getConceptService(), "160855AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     }
 
 }
