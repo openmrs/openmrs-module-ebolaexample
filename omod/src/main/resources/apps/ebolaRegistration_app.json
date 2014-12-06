@@ -17,7 +17,9 @@
             }
         ],
         "config": {
-            "afterCreatedUrl": "htmlformentryui/htmlform/enterHtmlFormWithSimpleUi.page?patientId={{patientId}}&visitId=&definitionUiResource=ebolaexample%3Ahtmlforms%2Ftriage.xml&returnUrl=%2Fopenmrs%2Febolaexample%2FebolaOverview.page%3Fpatient%3D8%26&",
+            // when we implement triage, switch to this line (but add a returnUrl, or else put a redirect from the coreapps patient dashboard to the ebola one
+            // "afterCreatedUrl": "htmlformentryui/htmlform/enterHtmlFormWithSimpleUi.page?patientId={{patientId}}&visitId=&definitionUiResource=ebolaexample%3Ahtmlforms%2Ftriage.xml",
+            "afterCreatedUrl": "ebolaexample/ebolaOverview.page?patient={{patientId}}",
             "sections": [
                 {
                     "id": "contactInfo",
