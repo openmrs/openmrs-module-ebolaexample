@@ -1,10 +1,11 @@
-<div ng-controller="AddPrescriptionController">
+<div ng-controller="AddPrescriptionController" xmlns="http://www.w3.org/1999/html">
 
     <h1>Adding new Prescription for {{ patient.display }}</h1>
 
     <form>
-        <select-drug ng-model="addOrder.drug" placeholder="Other Drug" size="40"></select-drug>
-        <button type="submit" ng-show="addOrder.drug" ng-click="save(addOrder)">Save</button>
+        <div>Instructions: <textarea ng-model="addOrder.instructions" rows="5" cols="60"></textarea></div>
+        <div><select-drug ng-model="addOrder.drug" placeholder="Other Drug" size="40"></select-drug></div>
+        <div><button type="submit" ng-show="addOrder.drug && addOrder.instructions" ng-click="save(addOrder)">Save</button></div>
     </form>
 
 </div>

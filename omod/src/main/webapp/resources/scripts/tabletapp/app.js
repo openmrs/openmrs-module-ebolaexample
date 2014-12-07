@@ -108,8 +108,20 @@ angular.module("tabletapp", ['locationService', 'ui.router', 'ngResource', 'uico
         }
     })
 
-    .controller("AddPrescriptionController", [ '$state', '$scope', 'OrderResource', 'Constants', 'EncounterResource',
-        function ($state, $scope, OrderResource, Constants, EncounterResource) {
+    .factory("CurrentSession", ['$http', function($http) {
+        var cachedInfo;
+        return {
+            getInfo: function() {
+                if(!cachedInfo) {
+                    cachedInfo = $http.get("/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/session-info");
+                }
+                return cachedInfo;
+            }
+        };
+    }])
+
+    .controller("AddPrescriptionController", [ '$state', '$scope', 'OrderResource', 'Constants', 'EncounterResource', 'CurrentSession',
+        function ($state, $scope, OrderResource, Constants, EncounterResource, CurrentSession) {
             $scope.addOrder = {
                 patient: $scope.patient
             };
@@ -121,19 +133,21 @@ angular.module("tabletapp", ['locationService', 'ui.router', 'ngResource', 'uico
                     "encounterType": Constants.encounterType.ebolaInpatientFollowup
                 };
                 new EncounterResource(encounterJson).$save().then(function (encounter) {
-                    var orderJson = {
-                            "type": Constants.orderType.drugorder,
-                            "patient": order.patient.uuid,
-                            "drug": order.drug.uuid,
-                            "encounter": encounter.uuid,
-                            "careSetting": Constants.careSetting.inpatient,
-                            "orderer": "ebac60fd-49fe-4047-8cad-1e678843a7de",
-                            "dosingType": Constants.dosingType.freeText,
-                            "dosingInstructions": "Two times a day!"
-                    }
-                    new OrderResource(orderJson).$save().then(function (order) {
-                        console.log(order);
-                    });
+                    CurrentSession.getInfo().then(function (response) {
+                        var orderJson = {
+                                "type": Constants.orderType.drugorder,
+                                "patient": order.patient.uuid,
+                                "drug": order.drug.uuid,
+                                "encounter": encounter.uuid,
+                                "careSetting": Constants.careSetting.inpatient,
+                                "orderer": response.data.providers[0]['uuid'],
+                                "dosingType": Constants.dosingType.freeText,
+                                "dosingInstructions": order.instructions
+                        }
+                        new OrderResource(orderJson).$save().then(function (order) {
+                            console.log(order);
+                        });
+                    })
                 })
             }
         }]);
