@@ -286,7 +286,7 @@
                     <webDriverCapabilities>
                         <capability>
                             <name>phantomjs.binary.path</name>
-                            <value>/usr/local/Cellar/phantomjs/1.9.7/bin/phantomjs</value>
+                            <value>${phantomjs.binary}</value>
                         </capability>
                     </webDriverCapabilities>
                 </configuration>
