@@ -249,6 +249,48 @@
                     </execArgs>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.github.searls</groupId>
+                <artifactId>jasmine-maven-plugin</artifactId>
+                <version>1.3.1.5</version>
+                <extensions>true</extensions>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <jsSrcDir>src/main/webapp/resources/scripts/tabletapp</jsSrcDir>
+                    <jsTestSrcDir>src/test/webapp/resources/scripts/tabletapp</jsTestSrcDir>
+                    <preloadSources>
+                        <source>src/main/webapp/resources/scripts/lib/angular/angular.js</source>
+                        <source>src/main/webapp/resources/scripts/lib/angular/angular-resource.js</source>
+                        <source>src/main/webapp/resources/scripts/lib/angular/angular-mocks.js</source>
+                        <source>src/main/webapp/resources/scripts/lib/ui-router/angular-ui-router.js</source>
+                        <source>src/main/webapp/resources/scripts/lib/lodash/dist/lodash.js</source>
+                        <source>src/main/webapp/resources/scripts/lib/jquery/jquery-2.1.1.min.js</source>
+                        <source>src/main/webapp/resources/scripts/uicommons/angular-ui/ui-bootstrap-tpls-0.11.2.js"></source>
+                        <source>src/main/webapp/resources/scripts/uicommons/emr.js"></source>
+                        <source>src/main/webapp/resources/scripts/uicommons/angular-common.js"></source>
+                        <source>src/main/webapp/resources/scripts/uicommons/services/locationService.js"></source>
+                        <source>src/main/webapp/resources/scripts/uicommons/services/drugService.js"></source>
+                        <source>src/main/webapp/resources/scripts/uicommons/services/orderService.js"></source>
+                        <source>src/main/webapp/resources/scripts/uicommons/directives/select-drug.js"></source>
+                        <source>src/main/webapp/resources/scripts/tabletapp/app.js"></source>
+                    </preloadSources>
+                    <serverPort>7234</serverPort>
+                    <skipTests>false</skipTests>
+                    <webDriverClassName>org.openqa.selenium.phantomjs.PhantomJSDriver</webDriverClassName>
+                    <webDriverCapabilities>
+                        <capability>
+                            <name>phantomjs.binary.path</name>
+                            <value>/usr/local/Cellar/phantomjs/1.9.7/bin/phantomjs</value>
+                        </capability>
+                    </webDriverCapabilities>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 

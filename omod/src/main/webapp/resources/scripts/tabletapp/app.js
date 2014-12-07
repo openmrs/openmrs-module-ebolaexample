@@ -1,6 +1,6 @@
 var OPENMRS_CONTEXT_PATH = location.pathname.substring(1, location.pathname.indexOf('/', 1));
 
-angular.module("tabletapp", ['locationService', 'ui.router', 'ngResource', 'uicommons.widget.select-drug'])
+angular.module("tabletapp", ['ui.router', 'ngResource', 'uicommons.widget.select-drug'])
 
     .config(function ($stateProvider, $urlRouterProvider) {
 
@@ -145,7 +145,7 @@ angular.module("tabletapp", ['locationService', 'ui.router', 'ngResource', 'uico
                                 "dosingInstructions": order.instructions
                         }
                         new OrderResource(orderJson).$save().then(function (order) {
-                            console.log(order);
+                            $scope.newOrder = order;
                         });
                     })
                 })
