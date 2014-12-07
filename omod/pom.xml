@@ -254,13 +254,13 @@
                 <artifactId>jasmine-maven-plugin</artifactId>
                 <version>1.3.1.5</version>
                 <extensions>true</extensions>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<goals>-->
+                            <!--<goal>test</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
                 <configuration>
                     <jsSrcDir>src/main/webapp/resources/scripts/tabletapp</jsSrcDir>
                     <jsTestSrcDir>src/test/webapp/resources/scripts/tabletapp</jsTestSrcDir>
