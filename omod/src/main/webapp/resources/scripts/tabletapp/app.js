@@ -119,41 +119,51 @@ angular.module("tabletapp", ['ui.router', 'ngResource', 'ngDialog', 'uicommons.w
         }
     })
 
-    .factory("CurrentSession", ['$http', function($http) {
-        var cachedInfo;
-        return {
-            getInfo: function() {
-                if(!cachedInfo) {
-                    cachedInfo = $http.get("/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/session-info");
+    .factory("CurrentSession", ['$http', 'Constants', 'EncounterResource',
+        function ($http, Constants, EncounterResource) {
+            var cachedInfo,
+                cachedEncounter,
+                cachedEncounterPatientUUID;
+            return {
+                getInfo: function () {
+                    if (!cachedInfo) {
+                        cachedInfo = $http.get("/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/session-info");
+                    }
+                    return cachedInfo;
+                },
+                getEncounter: function (patientUUID) {
+                    if (cachedEncounter && cachedEncounterPatientUUID == patientUUID) {
+                        return cachedEncounter;
+                    }
+                    cachedEncounterPatientUUID = patientUUID;
+                    cachedEncounter = new EncounterResource({
+                        "encounterDatetime": new Date().toJSON(),
+                        "patient": patientUUID,
+                        "encounterType": Constants.encounterType.ebolaInpatientFollowup
+                    }).$save();
+                    return cachedEncounter;
                 }
-                return cachedInfo;
-            }
-        };
-    }])
+            };
+        }])
 
-    .controller("AddPrescriptionController", [ '$state', '$scope', 'OrderResource', 'Constants', 'EncounterResource', 'CurrentSession',
-        function ($state, $scope, OrderResource, Constants, EncounterResource, CurrentSession) {
+    .controller("AddPrescriptionController", [ '$state', '$scope', 'OrderResource', 'Constants', 'CurrentSession',
+        function ($state, $scope, OrderResource, Constants, CurrentSession) {
             $scope.addOrder = {
                 patient: $scope.patient
             };
 
             $scope.save = function (order) {
-                var encounterJson = {
-                    "encounterDatetime": new Date().toJSON(),
-                    "patient": order.patient.uuid,
-                    "encounterType": Constants.encounterType.ebolaInpatientFollowup
-                };
-                new EncounterResource(encounterJson).$save().then(function (encounter) {
+                CurrentSession.getEncounter(order.patient.uuid).then(function (encounter) {
                     CurrentSession.getInfo().then(function (response) {
                         var orderJson = {
-                                "type": Constants.orderType.drugorder,
-                                "patient": order.patient.uuid,
-                                "drug": order.drug.uuid,
-                                "encounter": encounter.uuid,
-                                "careSetting": Constants.careSetting.inpatient,
-                                "orderer": response.data.providers[0]['uuid'],
-                                "dosingType": Constants.dosingType.freeText,
-                                "dosingInstructions": order.instructions
+                            "type": Constants.orderType.drugorder,
+                            "patient": order.patient.uuid,
+                            "drug": order.drug.uuid,
+                            "encounter": encounter.uuid,
+                            "careSetting": Constants.careSetting.inpatient,
+                            "orderer": response.data.providers[0]['uuid'],
+                            "dosingType": Constants.dosingType.freeText,
+                            "dosingInstructions": order.instructions
                         }
                         new OrderResource(orderJson).$save().then(function (order) {
                             $scope.newOrder = order;
