@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAda
 import org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -64,15 +65,18 @@ public class SessionInfoControllerTest extends BaseModuleWebContextSensitiveTest
     public void shouldReturnUUIDsForSession() throws Exception {
         User user = Context.getAuthenticatedUser();
         Provider provider = Context.getProviderService().getProvidersByPerson(user.getPerson()).iterator().next();
-
         MockHttpServletRequest request = new MockHttpServletRequest("GET", "/rest/" + RestConstants.VERSION_1 + "/"
                 + requestURI);
         request.addHeader("content-type", "application/json");
 
         response = handle(request);
         SimpleObject responseObject = new ObjectMapper().readValue(response.getContentAsString(), SimpleObject.class);
-        assertEquals(responseObject.get("userId"), user.getUuid());
-        assertEquals(responseObject.get("personId"), user.getPerson().getUuid());
+
+        LinkedHashMap parsedUser = (LinkedHashMap<String, String>) responseObject.get("user");
+        assertEquals(parsedUser.get("uuid"), user.getUuid());
+
+        LinkedHashMap parsedPerson = (LinkedHashMap<String, String>) responseObject.get("person");
+        assertEquals(parsedPerson.get("uuid"), user.getPerson().getUuid());
 
         List<Map> providers = (List<Map>) responseObject.get("providers");
         assertEquals(providers.size(), 1);
