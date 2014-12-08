@@ -3,7 +3,7 @@
     <h1>Adding new Prescription for {{ patient.display }}</h1>
 
     <form>
-        <div>Instructions: <textarea ng-model="addOrder.instructions" rows="5" cols="60"></textarea></div>
+        <div>Instructions: <textarea ng-model="addOrder.drug.instructions" rows="5" cols="60"></textarea></div>
         <div><select-drug ng-model="addOrder.drug" placeholder="Other Drug" size="40"></select-drug></div>
         <div><button type="submit" ng-show="addOrder.drug && addOrder.instructions" ng-click="save(addOrder)">Save</button></div>
     </form>

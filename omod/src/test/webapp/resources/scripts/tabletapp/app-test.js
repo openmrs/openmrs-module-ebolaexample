@@ -17,11 +17,15 @@ describe('app', function(){
                 uuid: 'NEW ORDER UUID'
             },
             sessionInfoResponseStub = {
-                "userId": "USER_UUID",
-                "personId": "PERSON_UUID",
-                "providers": [
+                user: {
+                    uuid: "USER_UUID"
+                },
+                person: {
+                    uuid: "PERSON_UUID"
+                },
+                providers: [
                     {
-                        "uuid": "PROVIDER_1_UUID"
+                        uuid: "PROVIDER_1_UUID"
                     }
                 ]
             },
@@ -48,6 +52,16 @@ describe('app', function(){
         });
 
         it('should save newly created order', function () {
+            httpMock.expectPOST(appUrl + 'order', {
+                "type": "drugorder",
+                "patient": "PATIENT_UUID",
+                "drug": "DRUG_UUID",
+                "encounter": "ENCOUNTER_ID",
+                "careSetting": "c365e560-c3ec-11e3-9c1a-0800200c9a66",
+                "orderer": "PROVIDER_1_UUID",
+                "dosingType": "org.openmrs.FreeTextDosingInstructions",
+                "dosingInstructions": "Drug instructions"
+            })
             scope.save(order);
             httpMock.flush();
             expect(scope.newOrder['uuid']).toEqual('NEW ORDER UUID');

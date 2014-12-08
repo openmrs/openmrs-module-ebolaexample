@@ -163,7 +163,7 @@ angular.module("tabletapp", ['ui.router', 'ngResource', 'ngDialog', 'uicommons.w
                             "careSetting": Constants.careSetting.inpatient,
                             "orderer": response.data.providers[0]['uuid'],
                             "dosingType": Constants.dosingType.freeText,
-                            "dosingInstructions": order.instructions
+                            "dosingInstructions": order.drug.instructions
                         }
                         new OrderResource(orderJson).$save().then(function (order) {
                             $scope.newOrder = order;
