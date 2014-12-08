@@ -13,6 +13,10 @@
     <name>Ebola Example Module OMOD</name>
     <description>OMOD project for EbolaExample</description>
 
+    <properties>
+        <projectBowerResources>${project.basedir}/src/main/webapp/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts</projectBowerResources>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
@@ -286,14 +290,14 @@
                         <source>src/main/webapp/resources/scripts/lib/ui-router/angular-ui-router.js</source>
                         <source>src/main/webapp/resources/scripts/lib/lodash/dist/lodash.js</source>
                         <source>src/main/webapp/resources/scripts/lib/jquery/jquery-2.1.1.min.js</source>
-                        <source>src/main/webapp/resources/scripts/uicommons/angular-ui/ui-bootstrap-tpls-0.11.2.js"></source>
-                        <source>src/main/webapp/resources/scripts/uicommons/emr.js"></source>
-                        <source>src/main/webapp/resources/scripts/uicommons/angular-common.js"></source>
-                        <source>src/main/webapp/resources/scripts/uicommons/services/locationService.js"></source>
-                        <source>src/main/webapp/resources/scripts/uicommons/services/drugService.js"></source>
-                        <source>src/main/webapp/resources/scripts/uicommons/services/orderService.js"></source>
-                        <source>src/main/webapp/resources/scripts/uicommons/directives/select-drug.js"></source>
-                        <source>src/main/webapp/resources/scripts/tabletapp/app.js"></source>
+                        <source>src/main/webapp/resources/scripts/tabletapp/app.js</source>
+                        <source>src/main/webapp/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts/directives/select-drug.js</source>
+                        <source>src/main/webapp/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts/services/drugService.js</source>
+                        <source>src/main/webapp/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts/services/locationService.js</source>
+                        <source>src/main/webapp/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts/services/orderService.js</source>
+                        <source>src/main/webapp/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts/emr.js</source>
+                        <source>src/main/webapp/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts/angular-ui/ui-bootstrap-tpls-0.11.2.js</source>
+                        <source>src/main/webapp/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts/angular-common.js</source>
                     </preloadSources>
                     <serverPort>7234</serverPort>
                     <skipTests>false</skipTests>
@@ -304,6 +308,26 @@
                             <value>${phantomjs.binary}</value>
                         </capability>
                     </webDriverCapabilities>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <executable>bower</executable>
+                    <arguments>
+                        <argument>install</argument>
+                        <argument>--allow-root</argument>
+                    </arguments>
+                    <workingDirectory>${basedir}/src/main/webapp</workingDirectory>
                 </configuration>
             </plugin>
         </plugins>
