@@ -35,8 +35,8 @@ describe('app', function(){
                 },
                 drug: {
                     uuid: 'DRUG_UUID',
-                    instructions: 'Drug instructions'
-                }
+                },
+                instructions: 'Drug instructions'
             };
 
         beforeEach(function () {

@@ -2,10 +2,73 @@
 
     <h1>Adding new Prescription for {{ patient.display }}</h1>
 
-    <form>
-        <div>Instructions: <textarea ng-model="addOrder.drug.instructions" rows="5" cols="60"></textarea></div>
-        <div><select-drug ng-model="addOrder.drug" placeholder="Other Drug" size="40"></select-drug></div>
-        <div><button type="submit" ng-show="addOrder.drug && addOrder.instructions" ng-click="save(addOrder)">Save</button></div>
+    <div ng-show="!addOrder.drug">
+        <select-drug ng-model="addOrder.drug" placeholder="Other Drug" size="40"></select-drug>
+    </div>
+    <form ng-show="addOrder.drug">
+        <div>{{ addOrder.drug.display }}</div>
+        <div>
+            <input id="free-text-instructions-checkbox" type="checkbox" ng-model="addOrder.freeTextInstructions">
+            <label for="free-text-instructions-checkbox" class="radio-button medium">Fill later</label>
+        </div>
+        <div ng-show="addOrder.freeTextInstructions">
+            <span class="question-title">INSTRUCTIONS:</span>
+            <textarea ng-model="addOrder.instructions" rows="5" cols="60"
+                      ng-required="addOrder.freeTextInstructions"></textarea>
+        </div>
+        <div ng-show="!addOrder.freeTextInstructions">
+            <span>
+                <span class="question-title">DOSE</span>
+                <input ng-mode="addOrder.drug.dose" type="text" ng-required="!addOrder.freeTestInstructions">
+            </span>
+            <span>
+                <span class="question-title">ROUTE</span>
+
+                <input id="route_1" type="radio" value="iv" name="route" ng-model="addOrder.route"/>
+                <label for="route_1" class="radio-button medium">IV</label>
+
+                <input id="route_2" type="radio" value="im" name="route" ng-model="addOrder.route"/>
+                <label for="route_2" class="radio-button medium">IM</label>
+            </span>
+            <div>
+                <span class="question-title">DURATION</span>
+
+                <input ng-mode="addOrder.drug.durationLength" type="text" ng-required="!addOrder.freeTestInstructions">
+
+                <input id="duration_1" type="radio" value="days" name="duration" ng-model="addOrder.durationType"/>
+                <label for="duration_1" class="radio-button small">Days</label>
+
+                <input id="duration_2" type="radio" value="times" name="duration" ng-model="addOrder.durationType"/>
+                <label for="duration_2" class="radio-button small">Times</label>
+
+            </div>
+
+            <div>
+                <span class="question-title">TIME OF DAY</span>
+
+                <input id="round_morning" type="checkbox" value="iv" name="route" ng-model="addOrder.roundMorning"/>
+                <label for="round_morning" class="radio-button small">Morning</label>
+                <input id="round_afternoon" type="checkbox" value="iv" name="route" ng-model="addOrder.roundAfternoon"/>
+                <label for="round_afternoon" class="radio-button small">Afternoon</label>
+                <input id="round_evening" type="checkbox" value="iv" name="route" ng-model="addOrder.roundEvening"/>
+                <label for="round_evening" class="radio-button small">Evening</label>
+                <input id="round_night" type="checkbox" value="iv" name="route" ng-model="addOrder.roundNight"/>
+                <label for="round_night" class="radio-button small">Night</label>
+            </div>
+
+        </div>
+        <div>
+            <button type="submit" ng-click="save(addOrder)">Save</button>
+        </div>
     </form>
 
-</div>
+    <div ng-show="addOrder.drug">
+        <input id="showHints" type="checkbox" value="iv" ng-model="showHints"/>
+        <label for="showHints" class="radio-button small">Show Hints</label>
+        <span ng-show="showHints">
+            {{ addOrder.drug.display }}
+        </span>
+    </div>
+
+
+    </div>
