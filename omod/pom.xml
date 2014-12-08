@@ -14,7 +14,7 @@
     <description>OMOD project for EbolaExample</description>
 
     <properties>
-        <projectBowerResources>${project.basedir}/src/main/webapp/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts</projectBowerResources>
+        <projectBowerResources>${project.basedir}/src/main/webapp/resources/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts</projectBowerResources>
     </properties>
 
     <dependencies>
@@ -284,20 +284,21 @@
                     <jsSrcDir>src/main/webapp/resources/scripts/tabletapp</jsSrcDir>
                     <jsTestSrcDir>src/test/webapp/resources/scripts/tabletapp</jsTestSrcDir>
                     <preloadSources>
-                        <source>src/main/webapp/resources/scripts/lib/angular/angular.js</source>
+                        <source>src/main/webapp/resources/bower_components/angular/angular.js</source>
+                        <source>src/main/webapp/resources/bower_components/ngDialog/js/ngDialog.js</source>
                         <source>src/main/webapp/resources/scripts/lib/angular/angular-resource.js</source>
                         <source>src/main/webapp/resources/scripts/lib/angular/angular-mocks.js</source>
                         <source>src/main/webapp/resources/scripts/lib/ui-router/angular-ui-router.js</source>
                         <source>src/main/webapp/resources/scripts/lib/lodash/dist/lodash.js</source>
                         <source>src/main/webapp/resources/scripts/lib/jquery/jquery-2.1.1.min.js</source>
                         <source>src/main/webapp/resources/scripts/tabletapp/app.js</source>
-                        <source>src/main/webapp/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts/directives/select-drug.js</source>
-                        <source>src/main/webapp/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts/services/drugService.js</source>
-                        <source>src/main/webapp/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts/services/locationService.js</source>
-                        <source>src/main/webapp/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts/services/orderService.js</source>
-                        <source>src/main/webapp/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts/emr.js</source>
-                        <source>src/main/webapp/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts/angular-ui/ui-bootstrap-tpls-0.11.2.js</source>
-                        <source>src/main/webapp/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts/angular-common.js</source>
+                        <source>src/main/webapp/resources/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts/directives/select-drug.js</source>
+                        <source>src/main/webapp/resources/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts/services/drugService.js</source>
+                        <source>src/main/webapp/resources/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts/services/locationService.js</source>
+                        <source>src/main/webapp/resources/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts/services/orderService.js</source>
+                        <source>src/main/webapp/resources/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts/emr.js</source>
+                        <source>src/main/webapp/resources/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts/angular-ui/ui-bootstrap-tpls-0.11.2.js</source>
+                        <source>src/main/webapp/resources/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts/angular-common.js</source>
                     </preloadSources>
                     <serverPort>7234</serverPort>
                     <skipTests>false</skipTests>
@@ -327,7 +328,7 @@
                         <argument>install</argument>
                         <argument>--allow-root</argument>
                     </arguments>
-                    <workingDirectory>src/main/webapp</workingDirectory>
+                    <workingDirectory>src/main/webapp/resources</workingDirectory>
                 </configuration>
             </plugin>
         </plugins>

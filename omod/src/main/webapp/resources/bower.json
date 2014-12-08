@@ -12,6 +12,7 @@
     "tests"
   ],
   "dependencies": {
-    "openmrs-uicommons": "master"
+    "openmrs-uicommons": "master",
+    "ngDialog": "0.3.6"
   }
 }

@@ -1,12 +1,21 @@
 Active Prescriptions:
 <ul>
     <li ng-repeat="order in activeOrders">
-        {{ order.display }} <button ng-click="showAdminister(order)">Administer</button>
+        {{ order.display }}
+        <button ng-click="showAdminister(order)">Administer</button>
     </li>
 </ul>
-    <div ng-show="administerDialogFor">
-        {{administerDialogFor}}
+
+<!--<div ng-show="administerDialogFor">-->
+    <!--{{administerDialogFor}}-->
+<!--</div>-->
+
+<script type="text/ng-template" id="administerDialog">
+    <div class="ngdialog-message">
+        <b>Administering: {{administerDialogFor.display}}</b>
     </div>
-    <a ui-sref="patient.addPrescription">Add</a>
+</script>
+
+<a ui-sref="patient.addPrescription">Add</a>
 
 

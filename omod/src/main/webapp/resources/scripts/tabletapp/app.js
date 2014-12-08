@@ -1,6 +1,6 @@
 var OPENMRS_CONTEXT_PATH = location.pathname.substring(1, location.pathname.indexOf('/', 1));
 
-angular.module("tabletapp", ['ui.router', 'ngResource', 'uicommons.widget.select-drug'])
+angular.module("tabletapp", ['ui.router', 'ngResource', 'ngDialog', 'uicommons.widget.select-drug'])
 
     .config(function ($stateProvider, $urlRouterProvider) {
 
@@ -82,13 +82,24 @@ angular.module("tabletapp", ['ui.router', 'ngResource', 'uicommons.widget.select
 
     }])
 
-    .controller("PatientController", [ '$state', '$scope', 'PatientResource', 'OrderResource', function ($state, $scope, PatientResource, OrderResource) {
+    .controller("PatientController", [ '$state', '$scope', 'PatientResource', 'OrderResource', 'ngDialog', function ($state, $scope, PatientResource, OrderResource, ngDialog) {
         var patientId = $state.params.uuid;
 
         $scope.patient = PatientResource.get({ uuid: patientId });
         OrderResource.query({ t: "drugorder", patient: patientId }, function (response) {
             $scope.activeOrders = response.results;
         });
+
+        $scope.showAdminister = function(order){
+            $scope.administerDialogFor = order;
+            ngDialog.open({
+                template: 'administerDialog',
+                controller: 'PatientController',
+                className: 'ngdialog-theme-plain',
+                closeByDocument: false,
+                scope: $scope
+            });
+        }
     }])
 
     .factory("Constants", function () {
@@ -148,6 +159,7 @@ angular.module("tabletapp", ['ui.router', 'ngResource', 'uicommons.widget.select
                             $scope.newOrder = order;
                         });
                     })
+
                 })
             }
         }]);
