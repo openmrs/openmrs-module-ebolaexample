@@ -327,7 +327,7 @@
                         <argument>install</argument>
                         <argument>--allow-root</argument>
                     </arguments>
-                    <workingDirectory>${basedir}/src/main/webapp</workingDirectory>
+                    <workingDirectory>${project.basedir}/src/main/webapp</workingDirectory>
                 </configuration>
             </plugin>
         </plugins>
