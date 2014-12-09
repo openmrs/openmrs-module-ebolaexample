@@ -1,0 +1,21 @@
+.tablet-list {
+	list-style: none;
+	padding: 0 10px;
+
+	li {
+		display: inline-block;
+
+		a {
+			text-decoration: none;
+		}
+	}
+}
+
+.question-title {
+	display: block;
+	font-size: 1.8em;
+	font-family: "OpenSansBold";
+	color: #595959;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}

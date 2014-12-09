@@ -1,0 +1,47 @@
+.patient-header {
+	background: #595959;
+	padding: 0.3em;
+	color: #ffcc00;
+	font-family: "OpenSansBold";
+	font-size: 2.5em;
+	overflow: hidden;
+}
+
+.navigation {
+	background: repeating-linear-gradient(
+	  45deg,
+	  #6E8F26,
+	  #6E8F26 10px,
+	  #64851B 10px,
+	  #64851B 20px
+	);
+	background-repeat: no-repeat;
+	font-family: "OpenSans";
+	color: white;
+	padding: 0.7em 0.5em;
+
+	h3 {
+		display: block;
+		margin: 5px;
+	}
+}
+
+.progress {
+	font-size: 1.8em;
+	color: rgb(207, 207, 207);
+	font-family: "OpenSansBold";
+	position: absolute;
+	left: 45%;
+	display: inline-block;
+	margin-top: 17px;
+}
+
+.patient-id {
+	float: left;
+	margin-right: 0.5em;
+}
+
+.patient-info {
+	float: right;
+	margin-left: 0.5em;
+}
