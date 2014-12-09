@@ -103,7 +103,7 @@ angular.module("tabletapp", ['ui.router', 'ngResource', 'ngDialog', 'uicommons.w
         });
 
         $scope.getPatientId = function() {
-            return $scope.patient.display.split(' ')[0];
+            return $scope.patient && $scope.patient.display && $scope.patient.display.split(' ')[0];
         };
 
         $scope.showAdminister = function(order){

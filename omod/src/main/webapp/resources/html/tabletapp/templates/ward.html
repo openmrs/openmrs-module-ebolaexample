@@ -1,11 +1,14 @@
-<div ng-controller="WardController">
+<div class="page-wrap" ng-controller="WardController">
 
     (Home) -> (Wards) -> Patients
 
     <h1>Patients in {{ ward.display }} ({{ ward.bedAssignments.length }})</h1>
-    <ul>
+    <ul class="tablet-list">
         <li ng-repeat="bedAssignment in ward.bedAssignments">
-            <a ui-sref="patient.overview({uuid: bedAssignment.patient.uuid})">{{ bedAssignment.patient.display }}<a>
+            <a class="radio-button long small" ui-sref="patient.overview({uuid: bedAssignment.patient.uuid})"><span>{{ bedAssignment.patient.display }}</span><a>
         </li>
     </ul>
+</div>
+<div class="actions">
+	<button class="left">BACK</button>
 </div>

@@ -1,4 +1,4 @@
-Active Prescriptions:
+<span class="question-title">Active Prescriptions</span>
 <ul>
     <li ng-repeat="order in activeOrders">
         {{ order.display }}
@@ -16,6 +16,6 @@ Active Prescriptions:
     </div>
 </script>
 
-<a ui-sref="patient.addPrescription">Add</a>
+<button ui-sref="patient.addPrescription">Add new prescription</button>
 
 
