@@ -56,7 +56,7 @@ describe('app', function(){
             });
         });
 
-        it('should save newly created order', function () {
+        it('should save newly created order with free text instructions', function () {
             initController();
             httpMock.expectPOST(apiUrl + 'order', {
                 "type": "drugorder",
@@ -68,6 +68,28 @@ describe('app', function(){
                 "dosingType": "org.openmrs.FreeTextDosingInstructions",
                 "dosingInstructions": "Drug instructions"
             })
+            order['freeTextInstructions'] = true;
+            scope.save(order);
+            httpMock.flush();
+            this.expect(scope.newOrder['uuid']).toEqual('NEW ORDER UUID');
+        });
+
+        it('should save newly created order with simple instructions', function () {
+            initController();
+            httpMock.expectPOST(apiUrl + 'order', {
+                "type": "drugorder",
+                "patient": "PATIENT_UUID",
+                "drug": "DRUG_UUID",
+                "encounter": "ENCOUNTER_ID",
+                "careSetting": "c365e560-c3ec-11e3-9c1a-0800200c9a66",
+                "orderer": "PROVIDER_1_UUID",
+                "dosingType": "org.openmrs.SimpleDosingInstructions",
+                "dose":"",
+                "doseUnits":"",
+                "route":"",
+                "frequency":""
+            })
+            order['freeTextInstructions'] = false;
             scope.save(order);
             httpMock.flush();
             this.expect(scope.newOrder['uuid']).toEqual('NEW ORDER UUID');

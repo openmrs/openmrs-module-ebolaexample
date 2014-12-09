@@ -127,7 +127,8 @@ angular.module("tabletapp", ['ui.router', 'ngResource', 'ngDialog', 'uicommons.w
                 inpatient: "c365e560-c3ec-11e3-9c1a-0800200c9a66"
             },
             dosingType: {
-                freeText: "org.openmrs.FreeTextDosingInstructions"
+                freeText: "org.openmrs.FreeTextDosingInstructions",
+                simple: "org.openmrs.SimpleDosingInstructions"
             },
             orderType: {
                 drugorder: "drugorder"
@@ -164,6 +165,18 @@ angular.module("tabletapp", ['ui.router', 'ngResource', 'ngDialog', 'uicommons.w
 
     .controller("AddPrescriptionController", [ '$state', '$scope', 'OrderResource', 'Constants', 'CurrentSession', 'DrugResource',
         function ($state, $scope, OrderResource, Constants, CurrentSession, DrugResource) {
+            function setDosing(order, orderJson) {
+                if(order.freeTextInstructions) {
+                    orderJson['dosingType'] = Constants.dosingType.freeText;
+                    orderJson['dosingInstructions'] = order.instructions;
+                } else {
+                    orderJson['dosingType'] = Constants.dosingType.simple;
+                    orderJson['dose'] = '';
+                    orderJson['doseUnits'] = '';
+                    orderJson['route'] = '';
+                    orderJson['frequency'] = '';
+                }
+            }
             $scope.addOrder = {
                 drug: $scope.ward = DrugResource.get({ uuid: $state.params.drugUUID }),
                 patient: $scope.patient
@@ -178,10 +191,9 @@ angular.module("tabletapp", ['ui.router', 'ngResource', 'ngDialog', 'uicommons.w
                             "drug": order.drug.uuid,
                             "encounter": encounter.uuid,
                             "careSetting": Constants.careSetting.inpatient,
-                            "orderer": response.data.providers[0]['uuid'],
-                            "dosingType": Constants.dosingType.freeText,
-                            "dosingInstructions": order.instructions
+                            "orderer": response.data.providers[0]['uuid']
                         }
+                        setDosing(order, orderJson);
                         new OrderResource(orderJson).$save().then(function (order) {
                             $scope.newOrder = order;
                         });
