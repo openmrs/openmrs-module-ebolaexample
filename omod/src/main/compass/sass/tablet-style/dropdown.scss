@@ -1,0 +1,28 @@
+.dropdown-menu {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	margin-top: 10px;
+	border-radius: 5px;
+
+	li {
+		padding: 10px 15px;
+		border: 2px solid #ddd;
+		border-bottom: none;
+		cursor: pointer;
+		
+		&:nth-child(odd) {
+			background: #f1f1f1;
+		}
+
+		&.active {
+			background: $primaryColor;
+		}
+	}
+
+	a {
+		font-family: "OpenSans";
+		font-size: 1.3em;
+		color: $grey1;
+	}
+}
