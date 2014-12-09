@@ -165,6 +165,19 @@ em {
 	display: inline-block;
 }
 
+.tablet-list {
+	list-style: none;
+	padding: 0 10px;
+}
+
+.tablet-list li {
+	display: inline-block;
+}
+
+.tablet-list li a {
+	text-decoration: none;
+}
+
 .radio-button {
 	font-family: "OpenSansBold";
 	font-size: 3.7em;
