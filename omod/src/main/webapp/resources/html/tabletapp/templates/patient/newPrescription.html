@@ -1,10 +1,14 @@
 <div xmlns="http://www.w3.org/1999/html">
+    <div ng-controller="NewPrescriptionController">
 
-    <h1>Adding new Prescription for {{ patient.display }}</h1>
+        <h1>Adding new Prescription for {{ newPrescription.patient.display }}</h1>
 
-    <div>
-        <select-drug ng-model="drug" placeholder="Other Drug" size="40"></select-drug>
-        <a ui-sref="patient.addPrescriptionDetails({ drugUUID: drug.uuid})">Add</a>
+        <div>
+            <select-drug-concept ng-model="drugConcept"
+                                 placeholder="Other Drug"
+                                 size="40"
+                                 typeahead-on-select=""></select-drug-concept>
+            <!--<a ui-sref="patient.addPrescriptionDetails({ drugUUID: newPrescription.drug.uuid})">Add</a>-->
+        </div>
     </div>
-
 </div>

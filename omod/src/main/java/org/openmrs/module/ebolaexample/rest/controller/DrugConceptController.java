@@ -36,14 +36,14 @@ public class DrugConceptController {
         List<SimpleObject> mappedConcepts = new ArrayList<SimpleObject>();
         for (Object concept : unmappedConcepts) {
             SimpleObject mappedConcept = new SimpleObject();
-            mappedConcept.add("name", ((ConceptListItem) concept).getName());
+            mappedConcept.add("display", ((ConceptListItem) concept).getName());
             mappedConcept.add("conceptId", ((ConceptListItem) concept).getConceptId());
             mappedConcepts.add(mappedConcept);
         }
         Collections.sort(mappedConcepts, new Comparator<SimpleObject>() {
             @Override
             public int compare(SimpleObject o1, SimpleObject o2) {
-                return ((String) o1.get("name")).compareToIgnoreCase((String) o2.get("name"));
+                return ((String) o1.get("display")).compareToIgnoreCase((String) o2.get("display"));
             }
         });
         return mappedConcepts;

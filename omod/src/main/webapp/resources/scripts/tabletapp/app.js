@@ -1,6 +1,7 @@
 var OPENMRS_CONTEXT_PATH = location.pathname.substring(1, location.pathname.indexOf('/', 1));
 
-angular.module("tabletapp", ['ui.router', 'ngResource', 'ngDialog', 'uicommons.widget.select-drug'])
+angular.module("tabletapp", ['ui.router', 'ngResource', 'ngDialog', 'uicommons.widget.select-drug',
+        'select-drug-concept', 'drugConceptService'])
 
     .config(function ($stateProvider, $urlRouterProvider) {
 
@@ -163,6 +164,17 @@ angular.module("tabletapp", ['ui.router', 'ngResource', 'ngDialog', 'uicommons.w
             };
         }])
 
+    .controller("NewPrescriptionController", [ '$scope', function ($scope) {
+        $scope.newPrescription = {
+            patient: $scope.patient,
+            drugConcept: {}
+        };
+
+        $scope.onDrugSelect = function (model) {
+            console.log(model);
+        }
+    }])
+
     .controller("AddPrescriptionController", [ '$state', '$scope', 'OrderResource', 'Constants', 'CurrentSession', 'DrugResource',
         function ($state, $scope, OrderResource, Constants, CurrentSession, DrugResource) {
             function setDosing(order, orderJson) {
@@ -177,6 +189,7 @@ angular.module("tabletapp", ['ui.router', 'ngResource', 'ngDialog', 'uicommons.w
                     orderJson['frequency'] = '';
                 }
             }
+
             $scope.addOrder = {
                 drug: $scope.ward = DrugResource.get({ uuid: $state.params.drugUUID }),
                 patient: $scope.patient
