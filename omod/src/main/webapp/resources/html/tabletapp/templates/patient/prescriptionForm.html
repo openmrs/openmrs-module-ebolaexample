@@ -1,10 +1,5 @@
 <div ng-controller="AddPrescriptionController" xmlns="http://www.w3.org/1999/html">
 
-    <h1>Adding new Prescription for {{ patient.display }}</h1>
-
-    <div ng-show="!addOrder.drug">
-        <select-drug ng-model="addOrder.drug" placeholder="Other Drug" size="40"></select-drug>
-    </div>
     <form ng-show="addOrder.drug">
         <div>{{ addOrder.drug.display }}</div>
         <div>

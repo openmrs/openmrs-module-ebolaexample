@@ -1,6 +1,6 @@
 describe('app', function(){
 
-    var appUrl = '///ws/rest/v1/';
+    var apiUrl = '///ws/rest/v1/';
 
     beforeEach(function () {
         module('tabletapp');
@@ -34,25 +34,31 @@ describe('app', function(){
                     uuid: 'PATIENT_UUID'
                 },
                 drug: {
-                    uuid: 'DRUG_UUID',
+                    uuid: 'DRUG_UUID'
                 },
                 instructions: 'Drug instructions'
-            };
+            },
+            initController;
 
         beforeEach(function () {
             inject(function ($controller, $rootScope, $httpBackend) {
                 httpMock = $httpBackend;
                 scope = $rootScope.$new();
-                httpMock.when('POST', appUrl + 'encounter').respond(encounterResponseStub);
-                httpMock.when('POST', appUrl + 'order').respond(orderResponseStub);
-                httpMock.when('GET', appUrl + 'ebola/session-info').respond(sessionInfoResponseStub);
+                httpMock.when('POST', apiUrl + 'encounter').respond(encounterResponseStub);
+                httpMock.when('POST', apiUrl + 'order').respond(orderResponseStub);
+                httpMock.when('GET', apiUrl + 'ebola/session-info').respond(sessionInfoResponseStub);
+                httpMock.when('GET', apiUrl + 'drug').respond({});
                 httpMock.when('GET', 'templates/wards.html').respond({});
-                $controller('AddPrescriptionController', {$scope: scope});
+                initController = function(stateParams) {
+                    var state = stateParams || {params: {}};
+                    $controller('AddPrescriptionController', {$scope: scope, $state: state});
+                }
             });
         });
 
         it('should save newly created order', function () {
-            httpMock.expectPOST(appUrl + 'order', {
+            initController();
+            httpMock.expectPOST(apiUrl + 'order', {
                 "type": "drugorder",
                 "patient": "PATIENT_UUID",
                 "drug": "DRUG_UUID",
@@ -64,7 +70,15 @@ describe('app', function(){
             })
             scope.save(order);
             httpMock.flush();
-            expect(scope.newOrder['uuid']).toEqual('NEW ORDER UUID');
+            this.expect(scope.newOrder['uuid']).toEqual('NEW ORDER UUID');
+        });
+
+        it('should load full drug information from web service', function () {
+            httpMock.expectGET(apiUrl + 'drug/1234').respond({info: "Some drug info"});
+            initController({params: { drugUUID: '1234'}});
+            httpMock.flush();
+
+            this.expect(scope.addOrder.drug.info).toEqual("Some drug info");
         });
 
     });
@@ -81,14 +95,14 @@ describe('app', function(){
             inject(function ($controller, $rootScope, $httpBackend, $injector) {
                 httpMock = $httpBackend;
                 scope = $rootScope.$new();
-                httpMock.when('POST', appUrl + 'encounter').respond(encounterResponseStub);
+                httpMock.when('POST', apiUrl + 'encounter').respond(encounterResponseStub);
                 currentSession = $injector.get('CurrentSession');
             });
         });
 
         describe('getEncounter', function() {
             it('should create encounter using the rest endpoint', function () {
-                httpMock.expectPOST(appUrl + 'encounter', function(dataString) {
+                httpMock.expectPOST(apiUrl + 'encounter', function(dataString) {
                     var data = JSON.parse(dataString),
                         patietnUUIDMatches = data['patient'] == 'PATIENT UUID',
                         dateExists = data['encounterDatetime'] != undefined,
@@ -100,7 +114,7 @@ describe('app', function(){
             })
 
             it('should cache encounters', function () {
-                httpMock.expectPOST(appUrl + 'encounter', function(dataString) {
+                httpMock.expectPOST(apiUrl + 'encounter', function(dataString) {
                     var data = JSON.parse(dataString),
                         patietnUUIDMatches = data['patient'] == 'PATIENT UUID',
                         dateExists = data['encounterDatetime'] != undefined,
@@ -115,7 +129,7 @@ describe('app', function(){
             })
 
             it('should only cache encounters for one patient at a time', function () {
-                httpMock.expectPOST(appUrl + 'encounter', function(dataString) {
+                httpMock.expectPOST(apiUrl + 'encounter', function(dataString) {
                     var data = JSON.parse(dataString),
                         patietnUUIDMatches = data['patient'] == 'PATIENT UUID',
                         dateExists = data['encounterDatetime'] != undefined,
@@ -128,11 +142,11 @@ describe('app', function(){
                 httpMock.verifyNoOutstandingExpectation();
                 httpMock.verifyNoOutstandingRequest();
 
-                httpMock.expectPOST(appUrl + 'encounter')
+                httpMock.expectPOST(apiUrl + 'encounter')
                 currentSession.getEncounter('DIFFERENT PATIENT UUID');
                 httpMock.flush();
 
-                httpMock.expectPOST(appUrl + 'encounter')
+                httpMock.expectPOST(apiUrl + 'encounter')
                 currentSession.getEncounter('PATIENT UUID');
                 httpMock.flush();
             })

@@ -25,6 +25,10 @@ angular.module("tabletapp", ['ui.router', 'ngResource', 'ngDialog', 'uicommons.w
             })
             .state('patient.addPrescription', {
                 url: '/addPrescription',
+                templateUrl: 'templates/patient/newPrescription.html'
+            })
+            .state('patient.addPrescriptionDetails', {
+                url: '/addPrescription/:drugUUID',
                 templateUrl: 'templates/patient/prescriptionForm.html'
             });
     })
@@ -55,6 +59,14 @@ angular.module("tabletapp", ['ui.router', 'ngResource', 'ngDialog', 'uicommons.w
 
     .factory("EncounterResource", [ '$resource', function ($resource) {
         return $resource("/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/encounter/:uuid", {
+            uuid: '@uuid'
+        }, {
+            query: { method: 'GET' }
+        });
+    }])
+
+    .factory("DrugResource", [ '$resource', function ($resource) {
+        return $resource("/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/drug/:uuid", {
             uuid: '@uuid'
         }, {
             query: { method: 'GET' }
@@ -146,9 +158,10 @@ angular.module("tabletapp", ['ui.router', 'ngResource', 'ngDialog', 'uicommons.w
             };
         }])
 
-    .controller("AddPrescriptionController", [ '$state', '$scope', 'OrderResource', 'Constants', 'CurrentSession',
-        function ($state, $scope, OrderResource, Constants, CurrentSession) {
+    .controller("AddPrescriptionController", [ '$state', '$scope', 'OrderResource', 'Constants', 'CurrentSession', 'DrugResource',
+        function ($state, $scope, OrderResource, Constants, CurrentSession, DrugResource) {
             $scope.addOrder = {
+                drug: $scope.ward = DrugResource.get({ uuid: $state.params.drugUUID }),
                 patient: $scope.patient
             };
 

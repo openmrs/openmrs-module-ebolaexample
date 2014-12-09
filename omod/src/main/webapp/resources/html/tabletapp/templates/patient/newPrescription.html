@@ -1,0 +1,10 @@
+<div xmlns="http://www.w3.org/1999/html">
+
+    <h1>Adding new Prescription for {{ patient.display }}</h1>
+
+    <div>
+        <select-drug ng-model="drug" placeholder="Other Drug" size="40"></select-drug>
+        <a ui-sref="patient.addPrescriptionDetails({ drugUUID: drug.uuid})">Add</a>
+    </div>
+
+</div>
