@@ -102,6 +102,10 @@ angular.module("tabletapp", ['ui.router', 'ngResource', 'ngDialog', 'uicommons.w
             $scope.activeOrders = response.results;
         });
 
+        $scope.getPatientId = function() {
+            return $scope.patient.display.split(' ')[0];
+        };
+
         $scope.showAdminister = function(order){
             $scope.administerDialogFor = order;
             ngDialog.open({
@@ -111,7 +115,7 @@ angular.module("tabletapp", ['ui.router', 'ngResource', 'ngDialog', 'uicommons.w
                 closeByDocument: false,
                 scope: $scope
             });
-        }
+        };
     }])
 
     .factory("Constants", function () {
