@@ -51,9 +51,9 @@
         <div class="separator" ng-show="addOrder.drug">
             <input class="checkbox" id="showHints" type="checkbox" value="iv" ng-model="showHints"/>
             <label for="showHints">Show Hints</label>
-            <span class="info" ng-show="showHints">
+            <div class="info" ng-show="showHints">
                 {{ addOrder.drug.display }}
-            </span>
+            </div>
         </div>
         <div class="actions">
             <button class="left">BACK</button>
