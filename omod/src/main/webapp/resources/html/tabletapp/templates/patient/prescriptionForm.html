@@ -4,8 +4,7 @@
         <h1>{{ addOrder.drug.display }}</h1>
         <div>
             <input class="checkbox" type="checkbox" id="free-text-instructions-checkbox" ng-model="addOrder.freeTextInstructions" />
-            <label class="checkbox-btn" for="free-text-instructions-checkbox"></label>
-            <span class="checkbox-label">I will fill this later</span>
+            <label for="free-text-instructions-checkbox">I will fill this later</label>
         </div>
         <div ng-show="addOrder.freeTextInstructions">
             <span class="question-title">INSTRUCTIONS</span>
@@ -49,10 +48,10 @@
             </div>
 
         </div>
-        <div ng-show="addOrder.drug">
-            <input id="showHints" type="checkbox" value="iv" ng-model="showHints"/>
-            <label for="showHints" class="radio-button small">Show Hints</label>
-            <span ng-show="showHints">
+        <div class="separator" ng-show="addOrder.drug">
+            <input class="checkbox" id="showHints" type="checkbox" value="iv" ng-model="showHints"/>
+            <label for="showHints">Show Hints</label>
+            <span class="info" ng-show="showHints">
                 {{ addOrder.drug.display }}
             </span>
         </div>

@@ -1,64 +1,50 @@
-.checkbox{
-  display: none;
+[type="checkbox"].checkbox:not(:checked),
+[type="checkbox"].checkbox:checked {
+  position: absolute;
+  left: -9999px;
 
-  &, &:after, &:before,
-  & *, & *:after, & *:before,
-  & + .checkbox-btn{
-    box-sizing: border-box;
-    &::selection{
-      background: none;
-    }
-  }
-
-  + .checkbox-btn{
-    outline: 0;
-    display: block;
-    width: 5em;
-    height: 2.5em;
+  + label {
     position: relative;
-    cursor: pointer;
-    user-select: none;
-    display: inline-block;
-    background: $grey4;
-    border-radius: 2em;
-    padding: 2px;
-    transition: all .4s ease;
+    padding-left: 35px;
+    font-size: 1.5em;
+    color: $grey1;
+    cursor: pointer;  
 
-    &:after, &:before{
-      position: relative;
-      display: block;
-      content: "";
-      width: 50%;
-      height: 100%;
+    &:before {
+      content: '';
+      position: absolute;
+      left:0; top: 2px;
+      width: 25px; 
+      height: 25px;
+      border: 1px solid #aaa;
+      background: #f8f8f8;
+      border-radius: 3px;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,.3);
     }
 
-    &:after{
-      left: 0;
-      border-radius: 50%;
-      background: #fff;
-      transition: all .2s ease;
-    }
-
-    &:before{
-      display: none;
-    }
-  }
-
-  &:checked{
-    + .checkbox-btn{
-      background: $primaryColor;
-
-      &:after{
-        left: 50%;
-      }
+    &:after {
+      content: '✔';
+      position: absolute;
+      top: 0; 
+      left: 5px;
+      font-size: 20px;
+      color: #09ad7e;
+      transition: all .2s;
     }
   }
 }
 
-.checkbox-label {
-  font-size: 1.5em;
-  color: $grey1;
-  font-family: "OpenSans";
-  position: relative;
-  top: -12px;
+[type="checkbox"].checkbox:not(:checked) + label:after {
+  opacity: 0;
+  transform: scale(0);
+}
+
+[type="checkbox"].checkbox:checked + label:after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+[type="checkbox"].checkbox:checked:focus + label:before,
+[type="checkbox"].checkbox:not(:checked):focus + label:before {
+  border: 1px dotted blue;
 }
