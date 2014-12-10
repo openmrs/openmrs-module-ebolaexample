@@ -246,4 +246,10 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
 
                 })
             }
-        }]);
+        }])
+
+    .controller("NewPrescriptionController", [ '$state', '$scope', 'DrugResource',
+        function ($state, $scope, DrugResource) {
+            $scope.commonDrugs = DrugResource.get();
+        }
+    ]);
