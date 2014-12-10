@@ -1,0 +1,64 @@
+.checkbox{
+  display: none;
+
+  &, &:after, &:before,
+  & *, & *:after, & *:before,
+  & + .checkbox-btn{
+    box-sizing: border-box;
+    &::selection{
+      background: none;
+    }
+  }
+
+  + .checkbox-btn{
+    outline: 0;
+    display: block;
+    width: 5em;
+    height: 2.5em;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    display: inline-block;
+    background: $grey4;
+    border-radius: 2em;
+    padding: 2px;
+    transition: all .4s ease;
+
+    &:after, &:before{
+      position: relative;
+      display: block;
+      content: "";
+      width: 50%;
+      height: 100%;
+    }
+
+    &:after{
+      left: 0;
+      border-radius: 50%;
+      background: #fff;
+      transition: all .2s ease;
+    }
+
+    &:before{
+      display: none;
+    }
+  }
+
+  &:checked{
+    + .checkbox-btn{
+      background: $primaryColor;
+
+      &:after{
+        left: 50%;
+      }
+    }
+  }
+}
+
+.checkbox-label {
+  font-size: 1.5em;
+  color: $grey1;
+  font-family: "OpenSans";
+  position: relative;
+  top: -12px;
+}

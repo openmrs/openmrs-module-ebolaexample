@@ -3,8 +3,9 @@
     <form ng-show="addOrder.drug">
         <h1>{{ addOrder.drug.display }}</h1>
         <div>
-            <input id="free-text-instructions-checkbox" type="checkbox" ng-model="addOrder.freeTextInstructions">
-            <label for="free-text-instructions-checkbox" class="radio-button small"><span>I will fill later</span></label>
+            <input class="checkbox" type="checkbox" id="free-text-instructions-checkbox" ng-model="addOrder.freeTextInstructions" />
+            <label class="checkbox-btn" for="free-text-instructions-checkbox"></label>
+            <span class="checkbox-label">I will fill this later</span>
         </div>
         <div ng-show="addOrder.freeTextInstructions">
             <span class="question-title">INSTRUCTIONS</span>
@@ -12,7 +13,7 @@
                       ng-required="addOrder.freeTextInstructions"></textarea>
         </div>
         <div ng-show="!addOrder.freeTextInstructions">
-            <span class="two-column">
+            <span class="inline">
                 <span class="question-title">DOSE</span>
 
                 <div class="input-container">
@@ -21,7 +22,7 @@
                 </div>
             </span>
             
-            <div class="two-column">
+            <span class="inline">
                 <span class="question-title">DURATION</span>
 
                 <div class="input-container">
@@ -33,7 +34,7 @@
 
                 <input id="duration_2" type="radio" value="times" name="duration" ng-model="addOrder.durationType"/>
                 <label for="duration_2" class="radio-button small">Once off</label>
-            </div>
+            </span>
             <div>
                 <span class="question-title">TIME OF DAY</span>
 
@@ -60,6 +61,4 @@
             <button class="right" type="submit" ng-click="save(addOrder)">Save</button>
         </div>
     </form>
-
-    
 </div>
