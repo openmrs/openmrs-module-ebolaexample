@@ -22,17 +22,8 @@
             </span>
             
             <span class="inline">
-                <span class="question-title">DURATION</span>
-
-                <div class="input-container">
-                    <input ng-mode="addOrder.drug.durationLength" type="number" ng-required="!addOrder.freeTestInstructions">
-                    <span class="unit">days</span>
-                </div>
-                
-                <span class="condition">OR</span>
-
-                <input id="duration_2" type="radio" value="times" name="duration" ng-model="addOrder.durationType"/>
-                <label for="duration_2" class="radio-button small smaller">Once off</label>
+                <span class="question-title">Route</span>
+                <span>Oral</span>
             </span>
             <div>
                 <span class="question-title">TIME OF DAY</span>
@@ -45,6 +36,19 @@
                 <label for="round_evening" class="radio-button small">Evening</label>
                 <input id="round_night" type="checkbox" value="iv" name="route" ng-model="addOrder.roundNight"/>
                 <label for="round_night" class="radio-button small">Night</label>
+            </div>
+
+            <div>
+             <span class="question-title">DURATION</span>
+                <div class="input-container">
+                    <input ng-mode="addOrder.drug.durationLength" type="number" ng-required="!addOrder.freeTestInstructions">
+                    <span class="unit">days</span>
+                </div>
+                
+                <span class="condition">OR</span>
+
+                <input id="duration_2" type="radio" value="times" name="duration" ng-model="addOrder.durationType"/>
+                <label for="duration_2" class="radio-button small smaller">Once off</label>
             </div>
 
         </div>
