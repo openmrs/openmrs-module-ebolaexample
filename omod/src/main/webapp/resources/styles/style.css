@@ -30,97 +30,61 @@
   font-style: normal;
 }
 
-/* line 42, ../../../compass/sass/style.scss */
+/* line 1, ../../../compass/sass/tablet-style/base.scss */
+html, body {
+  height: 100%;
+}
+
+/* line 5, ../../../compass/sass/tablet-style/base.scss */
 body {
   margin: 0;
   padding: 0;
+  font-family: "OpenSans";
+  font-size: 16px;
 }
 
-/* line 47, ../../../compass/sass/style.scss */
+/* line 12, ../../../compass/sass/tablet-style/base.scss */
 header {
   background: #aaa;
 }
 
-/* line 51, ../../../compass/sass/style.scss */
-.right {
-  float: right;
-}
-
-/* line 55, ../../../compass/sass/style.scss */
-.left {
-  float: left;
-}
-
-/* line 59, ../../../compass/sass/style.scss */
-.section {
-  display: table;
-  border-collapse: separate;
-  border-spacing: 10px;
-}
-
-/* line 65, ../../../compass/sass/style.scss */
-.section > div {
-  padding: 0 15px;
-}
-
-/* line 69, ../../../compass/sass/style.scss */
-.patient-header {
-  background: #595959;
-  padding: 0.3em;
-  color: #ffcc00;
-  font-family: "OpenSansBold";
-  font-size: 2.5em;
-  overflow: hidden;
-}
-
-/* line 78, ../../../compass/sass/style.scss */
-.navigation {
-  background: repeating-linear-gradient(45deg, #6e8f26, #6e8f26 10px, #64851b 10px, #64851b 20px);
-  background-repeat: no-repeat;
-  font-family: "OpenSans";
-  color: white;
-  padding: 0.7em 0.5em;
-}
-
-/* line 92, ../../../compass/sass/style.scss */
-.navigation h3 {
-  display: block;
-  margin: 5px;
-}
-
-/* line 97, ../../../compass/sass/style.scss */
-.category {
-  width: 24%;
-  display: inline-block;
-  text-align: center;
-}
-
-/* line 103, ../../../compass/sass/style.scss */
+/* line 16, ../../../compass/sass/tablet-style/base.scss */
 small {
   color: white;
   display: block;
   font-size: 0.45em;
 }
 
-/* line 109, ../../../compass/sass/style.scss */
+/* line 22, ../../../compass/sass/tablet-style/base.scss */
 em {
   font-family: "OpenSansLight";
   font-size: 0.65em;
   padding-left: 10px;
 }
 
-/* line 115, ../../../compass/sass/style.scss */
-.progress {
-  font-size: 1.8em;
-  color: #cfcfcf;
-  font-family: "OpenSansBold";
-  position: absolute;
-  left: 45%;
-  display: inline-block;
-  margin-top: 17px;
+/* line 28, ../../../compass/sass/tablet-style/base.scss */
+h1, h2, h3, h4, h5 {
+  color: #595959;
 }
 
-/* line 125, ../../../compass/sass/style.scss */
+/* line 32, ../../../compass/sass/tablet-style/base.scss */
+.right {
+  float: right;
+}
+
+/* line 36, ../../../compass/sass/tablet-style/base.scss */
+.left {
+  float: left;
+}
+
+/* line 40, ../../../compass/sass/tablet-style/base.scss */
+.category {
+  width: 24%;
+  display: inline-block;
+  text-align: center;
+}
+
+/* line 46, ../../../compass/sass/tablet-style/base.scss */
 .unit {
   font-family: "OpenSansBold";
   font-size: 1.8em;
@@ -131,62 +95,137 @@ em {
   float: right;
   margin-top: 22px;
 }
-
-/* line 136, ../../../compass/sass/style.scss */
+/* line 56, ../../../compass/sass/tablet-style/base.scss */
 .unit.small {
   font-size: 1.2em;
   width: 80px;
   margin-top: 17px;
 }
 
-/* line 142, ../../../compass/sass/style.scss */
-.patient-id {
-  float: left;
-  margin-right: 0.5em;
-}
-
-/* line 147, ../../../compass/sass/style.scss */
-.patient-info {
-  float: right;
-  margin-left: 0.5em;
-}
-
-/* line 152, ../../../compass/sass/style.scss */
+/* line 63, ../../../compass/sass/tablet-style/base.scss */
 .one-column {
   width: 100%;
 }
 
-/* line 156, ../../../compass/sass/style.scss */
+/* line 67, ../../../compass/sass/tablet-style/base.scss */
 .two-column {
   width: 47.5%;
   margin-right: 2%;
   display: inline-block;
 }
 
-/* line 162, ../../../compass/sass/style.scss */
+/* line 73, ../../../compass/sass/tablet-style/base.scss */
 .three-column {
   width: 31%;
   margin-right: 1%;
   display: inline-block;
 }
 
-/* line 168, ../../../compass/sass/style.scss */
+/* line 79, ../../../compass/sass/tablet-style/base.scss */
+.separator {
+  margin-top: 0.9em;
+}
+
+/* line 83, ../../../compass/sass/tablet-style/base.scss */
+.section {
+  display: table;
+  border-collapse: separate;
+  border-spacing: 10px;
+}
+/* line 88, ../../../compass/sass/tablet-style/base.scss */
+.section > div {
+  padding: 0 15px;
+}
+
+/* line 93, ../../../compass/sass/tablet-style/base.scss */
+.page-wrap {
+  min-height: 100%;
+  margin-bottom: -110px;
+}
+/* line 97, ../../../compass/sass/tablet-style/base.scss */
+.page-wrap:after {
+  content: "";
+  display: block;
+}
+
+/* line 103, ../../../compass/sass/tablet-style/base.scss */
+.page-wrap:after {
+  height: 110px;
+}
+
+/* line 1, ../../../compass/sass/tablet-style/header.scss */
+.patient-header {
+  background: #595959;
+  padding: 0.3em;
+  color: #ffcc00;
+  font-family: "OpenSansBold";
+  font-size: 2.5em;
+  overflow: hidden;
+}
+
+/* line 10, ../../../compass/sass/tablet-style/header.scss */
+.navigation {
+  background: repeating-linear-gradient(45deg, #6e8f26, #6e8f26 10px, #64851b 10px, #64851b 20px);
+  background-repeat: no-repeat;
+  font-family: "OpenSans";
+  color: white;
+  padding: 0.7em 0.5em;
+}
+/* line 24, ../../../compass/sass/tablet-style/header.scss */
+.navigation h3 {
+  display: block;
+  margin: 5px;
+  color: white;
+}
+
+/* line 31, ../../../compass/sass/tablet-style/header.scss */
+.progress {
+  font-size: 1.8em;
+  color: #cfcfcf;
+  font-family: "OpenSansBold";
+  position: absolute;
+  left: 45%;
+  display: inline-block;
+  margin-top: 17px;
+}
+
+/* line 41, ../../../compass/sass/tablet-style/header.scss */
+.patient-id {
+  float: left;
+  margin-right: 0.5em;
+}
+
+/* line 46, ../../../compass/sass/tablet-style/header.scss */
+.patient-info {
+  float: right;
+  margin-left: 0.5em;
+}
+
+/* line 1, ../../../compass/sass/tablet-style/form.scss */
 .tablet-list {
   list-style: none;
   padding: 0 10px;
 }
-
-/* line 173, ../../../compass/sass/style.scss */
+/* line 5, ../../../compass/sass/tablet-style/form.scss */
 .tablet-list li {
   display: inline-block;
 }
-
-/* line 177, ../../../compass/sass/style.scss */
+/* line 8, ../../../compass/sass/tablet-style/form.scss */
 .tablet-list li a {
   text-decoration: none;
 }
 
-/* line 181, ../../../compass/sass/style.scss */
+/* line 14, ../../../compass/sass/tablet-style/form.scss */
+.question-title {
+  display: block;
+  font-size: 1.8em;
+  font-family: "OpenSansBold";
+  color: #595959;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+/* line 1, ../../../compass/sass/tablet-style/input.scss */
 .radio-button {
   font-family: "OpenSansBold";
   font-size: 3.7em;
@@ -208,73 +247,37 @@ em {
   word-wrap: break-word;
   text-align: center;
 }
-
-/* line 206, ../../../compass/sass/style.scss */
+/* line 25, ../../../compass/sass/tablet-style/input.scss */
 .radio-button span {
   display: block;
   word-wrap: break-word;
   vertical-align: middle;
   line-height: normal;
 }
-
-/* line 213, ../../../compass/sass/style.scss */
+/* line 32, ../../../compass/sass/tablet-style/input.scss */
 .radio-button.long {
   width: 221px;
   max-width: 221px;
   padding: 0 15px;
 }
-
-/* line 219, ../../../compass/sass/style.scss */
+/* line 38, ../../../compass/sass/tablet-style/input.scss */
+.radio-button.medium {
+  font-size: 2.2em;
+}
+/* line 41, ../../../compass/sass/tablet-style/input.scss */
 .radio-button.medium.long span {
   padding-top: 7px;
 }
-
-/* line 223, ../../../compass/sass/style.scss */
+/* line 46, ../../../compass/sass/tablet-style/input.scss */
+.radio-button.small {
+  font-size: 1.6em;
+}
+/* line 49, ../../../compass/sass/tablet-style/input.scss */
 .radio-button.small.long span {
   padding-top: 22px;
 }
 
-/* line 227, ../../../compass/sass/style.scss */
-.radio-button.medium {
-  font-size: 2.2em;
-}
-
-/* line 231, ../../../compass/sass/style.scss */
-.radio-button.small {
-  font-size: 1.6em;
-}
-
-/* line 235, ../../../compass/sass/style.scss */
-html, body {
-  height: 100%;
-}
-
-/* line 239, ../../../compass/sass/style.scss */
-.page-wrap {
-  min-height: 100%;
-  margin-bottom: -110px;
-}
-
-/* line 244, ../../../compass/sass/style.scss */
-.page-wrap:after {
-  content: "";
-  display: block;
-}
-
-/* line 249, ../../../compass/sass/style.scss */
-.page-wrap:after {
-  height: 110px;
-}
-
-/* line 253, ../../../compass/sass/style.scss */
-.actions {
-  padding: 10px;
-  background: #555;
-  margin-top: 10px;
-  height: 80px;
-}
-
-/* line 260, ../../../compass/sass/style.scss */
+/* line 55, ../../../compass/sass/tablet-style/input.scss */
 button {
   background: white;
   padding: 0.2em 0.4em;
@@ -287,20 +290,14 @@ button {
   box-shadow: 0px 8px 0px 0px #000;
 }
 
-/* line 272, ../../../compass/sass/style.scss */
+/* line 67, ../../../compass/sass/tablet-style/input.scss */
 button:disabled {
-  border: 1px solid #C8C8C8;
+  border: 1px solid #c8c8c8;
   color: #c8c8c8;
-  box-shadow: 0px 8px 0px 0px #C8C8C8;
+  box-shadow: 0px 8px 0px 0px #c8c8c8;
 }
 
-/* line 278, ../../../compass/sass/style.scss */
-.actions button {
-  font-size: 2.4em;
-  margin: 0 0.2em;
-}
-
-/* line 283, ../../../compass/sass/style.scss */
+/* line 73, ../../../compass/sass/tablet-style/input.scss */
 input[type="radio"]:checked + .radio-button, input[type="checkbox"]:checked + .radio-button {
   background-color: #ffcc00;
   box-shadow: inset 0 7px 7px rgba(0, 0, 0, 0.2);
@@ -309,59 +306,87 @@ input[type="radio"]:checked + .radio-button, input[type="checkbox"]:checked + .r
   position: relative;
 }
 
-/* line 291, ../../../compass/sass/style.scss */
+/* line 81, ../../../compass/sass/tablet-style/input.scss */
 input[type="radio"], input[type="checkbox"] {
   display: none;
 }
 
-/* line 295, ../../../compass/sass/style.scss */
+/* line 85, ../../../compass/sass/tablet-style/input.scss */
 input[type="number"] {
   font-family: "OpenSansBold";
   font-size: 3.3em;
   color: #595959;
   border: none;
-  padding: 0.05em;
+  padding: 0;
   width: 3.3em;
   text-align: left;
   padding-left: 12px;
 }
-
-/* line 306, ../../../compass/sass/style.scss */
+/* line 95, ../../../compass/sass/tablet-style/input.scss */
 input[type="number"]:focus {
   border: none;
   outline: none;
 }
 
-/* line 311, ../../../compass/sass/style.scss */
+/* line 101, ../../../compass/sass/tablet-style/input.scss */
+.actions {
+  padding: 10px;
+  background: #555;
+  margin-top: 10px;
+  height: 80px;
+}
+/* line 107, ../../../compass/sass/tablet-style/input.scss */
+.actions button {
+  font-size: 2.4em;
+  margin: 0 0.2em;
+}
+
+/* line 113, ../../../compass/sass/tablet-style/input.scss */
 .input-container {
   border: 4px solid #595959;
   border-radius: 7px;
   display: inline-block;
   width: 270px;
 }
-
-/* line 318, ../../../compass/sass/style.scss */
+/* line 119, ../../../compass/sass/tablet-style/input.scss */
 .input-container.highlight {
   border: 4px solid #ffcc00;
   outline: none;
 }
-
-/* line 323, ../../../compass/sass/style.scss */
-.separator {
-  margin-top: 0.9em;
-}
-
-/* line 327, ../../../compass/sass/style.scss */
-.question-title {
-  display: block;
-  font-size: 1.8em;
-  font-family: "OpenSansBold";
-  color: #595959;
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-}
-
-/* line 336, ../../../compass/sass/style.scss */
+/* line 124, ../../../compass/sass/tablet-style/input.scss */
 .input-container.error {
-  border: 6px solid #ff0000;
+  border: 4px solid red;
+}
+
+/* line 1, ../../../compass/sass/tablet-style/dropdown.scss */
+.dropdown-menu {
+  padding: 0;
+  list-style: none;
+  margin: 10px 0;
+  border-radius: 5px;
+}
+/* line 7, ../../../compass/sass/tablet-style/dropdown.scss */
+.dropdown-menu li {
+  padding: 10px 15px;
+  border: 2px solid #dddddd;
+  border-bottom: none;
+  cursor: pointer;
+}
+/* line 13, ../../../compass/sass/tablet-style/dropdown.scss */
+.dropdown-menu li:nth-child(odd) {
+  background: whitesmoke;
+}
+/* line 17, ../../../compass/sass/tablet-style/dropdown.scss */
+.dropdown-menu li:last-child {
+  border-bottom: 2px solid #dddddd;
+}
+/* line 21, ../../../compass/sass/tablet-style/dropdown.scss */
+.dropdown-menu li.active {
+  background: #ffcc00;
+}
+/* line 26, ../../../compass/sass/tablet-style/dropdown.scss */
+.dropdown-menu a {
+  font-family: "OpenSans";
+  font-size: 1.3em;
+  color: #595959;
 }

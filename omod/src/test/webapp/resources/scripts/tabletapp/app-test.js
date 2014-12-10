@@ -1,4 +1,4 @@
-describe('app', function(){
+describe('app', function () {
 
     var apiUrl = '///ws/rest/v1/';
 
@@ -10,37 +10,36 @@ describe('app', function(){
 
         var httpMock,
             scope,
-            encounterResponseStub = {
-                uuid: 'ENCOUNTER_ID'
-            },
-            orderResponseStub = {
-                uuid: 'NEW ORDER UUID'
-            },
+            encounterResponseStub = { uuid: 'ENCOUNTER_ID' },
+            orderResponseStub = { uuid: 'NEW ORDER UUID' },
             sessionInfoResponseStub = {
-                user: {
-                    uuid: "USER_UUID"
-                },
-                person: {
-                    uuid: "PERSON_UUID"
-                },
+                user: { uuid: "USER_UUID" },
+                person: { uuid: "PERSON_UUID" },
                 providers: [
-                    {
-                        uuid: "PROVIDER_1_UUID"
-                    }
+                    { uuid: "PROVIDER_1_UUID" }
                 ]
             },
-            order = {
-                patient: {
-                    uuid: 'PATIENT_UUID'
-                },
-                drug: {
-                    uuid: 'DRUG_UUID'
-                },
-                instructions: 'Drug instructions'
-            },
+            order,
+            expectedOrderPost,
             initController;
 
         beforeEach(function () {
+            expectedOrderPost = {
+                "type": "drugorder",
+                "patient": "PATIENT_UUID",
+                "drug": "DRUG_UUID",
+                "encounter": "ENCOUNTER_ID",
+                "careSetting": "c365e560-c3ec-11e3-9c1a-0800200c9a66",
+                "orderer": "PROVIDER_1_UUID"
+            };
+            order  = {
+                patient: { uuid: 'PATIENT_UUID' },
+                drug: { uuid: 'DRUG_UUID' },
+                instructions: 'Drug instructions',
+                rounds: {},
+                freeTextInstructions: false
+            };
+
             inject(function ($controller, $rootScope, $httpBackend) {
                 httpMock = $httpBackend;
                 scope = $rootScope.$new();
@@ -49,7 +48,7 @@ describe('app', function(){
                 httpMock.when('GET', apiUrl + 'ebola/session-info').respond(sessionInfoResponseStub);
                 httpMock.when('GET', apiUrl + 'drug').respond({});
                 httpMock.when('GET', 'templates/wards.html').respond({});
-                initController = function(stateParams) {
+                initController = function (stateParams) {
                     var state = stateParams || {params: {}};
                     $controller('AddPrescriptionController', {$scope: scope, $state: state});
                 }
@@ -58,41 +57,50 @@ describe('app', function(){
 
         it('should save newly created order with free text instructions', function () {
             initController();
-            httpMock.expectPOST(apiUrl + 'order', {
-                "type": "drugorder",
-                "patient": "PATIENT_UUID",
-                "drug": "DRUG_UUID",
-                "encounter": "ENCOUNTER_ID",
-                "careSetting": "c365e560-c3ec-11e3-9c1a-0800200c9a66",
-                "orderer": "PROVIDER_1_UUID",
+            order['freeTextInstructions'] = true;
+            var expectedPost = $.extend({}, expectedOrderPost, {
                 "dosingType": "org.openmrs.FreeTextDosingInstructions",
                 "dosingInstructions": "Drug instructions"
-            })
-            order['freeTextInstructions'] = true;
+            });
+            httpMock.expectPOST(apiUrl + 'order', expectedPost)
             scope.save(order);
             httpMock.flush();
-            this.expect(scope.newOrder['uuid']).toEqual('NEW ORDER UUID');
         });
 
-        it('should save newly created order with simple instructions', function () {
+        it('should save newly created order with round based instructions', function () {
             initController();
-            httpMock.expectPOST(apiUrl + 'order', {
-                "type": "drugorder",
-                "patient": "PATIENT_UUID",
-                "drug": "DRUG_UUID",
-                "encounter": "ENCOUNTER_ID",
-                "careSetting": "c365e560-c3ec-11e3-9c1a-0800200c9a66",
-                "orderer": "PROVIDER_1_UUID",
-                "dosingType": "org.openmrs.SimpleDosingInstructions",
-                "dose":"",
-                "doseUnits":"",
-                "route":"",
-                "frequency":""
-            })
-            order['freeTextInstructions'] = false;
+            order.drug['dose'] = 1;
+            order.drug['doseUnits'] = 'DOSE UNITS UUID'
+            order.drug['route'] = 'ROUTE UUID'
+            var expectedPost = $.extend({}, expectedOrderPost, {
+                "dosingType": "org.openmrs.module.ebolaexample.domain.RoundBasedDosingInstructions",
+                "dose": 1,
+                "doseUnits": "DOSE UNITS UUID",
+                "route": "ROUTE UUID",
+                "frequency": "",
+                "dosingInstructions": ""
+            });
+            httpMock.expectPOST(apiUrl + 'order', expectedPost)
             scope.save(order);
             httpMock.flush();
-            this.expect(scope.newOrder['uuid']).toEqual('NEW ORDER UUID');
+        });
+
+        it('should interpret round selections as dosing instructions', function () {
+            initController();
+            order['rounds'] = {
+                Morning: false,
+                Afternoon: true,
+                Evening: true,
+                Night: false
+            }
+            var expectedPost = $.extend({}, expectedOrderPost, {
+                "dosingType": "org.openmrs.module.ebolaexample.domain.RoundBasedDosingInstructions",
+                "frequency": "",
+                "dosingInstructions": "Afternoon,Evening"
+            });
+            httpMock.expectPOST(apiUrl + 'order', expectedPost)
+            scope.save(order);
+            httpMock.flush();
         });
 
         it('should load full drug information from web service', function () {
@@ -122,9 +130,9 @@ describe('app', function(){
             });
         });
 
-        describe('getEncounter', function() {
+        describe('getEncounter', function () {
             it('should create encounter using the rest endpoint', function () {
-                httpMock.expectPOST(apiUrl + 'encounter', function(dataString) {
+                httpMock.expectPOST(apiUrl + 'encounter', function (dataString) {
                     var data = JSON.parse(dataString),
                         patietnUUIDMatches = data['patient'] == 'PATIENT UUID',
                         dateExists = data['encounterDatetime'] != undefined,
@@ -136,7 +144,7 @@ describe('app', function(){
             })
 
             it('should cache encounters', function () {
-                httpMock.expectPOST(apiUrl + 'encounter', function(dataString) {
+                httpMock.expectPOST(apiUrl + 'encounter', function (dataString) {
                     var data = JSON.parse(dataString),
                         patietnUUIDMatches = data['patient'] == 'PATIENT UUID',
                         dateExists = data['encounterDatetime'] != undefined,
@@ -151,7 +159,7 @@ describe('app', function(){
             })
 
             it('should only cache encounters for one patient at a time', function () {
-                httpMock.expectPOST(apiUrl + 'encounter', function(dataString) {
+                httpMock.expectPOST(apiUrl + 'encounter', function (dataString) {
                     var data = JSON.parse(dataString),
                         patietnUUIDMatches = data['patient'] == 'PATIENT UUID',
                         dateExists = data['encounterDatetime'] != undefined,

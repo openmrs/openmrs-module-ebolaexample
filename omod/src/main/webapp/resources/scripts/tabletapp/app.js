@@ -1,100 +1,100 @@
-var OPENMRS_CONTEXT_PATH = location.pathname.substring(1, location.pathname.indexOf('/', 1));
+var OPENMRS_CONTEXT_PATH = location.pathname.substring(1, location.pathname.indexOf("/", 1));
 
-angular.module("tabletapp", ['ui.router', 'ngResource', 'ngDialog', 'uicommons.widget.select-drug'])
+angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.widget.select-drug"])
 
     .config(function ($stateProvider, $urlRouterProvider) {
 
-        $urlRouterProvider.otherwise('/wards');
+        $urlRouterProvider.otherwise("/wards");
 
         $stateProvider
-            .state('wards', {
-                url: '/wards',
-                templateUrl: 'templates/wards.html'
+            .state("wards", {
+                url: "/wards",
+                templateUrl: "templates/wards.html"
             })
-            .state('ward', {
-                url: '/wards/:uuid',
-                templateUrl: 'templates/ward.html'
+            .state("ward", {
+                url: "/wards/:uuid",
+                templateUrl: "templates/ward.html"
             })
-            .state('patient', {
-                url: '/patients/:uuid',
-                templateUrl: 'templates/patient.html'
+            .state("patient", {
+                url: "/patients/:uuid",
+                templateUrl: "templates/patient.html"
             })
-            .state('patient.overview', {
-                url: '/overview',
-                templateUrl: 'templates/patient/overview.html'
+            .state("patient.overview", {
+                url: "/overview",
+                templateUrl: "templates/patient/overview.html"
             })
-            .state('patient.addPrescription', {
-                url: '/addPrescription',
-                templateUrl: 'templates/patient/newPrescription.html'
+            .state("patient.addPrescription", {
+                url: "/addPrescription",
+                templateUrl: "templates/patient/newPrescription.html"
             })
-            .state('patient.addPrescriptionDetails', {
-                url: '/addPrescription/:drugUUID',
-                templateUrl: 'templates/patient/prescriptionForm.html'
+            .state("patient.addPrescriptionDetails", {
+                url: "/addPrescription/:drugUUID",
+                templateUrl: "templates/patient/prescriptionForm.html"
             });
     })
 
-    .factory("WardResource", [ '$resource', function ($resource) {
+    .factory("WardResource", [ "$resource", function ($resource) {
         return $resource("/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/ward/:uuid", {
-            uuid: '@uuid'
+            uuid: "@uuid"
         }, {
-            query: { method: 'GET' }
+            query: { method: "GET" }
         });
     }])
 
-    .factory("PatientResource", [ '$resource', function ($resource) {
+    .factory("PatientResource", [ "$resource", function ($resource) {
         return $resource("/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/patient/:uuid", {
-            uuid: '@uuid'
+            uuid: "@uuid"
         }, {
-            query: { method: 'GET' }
+            query: { method: "GET" }
         });
     }])
 
-    .factory("OrderResource", [ '$resource', function ($resource) {
+    .factory("OrderResource", [ "$resource", function ($resource) {
         return $resource("/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/order/:uuid", {
-            uuid: '@uuid'
+            uuid: "@uuid"
         }, {
-            query: { method: 'GET' }
+            query: { method: "GET" }
         });
     }])
 
-    .factory("EncounterResource", [ '$resource', function ($resource) {
+    .factory("EncounterResource", [ "$resource", function ($resource) {
         return $resource("/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/encounter/:uuid", {
-            uuid: '@uuid'
+            uuid: "@uuid"
         }, {
-            query: { method: 'GET' }
+            query: { method: "GET" }
         });
     }])
 
-    .factory("DrugResource", [ '$resource', function ($resource) {
+    .factory("DrugResource", [ "$resource", function ($resource) {
         return $resource("/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/drug/:uuid", {
-            uuid: '@uuid'
+            uuid: "@uuid"
         }, {
-            query: { method: 'GET' }
+            query: { method: "GET" }
         });
     }])
 
 
-    .controller("ListWardsController", [ '$scope', 'WardResource', function ($scope, WardResource) {
+    .controller("ListWardsController", [ "$scope", "WardResource", function ($scope, WardResource) {
 
         $scope.suspectWards = [];
         $scope.confirmedWards = [];
         $scope.recoveryWards = [];
 
-        WardResource.query({ v: 'default' }, function (response) {
+        WardResource.query({ v: "default" }, function (response) {
             var results = response.results;
-            $scope.suspectWards = _.where(results, { type: 'suspect'});
-            $scope.confirmedWards = _.where(results, { type: 'confirmed'});
-            $scope.recoveryWards = _.where(results, { type: 'recovery'});
+            $scope.suspectWards = _.where(results, { type: "suspect"});
+            $scope.confirmedWards = _.where(results, { type: "confirmed"});
+            $scope.recoveryWards = _.where(results, { type: "recovery"});
         });
     }])
 
-    .controller("WardController", [ '$state', '$scope', 'WardResource', function ($state, $scope, WardResource) {
+    .controller("WardController", [ "$state", "$scope", "WardResource", function ($state, $scope, WardResource) {
         var wardId = $state.params.uuid;
         $scope.ward = WardResource.get({ uuid: wardId });
 
     }])
 
-    .controller("PatientController", [ '$state', '$scope', 'PatientResource', 'OrderResource', 'ngDialog', function ($state, $scope, PatientResource, OrderResource, ngDialog) {
+    .controller("PatientController", [ "$state", "$scope", "PatientResource", "OrderResource", "ngDialog", function ($state, $scope, PatientResource, OrderResource, ngDialog) {
         var patientId = $state.params.uuid;
 
         $scope.patient = PatientResource.get({ uuid: patientId });
@@ -103,15 +103,15 @@ angular.module("tabletapp", ['ui.router', 'ngResource', 'ngDialog', 'uicommons.w
         });
 
         $scope.getPatientId = function() {
-            return $scope.patient && $scope.patient.display && $scope.patient.display.split(' ')[0];
+            return $scope.patient && $scope.patient.display && $scope.patient.display.split(" ")[0];
         };
 
         $scope.showAdminister = function(order){
             $scope.administerDialogFor = order;
             ngDialog.open({
-                template: 'administerDialog',
-                controller: 'PatientController',
-                className: 'ngdialog-theme-plain',
+                template: "administerDialog",
+                controller: "PatientController",
+                className: "ngdialog-theme-plain",
                 closeByDocument: false,
                 scope: $scope
             });
@@ -128,15 +128,46 @@ angular.module("tabletapp", ['ui.router', 'ngResource', 'ngDialog', 'uicommons.w
             },
             dosingType: {
                 freeText: "org.openmrs.FreeTextDosingInstructions",
-                simple: "org.openmrs.SimpleDosingInstructions"
+                simple: "org.openmrs.SimpleDosingInstructions",
+                roundBased: "org.openmrs.module.ebolaexample.domain.RoundBasedDosingInstructions"
             },
             orderType: {
                 drugorder: "drugorder"
-            }
+            },
+            rounds: [
+                { name: "Morning"},
+                { name: "Afternoon"},
+                { name: "Evening"},
+                { name: "Night"}
+            ],
+            doseUnits: [
+                {
+                    display: "mg",
+                    uuid: "161553AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                }
+            ],
+            routes: [
+                {
+                    display: 'Rectal suppository',
+                    uuid: '162458AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+                },
+                {
+                    display: 'IV',
+                    uuid: '160242AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+                },
+                {
+                    display: 'IM',
+                    uuid: '160243AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+                },
+                {
+                    display: 'Oral',
+                    uuid: '160240AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+                }
+             ]
         }
     })
 
-    .factory("CurrentSession", ['$http', 'Constants', 'EncounterResource',
+    .factory("CurrentSession", ["$http", "Constants", "EncounterResource",
         function ($http, Constants, EncounterResource) {
             var cachedInfo,
                 cachedEncounter,
@@ -163,24 +194,38 @@ angular.module("tabletapp", ['ui.router', 'ngResource', 'ngDialog', 'uicommons.w
             };
         }])
 
-    .controller("AddPrescriptionController", [ '$state', '$scope', 'OrderResource', 'Constants', 'CurrentSession', 'DrugResource',
+    .controller("AddPrescriptionController", [ "$state", "$scope", "OrderResource", "Constants", "CurrentSession", "DrugResource",
         function ($state, $scope, OrderResource, Constants, CurrentSession, DrugResource) {
             function setDosing(order, orderJson) {
                 if(order.freeTextInstructions) {
-                    orderJson['dosingType'] = Constants.dosingType.freeText;
-                    orderJson['dosingInstructions'] = order.instructions;
+                    orderJson["dosingType"] = Constants.dosingType.freeText;
+                    orderJson["dosingInstructions"] = order.instructions;
                 } else {
-                    orderJson['dosingType'] = Constants.dosingType.simple;
-                    orderJson['dose'] = '';
-                    orderJson['doseUnits'] = '';
-                    orderJson['route'] = '';
-                    orderJson['frequency'] = '';
+                    var rounds = _.filter(Object.keys(order.rounds), function(key) {
+                        return order.rounds[key];
+                    }).join();
+                    orderJson["dosingType"] = Constants.dosingType.roundBased;
+                    orderJson["dose"] = order.drug.dose;
+                    orderJson["doseUnits"] = order.drug.doseUnits;
+                    orderJson["route"] = order.drug.route;
+                    orderJson["frequency"] = "";
+                    orderJson["dosingInstructions"] = rounds;
                 }
             }
+
+            var rounds = _.reduce(angular.copy(Constants.rounds), function(memo, val){
+                memo[val.name] = false;
+                return memo
+            }, {});
+
             $scope.addOrder = {
-                drug: $scope.ward = DrugResource.get({ uuid: $state.params.drugUUID }),
-                patient: $scope.patient
+                drug: DrugResource.get({ uuid: $state.params.drugUUID }),
+                patient: $scope.patient,
+                rounds: rounds
             };
+
+            $scope.doseUnits = angular.copy(Constants.doseUnits);
+            $scope.routes = angular.copy(Constants.routes);
 
             $scope.save = function (order) {
                 CurrentSession.getEncounter(order.patient.uuid).then(function (encounter) {
@@ -191,7 +236,7 @@ angular.module("tabletapp", ['ui.router', 'ngResource', 'ngDialog', 'uicommons.w
                             "drug": order.drug.uuid,
                             "encounter": encounter.uuid,
                             "careSetting": Constants.careSetting.inpatient,
-                            "orderer": response.data.providers[0]['uuid']
+                            "orderer": response.data.providers[0]["uuid"]
                         }
                         setDosing(order, orderJson);
                         new OrderResource(orderJson).$save().then(function (order) {
