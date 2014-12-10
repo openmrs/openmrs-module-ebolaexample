@@ -1,4 +1,4 @@
-<div ng-controller="ListWardsController">
+<div class="page-wrap" ng-controller="ListWardsController">
 
     (Home) -> Wards
 
@@ -22,4 +22,7 @@
             <a class="radio-button small" ui-sref="ward({uuid: ward.uuid})"><span>{{ ward.display }} ({{ ward.bedAssignments.length }})</span><a>
         </li>
     </ul>
+</div>
+<div class="actions">
+    <button class="left">BACK</button>
 </div>
