@@ -50,6 +50,13 @@
 			padding-top: 22px;
 		}
 	}
+
+	&.smaller {
+		width: 160px;
+		height: 68px;
+		line-height: 61px;
+		margin-left: 15px;
+	}
 }
 
 button {

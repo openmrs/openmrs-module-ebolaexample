@@ -85,6 +85,15 @@ h1, h2, h3, h4, h5 {
 	margin-top: 0.9em;
 }
 
+.condition {
+	font-size: 1.5em;
+	margin-left: 0.5em;
+	color: $grey1;
+	top: -10px;
+	position: relative;
+	font-family: "OpenSansBold";
+}
+
 .section {
 	display: table;
 	border-collapse: separate;
