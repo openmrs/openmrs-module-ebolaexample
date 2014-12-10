@@ -1,43 +1,39 @@
 <div ng-controller="AddPrescriptionController" xmlns="http://www.w3.org/1999/html">
 
     <form ng-show="addOrder.drug">
-        <div>{{ addOrder.drug.display }}</div>
+        <h1>{{ addOrder.drug.display }}</h1>
         <div>
             <input id="free-text-instructions-checkbox" type="checkbox" ng-model="addOrder.freeTextInstructions">
-            <label for="free-text-instructions-checkbox" class="radio-button medium">Fill later</label>
+            <label for="free-text-instructions-checkbox" class="radio-button small"><span>I will fill later</span></label>
         </div>
         <div ng-show="addOrder.freeTextInstructions">
-            <span class="question-title">INSTRUCTIONS:</span>
+            <span class="question-title">INSTRUCTIONS</span>
             <textarea ng-model="addOrder.instructions" rows="5" cols="60"
                       ng-required="addOrder.freeTextInstructions"></textarea>
         </div>
         <div ng-show="!addOrder.freeTextInstructions">
-            <span>
+            <span class="two-column">
                 <span class="question-title">DOSE</span>
-                <input ng-mode="addOrder.drug.dose" type="text" ng-required="!addOrder.freeTestInstructions">
-            </span>
-            <span>
-                <span class="question-title">ROUTE</span>
 
-                <input id="route_1" type="radio" value="iv" name="route" ng-model="addOrder.route"/>
-                <label for="route_1" class="radio-button medium">IV</label>
-
-                <input id="route_2" type="radio" value="im" name="route" ng-model="addOrder.route"/>
-                <label for="route_2" class="radio-button medium">IM</label>
+                <div class="input-container">
+                    <input ng-mode="addOrder.drug.dose" type="number" ng-required="!addOrder.freeTestInstructions">
+                    <span class="unit">mg</span>
+                </div>
             </span>
-            <div>
+            
+            <div class="two-column">
                 <span class="question-title">DURATION</span>
 
-                <input ng-mode="addOrder.drug.durationLength" type="text" ng-required="!addOrder.freeTestInstructions">
-
-                <input id="duration_1" type="radio" value="days" name="duration" ng-model="addOrder.durationType"/>
-                <label for="duration_1" class="radio-button small">Days</label>
+                <div class="input-container">
+                    <input ng-mode="addOrder.drug.durationLength" type="number" ng-required="!addOrder.freeTestInstructions">
+                    <span class="unit">days</span>
+                </div>
+                
+                OR
 
                 <input id="duration_2" type="radio" value="times" name="duration" ng-model="addOrder.durationType"/>
-                <label for="duration_2" class="radio-button small">Times</label>
-
+                <label for="duration_2" class="radio-button small">Once off</label>
             </div>
-
             <div>
                 <span class="question-title">TIME OF DAY</span>
 
@@ -52,18 +48,18 @@
             </div>
 
         </div>
-        <div>
-            <button type="submit" ng-click="save(addOrder)">Save</button>
+        <div ng-show="addOrder.drug">
+            <input id="showHints" type="checkbox" value="iv" ng-model="showHints"/>
+            <label for="showHints" class="radio-button small">Show Hints</label>
+            <span ng-show="showHints">
+                {{ addOrder.drug.display }}
+            </span>
+        </div>
+        <div class="actions">
+            <button class="left">BACK</button>
+            <button class="right" type="submit" ng-click="save(addOrder)">Save</button>
         </div>
     </form>
 
-    <div ng-show="addOrder.drug">
-        <input id="showHints" type="checkbox" value="iv" ng-model="showHints"/>
-        <label for="showHints" class="radio-button small">Show Hints</label>
-        <span ng-show="showHints">
-            {{ addOrder.drug.display }}
-        </span>
-    </div>
-
-
-    </div>
+    
+</div>
