@@ -52,6 +52,7 @@ angular.module("constants", [])
                 }
             ],
             routes: [
+                //nasogastric,
                 {
                     display: 'Rectal suppository',
                     uuid: '162458AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
@@ -67,6 +68,14 @@ angular.module("constants", [])
                 {
                     display: 'Oral',
                     uuid: '160240AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+                },
+                {
+                    display: 'Nasogastric',
+                    uuid: '1766AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+                },
+                {
+                    display: 'IO',
+                    uuid: '162624AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
                 }
             ]
         }
