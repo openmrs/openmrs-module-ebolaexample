@@ -6,7 +6,7 @@
 
         <div ng-show="commonDrugConcepts.results">
             <a style="margin: 20px 20px; width: 40%;" ng-repeat="concept in commonDrugConcepts.results.slice(0, 20)"
-               ui-sref="patient.addPrescriptionRoute({ conceptUUID: concept.uuid})" type="button">
+               ui-sref="patient.addPrescriptionRoute({ conceptUUID: concept.uuid, concept: concept})" type="button">
                 {{ concept.display}}
             </a>
         </div>

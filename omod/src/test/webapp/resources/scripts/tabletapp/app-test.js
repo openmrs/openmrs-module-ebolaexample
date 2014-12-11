@@ -67,9 +67,10 @@ describe('app', function () {
             inject(function ($controller, $rootScope, $httpBackend) {
                 httpMock = $httpBackend;
                 scope = $rootScope.$new();
-                httpMock.when('GET', apiUrl + 'drug?concept=CONCEPTUUID&v=full').respond(drugsResponse);
+                httpMock.when('GET', apiUrl + 'concept/654321').respond({uuid: '654321'});
+                httpMock.when('GET', apiUrl + 'drug?concept=654321&v=full').respond(drugsResponse);
                 initController = function (stateParams) {
-                    var state = stateParams || {params: {conceptUUID: 'CONCEPTUUID'}};
+                    var state = stateParams || { params: {conceptUUID: '654321'} };
                     $controller('NewPrescriptionRouteController', {$scope: scope, $state: state});
                 }
             });
@@ -85,17 +86,37 @@ describe('app', function () {
                         "uuid": "160240AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
                         "display": "Oral administration"
                     },
-                    uuid: null },
+                    uuid: null,
+                    concept: { uuid: '654321' } },
                 { display: "IV - Suspension",
                     route: {
                         "uuid": "160299AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
                         "display": "IV"
                     },
-                    uuid: "1329AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" },
+                    uuid: "1329AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+                    concept: { uuid: '654321' } },
                 { display: "Acetaminophen 25 MG/ML Oral Solution",
                     route: null,
-                    uuid: "1327AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" }
+                    uuid: "1327AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+                    concept: { uuid: '654321' } }
             ]);
+        });
+
+        it('should set concept on order from state params', function () {
+            var concept = {uuid: '654321', display: 'Concept from Service'};
+            initController({ params: { concept: concept, conceptUUID: '654321' } });
+            httpMock.flush();
+            scope.$digest();
+            expect(scope.drugs[0].concept).toEqual(concept);
+        });
+
+        it('should load drug concept on order from web service if needed', function () {
+            var concept = {uuid: '654321', display: 'Concept from Service'};
+            httpMock.expectGET(apiUrl + 'concept/654321').respond(concept);
+            initController({params: {concept: null, conceptUUID: '654321'}});
+            httpMock.flush();
+            scope.$digest();
+            expect(scope.drugs[0].concept).toEqual(concept);
         });
     });
 
@@ -123,11 +144,14 @@ describe('app', function () {
                 "drug": "DRUG_UUID",
                 "encounter": "ENCOUNTER_ID",
                 "careSetting": "c365e560-c3ec-11e3-9c1a-0800200c9a66",
-                "orderer": "PROVIDER_1_UUID"
+                "orderer": "PROVIDER_1_UUID",
+                "concept": 'CONCEPT_UUID'
             };
             order = {
                 patient: { uuid: 'PATIENT_UUID' },
-                drug: { uuid: 'DRUG_UUID' },
+                drug: {
+                    uuid: 'DRUG_UUID',
+                    concept: { uuid: 'CONCEPT_UUID' }},
                 instructions: 'Drug instructions',
                 rounds: {},
                 freeTextInstructions: false
@@ -139,10 +163,10 @@ describe('app', function () {
                 httpMock.when('POST', apiUrl + 'encounter').respond(encounterResponseStub);
                 httpMock.when('POST', apiUrl + 'order').respond(orderResponseStub);
                 httpMock.when('GET', apiUrl + 'ebola/session-info').respond(sessionInfoResponseStub);
-                httpMock.when('GET', apiUrl + 'drug').respond({});
+                httpMock.when('GET', apiUrl + 'drug/999').respond({concept: {uuid: '0987654'}});
                 httpMock.when('GET', 'templates/wards.html').respond({});
                 initController = function (stateParams) {
-                    var state = stateParams || {params: {}};
+                    var state = stateParams || {params: {prescriptionInfo: {uuid: '999'}}};
                     $controller('AddPrescriptionController', {$scope: scope, $state: state});
                 }
             });
@@ -164,7 +188,7 @@ describe('app', function () {
             initController();
             order.drug['dose'] = 1;
             order.drug['doseUnits'] = 'DOSE UNITS UUID'
-            order.drug['route'] = 'ROUTE UUID'
+            order.drug['route'] = { uuid: 'ROUTE UUID' };
             var expectedPost = $.extend({}, expectedOrderPost, {
                 "dosingType": "org.openmrs.module.ebolaexample.domain.RoundBasedDosingInstructions",
                 "dose": 1,

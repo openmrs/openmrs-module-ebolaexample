@@ -49,7 +49,7 @@ angular.module("constants", [])
                 {
                     display: "mg/kg",
                     uuid: ""
-                },
+                }
             ],
             routes: [
                 {

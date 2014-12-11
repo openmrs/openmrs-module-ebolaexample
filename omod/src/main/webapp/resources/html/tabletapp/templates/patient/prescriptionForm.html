@@ -1,7 +1,7 @@
 <div ng-controller="AddPrescriptionController" xmlns="http://www.w3.org/1999/html">
 
     <form ng-show="addOrder.drug">
-        <h1>{{ addOrder.drug.display }}</h1>
+        <h1>{{ addOrder.drug.concept.display }} : {{ addOrder.drug.display }}</h1>
 
 
         <div>
@@ -15,14 +15,13 @@
                       ng-required="addOrder.freeTextInstructions"></textarea>
         </div>
         <div ng-show="!addOrder.freeTextInstructions">
-            <div>
+            <div ng-hide="routeProvided">
                 <span class="question-title">ROUTE</span>
-                <span ng-repeat="route in routes" ng-hide="routeProvided">
+                <span ng-repeat="route in routes">
                     <input id="route_{{route.display}}" type="radio" value="{{route.uuid}}"
                            name="addOrder.drug.route" ng-model="addOrder.drug.route"/>
                     <label for="route_{{route.display}}" class="radio-button small">{{route.display}}</label>
                 </span>
-                <span ng-show="routeProvided">{{ addOrder.drug.route.display }}</span>
             </div>
             <span class="inline">
                 <span class="question-title">DOSE</span>
