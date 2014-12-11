@@ -32,8 +32,9 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
                 templateUrl: "templates/patient/newPrescriptionRoute.html"
             })
             .state("patient.addPrescriptionDetails", {
-                url: "/addPrescription/:drugUUID",
-                templateUrl: "templates/patient/prescriptionForm.html"
+                url: "/addPrescription",
+                templateUrl: "templates/patient/prescriptionForm.html",
+                params: { prescriptionInfo: null }
             });
     })
 
@@ -224,21 +225,25 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
                     orderJson["dosingInstructions"] = rounds;
                 }
             }
-
             var rounds = _.reduce(angular.copy(Constants.rounds), function (memo, val) {
-                memo[val.name] = false;
-                return memo
-            }, {});
+                    memo[val.name] = false;
+                    return memo
+                }, {});
 
+            var drug = $state.params.prescriptionInfo;
+            if ($state.params.prescriptionInfo && $state.params.prescriptionInfo.uuid) {
+                drug = DrugResource.get({ uuid: $state.params.prescriptionInfo.uuid }, function (response) {
+                    $scope.routeProvided = drug.route;
+                });
+            }
+            $scope.doseUnits = angular.copy(Constants.doseUnits);
+            $scope.routes = angular.copy(Constants.routes);
+            $scope.routeProvided = drug && drug.route;
             $scope.addOrder = {
-                drug: DrugResource.get({ uuid: $state.params.drugUUID }),
+                drug: drug,
                 patient: $scope.patient,
                 rounds: rounds
             };
-
-            $scope.doseUnits = angular.copy(Constants.doseUnits);
-            $scope.routes = angular.copy(Constants.routes);
-
             $scope.save = function (order) {
                 CurrentSession.getEncounter(order.patient.uuid).then(function (encounter) {
                     CurrentSession.getInfo().then(function (response) {
@@ -277,7 +282,7 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
                             return d.display == drug.display;
                         });
                     if (lastIndex != firstIndex) {
-                        drug.drugUUID = null;
+                        drug.uuid = null;
                     }
                 });
                 return mappedDrugs;
@@ -286,15 +291,15 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
             function mapDrugsToSimpleRepresentation(drugs) {
                 return _.map(drugs, function (drug) {
                     var rep = { display: drug.display,
-                                routeUUID: null,
-                                drugUUID: drug.uuid };
+                        route: null,
+                        uuid: drug.uuid };
                     if (drug.route) {
                         var display = drug.route.display;
                         if (drug.dosageForm) {
                             display = display + " - " + drug.dosageForm.display
                         }
                         rep['display'] = display;
-                        rep['routeUUID'] = drug.route.uuid;
+                        rep['route'] = drug.route;
                     }
                     return rep;
                 });

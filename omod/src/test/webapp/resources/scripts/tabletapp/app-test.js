@@ -81,14 +81,20 @@ describe('app', function () {
             scope.$digest();
             expect(scope.drugs).toEqual([
                 { display: "Oral administration - Tablet",
-                  routeUUID: "160240AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                  drugUUID: null },
+                    route: {
+                        "uuid": "160240AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "display": "Oral administration"
+                    },
+                    uuid: null },
                 { display: "IV - Suspension",
-                  routeUUID: "160299AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                  drugUUID: "1329AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" },
+                    route: {
+                        "uuid": "160299AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                        "display": "IV"
+                    },
+                    uuid: "1329AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" },
                 { display: "Acetaminophen 25 MG/ML Oral Solution",
-                  routeUUID: null,
-                  drugUUID: "1327AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" }
+                    route: null,
+                    uuid: "1327AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" }
             ]);
         });
     });
@@ -192,12 +198,59 @@ describe('app', function () {
 
         it('should load full drug information from web service', function () {
             httpMock.expectGET(apiUrl + 'drug/1234').respond({info: "Some drug info"});
-            initController({params: { drugUUID: '1234'}});
+            initController({params: {prescriptionInfo: {uuid: "1234"}}});
             httpMock.flush();
 
             this.expect(scope.addOrder.drug.info).toEqual("Some drug info");
         });
 
+        it('should not load full drug information from web service if there is no drug uuid', function () {
+            initController({params: {prescriptionInfo: {uuid: null}}});
+            httpMock.verifyNoOutstandingExpectation();
+            httpMock.verifyNoOutstandingRequest();
+        });
+
+        it('should set routeProvided if the route is provided by params', function () {
+            initController({
+                params: {
+                    prescriptionInfo: {
+                        uuid: null,
+                        route: {
+                            uuid: "",
+                            display: ""}
+                    }}});
+            httpMock.verifyNoOutstandingExpectation();
+            httpMock.verifyNoOutstandingRequest();
+            this.expect(scope.routeProvided).toBeTruthy();
+        });
+
+        it('should set routeProvided to falsey if the route is not provided by params', function () {
+            initController({
+                params: {
+                    prescriptionInfo: {
+                        uuid: null,
+                        route: null
+                    }}});
+            httpMock.verifyNoOutstandingExpectation();
+            httpMock.verifyNoOutstandingRequest();
+            this.expect(scope.routeProvided).toBeFalsy();
+        });
+
+        it('should set routeProvided to truthy if the route is provided by web service', function () {
+            httpMock.expectGET(apiUrl + 'drug/1234').respond({route: {uuid: '12345678'}});
+            initController({params: {prescriptionInfo: {uuid: "1234"}}});
+            httpMock.flush();
+            scope.$digest();
+            this.expect(scope.routeProvided).toBeTruthy();
+        });
+
+        it('should set routeProvided to falsy if the route is not provided by web service', function () {
+            httpMock.expectGET(apiUrl + 'drug/1234').respond({route: null});
+            initController({params: {prescriptionInfo: {uuid: "1234"}}});
+            httpMock.flush();
+            scope.$digest();
+            this.expect(scope.routeProvided).toBeFalsy();
+        });
     });
 
     describe('CurrentSession', function () {
