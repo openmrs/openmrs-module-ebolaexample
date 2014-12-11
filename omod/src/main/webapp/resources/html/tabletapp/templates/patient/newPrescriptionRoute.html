@@ -1,0 +1,14 @@
+<div ng-controller="NewPrescriptionRouteController" class="page-wrap" xmlns="http://www.w3.org/1999/html">
+    <span class="question-title">Choose Route/Form</span>
+    <div>
+        <div ng-show="drugs">
+            <a style="margin: 20px 20px; width: 40%;" ng-repeat="drug in drugs"
+               ui-sref="patient.addPrescriptionDetails({ drugUUID: drug.uuid})" type="button">
+                {{ drug.display}}
+            </a>
+        </div>
+    </div>
+</div>
+<div class="actions">
+    <button class="left">BACK</button>
+</div>

@@ -6,6 +6,93 @@ describe('app', function () {
         module('tabletapp');
     });
 
+    describe('NewPrescriptionRouteController', function () {
+
+        var httpMock,
+            scope,
+            initController,
+            drugsResponse = {
+                "results": [
+                    {
+                        "display": "Acetaminophen 160 MG Oral Tablet",
+                        "uuid": "1326AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+                        "name": "Acetaminophen 160 MG Oral Tablet",
+                        "dosageForm": {
+                            "uuid": "1513AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                            "display": "Tablet"
+                        },
+                        "route": {
+                            "uuid": "160240AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                            "display": "Oral administration"
+                        }
+                    },
+                    {
+                        "display": "Acetaminophen 360 MG Oral Tablet",
+                        "uuid": "1328AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+                        "name": "Acetaminophen 360 MG Oral Tablet",
+                        "dosageForm": {
+                            "uuid": "1513AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                            "display": "Tablet"
+                        },
+                        "route": {
+                            "uuid": "160240AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                            "display": "Oral administration"
+                        }
+                    },
+                    {
+                        "display": "Acetaminophen 10 MG/KG IV",
+                        "uuid": "1329AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+                        "name": "Acetaminophen 10 MG/KG IV",
+                        "dosageForm": {
+                            "uuid": "1517AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                            "display": "Suspension"
+                        },
+                        "route": {
+                            "uuid": "160299AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                            "display": "IV"
+                        }
+                    },
+                    {
+                        "display": "Acetaminophen 25 MG/ML Oral Solution",
+                        "uuid": "1327AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+                        "name": "Acetaminophen 25 MG/ML Oral Solution",
+                        "dosageForm": null,
+                        "route": null
+                    }
+                ]
+            };
+
+        beforeEach(function () {
+
+            inject(function ($controller, $rootScope, $httpBackend) {
+                httpMock = $httpBackend;
+                scope = $rootScope.$new();
+                httpMock.when('GET', apiUrl + 'drug?concept=CONCEPTUUID&v=full').respond(drugsResponse);
+                initController = function (stateParams) {
+                    var state = stateParams || {params: {conceptUUID: 'CONCEPTUUID'}};
+                    $controller('NewPrescriptionRouteController', {$scope: scope, $state: state});
+                }
+            });
+        });
+
+        it('should create drug display from route/forms if possible', function () {
+            initController();
+            httpMock.flush();
+            scope.$digest();
+            expect(scope.drugs).toEqual([
+                { display: "Oral administration - Tablet",
+                  routeUUID: "160240AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                  drugUUID: null },
+                { display: "IV - Suspension",
+                  routeUUID: "160299AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                  drugUUID: "1329AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" },
+                { display: "Acetaminophen 25 MG/ML Oral Solution",
+                  routeUUID: null,
+                  drugUUID: "1327AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF" }
+            ]);
+        });
+    });
+
     describe('AddPrescriptionController', function () {
 
         var httpMock,
@@ -32,7 +119,7 @@ describe('app', function () {
                 "careSetting": "c365e560-c3ec-11e3-9c1a-0800200c9a66",
                 "orderer": "PROVIDER_1_UUID"
             };
-            order  = {
+            order = {
                 patient: { uuid: 'PATIENT_UUID' },
                 drug: { uuid: 'DRUG_UUID' },
                 instructions: 'Drug instructions',

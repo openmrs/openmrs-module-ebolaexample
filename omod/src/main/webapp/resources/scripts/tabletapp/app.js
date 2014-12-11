@@ -27,6 +27,10 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
                 url: "/addPrescription",
                 templateUrl: "templates/patient/newPrescription.html"
             })
+            .state("patient.addPrescriptionRoute", {
+                url: "/addPrescriptionRoute/:conceptUUID",
+                templateUrl: "templates/patient/newPrescriptionRoute.html"
+            })
             .state("patient.addPrescriptionDetails", {
                 url: "/addPrescription/:drugUUID",
                 templateUrl: "templates/patient/prescriptionForm.html"
@@ -73,6 +77,14 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
         });
     }])
 
+    .factory("ConceptResource", [ "$resource", function ($resource) {
+        return $resource("/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/concept/:uuid", {
+            uuid: "@uuid"
+        }, {
+            query: { method: "GET" }
+        });
+    }])
+
 
     .controller("ListWardsController", [ "$scope", "WardResource", function ($scope, WardResource) {
 
@@ -102,11 +114,11 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
             $scope.activeOrders = response.results;
         });
 
-        $scope.getPatientId = function() {
+        $scope.getPatientId = function () {
             return $scope.patient && $scope.patient.display && $scope.patient.display.split(" ")[0];
         };
 
-        $scope.showAdminister = function(order){
+        $scope.showAdminister = function (order) {
             $scope.administerDialogFor = order;
             ngDialog.open({
                 template: "administerDialog",
@@ -163,7 +175,7 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
                     display: 'Oral',
                     uuid: '160240AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
                 }
-             ]
+            ]
         }
     })
 
@@ -197,11 +209,11 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
     .controller("AddPrescriptionController", [ "$state", "$scope", "OrderResource", "Constants", "CurrentSession", "DrugResource",
         function ($state, $scope, OrderResource, Constants, CurrentSession, DrugResource) {
             function setDosing(order, orderJson) {
-                if(order.freeTextInstructions) {
+                if (order.freeTextInstructions) {
                     orderJson["dosingType"] = Constants.dosingType.freeText;
                     orderJson["dosingInstructions"] = order.instructions;
                 } else {
-                    var rounds = _.filter(Object.keys(order.rounds), function(key) {
+                    var rounds = _.filter(Object.keys(order.rounds),function (key) {
                         return order.rounds[key];
                     }).join();
                     orderJson["dosingType"] = Constants.dosingType.roundBased;
@@ -213,7 +225,7 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
                 }
             }
 
-            var rounds = _.reduce(angular.copy(Constants.rounds), function(memo, val){
+            var rounds = _.reduce(angular.copy(Constants.rounds), function (memo, val) {
                 memo[val.name] = false;
                 return memo
             }, {});
@@ -248,8 +260,55 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
             }
         }])
 
-    .controller("NewPrescriptionController", [ '$state', '$scope', 'DrugResource',
+    .controller("NewPrescriptionController", [ '$state', '$scope', 'ConceptResource',
+        function ($state, $scope, ConceptResource) {
+            $scope.commonDrugConcepts = ConceptResource.query({formulary: true});
+        }
+    ])
+
+    .controller("NewPrescriptionRouteController", [ '$state', '$scope', 'DrugResource',
         function ($state, $scope, DrugResource) {
-            $scope.commonDrugs = DrugResource.get();
+            function removeDrugIdsFromDuplicates(mappedDrugs) {
+                $.each(mappedDrugs, function (index, drug) {
+                    var lastIndex = _.findLastIndex(mappedDrugs, function (d) {
+                            return d.display == drug.display;
+                        }),
+                        firstIndex = _.findIndex(mappedDrugs, function (d) {
+                            return d.display == drug.display;
+                        });
+                    if (lastIndex != firstIndex) {
+                        drug.drugUUID = null;
+                    }
+                });
+                return mappedDrugs;
+            }
+
+            function mapDrugsToSimpleRepresentation(drugs) {
+                return _.map(drugs, function (drug) {
+                    var rep = { display: drug.display,
+                                routeUUID: null,
+                                drugUUID: drug.uuid };
+                    if (drug.route) {
+                        var display = drug.route.display;
+                        if (drug.dosageForm) {
+                            display = display + " - " + drug.dosageForm.display
+                        }
+                        rep['display'] = display;
+                        rep['routeUUID'] = drug.route.uuid;
+                    }
+                    return rep;
+                });
+            }
+
+            var conceptId = $state.params.conceptUUID;
+
+            DrugResource.query({concept: conceptId, v: 'full'}, function (response) {
+                var mappedDrugs = mapDrugsToSimpleRepresentation(response.results);
+                mappedDrugs = removeDrugIdsFromDuplicates(mappedDrugs);
+                $scope.drugs = _.uniq(mappedDrugs, function (elem) {
+                    return JSON.stringify(elem);
+                });
+            });
+
         }
     ]);
