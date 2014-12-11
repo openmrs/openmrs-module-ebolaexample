@@ -4,7 +4,6 @@
 
 	width: 165px;
 	height: 110px;
-	line-height: 110px;
 	max-width: 160px;
 	max-height: 110px;
 
@@ -16,11 +15,13 @@
 
 	background: $grey4;
 	color: white;
-	vertical-align: top;
 	display: inline-block;
-	box-sizing: border-box;
-  	word-wrap: break-word;
   	text-align: center;
+
+  	display: inline-flex;
+	align-items: center;
+	text-decoration: none;
+	justify-content: center;
 
   	span {
 		display: block;
@@ -28,6 +29,7 @@
 		vertical-align: middle;
 		line-height: normal;
 	}
+
 
 	&.long {
 		width: 221px;
@@ -56,6 +58,14 @@
 		height: 68px;
 		line-height: 61px;
 		margin-left: 15px;
+	}
+
+	&.full {
+		width: 46%;
+		max-width: 60%;
+		margin-bottom: 20px;
+		height: 50px;
+		vertical-align: top;
 	}
 }
 

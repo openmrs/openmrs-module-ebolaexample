@@ -2,7 +2,7 @@
     <span class="question-title">Choose Route/Form</span>
     <div>
         <div ng-show="drugs">
-            <a style="margin: 20px 20px; width: 40%;" ng-repeat="drug in drugs"
+            <a class="radio-button small full" ng-repeat="drug in drugs"
                ui-sref="patient.addPrescriptionDetails({ prescriptionInfo: drug })" type="button">
                 {{ drug.display}}
             </a>
