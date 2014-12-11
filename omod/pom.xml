@@ -291,6 +291,7 @@
                         <source>src/main/webapp/resources/scripts/lib/lodash/dist/lodash.js</source>
                         <source>src/main/webapp/resources/scripts/lib/jquery/jquery-2.1.1.min.js</source>
                         <source>src/main/webapp/resources/scripts/tabletapp/app.js</source>
+                        <source>src/main/webapp/resources/scripts/tabletapp/constants.js</source>
                         <source>src/main/webapp/resources/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts/directives/select-drug.js</source>
                         <source>src/main/webapp/resources/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts/services/drugService.js</source>
                         <source>src/main/webapp/resources/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts/services/locationService.js</source>
