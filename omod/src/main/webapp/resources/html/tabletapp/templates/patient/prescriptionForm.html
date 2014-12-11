@@ -20,7 +20,7 @@
                 <span ng-repeat="route in routes">
                     <input id="route_{{route.display}}" type="radio" value="{{route.uuid}}"
                            name="addOrder.drug.route" ng-model="addOrder.drug.route"/>
-                    <label for="route_{{route.display}}" class="radio-button small">{{route.display}}</label>
+                    <label for="route_{{route.display}}" class="radio-button small"><span>{{route.display}}</span></label>
                 </span>
             </div>
             <span class="inline">
