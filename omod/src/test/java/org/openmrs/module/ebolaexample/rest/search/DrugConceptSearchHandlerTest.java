@@ -1,8 +1,12 @@
-package org.openmrs.module.ebolaexample.rest.controller;
+package org.openmrs.module.ebolaexample.rest.search;
+
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.openmrs.Concept;
+import org.openmrs.Drug;
 import org.openmrs.Provider;
 import org.openmrs.User;
 import org.openmrs.api.context.Context;
@@ -17,15 +21,20 @@ import org.openmrs.web.test.BaseModuleWebContextSensitiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.web.servlet.HandlerExecutionChain;
+import org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter;
+import org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.TestCase.assertTrue;
 
-public class SessionInfoControllerTest extends BaseModuleWebContextSensitiveTest {
-
+/**
+ * Integration tests for the DrugConceptSearchHandler
+ */
+public class DrugConceptSearchHandlerTest extends BaseModuleWebContextSensitiveTest {
     @Autowired
     private EbolaTestBaseMetadata ebolaTestBaseMetadata;
 
@@ -38,6 +47,7 @@ public class SessionInfoControllerTest extends BaseModuleWebContextSensitiveTest
     @Autowired
     private WebMethods webMethods;
 
+    private WardResource resource;
     private MockHttpServletResponse response;
     private String requestURI;
 
@@ -48,29 +58,27 @@ public class SessionInfoControllerTest extends BaseModuleWebContextSensitiveTest
         ebolaTestData.install();
         initializeInMemoryDatabase();
         response = new MockHttpServletResponse();
-        requestURI = "ebola/session-info";
+        requestURI = "concept";
     }
 
     @Test
-    public void shouldReturnUUIDsForSession() throws Exception {
-        User user = Context.getAuthenticatedUser();
-        Provider provider = Context.getProviderService().getProvidersByPerson(user.getPerson()).iterator().next();
-        MockHttpServletRequest request = new MockHttpServletRequest("GET", "/rest/" + RestConstants.VERSION_1 + "/"
-                + requestURI);
+    public void shouldReturnOnlyDrugConcepts() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest("GET", "/rest/v1/concept");
+        request.addParameter("formulary","true");
         request.addHeader("content-type", "application/json");
 
         response = webMethods.handle(request);
         SimpleObject responseObject = new ObjectMapper().readValue(response.getContentAsString(), SimpleObject.class);
+        List<Drug> allDrugs = Context.getConceptService().getAllDrugs();
+        List<LinkedHashMap> results = (List<LinkedHashMap>) responseObject.get("results");
+        assertTrue(results.size() <= allDrugs.size());
 
-        LinkedHashMap parsedUser = (LinkedHashMap<String, String>) responseObject.get("user");
-        assertEquals(parsedUser.get("uuid"), user.getUuid());
-
-        LinkedHashMap parsedPerson = (LinkedHashMap<String, String>) responseObject.get("person");
-        assertEquals(parsedPerson.get("uuid"), user.getPerson().getUuid());
-
-        List<Map> providers = (List<Map>) responseObject.get("providers");
-        assertEquals(providers.size(), 1);
-        assertEquals(providers.get(0).get("uuid"), provider.getUuid());
+        Set<String> drugNames = new HashSet<String>();
+        for (Drug drug: allDrugs) {
+            drugNames.add(drug.getConcept().getDisplayString());
+        }
+        for (LinkedHashMap result : results) {
+            assertTrue(drugNames.contains(result.get("display")));
+        }
     }
 }
-
