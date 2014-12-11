@@ -25,7 +25,31 @@ angular.module("constants", [])
                 {
                     display: "mg",
                     uuid: "161553AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                }
+                },
+                {
+                    display: "grams",
+                    uuid: "161554AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                },
+                {
+                    display: "tablets",
+                    uuid: "1513AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                },
+                {
+                    display: "mL",
+                    uuid: "162263AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                },
+                {
+                    display: "puffs",
+                    uuid: "162372AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                },
+                {
+                    display: "topical",
+                    uuid: "162467AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                },
+                {
+                    display: "mg/kg",
+                    uuid: ""
+                },
             ],
             routes: [
                 {
