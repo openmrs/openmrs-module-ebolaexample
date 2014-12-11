@@ -183,6 +183,10 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
                 return memo
             }, {});
 
+            $scope.orderedRoundNames = _.map(angular.copy(Constants.rounds), function(el) {
+                return el.name;
+            });
+
             var drug = $state.params.prescriptionInfo;
             if ($state.params.prescriptionInfo && $state.params.prescriptionInfo.uuid) {
                 drug = DrugResource.get({ uuid: $state.params.prescriptionInfo.uuid }, function (response) {

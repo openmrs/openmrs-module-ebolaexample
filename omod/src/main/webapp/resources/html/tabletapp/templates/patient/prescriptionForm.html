@@ -20,7 +20,7 @@
                 <span ng-repeat="route in routes">
                     <input id="route_{{route.display}}" type="radio" value="{{route.uuid}}"
                            name="addOrder.drug.route" ng-model="addOrder.drug.route"/>
-                    <label for="route_{{route.display}}" class="radio-button small"><span>{{route.display}}</span></label>
+                    <label for="route_{{route.display}}" class="radio-button small"><span>{{route.display}}c</span></label>
                 </span>
             </div>
             <span class="inline">
@@ -38,10 +38,10 @@
 
             <div>
                 <span class="question-title">TIME OF DAY</span>
-                <span ng-repeat="(round,selected) in addOrder.rounds">
-                    <input id="round_{{round}}" type="checkbox" value="{{name}}" name="addOrder.rounds[round]"
-                           ng-model="addOrder.rounds[round]"/>
-                    <label for="round_{{round}}" class="radio-button small">{{round}}</label>
+                <span ng-repeat="roundKey in orderedRoundNames">
+                    <input id="round_{{roundKey}}" type="checkbox" value="{{roundKey}}" name="addOrder.rounds[roundKey]"
+                           ng-model="addOrder.rounds[roundKey]"/>
+                    <label for="round_{{roundKey}}" class="radio-button small">{{roundKey}}</label>
                 </span>
             </div>
 
