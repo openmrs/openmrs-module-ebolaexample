@@ -163,7 +163,7 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
         function ($state, $scope, OrderResource, Constants, CurrentSession, DrugResource) {
             function setDosing(order, orderJson) {
                 if (order.freeTextInstructions) {
-                    orderJson["dosingType"] = Constants.dosingType.freeText;
+                    orderJson["dosingType"] = Constants.dosingType.unvalidatedFreeText;
                     orderJson["dosingInstructions"] = order.instructions;
                 } else {
                     var rounds = _.filter(Object.keys(order.rounds),function (key) {
@@ -175,6 +175,8 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
                     orderJson["route"] = order.drug.route && order.drug.route.uuid;
                     orderJson["frequency"] = "";
                     orderJson["dosingInstructions"] = rounds;
+                    orderJson["duration"] = order.drug.duration;
+                    orderJson["durationUnits"] = Constants.durationUnits.days;
                     orderJson["asNeeded"] = order.drug.asNeeded;
                     orderJson["asNeededCondition"] = order.drug.asNeededCondition;
                 }

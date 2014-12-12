@@ -180,7 +180,7 @@ describe('app', function () {
             initController();
             order['freeTextInstructions'] = true;
             var expectedPost = $.extend({}, expectedOrderPost, {
-                "dosingType": "org.openmrs.FreeTextDosingInstructions",
+                "dosingType": "org.openmrs.module.ebolaexample.domain.UnvalidatedFreeTextDosingInstructions",
                 "dosingInstructions": "Drug instructions"
             });
             httpMock.expectPOST(apiUrl + 'order', expectedPost)
@@ -192,7 +192,7 @@ describe('app', function () {
             initController({prescriptionInfo: 'some wild params'});
             order['freeTextInstructions'] = true;
             var expectedPost = $.extend({}, expectedOrderPost, {
-                "dosingType": "org.openmrs.FreeTextDosingInstructions",
+                "dosingType": "org.openmrs.module.ebolaexample.domain.UnvalidatedFreeTextDosingInstructions",
                 "dosingInstructions": "Drug instructions"
             });
             httpMock.expectPOST(apiUrl + 'order', expectedPost)
@@ -212,7 +212,8 @@ describe('app', function () {
                 "doseUnits": "DOSE UNITS UUID",
                 "route": "ROUTE UUID",
                 "frequency": "",
-                "dosingInstructions": ""
+                "dosingInstructions": "",
+                "durationUnits":"1072AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
             });
             httpMock.expectPOST(apiUrl + 'order', expectedPost)
             scope.save(order);
@@ -230,7 +231,8 @@ describe('app', function () {
             var expectedPost = $.extend({}, expectedOrderPost, {
                 "dosingType": "org.openmrs.module.ebolaexample.domain.RoundBasedDosingInstructions",
                 "frequency": "",
-                "dosingInstructions": "Afternoon,Evening"
+                "dosingInstructions": "Afternoon,Evening",
+                "durationUnits":"1072AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
             });
             httpMock.expectPOST(apiUrl + 'order', expectedPost)
             scope.save(order);

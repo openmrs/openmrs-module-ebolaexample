@@ -8,9 +8,13 @@ angular.module("constants", [])
                 inpatient: "c365e560-c3ec-11e3-9c1a-0800200c9a66"
             },
             dosingType: {
-                freeText: "org.openmrs.FreeTextDosingInstructions",
+                freeText: "org.openmrs.module.ebolaexample.domain.UnvalidatedFreeTextDosingInstructions",
+                unvalidatedFreeText: "org.openmrs.module.ebolaexample.domain.UnvalidatedFreeTextDosingInstructions",
                 simple: "org.openmrs.SimpleDosingInstructions",
                 roundBased: "org.openmrs.module.ebolaexample.domain.RoundBasedDosingInstructions"
+            },
+            durationUnits: {
+                days: '1072AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
             },
             orderType: {
                 drugorder: "drugorder"

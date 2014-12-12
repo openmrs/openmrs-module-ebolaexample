@@ -16,6 +16,7 @@ public class RoundBasedDosingInstructionsTest extends BaseModuleContextSensitive
     @Test
     public void getDosingInstructionsAsString_shouldAppendRoundInformationFromDosingInstructions() throws Exception {
         DrugOrder order = createValidDrugOrder();
+        order.setDuration(null);
         RoundBasedDosingInstructions dosingInstructions =
                 (RoundBasedDosingInstructions) new RoundBasedDosingInstructions().getDosingInstructions(order);
         String dosingInstructionsAsString = dosingInstructions.getDosingInstructionsAsString(Context.getLocale());
@@ -27,6 +28,7 @@ public class RoundBasedDosingInstructionsTest extends BaseModuleContextSensitive
     public void getDosingInstructionsAsString_shouldIncludePRNInformation() throws Exception {
         DrugOrder order = createValidDrugOrder();
         order.setAsNeeded(true);
+        order.setDuration(null);
         order.setAsNeededCondition("Pain");
         RoundBasedDosingInstructions dosingInstructions =
                 (RoundBasedDosingInstructions) new RoundBasedDosingInstructions().getDosingInstructions(order);
@@ -74,6 +76,15 @@ public class RoundBasedDosingInstructionsTest extends BaseModuleContextSensitive
     }
 
     @Test
+    public void validate_shouldValidateDurationIsNotEmpty() throws Exception {
+        DrugOrder order = createValidDrugOrder();
+        order.setDuration(null);
+        Errors errors = new BindException(order, "drugOrder");
+        new RoundBasedDosingInstructions().validate(order, errors);
+        assertEquals(true, errors.hasErrors());
+    }
+
+    @Test
     public void validate_shouldValidateDosingInstructions() throws Exception {
         assertValidityOfDosingInstructions("", false);
         assertValidityOfDosingInstructions("Invalid", false);
@@ -97,6 +108,8 @@ public class RoundBasedDosingInstructionsTest extends BaseModuleContextSensitive
         drugOrder.setRoute(createConceptWithName("IV"));
         drugOrder.setDosingInstructions("Morning,Evening");
         drugOrder.setDosingType(RoundBasedDosingInstructions.class);
+        drugOrder.setDuration(5);
+        drugOrder.setDurationUnits(createConceptWithName("days"));
         OrderFrequency frequency = new OrderFrequency();
         frequency.setConcept(createConceptWithName("Twice a day"));
         drugOrder.setFrequency(frequency);

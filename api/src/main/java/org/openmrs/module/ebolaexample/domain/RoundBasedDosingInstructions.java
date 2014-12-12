@@ -87,10 +87,11 @@ public class RoundBasedDosingInstructions implements DosingInstructions {
 
     @Override
     public void validate(DrugOrder order, Errors errors) {
-        ValidationUtils.rejectIfEmpty(errors, "dosingInstructions", "DrugOrder.error.dosingInstructionsIsNullForDosingTypeSimple");
-        ValidationUtils.rejectIfEmpty(errors, "route", "DrugOrder.error.routeIsNullForDosingTypeSimple");
-        ValidationUtils.rejectIfEmpty(errors, "dose", "DrugOrder.error.doseIsNullForDosingTypeSimple");
-        ValidationUtils.rejectIfEmpty(errors, "doseUnits", "DrugOrder.error.doseUnitsIsNullForDosingTypeSimple");
+        ValidationUtils.rejectIfEmpty(errors, "dosingInstructions", "DrugOrder.error.dosingInstructionsIsNullForDosingTypeRoundBased");
+        ValidationUtils.rejectIfEmpty(errors, "route", "DrugOrder.error.routeIsNullForDosingTypeRoundBased");
+        ValidationUtils.rejectIfEmpty(errors, "dose", "DrugOrder.error.doseIsNullForDosingTypeRoundBased");
+        ValidationUtils.rejectIfEmpty(errors, "doseUnits", "DrugOrder.error.doseUnitsIsNullForDosingTypeRoundBased");
+        ValidationUtils.rejectIfEmpty(errors, "duration", "DrugOrder.error.durationIsNullForDosingTypeRoundBased");
 
         String[] rounds = order.getDosingInstructions().split(",");
         for (String round : rounds) {
