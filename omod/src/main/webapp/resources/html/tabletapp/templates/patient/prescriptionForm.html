@@ -65,8 +65,10 @@
                 <input class="checkbox" type="checkbox" id="as-needed-checkbox"
                        ng-model="addOrder.drug.asNeeded"/>
                 <label for="as-needed-checkbox">PRN</label>
-                <select ng-options="condition for condition in asNeededConditions"
+                <span class="select-arrow">
+                    <select ng-options="condition for condition in asNeededConditions"
                         ng-model="addOrder.drug.asNeededCondition"></select>
+                </span>
             </div>
 
         </div>
