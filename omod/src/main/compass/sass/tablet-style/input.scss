@@ -162,4 +162,8 @@ textarea {
 	&.error {
 	  border: 4px solid $error;
 	}
+
+	&.no-unit {
+		width: 180px;
+	}
 }
