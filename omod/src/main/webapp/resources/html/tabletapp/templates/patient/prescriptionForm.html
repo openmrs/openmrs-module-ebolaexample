@@ -1,7 +1,7 @@
 <div ng-controller="AddPrescriptionController" xmlns="http://www.w3.org/1999/html">
     <form ng-show="addOrder.drug">
         <div class="page-wrap-smaller">
-            <h1>{{ addOrder.drug.concept.display }} : {{ addOrder.drug.display }}</h1>
+            <h1>{{ addOrder.drug.concept.display }}<em>{{ addOrder.drug.display }}</em></h1>
 
             <div>
                 <input class="checkbox" type="checkbox" id="free-text-instructions-checkbox"

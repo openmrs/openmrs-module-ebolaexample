@@ -40,6 +40,12 @@
       border-radius: 5px;
       padding-right: 30px;
       height: 81px;
+
+      option {
+        color: $grey1;
+        font-family: "OpenSansBold";
+        font-size: 1.7em;
+      }
     }
 
     select[disabled] {
