@@ -189,7 +189,7 @@ describe('app', function () {
         });
 
         it('should save direct to desired state', function () {
-            initController({someKey: 'some wild params'});
+            initController({prescriptionInfo: 'some wild params'});
             order['freeTextInstructions'] = true;
             var expectedPost = $.extend({}, expectedOrderPost, {
                 "dosingType": "org.openmrs.FreeTextDosingInstructions",
@@ -198,7 +198,7 @@ describe('app', function () {
             httpMock.expectPOST(apiUrl + 'order', expectedPost)
             scope.save(order, 'anywhere');
             httpMock.flush();
-            expect(state.go).toHaveBeenCalledWith('anywhere', {someKey: 'some wild params'});
+            expect(state.go).toHaveBeenCalledWith('anywhere', {prescriptionInfo: 'some wild params'});
         });
 
         it('should save newly created order with round based instructions', function () {

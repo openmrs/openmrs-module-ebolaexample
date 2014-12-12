@@ -189,15 +189,19 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
                 return el.name;
             });
 
-            var drug = $state.params.prescriptionInfo;
+            var drug = {}
             if ($state.params.prescriptionInfo && $state.params.prescriptionInfo.uuid) {
                 drug = DrugResource.get({ uuid: $state.params.prescriptionInfo.uuid }, function (response) {
                     $scope.routeProvided = drug.route;
+                    drug.route = drug.route || {};
                 });
+            } else {
+                drug = $state.params.prescriptionInfo;
+                $scope.routeProvided = drug.route;
+                drug.route = drug.route || {};
             }
             $scope.doseUnits = angular.copy(Constants.doseUnits);
             $scope.routes = angular.copy(Constants.routes);
-            $scope.routeProvided = drug && drug.route;
             $scope.asNeededConditions = Constants.asNeededConditions;
             $scope.addOrder = {
                 drug: drug,
