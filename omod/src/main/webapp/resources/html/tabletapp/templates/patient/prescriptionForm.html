@@ -28,11 +28,10 @@
                 <div class="input-container">
                     <input ng-model="addOrder.drug.dose" type="number" ng-required="!addOrder.freeTestInstructions">
                 </div>
-                <span ng-repeat="doseUnit in doseUnits">
-                    <input id="dose_unit_{{doseUnit.display}}" type="radio"
-                           ng-value="doseUnit.uuid" name="doseUnits" ng-model="addOrder.drug.doseUnits"/>
-                    <label for="dose_unit_{{doseUnit.display}}"
-                           class="radio-button small">{{doseUnit.display}}</label>
+                <span class="select-arrow">
+                    <select ng-model="addOrder.drug.doseUnits">
+                        <option ng-repeat="doseUnit in doseUnits">{{doseUnit.display}}</option>
+                    </select>
                 </span>
             </span>
 

@@ -1,3 +1,9 @@
+@import "compass";
+
+//style from reference application
+@import "../../sass-external/uicommons-scss/variables";
+@import "../../sass-external/uicommons-scss/fragments/checkboxes";
+
 @import "tablet-style/variables";
 @import "tablet-style/fonts";
 @import "tablet-style/base";
@@ -6,3 +12,5 @@
 @import "tablet-style/input";
 @import "tablet-style/dropdown";
 @import "tablet-style/checkbox";
+@import "tablet-style/select";
+@import "tablet-style/table";

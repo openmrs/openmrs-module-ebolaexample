@@ -1,0 +1,49 @@
+.select-arrow {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+
+    &:after {
+      position: absolute;
+      display: inline-block;
+      right: 7px;
+      top: 0;
+      height: 50px;
+      content: "\f0d7";
+      font-weight: normal;
+      font-style: normal;
+      text-decoration: inherit;
+      font-family: "FontAwesome";
+      pointer-events: none;
+      margin-top: 5px;
+      padding-left: 5px;
+      line-height: 3.2em;
+      border-left: 4px solid #595959;
+    }
+
+    select {
+      min-width: 130px;
+      font-family: "OpenSansBold";
+      @include appearance(none);
+      background: white;
+      cursor: pointer;
+      color: $grey1;
+      font-size: 1.7em;
+      height: 50px;
+      display: block;
+      padding: 0px 5px;
+      margin: 0;
+      margin-top: 5px;
+      background-color: #FFF;
+      border: 4px solid #595959;
+      border-radius: 5px;
+    }
+
+    select[disabled] {
+      background: #EEE;
+      border: #CCC 1px solid;
+      color: #CCC;
+      font-style: normal;
+      cursor: default;
+    }
+  }
