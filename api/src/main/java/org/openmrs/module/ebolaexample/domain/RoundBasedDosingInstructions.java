@@ -29,7 +29,6 @@ public class RoundBasedDosingInstructions implements DosingInstructions {
 
     @Override
     public String getDosingInstructionsAsString(Locale locale) {
-
         StringBuilder dosingInstructions = new StringBuilder();
         dosingInstructions.append(this.dose);
         dosingInstructions.append(" ");
@@ -57,7 +56,15 @@ public class RoundBasedDosingInstructions implements DosingInstructions {
 
     @Override
     public void setDosingInstructions(DrugOrder order) {
-
+        order.setDosingType(this.getClass());
+        order.setDose(this.dose);
+        order.setDoseUnits(this.doseUnits);
+        order.setRoute(this.route);
+        order.setDuration(this.duration);
+        order.setDurationUnits(this.durationUnits);
+        order.setAsNeeded(this.asNeeded);
+        order.setAsNeededCondition(this.asNeededCondition);
+        order.setDosingInstructions(this.roundInstructions);
     }
 
     @Override
