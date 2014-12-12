@@ -7,7 +7,7 @@
     &:after {
       position: absolute;
       display: inline-block;
-      right: 7px;
+      right: 4px;
       top: -1px;
       content: "\f0d7";
       font-weight: normal;
@@ -16,12 +16,14 @@
       font-family: "FontAwesome";
       pointer-events: none;
       margin-top: 5px;
-      padding-left: 5px;
+      padding-left: 3px;
       line-height: 2.3em;
       border-left: 4px solid $grey1;
       color: $grey1;
-      height: 76px;
+      height: 73px;
       font-size: 2em;
+      background: #f3f3f3;
+      padding-right: 2px;
     }
 
     select {
