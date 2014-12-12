@@ -1,82 +1,80 @@
 <div ng-controller="AddPrescriptionController" xmlns="http://www.w3.org/1999/html">
-
     <form ng-show="addOrder.drug">
-        <h1>{{ addOrder.drug.concept.display }} : {{ addOrder.drug.display }}</h1>
+        <div class="page-wrap-smaller">
+            <h1>{{ addOrder.drug.concept.display }} : {{ addOrder.drug.display }}</h1>
 
-
-        <div>
-            <input class="checkbox" type="checkbox" id="free-text-instructions-checkbox"
-                   ng-model="addOrder.freeTextInstructions"/>
-            <label for="free-text-instructions-checkbox">I will fill this later</label>
-        </div>
-        <div ng-show="addOrder.freeTextInstructions">
-            <span class="question-title">INSTRUCTIONS</span>
-            <textarea ng-model="addOrder.instructions" rows="5" cols="60"
-                      ng-required="addOrder.freeTextInstructions"></textarea>
-        </div>
-        <div ng-show="!addOrder.freeTextInstructions">
-            <div ng-hide="routeProvided">
-                <span class="question-title">ROUTE</span>
-                <span ng-repeat="route in routes">
-                    <input id="route_{{route.display}}" type="radio" value="{{route.uuid}}"
-                           name="addOrder.drug.route" ng-model="addOrder.drug.route.uuid"/>
-                    <label for="route_{{route.display}}" class="radio-button small"><span>{{route.display}}c</span></label>
-                </span>
+            <div>
+                <input class="checkbox" type="checkbox" id="free-text-instructions-checkbox"
+                       ng-model="addOrder.freeTextInstructions"/>
+                <label for="free-text-instructions-checkbox">I will fill this later</label>
             </div>
-            <span class="inline">
-                <span class="question-title">DOSE</span>
-                <div class="input-container">
-                    <input ng-model="addOrder.drug.dose" type="number" ng-required="!addOrder.freeTestInstructions">
+            <div ng-show="addOrder.freeTextInstructions">
+                <span class="question-title">INSTRUCTIONS</span>
+                <textarea ng-model="addOrder.instructions" rows="5" cols="60"
+                          ng-required="addOrder.freeTextInstructions"></textarea>
+            </div>
+            <div ng-show="!addOrder.freeTextInstructions">
+                <div ng-hide="routeProvided">
+                    <span class="question-title">ROUTE</span>
+                    <span ng-repeat="route in routes">
+                        <input id="route_{{route.display}}" type="radio" value="{{route.uuid}}"
+                               name="addOrder.drug.route" ng-model="addOrder.drug.route.uuid"/>
+                        <label for="route_{{route.display}}" class="radio-button small"><span>{{route.display}}c</span></label>
+                    </span>
                 </div>
-                <span class="select-arrow">
-                    <select ng-model="addOrder.drug.doseUnits">
-                        <option ng-repeat="doseUnit in doseUnits">{{doseUnit.display}}</option>
-                    </select>
+                <span class="inline">
+                    <span class="question-title">DOSE</span>
+                    <div class="input-container">
+                        <input ng-model="addOrder.drug.dose" type="number" ng-required="!addOrder.freeTestInstructions">
+                    </div>
+                    <span class="select-arrow">
+                        <select ng-model="addOrder.drug.doseUnits">
+                            <option ng-repeat="doseUnit in doseUnits">{{doseUnit.display}}</option>
+                        </select>
+                    </span>
                 </span>
-            </span>
 
-            <div>
-                <span class="question-title">TIME OF DAY</span>
-                <span ng-repeat="roundKey in orderedRoundNames">
-                    <input id="round_{{roundKey}}" type="checkbox" value="{{roundKey}}" name="addOrder.rounds[roundKey]"
-                           ng-model="addOrder.rounds[roundKey]"/>
-                    <label for="round_{{roundKey}}" class="radio-button small">{{roundKey}}</label>
-                </span>
-            </div>
-
-            <div>
-                <span class="question-title">DURATION</span>
-
-                <div class="input-container">
-                    <input ng-mode="addOrder.drug.durationLength" type="number"
-                           ng-required="!addOrder.freeTestInstructions">
-                    <span class="unit">days</span>
+                <div>
+                    <span class="question-title">TIME OF DAY<em>(Select one or more)</em></span>
+                    <span ng-repeat="roundKey in orderedRoundNames">
+                        <input id="round_{{roundKey}}" type="checkbox" value="{{roundKey}}" name="addOrder.rounds[roundKey]"
+                               ng-model="addOrder.rounds[roundKey]"/>
+                        <label for="round_{{roundKey}}" class="radio-button small">{{roundKey}}</label>
+                    </span>
                 </div>
 
-                <span class="condition">OR</span>
+                <div>
+                    <span class="question-title">DURATION</span>
 
-                <input id="duration_2" type="radio" value="times" name="duration" ng-model="addOrder.durationType"/>
-                <label for="duration_2" class="radio-button small smaller">Once off</label>
+                    <div class="input-container">
+                        <input ng-mode="addOrder.drug.durationLength" type="number"
+                               ng-required="!addOrder.freeTestInstructions">
+                        <span class="unit">days</span>
+                    </div>
+
+                    <span class="condition">OR</span>
+
+                    <input id="duration_2" type="radio" value="times" name="duration" ng-model="addOrder.durationType"/>
+                    <label for="duration_2" class="radio-button small smaller">Once off</label>
+                </div>
+
+                <div>
+                    <span class="question-title">OPTIONS</span>
+
+                    <input class="checkbox" type="checkbox" id="as-needed-checkbox"
+                           ng-model="addOrder.drug.asNeeded"/>
+                    <label for="as-needed-checkbox">PRN</label>
+                    <span ng-show="addOrder.drug.asNeeded" class="select-arrow">
+                        <select ng-options="condition for condition in asNeededConditions"
+                            ng-model="addOrder.drug.asNeededCondition"></select>
+                    </span>
+                </div>
             </div>
-
-            <div>
-                <span class="question-title">OPTIONS</span>
-
-                <input class="checkbox" type="checkbox" id="as-needed-checkbox"
-                       ng-model="addOrder.drug.asNeeded"/>
-                <label for="as-needed-checkbox">PRN</label>
-                <span ng-show="addOrder.drug.asNeeded" class="select-arrow">
-                    <select ng-options="condition for condition in asNeededConditions"
-                        ng-model="addOrder.drug.asNeededCondition"></select>
-                </span>
-            </div>
-
         </div>
-
         <div class="actions">
-            <button class="left">BACK</button>
-            <button class="right" type="submit" ng-click="save(addOrder, 'patient.addPrescription')">Save and Add More</button>
-            <button class="right" type="submit" ng-click="save(addOrder, 'patient.overview')">Save and Finish</button>
+            <button class="left small">BACK</button>
+            <button class="right small" type="submit" ng-click="save(addOrder, 'patient.overview')">Finish</button>
+            <button class="right small" type="submit" ng-click="save(addOrder, 'patient.addPrescription')">Save and Add More</button>
         </div>
     </form>
 </div>

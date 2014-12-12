@@ -1,7 +1,16 @@
 [type="checkbox"].checkbox {
   @include check-box; 
+  padding: 15px;
+
+  &:checked:after {
+  	font-size: 2.5em;
+  	color: $grey1;
+  }
 
   & + label {
     vertical-align: top;
+	font-size: 1.7em;
+	font-family: "OpenSansBold";
+	color: $grey1;
   }
 }
