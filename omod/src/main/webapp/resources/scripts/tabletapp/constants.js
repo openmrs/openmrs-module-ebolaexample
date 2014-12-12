@@ -52,7 +52,6 @@ angular.module("constants", [])
                 }
             ],
             routes: [
-                //nasogastric,
                 {
                     display: 'Rectal suppository',
                     uuid: '162458AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
@@ -77,6 +76,18 @@ angular.module("constants", [])
                     display: 'IO',
                     uuid: '162624AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
                 }
+            ],
+            asNeededConditions: [
+                "Pain",
+                "Insomnia",
+                "Diarrhea",
+                "Nausea",
+                "Fever",
+                "Indigestion",
+                "Agitation",
+                "Anxiety",
+                "Constipation",
+                "Cough"
             ]
         }
     });

@@ -135,7 +135,8 @@ describe('app', function () {
             },
             order,
             expectedOrderPost,
-            initController;
+            initController,
+            state;
 
         beforeEach(function () {
             expectedOrderPost = {
@@ -157,16 +158,19 @@ describe('app', function () {
                 freeTextInstructions: false
             };
 
-            inject(function ($controller, $rootScope, $httpBackend) {
+            inject(function ($state, $controller, $rootScope, $httpBackend) {
                 httpMock = $httpBackend;
                 scope = $rootScope.$new();
+                httpMock.when('GET', 'templates/wards.html').respond({});
+                httpMock.flush();
+                state = $state;
+                spyOn(state, 'go');
                 httpMock.when('POST', apiUrl + 'encounter').respond(encounterResponseStub);
                 httpMock.when('POST', apiUrl + 'order').respond(orderResponseStub);
                 httpMock.when('GET', apiUrl + 'ebola/session-info').respond(sessionInfoResponseStub);
                 httpMock.when('GET', apiUrl + 'drug/999').respond({concept: {uuid: '0987654'}});
-                httpMock.when('GET', 'templates/wards.html').respond({});
                 initController = function (stateParams) {
-                    var state = stateParams || {params: {prescriptionInfo: {uuid: '999'}}};
+                    state['params'] = stateParams || {prescriptionInfo: {uuid: '999'}};
                     $controller('AddPrescriptionController', {$scope: scope, $state: state});
                 }
             });
@@ -180,14 +184,27 @@ describe('app', function () {
                 "dosingInstructions": "Drug instructions"
             });
             httpMock.expectPOST(apiUrl + 'order', expectedPost)
-            scope.save(order);
+            scope.save(order, 'anywhere');
             httpMock.flush();
+        });
+
+        it('should save direct to desired state', function () {
+            initController({someKey: 'some wild params'});
+            order['freeTextInstructions'] = true;
+            var expectedPost = $.extend({}, expectedOrderPost, {
+                "dosingType": "org.openmrs.FreeTextDosingInstructions",
+                "dosingInstructions": "Drug instructions"
+            });
+            httpMock.expectPOST(apiUrl + 'order', expectedPost)
+            scope.save(order, 'anywhere');
+            httpMock.flush();
+            expect(state.go).toHaveBeenCalledWith('anywhere', {someKey: 'some wild params'});
         });
 
         it('should save newly created order with round based instructions', function () {
             initController();
             order.drug['dose'] = 1;
-            order.drug['doseUnits'] = 'DOSE UNITS UUID'
+            order.drug['doseUnits'] = 'DOSE UNITS UUID';
             order.drug['route'] = { uuid: 'ROUTE UUID' };
             var expectedPost = $.extend({}, expectedOrderPost, {
                 "dosingType": "org.openmrs.module.ebolaexample.domain.RoundBasedDosingInstructions",
@@ -220,29 +237,40 @@ describe('app', function () {
             httpMock.flush();
         });
 
+        it('should set and reset asNeededCondition according to asNeeded value', function () {
+            initController();
+            httpMock.flush();
+
+            this.expect(scope.addOrder.drug.asNeeded).toBeFalsy();
+            scope.addOrder.drug.asNeededCondition = "Something";
+            scope.$digest();
+            scope.addOrder.drug.asNeeded = false;
+            scope.$digest();
+            this.expect(scope.addOrder.drug.asNeededCondition).toEqual("");
+        });
+
         it('should load full drug information from web service', function () {
             httpMock.expectGET(apiUrl + 'drug/1234').respond({info: "Some drug info"});
-            initController({params: {prescriptionInfo: {uuid: "1234"}}});
+            initController({prescriptionInfo: {uuid: "1234"}});
             httpMock.flush();
 
             this.expect(scope.addOrder.drug.info).toEqual("Some drug info");
         });
 
         it('should not load full drug information from web service if there is no drug uuid', function () {
-            initController({params: {prescriptionInfo: {uuid: null}}});
+            initController({prescriptionInfo: {uuid: null}});
             httpMock.verifyNoOutstandingExpectation();
             httpMock.verifyNoOutstandingRequest();
         });
 
         it('should set routeProvided if the route is provided by params', function () {
             initController({
-                params: {
                     prescriptionInfo: {
                         uuid: null,
                         route: {
                             uuid: "",
                             display: ""}
-                    }}});
+                    }});
             httpMock.verifyNoOutstandingExpectation();
             httpMock.verifyNoOutstandingRequest();
             this.expect(scope.routeProvided).toBeTruthy();
@@ -250,11 +278,10 @@ describe('app', function () {
 
         it('should set routeProvided to falsey if the route is not provided by params', function () {
             initController({
-                params: {
                     prescriptionInfo: {
                         uuid: null,
                         route: null
-                    }}});
+                    }});
             httpMock.verifyNoOutstandingExpectation();
             httpMock.verifyNoOutstandingRequest();
             this.expect(scope.routeProvided).toBeFalsy();
@@ -262,7 +289,7 @@ describe('app', function () {
 
         it('should set routeProvided to truthy if the route is provided by web service', function () {
             httpMock.expectGET(apiUrl + 'drug/1234').respond({route: {uuid: '12345678'}});
-            initController({params: {prescriptionInfo: {uuid: "1234"}}});
+            initController({prescriptionInfo: {uuid: "1234"}});
             httpMock.flush();
             scope.$digest();
             this.expect(scope.routeProvided).toBeTruthy();
@@ -270,7 +297,7 @@ describe('app', function () {
 
         it('should set routeProvided to falsy if the route is not provided by web service', function () {
             httpMock.expectGET(apiUrl + 'drug/1234').respond({route: null});
-            initController({params: {prescriptionInfo: {uuid: "1234"}}});
+            initController({prescriptionInfo: {uuid: "1234"}});
             httpMock.flush();
             scope.$digest();
             this.expect(scope.routeProvided).toBeFalsy();

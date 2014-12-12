@@ -3,7 +3,7 @@
     <span class="question-title">{{ ward.display }}</span>
     <ul class="tablet-list">
         <li ng-repeat="bedAssignment in ward.bedAssignments">
-            <a class="radio-button long small" ui-sref="patient.overview({uuid: bedAssignment.patient.uuid})">
+            <a class="radio-button long small" ui-sref="patient.overview({patientUUID: bedAssignment.patient.uuid})">
             {{ bedAssignment.patient.display }}<a>
         </li>
     </ul>

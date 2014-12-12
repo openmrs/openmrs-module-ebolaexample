@@ -60,18 +60,22 @@
                 <label for="duration_2" class="radio-button small smaller">Once off</label>
             </div>
 
-        </div>
-        <div class="separator" ng-show="addOrder.drug">
-            <input class="checkbox" id="showHints" type="checkbox" value="iv" ng-model="showHints"/>
-            <label for="showHints">Show Hints</label>
+            <div>
+                <span class="question-title">OPTIONS</span>
 
-            <div class="info" ng-show="showHints">
-                {{ addOrder.drug.display }}
+                <input class="checkbox" type="checkbox" id="as-needed-checkbox"
+                       ng-model="addOrder.drug.asNeeded"/>
+                <label for="as-needed-checkbox">PRN</label>
+                <select ng-options="condition for condition in asNeededConditions"
+                        ng-model="addOrder.drug.asNeededCondition"></select>
             </div>
+
         </div>
+
         <div class="actions">
             <button class="left">BACK</button>
-            <button class="right" type="submit" ng-click="save(addOrder)">Save</button>
+            <button class="right" type="submit" ng-click="save(addOrder, 'patient.addPrescription')">Save and Add More</button>
+            <button class="right" type="submit" ng-click="save(addOrder, 'patient.overview')">Save and Finish</button>
         </div>
     </form>
 </div>

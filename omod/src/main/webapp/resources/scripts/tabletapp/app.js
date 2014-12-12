@@ -16,11 +16,11 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
                 templateUrl: "templates/ward.html"
             })
             .state("patient", {
-                url: "/patients/:uuid",
+                url: "/patients/:patientUUID",
                 templateUrl: "templates/patient.html"
             })
             .state("patient.overview", {
-                url: "/overview",
+                url: "/overview/:patientUUID",
                 templateUrl: "templates/patient/overview.html"
             })
             .state("patient.addPrescription", {
@@ -109,7 +109,7 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
     }])
 
     .controller("PatientController", [ "$state", "$scope", "PatientResource", "OrderResource", "ngDialog", function ($state, $scope, PatientResource, OrderResource, ngDialog) {
-        var patientId = $state.params.uuid;
+        var patientId = $state.params.patientUUID;
 
         $scope.patient = PatientResource.get({ uuid: patientId });
         OrderResource.query({ t: "drugorder", patient: patientId }, function (response) {
@@ -175,6 +175,8 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
                     orderJson["route"] = order.drug.route && order.drug.route.uuid;
                     orderJson["frequency"] = "";
                     orderJson["dosingInstructions"] = rounds;
+                    orderJson["asNeeded"] = order.drug.asNeeded;
+                    orderJson["asNeededCondition"] = order.drug.asNeededCondition;
                 }
             }
 
@@ -183,7 +185,7 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
                 return memo
             }, {});
 
-            $scope.orderedRoundNames = _.map(angular.copy(Constants.rounds), function(el) {
+            $scope.orderedRoundNames = _.map(angular.copy(Constants.rounds), function (el) {
                 return el.name;
             });
 
@@ -196,12 +198,18 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
             $scope.doseUnits = angular.copy(Constants.doseUnits);
             $scope.routes = angular.copy(Constants.routes);
             $scope.routeProvided = drug && drug.route;
+            $scope.asNeededConditions = Constants.asNeededConditions;
             $scope.addOrder = {
                 drug: drug,
                 patient: $scope.patient,
                 rounds: rounds
             };
-            $scope.save = function (order) {
+            $scope.$watch('addOrder.drug.asNeeded', function () {
+                if ($scope.addOrder.drug && !$scope.addOrder.drug.asNeeded) {
+                    $scope.addOrder.drug.asNeededCondition = '';
+                }
+            })
+            $scope.save = function (order, newState) {
                 CurrentSession.getEncounter(order.patient.uuid).then(function (encounter) {
                     CurrentSession.getInfo().then(function (response) {
                         var orderJson = {
@@ -215,7 +223,7 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
                         }
                         setDosing(order, orderJson);
                         new OrderResource(orderJson).$save().then(function (order) {
-                            $scope.newOrder = order;
+                            $state.go(newState, $state.params);
                         });
                     })
 
@@ -245,6 +253,7 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
                 });
                 return mappedDrugs;
             }
+
             function mapDrugsToSimpleRepresentation(drugs, concept) {
                 return _.map(drugs, function (drug) {
                     var rep = { display: drug.display,
@@ -262,6 +271,7 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
                     return rep;
                 });
             }
+
             function loadDrugs(concept) {
                 DrugResource.query({concept: concept.uuid, v: 'full'}, function (response) {
                     var mappedDrugs = mapDrugsToSimpleRepresentation(response.results, concept);
@@ -271,10 +281,11 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
                     });
                 });
             }
-            if($state.params.concept) {
+
+            if ($state.params.concept) {
                 loadDrugs($state.params.concept);
             } else {
-                ConceptResource.get({uuid: $state.params.conceptUUID}, function(response) {
+                ConceptResource.get({uuid: $state.params.conceptUUID}, function (response) {
                     loadDrugs(response.toJSON());
                 });
             }
