@@ -2,8 +2,8 @@
 	font-family: "OpenSansBold";
 	font-size: 3.7em;
 
-	width: 165px;
-	height: 110px;
+	width: 20%;
+	height: 100px;
 	max-width: 160px;
 	max-height: 110px;
 	line-height: 1em;
@@ -30,7 +30,6 @@
 		vertical-align: middle;
 		line-height: normal;
 	}
-
 
 	&.long {
 		width: 221px;
@@ -65,7 +64,9 @@
 		width: 46%;
 		max-width: 60%;
 		margin-bottom: 20px;
-		height: 40px;
+		min-height: 40px;
+		padding: 7px 0;
+		height: auto;
 		vertical-align: top;
 	}
 }
@@ -94,8 +95,9 @@ input[type="text"] {
 	color: $grey1;
 	font-size: 1.7em;
 	margin-bottom: 15px;
-	border: 2px solid $grey1;
 	padding-left: 10px;
+	border: 4px solid $grey1;
+	border-radius: 7px;
 }
 
 input[type="radio"]:checked + .radio-button, input[type="checkbox"]:checked + .radio-button {
