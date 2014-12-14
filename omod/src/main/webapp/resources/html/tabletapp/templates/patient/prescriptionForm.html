@@ -30,7 +30,7 @@
                     </div>
                     <span class="select-arrow">
                         <select ng-model="addOrder.drug.doseUnits">
-                            <option ng-repeat="doseUnit in doseUnits">{{doseUnit.display}}</option>
+                            <option ng-repeat="doseUnit in doseUnits" value="{{doseUnit.uuid}}">{{doseUnit.display}}</option>
                         </select>
                     </span>
                 </span>
