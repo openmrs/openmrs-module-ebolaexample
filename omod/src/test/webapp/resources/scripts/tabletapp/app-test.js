@@ -188,6 +188,15 @@ describe('app', function () {
             httpMock.flush();
         });
 
+        it('should not save if the form is not valid', function () {
+            initController();
+            httpMock.flush();
+            scope.form = {$valid: false};
+            scope.save(order, 'anywhere');
+            httpMock.verifyNoOutstandingExpectation();
+            httpMock.verifyNoOutstandingRequest();
+        });
+
         it('should save direct to desired state', function () {
             initController({prescriptionInfo: 'some wild params'});
             order['freeTextInstructions'] = true;

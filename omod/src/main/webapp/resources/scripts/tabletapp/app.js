@@ -216,24 +216,26 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
                 }
             })
             $scope.save = function (order, newState) {
-                CurrentSession.getEncounter(order.patient.uuid).then(function (encounter) {
-                    CurrentSession.getInfo().then(function (response) {
-                        var orderJson = {
-                            "type": Constants.orderType.drugorder,
-                            "patient": order.patient.uuid,
-                            "drug": order.drug.uuid,
-                            "encounter": encounter.uuid,
-                            "careSetting": Constants.careSetting.inpatient,
-                            "orderer": response.data.providers[0]["uuid"],
-                            "concept": order.drug.concept.uuid
-                        }
-                        setDosing(order, orderJson);
-                        new OrderResource(orderJson).$save().then(function (order) {
-                            $state.go(newState, $state.params);
-                        });
-                    })
+                if ($scope.form.$valid) {
+                    CurrentSession.getEncounter(order.patient.uuid).then(function (encounter) {
+                        CurrentSession.getInfo().then(function (response) {
+                            var orderJson = {
+                                "type": Constants.orderType.drugorder,
+                                "patient": order.patient.uuid,
+                                "drug": order.drug.uuid,
+                                "encounter": encounter.uuid,
+                                "careSetting": Constants.careSetting.inpatient,
+                                "orderer": response.data.providers[0]["uuid"],
+                                "concept": order.drug.concept.uuid
+                            }
+                            setDosing(order, orderJson);
+                            new OrderResource(orderJson).$save().then(function (order) {
+                                $state.go(newState, $state.params);
+                            });
+                        })
 
-                })
+                    })
+                }
             }
         }])
 
