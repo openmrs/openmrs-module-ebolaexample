@@ -74,6 +74,7 @@ angular.module("prescriptions", ["tabletapp", "constants"])
                         }
                         setDosing(order, orderJson);
                         new OrderResource(orderJson).$save().then(function (order) {
+                            $state.params['uuid'] = CurrentSession.getRecentWard();
                             $state.go(newState, $state.params);
                         });
                     })

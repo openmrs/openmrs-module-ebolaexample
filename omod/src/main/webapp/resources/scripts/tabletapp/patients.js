@@ -1,4 +1,4 @@
-angular.module("patients", ["ui.router", "resources", "ngDialog", "constants"])
+angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "session"])
 
     .controller("ListWardsController", [ "$scope", "WardResource", function ($scope, WardResource) {
 
@@ -14,11 +14,13 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants"])
         });
     }])
 
-    .controller("WardController", [ "$state", "$scope", "WardResource", function ($state, $scope, WardResource) {
-        var wardId = $state.params.uuid;
-        $scope.ward = WardResource.get({ uuid: wardId });
+    .controller("WardController", [ "$state", "$scope", "WardResource", "CurrentSession",
+        function ($state, $scope, WardResource, CurrentSession) {
+            var wardId = $state.params.uuid;
+            CurrentSession.setRecentWard(wardId);
+            $scope.ward = WardResource.get({ uuid: wardId });
 
-    }])
+        }])
 
     .controller("PatientController", [ "$state", "$scope", "PatientResource", "OrderResource", "ngDialog", function ($state, $scope, PatientResource, OrderResource, ngDialog) {
         var patientId = $state.params.patientUUID;

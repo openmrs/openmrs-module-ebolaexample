@@ -1,7 +1,7 @@
 var OPENMRS_CONTEXT_PATH = location.pathname.substring(1, location.pathname.indexOf("/", 1));
 
 angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "constants",
-    "prescriptions", "resources", "patients"])
+    "prescriptions", "resources", "patients", "session"])
 
     .config(function ($stateProvider, $urlRouterProvider) {
 
@@ -38,31 +38,4 @@ angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "const
                 templateUrl: "templates/patient/prescriptionForm.html",
                 params: { prescriptionInfo: null }
             });
-    })
-
-    .factory("CurrentSession", ["$http", "Constants", "EncounterResource",
-        function ($http, Constants, EncounterResource) {
-            var cachedInfo,
-                cachedEncounter,
-                cachedEncounterPatientUUID;
-            return {
-                getInfo: function () {
-                    if (!cachedInfo) {
-                        cachedInfo = $http.get("/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/session-info");
-                    }
-                    return cachedInfo;
-                },
-                getEncounter: function (patientUUID) {
-                    if (cachedEncounter && cachedEncounterPatientUUID == patientUUID) {
-                        return cachedEncounter;
-                    }
-                    cachedEncounterPatientUUID = patientUUID;
-                    cachedEncounter = new EncounterResource({
-                        "encounterDatetime": new Date().toJSON(),
-                        "patient": patientUUID,
-                        "encounterType": Constants.encounterType.ebolaInpatientFollowup
-                    }).$save();
-                    return cachedEncounter;
-                }
-            };
-        }]);
+    });

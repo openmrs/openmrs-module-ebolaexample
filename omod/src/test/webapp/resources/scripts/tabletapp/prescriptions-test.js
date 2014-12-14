@@ -63,7 +63,6 @@ describe('prescriptions', function () {
             };
 
         beforeEach(function () {
-
             inject(function ($controller, $rootScope, $httpBackend) {
                 httpMock = $httpBackend;
                 scope = $rootScope.$new();
@@ -127,7 +126,8 @@ describe('prescriptions', function () {
             order,
             expectedOrderPost,
             initController,
-            state;
+            state,
+            currentSession;
 
         beforeEach(function () {
             expectedOrderPost = {
@@ -150,7 +150,8 @@ describe('prescriptions', function () {
                 form: {$valid: true}
             };
 
-            inject(function ($state, $controller, $rootScope, $httpBackend) {
+            inject(function ($state, $controller, $rootScope, $httpBackend, $injector) {
+                currentSession = $injector.get('CurrentSession');
                 httpMock = $httpBackend;
                 scope = $rootScope.$new();
                 httpMock.when('GET', 'templates/wards.html').respond({});
@@ -221,9 +222,10 @@ describe('prescriptions', function () {
                 "dosingInstructions": "Drug instructions"
             });
             httpMock.expectPOST(apiUrl + 'order', expectedPost)
+            currentSession.setRecentWard('ward uuid')
             scope.save(order, 'anywhere');
             httpMock.flush();
-            expect(state.go).toHaveBeenCalledWith('anywhere', {prescriptionInfo: 'some wild params'});
+            expect(state.go).toHaveBeenCalledWith('anywhere', {prescriptionInfo: 'some wild params', uuid: 'ward uuid'});
         });
 
         it('should save newly created order with round based instructions', function () {
