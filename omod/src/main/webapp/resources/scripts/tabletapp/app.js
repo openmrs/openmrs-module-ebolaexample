@@ -28,7 +28,7 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
                 templateUrl: "templates/patient/newPrescription.html"
             })
             .state("patient.addPrescriptionRoute", {
-                url: "/addPrescriptionRoute/:conceptUUID",
+                url: "/addPrescription",
                 templateUrl: "templates/patient/newPrescriptionRoute.html",
                 params: { concept: null }
             })
@@ -294,13 +294,6 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
                     });
                 });
             }
-
-            if ($state.params.concept) {
-                loadDrugs($state.params.concept);
-            } else {
-                ConceptResource.get({uuid: $state.params.conceptUUID}, function (response) {
-                    loadDrugs(response.toJSON());
-                });
-            }
+            loadDrugs($state.params.concept);
         }
     ]);

@@ -70,7 +70,7 @@ describe('app', function () {
                 httpMock.when('GET', apiUrl + 'concept/654321').respond({uuid: '654321'});
                 httpMock.when('GET', apiUrl + 'drug?concept=654321&v=full').respond(drugsResponse);
                 initController = function (stateParams) {
-                    var state = stateParams || { params: {conceptUUID: '654321'} };
+                    var state = stateParams || { params: {concept: {uuid: '654321'} } };
                     $controller('NewPrescriptionRouteController', {$scope: scope, $state: state});
                 }
             });
@@ -104,16 +104,7 @@ describe('app', function () {
 
         it('should set concept on order from state params', function () {
             var concept = {uuid: '654321', display: 'Concept from Service'};
-            initController({ params: { concept: concept, conceptUUID: '654321' } });
-            httpMock.flush();
-            scope.$digest();
-            expect(scope.drugs[0].concept).toEqual(concept);
-        });
-
-        it('should load drug concept on order from web service if needed', function () {
-            var concept = {uuid: '654321', display: 'Concept from Service'};
-            httpMock.expectGET(apiUrl + 'concept/654321').respond(concept);
-            initController({params: {concept: null, conceptUUID: '654321'}});
+            initController({ params: { concept: concept } });
             httpMock.flush();
             scope.$digest();
             expect(scope.drugs[0].concept).toEqual(concept);
