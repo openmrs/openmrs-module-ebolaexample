@@ -1,5 +1,5 @@
 <div ng-controller="AddPrescriptionController" xmlns="http://www.w3.org/1999/html">
-    <form ng-show="addOrder.drug" name="form">
+    <form ng-show="addOrder.drug" name="addOrder.form">
         <div class="page-wrap-smaller">
             <h1>{{ addOrder.drug.concept.display }}<em>{{ addOrder.drug.display }}</em></h1>
 
@@ -10,30 +10,52 @@
             </div>
             <div ng-show="addOrder.freeTextInstructions">
                 <span class="question-title">INSTRUCTIONS</span>
-                <textarea ng-model="addOrder.instructions" rows="5" cols="60"
-                          ng-required="addOrder.freeTextInstructions"></textarea>
+                <textarea ng-model="addOrder.instructions" rows="5" cols="60"></textarea>
             </div>
             <div ng-show="!addOrder.freeTextInstructions">
                 <div ng-hide="routeProvided">
                     <span class="question-title">ROUTE</span>
-                <span ng-repeat="route in routes">
-                    <input id="route_{{route.display}}" type="radio" value="{{route.uuid}}"
-                           name="addOrder.drug.route" ng-model="addOrder.drug.route.uuid"/>
-                    <label for="route_{{route.display}}"
-                           class="radio-button small"><span>{{route.display}}</span></label>
-                </span>
+                    <span class="select-arrow">
+                        <select ng-model="addOrder.drug.route.uuid"
+                                ng-required="!addOrder.freeTextInstructions && !routeProvided"
+                                name="route">
+                            <option></option>
+                            <option ng-repeat="route in routes" value="{{route.uuid}}">{{route.display}}</option>
+                        </select>
+                    </span>
+
+                    <div id="route-errors" class="error-text" ng-show="addOrder.form.route.$invalid && hasErrors">
+                        <p class="text-danger" ng-show="addOrder.form.route.$error.required">
+                            Required
+                        </p>
+                    </div>
+
                 </div>
                 <span class="inline">
                     <span class="question-title">DOSE</span>
                     <div class="input-container no-unit">
-                        <input ng-model="addOrder.drug.dose" type="number" ng-required="!addOrder.freeTestInstructions">
+                        <input ng-model="addOrder.drug.dose" type="number" ng-required="!addOrder.freeTextInstructions"
+                               name="dose">
+                    </div>
+                    <div id="dose-errors" class="error-text" ng-show="addOrder.form.dose.$invalid && hasErrors">
+                        <p class="text-danger" ng-show="addOrder.form.dose.$error.required">
+                            Required
+                        </p>
                     </div>
                     <span class="select-arrow">
                         <select ng-model="addOrder.drug.doseUnits"
-                                ng-required="!addOrder.freeTestInstructions">
+                                ng-required="!addOrder.freeTextInstructions"
+                                name="doseUnits">
                             <option></option>
-                            <option ng-repeat="doseUnit in doseUnits" value="{{doseUnit.uuid}}">{{doseUnit.display}}</option>
+                            <option ng-repeat="doseUnit in doseUnits" value="{{doseUnit.uuid}}">{{doseUnit.display}}
+                            </option>
                         </select>
+                        <div id="dose-units-errors" class="error-text"
+                             ng-show="addOrder.form.doseUnits.$invalid && hasErrors">
+                            <p class="text-danger" ng-show="addOrder.form.doseUnits.$error.required">
+                                Required
+                            </p>
+                        </div>
                     </span>
                 </span>
 
@@ -41,10 +63,15 @@
                     <span class="question-title">TIME OF DAY<em>(Select one or more)</em></span>
                     <span ng-repeat="roundKey in orderedRoundNames">
                         <input id="round_{{roundKey}}" type="checkbox" value="{{roundKey}}"
-                               name="addOrder.rounds[roundKey]"
                                ng-model="addOrder.rounds[roundKey]"/>
                         <label for="round_{{roundKey}}" class="radio-button small">{{roundKey}}</label>
                     </span>
+                    <div id="rounds-errors" class="error-text"
+                         ng-show="hasErrors && !roundSelected">
+                        <p class="text-danger">
+                            Required
+                        </p>
+                    </div>
                 </div>
 
                 <div>
@@ -52,8 +79,15 @@
 
                     <div class="input-container">
                         <input ng-model="addOrder.drug.duration" type="number"
-                               ng-required="!addOrder.freeTextInstructions">
+                               ng-required="!addOrder.freeTextInstructions"
+                               name="duration">
                         <span class="unit">days</span>
+                    </div>
+                    <div id="dose-duration-errors" class="error-text"
+                         ng-show="addOrder.form.duration.$invalid && hasErrors">
+                        <p class="text-danger" ng-show="addOrder.form.duration.$error.required">
+                            Required
+                        </p>
                     </div>
                 </div>
 
@@ -66,7 +100,7 @@
                     <span ng-show="addOrder.drug.asNeeded" class="select-arrow">
                         <select ng-options="condition for condition in asNeededConditions"
                                 ng-model="addOrder.drug.asNeededCondition"
-                                ng-required="!addOrder.freeTestInstructions"></select>
+                                ng-required="!addOrder.freeTextInstructions"></select>
                     </span>
                 </div>
             </div>

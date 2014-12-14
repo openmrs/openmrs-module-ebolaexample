@@ -153,9 +153,10 @@ describe('app', function () {
                 drug: {
                     uuid: 'DRUG_UUID',
                     concept: { uuid: 'CONCEPT_UUID' }},
+                rounds: {Morning: true},
                 instructions: 'Drug instructions',
-                rounds: {},
-                freeTextInstructions: false
+                freeTextInstructions: false,
+                form: {$valid: true}
             };
 
             inject(function ($state, $controller, $rootScope, $httpBackend) {
@@ -191,15 +192,39 @@ describe('app', function () {
         it('should not save if the form is not valid', function () {
             initController();
             httpMock.flush();
-            scope.form = {$valid: false};
+            order.form = {$valid: false};
             scope.save(order, 'anywhere');
             httpMock.verifyNoOutstandingExpectation();
             httpMock.verifyNoOutstandingRequest();
+            expect(scope.hasErrors).toBeTruthy();
+        });
+
+        it('should not save if no round is selected', function () {
+            initController();
+            httpMock.flush();
+            order['rounds'] = {
+                Morning: false,
+                Afternoon: false,
+                Evening: false,
+                Night: false
+            }
+            scope.roundSelected = true;
+            scope.save(order, 'anywhere');
+            httpMock.verifyNoOutstandingExpectation();
+            httpMock.verifyNoOutstandingRequest();
+            expect(scope.hasErrors).toBeTruthy();
+            expect(scope.roundSelected).toBeFalsy();
         });
 
         it('should save direct to desired state', function () {
             initController({prescriptionInfo: 'some wild params'});
             order['freeTextInstructions'] = true;
+            order['rounds'] = {
+                Morning: false,
+                Afternoon: false,
+                Evening: false,
+                Night: false
+            }
             var expectedPost = $.extend({}, expectedOrderPost, {
                 "dosingType": "org.openmrs.module.ebolaexample.domain.UnvalidatedFreeTextDosingInstructions",
                 "dosingInstructions": "Drug instructions"
@@ -221,7 +246,7 @@ describe('app', function () {
                 "doseUnits": "DOSE UNITS UUID",
                 "route": "ROUTE UUID",
                 "frequency": "",
-                "dosingInstructions": "",
+                "dosingInstructions": "Morning",
                 "durationUnits":"1072AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
             });
             httpMock.expectPOST(apiUrl + 'order', expectedPost)

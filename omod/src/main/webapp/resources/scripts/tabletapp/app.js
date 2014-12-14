@@ -216,7 +216,10 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
                 }
             })
             $scope.save = function (order, newState) {
-                if ($scope.form.$valid) {
+                $scope.roundSelected = _.some(Object.keys(order.rounds),function (key) {
+                    return order.rounds[key];
+                });
+                if (order.form.$valid && (order.freeTextInstructions || $scope.roundSelected)) {
                     CurrentSession.getEncounter(order.patient.uuid).then(function (encounter) {
                         CurrentSession.getInfo().then(function (response) {
                             var orderJson = {
@@ -235,6 +238,8 @@ angular.module("tabletapp", ["ui.router", "ngResource", "ngDialog", "uicommons.w
                         })
 
                     })
+                } else {
+                    $scope.hasErrors = true;
                 }
             }
         }])
