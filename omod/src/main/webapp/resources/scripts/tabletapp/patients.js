@@ -36,6 +36,14 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             reloadActiveOrders();
             $rootScope.$on('$stateChangeSuccess', reloadActiveOrders);
 
+            $scope.focusInput = function ($event) {
+                angular.element($event.target).parent().addClass('highlight');
+            };
+
+            $scope.blurInput = function ($event) {
+                angular.element($event.target).parent().removeClass('highlight');
+            };
+
             $scope.getPatientId = function () {
                 return $scope.patient && $scope.patient.display && $scope.patient.display.split(" ")[0];
             };
