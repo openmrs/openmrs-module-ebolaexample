@@ -1,6 +1,6 @@
 angular.module("prescriptions", ["tabletapp", "constants"])
 
-    .controller("AddPrescriptionController", [ "$state", "$scope", "OrderResource", "Constants", "CurrentSession", "DrugResource",
+    .controller("NewPrescriptionDetailsController", [ "$state", "$scope", "OrderResource", "Constants", "CurrentSession", "DrugResource",
         function ($state, $scope, OrderResource, Constants, CurrentSession, DrugResource) {
             function setDosing(order, orderJson) {
                 if (order.freeTextInstructions) {

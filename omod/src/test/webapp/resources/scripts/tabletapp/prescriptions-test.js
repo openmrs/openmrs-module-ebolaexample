@@ -110,7 +110,7 @@ describe('prescriptions', function () {
         });
     });
 
-    describe('AddPrescriptionController', function () {
+    describe('NewPrescriptionDetailsController', function () {
 
         var httpMock,
             scope,
@@ -164,7 +164,7 @@ describe('prescriptions', function () {
                 httpMock.when('GET', apiUrl + 'drug/999').respond({concept: {uuid: '0987654'}});
                 initController = function (stateParams) {
                     state['params'] = stateParams || {prescriptionInfo: {uuid: '999'}};
-                    $controller('AddPrescriptionController', {$scope: scope, $state: state});
+                    $controller('NewPrescriptionDetailsController', {$scope: scope, $state: state});
                 }
             });
         });
