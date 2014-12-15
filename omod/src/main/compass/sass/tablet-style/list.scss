@@ -1,0 +1,22 @@
+ul {
+	margin: 0;
+	padding: 0;
+	border: 4px solid #eee;
+
+	li {
+		list-style: none;
+		font-size: 1.3em;
+		padding: 0.7em 0.5em;
+
+		&:nth-child(even) {
+			background: #eee;
+		}
+	}
+
+	button {
+		font-size: 0.9em;
+		float: right;
+		position: relative;
+		top: -7px;
+	}
+}
