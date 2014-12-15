@@ -3,6 +3,14 @@
 	<ul class="list-items">
 	    <li ng-repeat="order in activeOrders">
 	        {{ order.display }}
+	        <div>
+	        	<em>
+	        		{{ order.drug.display }}
+	        		{{ order.route.display }}
+	        		{{ order.dosingInstructions }}
+	        		for {{ order.duration }} days
+	        	</em>
+	        </div>
 	        <button ng-click="showAdminister(order)">Administer</button>
 	    </li>
 	</ul>

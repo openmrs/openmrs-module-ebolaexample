@@ -26,7 +26,7 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
         var patientId = $state.params.patientUUID;
 
         $scope.patient = PatientResource.get({ uuid: patientId });
-        OrderResource.query({ t: "drugorder", patient: patientId }, function (response) {
+        OrderResource.query({ t: "drugorder", v: 'full', patient: patientId }, function (response) {
             $scope.activeOrders = response.results;
         });
 
