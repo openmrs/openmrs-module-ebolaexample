@@ -209,6 +209,24 @@ describe('prescriptions', function () {
             expect(scope.roundSelected).toBeFalsy();
         });
 
+        it('should set serverError if there is a problem saving', function () {
+            initController({prescriptionInfo: 'some wild params'});
+            order['freeTextInstructions'] = true;
+            scope.addOrder['rounds'] = {
+                Morning: true
+            }
+            order['rounds'] = scope.addOrder['rounds']
+            var expectedPost = $.extend({}, expectedOrderPost, {
+                "dosingType": "org.openmrs.module.ebolaexample.domain.UnvalidatedFreeTextDosingInstructions",
+                "dosingInstructions": "Drug instructions"
+            });
+            httpMock.expectPOST(apiUrl + 'order', expectedPost).respond(500, {});
+            currentSession.setRecentWard('ward uuid')
+            scope.save(order, 'anywhere');
+            httpMock.flush();
+            expect(scope.serverError).toBeTruthy();
+        });
+
         it('should save direct to desired state', function () {
             initController({prescriptionInfo: 'some wild params'});
             order['freeTextInstructions'] = true;

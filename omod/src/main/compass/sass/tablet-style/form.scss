@@ -34,3 +34,12 @@ form {
 	background: $grey3;
 	margin-top: 10px;
 }
+
+span {
+  &.error {
+    vertical-align: top;
+    font-size: 1.7em;
+    font-family: "OpenSansBold";
+    color: red;
+  }
+}

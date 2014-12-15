@@ -78,6 +78,8 @@ angular.module("prescriptions", ["tabletapp", "constants"])
                             new OrderResource(orderJson).$save().then(function (order) {
                                 $state.params['uuid'] = CurrentSession.getRecentWard();
                                 $state.go(newState, $state.params);
+                            }, function() {
+                                $scope.serverError = true;
                             });
                         })
 
