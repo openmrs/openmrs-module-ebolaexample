@@ -41,6 +41,7 @@ import java.util.*;
 public class DrugConceptSearchHandler implements SearchHandler {
 
     public static final String REQUEST_PARAM_FORMULARY = "formulary";
+    public static final String REQUEST_PARAM_QUERY = "q";
 
     @Autowired
     @Qualifier("conceptService")
@@ -48,7 +49,8 @@ public class DrugConceptSearchHandler implements SearchHandler {
 
     SearchQuery searchQuery = new SearchQuery.Builder(
             "Allows you to find active drug concept names")
-            .withRequiredParameters(REQUEST_PARAM_FORMULARY).build();
+            .withRequiredParameters(REQUEST_PARAM_FORMULARY)
+            .withOptionalParameters(REQUEST_PARAM_QUERY).build();
 
     private final SearchConfig searchConfig = new SearchConfig("getDrugConcepts", RestConstants.VERSION_1 + "/concept",
             Arrays.asList("1.10.*", "1.11.*"), searchQuery);
@@ -58,7 +60,7 @@ public class DrugConceptSearchHandler implements SearchHandler {
         public int compare(Concept o1, Concept o2) {
             return o1.getDisplayString().compareToIgnoreCase(o2.getDisplayString());
         }
-    };;
+    };
 
     /**
      * @see org.openmrs.module.webservices.rest.web.resource.api.SearchHandler#getSearchConfig()
@@ -73,7 +75,13 @@ public class DrugConceptSearchHandler implements SearchHandler {
      */
     @Override
     public PageableResult search(RequestContext context) throws ResponseException {
-        List<Drug> allDrugs = Context.getConceptService().getAllDrugs(context.getIncludeAll());
+        String query = context.getParameter(REQUEST_PARAM_QUERY);
+        List<Drug> allDrugs = new ArrayList<Drug>();
+        if(query == null || query.isEmpty()) {
+            allDrugs = Context.getConceptService().getAllDrugs(context.getIncludeAll());
+        } else {
+            allDrugs = Context.getConceptService().getDrugs(query, Context.getLocale(), false, false);
+        }
         Set<Concept> drugNames = new HashSet<Concept>();
         for (Drug drug: allDrugs) {
             drugNames.add(drug.getConcept());

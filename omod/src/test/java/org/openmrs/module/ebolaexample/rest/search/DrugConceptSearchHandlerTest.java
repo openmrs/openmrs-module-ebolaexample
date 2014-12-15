@@ -72,6 +72,7 @@ public class DrugConceptSearchHandlerTest extends BaseModuleWebContextSensitiveT
         List<Drug> allDrugs = Context.getConceptService().getAllDrugs();
         List<LinkedHashMap> results = (List<LinkedHashMap>) responseObject.get("results");
         assertTrue(results.size() <= allDrugs.size());
+        assertTrue(results.size() > 0);
 
         Set<String> drugNames = new HashSet<String>();
         for (Drug drug: allDrugs) {
@@ -80,5 +81,19 @@ public class DrugConceptSearchHandlerTest extends BaseModuleWebContextSensitiveT
         for (LinkedHashMap result : results) {
             assertTrue(drugNames.contains(result.get("display")));
         }
+    }
+
+    @Test
+    public void shouldFilterDrugConceptsByQuery() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest("GET", "/rest/v1/concept");
+        request.addParameter("formulary","true");
+        request.addParameter("q","ASP");
+        request.addHeader("content-type", "application/json");
+
+        response = webMethods.handle(request);
+        SimpleObject responseObject = new ObjectMapper().readValue(response.getContentAsString(), SimpleObject.class);
+        List<LinkedHashMap> results = (List<LinkedHashMap>) responseObject.get("results");
+        assertTrue(results.size() == 1);
+        assertEquals("ASPIRIN", results.get(0).get("display"));
     }
 }
