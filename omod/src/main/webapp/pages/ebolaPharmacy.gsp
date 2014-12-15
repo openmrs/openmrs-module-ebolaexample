@@ -11,8 +11,6 @@
 
 <h2>Pharmacy Overview ${ ui.format(today)}</h2>
 
-<p>Number of patients = ${patients.size}</p>
-
 <table>
     <thead>
     <tr>
@@ -23,23 +21,32 @@
     </tr>
     </thead>
     <tbody>
-    <% patients.each { p ->
-        def names = p.names
-        def identifiers = p.identifiers
+    <% ebolaPatients.each { ebolaPatient ->
+        def names = ebolaPatient.patient.names
+        def identifiers = ebolaPatient.patient.identifiers
         def location
+        def drugOrders = ebolaPatient.drugOrders
+
     %>
     <tr>
-        <td>
-            <% names.each { name -> def pName = name %> ${pName.fullName} <% } %>
-        </td>
         <td>
             <% identifiers.each { identifier ->
                 def pIdentifier = identifier
                 location = identifier.location
             %> ${pIdentifier.identifier} <% } %>
         </td>
+
+        <td>
+            <% names.each { name -> def pName = name %> ${pName.fullName} <% } %>
+        </td>
+
         <td>
              ${location.name}
+        </td>
+        <td>
+            <% drugOrders.each { drugOrder ->
+                def pDrugOrder = drugOrder
+            %> ${pDrugOrder.drug.name }<br> <% } %>
         </td>
     </tr>
     <% } %>
