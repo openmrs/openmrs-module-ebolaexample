@@ -1,0 +1,26 @@
+.card.radio-button.small.long {
+	display: block;
+	text-align: left;
+	width: 352px;
+	max-width: 352px;
+
+	span {
+		display: block;
+	}
+
+	em {
+		padding: 0;
+		font-size: 1em;
+	}
+
+	.number {
+		float: right;
+		width: auto;
+		position: relative;
+		top: -22px;
+		background: white;
+		border-radius: 7px;
+		color: $grey4;
+		padding: 5px;
+	}
+}

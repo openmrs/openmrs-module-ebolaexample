@@ -2,8 +2,11 @@
     <h1>Please select a patient<em>{{ ward.display }}</em></h1>
     <ul class="tablet-list">
         <li ng-repeat="bedAssignment in ward.bedAssignments">
-            <a class="radio-button long small" ui-sref="patient.overview({patientUUID: bedAssignment.patient.uuid})">
-            {{ bedAssignment.patient.display }}</a>
+            <a class="radio-button card long small" ui-sref="patient.overview({patientUUID: bedAssignment.patient.uuid})">
+    	        <span>{{ getPatientName(bedAssignment.patient.display) }}</span>
+    	        <em>{{ getPatientId(bedAssignment.patient.display) }}</em>
+				<span class="number">{{ bedAssignment.bed.display}}</span>
+            </a>
         </li>
     </ul>
 </div>

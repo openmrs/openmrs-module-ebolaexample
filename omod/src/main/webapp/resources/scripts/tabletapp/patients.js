@@ -20,6 +20,22 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             CurrentSession.setRecentWard(wardId);
             $scope.ward = WardResource.get({ uuid: wardId });
 
+            function toCamelCase(sentenceCase) {
+                var out = "";
+                sentenceCase.split(" ").forEach(function (el, idx) {
+                    var add = el.toLowerCase();
+                    out += (idx === 0 ? add : add[0].toUpperCase() + add.slice(1) + ' ');
+                });
+                return out;
+            }
+
+            $scope.getPatientName = function (display) {
+                return toCamelCase(display.split( / (.+)/)[1].split('-')[1]);
+            };
+
+            $scope.getPatientId = function (display) {
+                return display.split( / (.+)/)[0];
+            };
         }])
 
     .controller("PatientController", [ "$state", "$scope", "PatientResource", "OrderResource", "ngDialog", "$rootScope",
