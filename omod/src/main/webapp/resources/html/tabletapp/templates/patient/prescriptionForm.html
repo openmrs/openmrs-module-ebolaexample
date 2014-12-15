@@ -1,7 +1,7 @@
 <div ng-controller="NewPrescriptionDetailsController" xmlns="http://www.w3.org/1999/html">
     <form ng-show="addOrder.drug" name="addOrder.form">
+        <span class="error-message" ng-show="serverError">There was an error saving this prescription</span>
         <div class="page-wrap-smaller">
-            <span class="error" ng-show="serverError">There was an error saving this prescription</span>
             <h1>{{ addOrder.drug.concept.display }}<em>{{ addOrder.drug.display }}</em></h1>
 
             <div>
