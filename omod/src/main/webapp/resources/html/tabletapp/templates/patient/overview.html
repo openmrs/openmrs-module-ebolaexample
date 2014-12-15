@@ -1,6 +1,6 @@
 <div class="page-wrap-smaller">
 	<span class="question-title">Active Prescriptions</span>
-	<ul>
+	<ul class="list-items">
 	    <li ng-repeat="order in activeOrders">
 	        {{ order.display }}
 	        <button ng-click="showAdminister(order)">Administer</button>
@@ -15,6 +15,6 @@
 
 </div>
 <div class="actions">
-    <button class="left">BACK</button>
-    <button ui-sref="patient.addPrescription">Add new prescription</button>
+    <button class="left">Back</button>
+    <button class="right" ui-sref="patient.addPrescription">Add new prescription</button>
 </div>
