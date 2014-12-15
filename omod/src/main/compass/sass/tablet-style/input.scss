@@ -72,6 +72,10 @@
 		height: auto;
 		vertical-align: top;
 	}
+
+	&.error {
+		background: $error;
+	}
 }
 
 button {

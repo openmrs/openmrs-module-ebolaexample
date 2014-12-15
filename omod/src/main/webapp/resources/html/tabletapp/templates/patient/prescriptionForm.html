@@ -15,7 +15,7 @@
             </div>
             <div ng-show="!addOrder.freeTextInstructions">
                 <div ng-hide="routeProvided">
-                    <span class="question-title">ROUTE<em>(Required)</em></span>
+                    <span class="question-title">ROUTE<em ng-class="{error: addOrder.form.route.$invalid && hasErrors}">(Required)</em></span>
                     <span class="select-arrow">
                         <select ng-model="addOrder.drug.route.uuid"
                                 ng-required="!addOrder.freeTextInstructions && !routeProvided"
@@ -27,16 +27,15 @@
                     </span>
                 </div>
                 <span class="inline">
-                    <span class="question-title">DOSE<em>(Required)</em></span>
+                    <span class="question-title">DOSE<em ng-class="{error: addOrder.form.dose.$invalid && hasErrors}">(Required)</em></span>
                     <div ng-class="{error: addOrder.form.dose.$invalid && hasErrors}" class="input-container no-unit">
                         <input ng-model="addOrder.drug.dose" type="number" ng-required="!addOrder.freeTextInstructions"
                                name="dose">
                     </div>
-                    <span class="select-arrow">
+                    <span class="select-arrow" ng-class="{error: addOrder.form.doseUnits.$invalid && hasErrors}">
                         <select ng-model="addOrder.drug.doseUnits"
                                 ng-required="!addOrder.freeTextInstructions"
-                                name="doseUnits"
-                                ng-class="{error: addOrder.form.doseUnits.$invalid && hasErrors}">
+                                name="doseUnits">
                             <option></option>
                             <option ng-repeat="doseUnit in doseUnits" value="{{doseUnit.uuid}}">{{doseUnit.display}}
                             </option>
@@ -45,18 +44,17 @@
                 </span>
 
                 <div>
-                    <span class="question-title">TIME OF DAY<em>(Select one or more)</em></span>
+                    <span class="question-title">TIME OF DAY<em ng-class="{error: hasErrors && !roundSelected}">(Select one or more)</em></span>
                     <span ng-repeat="roundKey in orderedRoundNames"
-                          ng-class="{error: hasErrors && !roundSelected}"
                           class="checkboxes">
                         <input id="round_{{roundKey}}" type="checkbox" value="{{roundKey}}"
                                ng-model="addOrder.rounds[roundKey]"/>
-                        <label for="round_{{roundKey}}" class="radio-button small">{{roundKey}}</label>
+                        <label for="round_{{roundKey}}" ng-class="{error: hasErrors && !roundSelected}" class="radio-button small">{{roundKey}}</label>
                     </span>
                 </div>
 
                 <div>
-                    <span class="question-title">DURATION<em>(Required)</em></span>
+                    <span class="question-title">DURATION<em ng-class="{error: addOrder.form.duration.$invalid && hasErrors}">(Required)</em></span>
 
                     <div class="input-container" ng-class="{error: addOrder.form.duration.$invalid && hasErrors}">
                         <input ng-model="addOrder.drug.duration" type="number"
