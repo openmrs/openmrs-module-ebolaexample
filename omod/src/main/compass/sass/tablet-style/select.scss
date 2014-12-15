@@ -42,6 +42,10 @@
       padding-right: 30px;
       height: 81px;
 
+      &.error {
+        border: 4px solid $error;
+      }
+
       option {
         color: $grey1;
         font-family: "OpenSansBold";

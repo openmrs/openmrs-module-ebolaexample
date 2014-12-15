@@ -154,6 +154,7 @@ describe('prescriptions', function () {
                 currentSession = $injector.get('CurrentSession');
                 httpMock = $httpBackend;
                 scope = $rootScope.$new();
+                scope.addOrder = {};
                 httpMock.when('GET', 'templates/wards.html').respond({});
                 httpMock.flush();
                 state = $state;
@@ -194,13 +195,13 @@ describe('prescriptions', function () {
         it('should not save if no round is selected', function () {
             initController();
             httpMock.flush();
-            order['rounds'] = {
+            scope.addOrder['rounds'] = {
                 Morning: false,
                 Afternoon: false,
                 Evening: false,
                 Night: false
             }
-            scope.roundSelected = true;
+            order['rounds'] = scope.addOrder['rounds']
             scope.save(order, 'anywhere');
             httpMock.verifyNoOutstandingExpectation();
             httpMock.verifyNoOutstandingRequest();
@@ -211,12 +212,13 @@ describe('prescriptions', function () {
         it('should save direct to desired state', function () {
             initController({prescriptionInfo: 'some wild params'});
             order['freeTextInstructions'] = true;
-            order['rounds'] = {
+            scope.addOrder['rounds'] = {
                 Morning: false,
                 Afternoon: false,
                 Evening: false,
                 Night: false
             }
+            order['rounds'] = scope.addOrder['rounds']
             var expectedPost = $.extend({}, expectedOrderPost, {
                 "dosingType": "org.openmrs.module.ebolaexample.domain.UnvalidatedFreeTextDosingInstructions",
                 "dosingInstructions": "Drug instructions"
@@ -233,6 +235,14 @@ describe('prescriptions', function () {
             order.drug['dose'] = 1;
             order.drug['doseUnits'] = 'DOSE UNITS UUID';
             order.drug['route'] = { uuid: 'ROUTE UUID' };
+            scope.addOrder['rounds'] = {
+                Morning: true,
+                Afternoon: false,
+                Evening: false,
+                Night: false
+            }
+            order['rounds'] = scope.addOrder['rounds']
+            scope.$digest();
             var expectedPost = $.extend({}, expectedOrderPost, {
                 "dosingType": "org.openmrs.module.ebolaexample.domain.RoundBasedDosingInstructions",
                 "dose": 1,
@@ -240,7 +250,7 @@ describe('prescriptions', function () {
                 "route": "ROUTE UUID",
                 "frequency": "",
                 "dosingInstructions": "Morning",
-                "durationUnits":"1072AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                "durationUnits": "1072AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
             });
             httpMock.expectPOST(apiUrl + 'order', expectedPost)
             scope.save(order);
@@ -249,17 +259,19 @@ describe('prescriptions', function () {
 
         it('should interpret round selections as dosing instructions', function () {
             initController();
-            order['rounds'] = {
+            scope.addOrder['rounds'] = {
                 Morning: false,
                 Afternoon: true,
                 Evening: true,
                 Night: false
             }
+            order['rounds'] = scope.addOrder['rounds']
+            scope.$digest();
             var expectedPost = $.extend({}, expectedOrderPost, {
                 "dosingType": "org.openmrs.module.ebolaexample.domain.RoundBasedDosingInstructions",
                 "frequency": "",
                 "dosingInstructions": "Afternoon,Evening",
-                "durationUnits":"1072AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                "durationUnits": "1072AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
             });
             httpMock.expectPOST(apiUrl + 'order', expectedPost)
             scope.save(order);
@@ -294,12 +306,12 @@ describe('prescriptions', function () {
 
         it('should set routeProvided if the route is provided by params', function () {
             initController({
-                    prescriptionInfo: {
-                        uuid: null,
-                        route: {
-                            uuid: "",
-                            display: ""}
-                    }});
+                prescriptionInfo: {
+                    uuid: null,
+                    route: {
+                        uuid: "",
+                        display: ""}
+                }});
             httpMock.verifyNoOutstandingExpectation();
             httpMock.verifyNoOutstandingRequest();
             this.expect(scope.routeProvided).toBeTruthy();
@@ -307,10 +319,10 @@ describe('prescriptions', function () {
 
         it('should set routeProvided to falsey if the route is not provided by params', function () {
             initController({
-                    prescriptionInfo: {
-                        uuid: null,
-                        route: null
-                    }});
+                prescriptionInfo: {
+                    uuid: null,
+                    route: null
+                }});
             httpMock.verifyNoOutstandingExpectation();
             httpMock.verifyNoOutstandingRequest();
             this.expect(scope.routeProvided).toBeFalsy();

@@ -56,10 +56,12 @@ angular.module("prescriptions", ["tabletapp", "constants"])
                     $scope.addOrder.drug.asNeededCondition = '';
                 }
             })
-            $scope.save = function (order, newState) {
-                $scope.roundSelected = _.some(Object.keys(order.rounds), function (key) {
-                    return order.rounds[key];
+            $scope.$watch('addOrder.rounds', function() {
+                $scope.roundSelected = _.some(Object.keys($scope.addOrder.rounds), function (key) {
+                    return $scope.addOrder.rounds[key];
                 });
+            }, true);
+            $scope.save = function (order, newState) {
                 if (order.form.$valid && (order.freeTextInstructions || $scope.roundSelected)) {
                     CurrentSession.getEncounter(order.patient.uuid).then(function (encounter) {
                         CurrentSession.getInfo().then(function (response) {
