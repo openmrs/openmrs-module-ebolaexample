@@ -21,6 +21,8 @@
 	color: white;
 	display: inline-block;
   	text-align: center;
+  	vertical-align: top;
+  	word-break: break-word;
 
   	display: inline-flex;
 	align-items: center;
@@ -150,7 +152,11 @@ input[type="number"] {
 	padding: 10px;
 	background: #555;
 	margin-top: 10px;
-	height: 65px;
+	height: 80px;
+
+	&.small {
+		height: 65px;
+	}
 
 	button {
 		font-size: 2.4em;

@@ -1,4 +1,4 @@
-<div class="page-wrap" ng-controller="WardController">
+<div class="page-wrap spaced" ng-controller="WardController">
     <h1>Please select a patient<em>{{ ward.display }}</em></h1>
     <ul class="tablet-list">
         <li ng-repeat="bedAssignment in ward.bedAssignments">
@@ -7,6 +7,6 @@
         </li>
     </ul>
 </div>
-<div class="actions">
+<div class="actions small">
     <back-button></back-button>
 </div>
