@@ -6,7 +6,7 @@
     <ul class="tablet-list">
         <li ng-repeat="ward in suspectWards">
             <a class="radio-button small" ui-sref="ward({uuid: ward.uuid})"><span>{{ ward.display }}
-            <span class="patient-number">{{ ward.bedAssignments.length }} patients</span></span><a>
+            <span class="patient-number"><span class="inpatient-number">{{ ward.bedAssignments.length }}</span> patients</span></span><a>
         </li>
     </ul>
 
@@ -14,7 +14,7 @@
     <ul class="tablet-list">
         <li ng-repeat="ward in confirmedWards">
             <a class="radio-button small" ui-sref="ward({uuid: ward.uuid})"><span>{{ ward.display }}
-            <span class="patient-number">{{ ward.bedAssignments.length }} patients</span></span><a>
+            <span class="patient-number"><span class="inpatient-number">{{ ward.bedAssignments.length }}</span> patients</span></span><a>
         </li>
     </ul>
 
@@ -22,7 +22,7 @@
     <ul class="tablet-list">
         <li ng-repeat="ward in recoveryWards">
             <a class="radio-button small" ui-sref="ward({uuid: ward.uuid})"><span>{{ ward.display }}
-            <span class="patient-number">{{ ward.bedAssignments.length }} patients</span></span></a>
+            <span class="patient-number"><span class="inpatient-number">{{ ward.bedAssignments.length }}</span> patients</span></span></a>
         </li>
     </ul>
 </div>

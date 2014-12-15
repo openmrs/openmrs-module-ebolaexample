@@ -74,6 +74,20 @@
 	}
 }
 
+.radio-button span.inpatient-number {
+	display: inline-block;
+	background: white;
+	padding: 0 7px;
+	color: $grey4;
+	font-family: "OpenSansBold";
+	border-radius: 7px;
+	margin-right: 3px;
+}
+
+.patient-number {
+	margin: 5px 0;
+} 
+
 button {
 	background: white;
 	padding: 0.2em 0.4em;
@@ -141,6 +155,7 @@ input[type="number"] {
 	button {
 		font-size: 2.4em;
 		margin: 0 0.2em;
+		background: darken($primaryColor, 5%);
 
 		&.small {
 			font-size: 1.7em;

@@ -1,6 +1,5 @@
 <div class="page-wrap" ng-controller="WardController">
-    <h1>Please select a patient</h1>
-    <span class="question-title">{{ ward.display }}</span>
+    <h1>Please select a patient<em>{{ ward.display }}</em></h1>
     <ul class="tablet-list">
         <li ng-repeat="bedAssignment in ward.bedAssignments">
             <a class="radio-button long small" ui-sref="patient.overview({patientUUID: bedAssignment.patient.uuid})">
