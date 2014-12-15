@@ -89,6 +89,11 @@ angular.module("prescriptions", ["tabletapp", "constants"])
     .controller("NewPrescriptionController", [ '$state', '$scope', 'ConceptResource',
         function ($state, $scope, ConceptResource) {
             $scope.commonDrugConcepts = ConceptResource.query({formulary: true});
+            $scope.$watch('concept', function (concept) {
+                if(concept) {
+                    $state.go('patient.addPrescriptionRoute', { concept: concept });
+                }
+            })
         }
     ])
 
