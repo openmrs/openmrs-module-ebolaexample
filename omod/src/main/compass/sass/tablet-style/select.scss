@@ -61,8 +61,10 @@
     }
 
     &.error {
+      font-size: 1em;
+
       &:after {
-        border-left-color: $error;
+        border-left: 4px solid $error;
       }
 
       select {

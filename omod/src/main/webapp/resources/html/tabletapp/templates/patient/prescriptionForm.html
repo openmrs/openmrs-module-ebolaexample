@@ -16,7 +16,7 @@
             <div ng-show="!addOrder.freeTextInstructions">
                 <div ng-hide="routeProvided">
                     <span class="question-title">ROUTE<em ng-class="{error: addOrder.form.route.$invalid && hasErrors}">(Required)</em></span>
-                    <span class="select-arrow">
+                    <span class="select-arrow" ng-class="{error: addOrder.form.route.$invalid && hasErrors}">
                         <select ng-model="addOrder.drug.route.uuid"
                                 ng-required="!addOrder.freeTextInstructions && !routeProvided"
                                 name="route"
@@ -44,12 +44,12 @@
                 </span>
 
                 <div>
-                    <span class="question-title">TIME OF DAY<em ng-class="{error: hasErrors && !roundSelected}">(Select one or more)</em></span>
+                    <span class="question-title" ng-class="{error: hasErrors && !roundSelected}">TIME OF DAY<em ng-class="{error: hasErrors && !roundSelected}">(Select one or more)</em></span>
                     <span ng-repeat="roundKey in orderedRoundNames"
                           class="checkboxes">
                         <input id="round_{{roundKey}}" type="checkbox" value="{{roundKey}}"
                                ng-model="addOrder.rounds[roundKey]"/>
-                        <label for="round_{{roundKey}}" ng-class="{error: hasErrors && !roundSelected}" class="radio-button small">{{roundKey}}</label>
+                        <label for="round_{{roundKey}}" class="radio-button small">{{roundKey}}</label>
                     </span>
                 </div>
 
