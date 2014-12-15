@@ -22,27 +22,33 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
 
         }])
 
-    .controller("PatientController", [ "$state", "$scope", "PatientResource", "OrderResource", "ngDialog", function ($state, $scope, PatientResource, OrderResource, ngDialog) {
-        var patientId = $state.params.patientUUID;
+    .controller("PatientController", [ "$state", "$scope", "PatientResource", "OrderResource", "ngDialog", "$rootScope",
+        function ($state, $scope, PatientResource, OrderResource, ngDialog, $rootScope) {
+            var patientId = $state.params.patientUUID;
 
-        $scope.patient = PatientResource.get({ uuid: patientId });
-        OrderResource.query({ t: "drugorder", v: 'full', patient: patientId }, function (response) {
-            $scope.activeOrders = response.results;
-        });
+            $scope.patient = PatientResource.get({ uuid: patientId });
+            function reloadActiveOrders() {
+                OrderResource.query({ t: "drugorder", v: 'full', patient: patientId }, function (response) {
+                    $scope.activeOrders = response.results;
+                });
+            }
 
-        $scope.getPatientId = function () {
-            return $scope.patient && $scope.patient.display && $scope.patient.display.split(" ")[0];
-        };
+            reloadActiveOrders();
+            $rootScope.$on('$stateChangeSuccess', reloadActiveOrders);
 
-        $scope.showAdminister = function (order) {
-            $scope.administerDialogFor = order;
-            ngDialog.open({
-                template: "administerDialog",
-                controller: "PatientController",
-                className: "ngdialog-theme-plain",
-                closeByDocument: false,
-                scope: $scope
-            });
-        };
-    }]);
+            $scope.getPatientId = function () {
+                return $scope.patient && $scope.patient.display && $scope.patient.display.split(" ")[0];
+            };
+
+            $scope.showAdminister = function (order) {
+                $scope.administerDialogFor = order;
+                ngDialog.open({
+                    template: "administerDialog",
+                    controller: "PatientController",
+                    className: "ngdialog-theme-plain",
+                    closeByDocument: false,
+                    scope: $scope
+                });
+            };
+        }]);
 
