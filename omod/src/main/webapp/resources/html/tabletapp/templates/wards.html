@@ -22,10 +22,10 @@
     <ul class="tablet-list">
         <li ng-repeat="ward in recoveryWards">
             <a class="radio-button small" ui-sref="ward({uuid: ward.uuid})"><span>{{ ward.display }}
-            <span class="patient-number">{{ ward.bedAssignments.length }} patients</span></span><a>
+            <span class="patient-number">{{ ward.bedAssignments.length }} patients</span></span></a>
         </li>
     </ul>
 </div>
 <div class="actions">
-    <button class="left">BACK</button>
+    <back-button></back-button>
 </div>

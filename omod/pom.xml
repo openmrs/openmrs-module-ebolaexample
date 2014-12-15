@@ -296,6 +296,7 @@
                         <source>src/main/webapp/resources/scripts/tabletapp/patients.js</source>
                         <source>src/main/webapp/resources/scripts/tabletapp/resources.js</source>
                         <source>src/main/webapp/resources/scripts/tabletapp/select-drug-name.js</source>
+                        <source>src/main/webapp/resources/scripts/tabletapp/directives.js</source>
                         <source>src/main/webapp/resources/scripts/tabletapp/constants.js</source>
                         <source>src/main/webapp/resources/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts/directives/select-drug.js</source>
                         <source>src/main/webapp/resources/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts/services/drugService.js</source>
