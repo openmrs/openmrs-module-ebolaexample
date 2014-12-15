@@ -12,11 +12,13 @@ describe('app', function () {
             currentSession,
             encounterResponseStub = {
                 uuid: 'ENCOUNTER_ID'
-            };
+            },
+            constants;
 
         beforeEach(function () {
-            inject(function ($controller, $rootScope, $httpBackend, $injector) {
+            inject(function ($controller, $rootScope, $httpBackend, $injector, Constants) {
                 httpMock = $httpBackend;
+                constants = Constants;
                 scope = $rootScope.$new();
                 httpMock.when('POST', apiUrl + 'encounter').respond(encounterResponseStub);
                 currentSession = $injector.get('CurrentSession');

@@ -127,7 +127,7 @@ describe('prescriptions', function () {
             expectedOrderPost,
             initController,
             state,
-            currentSession;
+            injector;
 
         beforeEach(function () {
             expectedOrderPost = {
@@ -151,7 +151,6 @@ describe('prescriptions', function () {
             };
 
             inject(function ($state, $controller, $rootScope, $httpBackend, $injector) {
-                currentSession = $injector.get('CurrentSession');
                 httpMock = $httpBackend;
                 scope = $rootScope.$new();
                 scope.addOrder = {};
@@ -159,11 +158,13 @@ describe('prescriptions', function () {
                 httpMock.flush();
                 state = $state;
                 spyOn(state, 'go');
+                injector = $injector;
                 httpMock.when('POST', apiUrl + 'encounter').respond(encounterResponseStub);
                 httpMock.when('POST', apiUrl + 'order').respond(orderResponseStub);
                 httpMock.when('GET', apiUrl + 'ebola/session-info').respond(sessionInfoResponseStub);
                 httpMock.when('GET', apiUrl + 'drug/999').respond({concept: {uuid: '0987654'}});
-                initController = function (stateParams) {
+                initController = function (stateParams, session) {
+                    session = session || $injector.get('CurrentSession')
                     state['params'] = stateParams || {prescriptionInfo: {uuid: '999'}};
                     $controller('NewPrescriptionDetailsController', {$scope: scope, $state: state});
                 }
@@ -221,14 +222,15 @@ describe('prescriptions', function () {
                 "dosingInstructions": "Drug instructions"
             });
             httpMock.expectPOST(apiUrl + 'order', expectedPost).respond(500, {});
-            currentSession.setRecentWard('ward uuid')
             scope.save(order, 'anywhere');
             httpMock.flush();
             expect(scope.serverError).toBeTruthy();
         });
 
         it('should save direct to desired state', function () {
-            initController({prescriptionInfo: 'some wild params'});
+            var currentSession = injector.get('CurrentSession');
+            spyOn(currentSession, 'getRecentWard').andReturn('ward uuid');
+            initController({prescriptionInfo: 'some wild params'}, currentSession);
             order['freeTextInstructions'] = true;
             scope.addOrder['rounds'] = {
                 Morning: false,
@@ -242,7 +244,6 @@ describe('prescriptions', function () {
                 "dosingInstructions": "Drug instructions"
             });
             httpMock.expectPOST(apiUrl + 'order', expectedPost)
-            currentSession.setRecentWard('ward uuid')
             scope.save(order, 'anywhere');
             httpMock.flush();
             expect(state.go).toHaveBeenCalledWith('anywhere', {prescriptionInfo: 'some wild params', uuid: 'ward uuid'});

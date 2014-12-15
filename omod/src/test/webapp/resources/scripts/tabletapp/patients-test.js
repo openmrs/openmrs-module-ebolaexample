@@ -8,24 +8,24 @@ describe('patients', function () {
 
     describe('WardController', function () {
         var httpMock,
-            currentSession,
-            initController;
+            sessionSpy,
+            initController,
+            injector;
 
         beforeEach(function () {
             inject(function ($controller, $httpBackend, $injector, $rootScope) {
                 httpMock = $httpBackend;
-                currentSession = $injector.get('CurrentSession');
+                sessionSpy = jasmine.createSpyObj('CurrentSession', ['setRecentWard'])
                 initController = function (stateParams) {
-                    $controller('WardController', {$scope: $rootScope.$new(), $state: {params: stateParams}});
+                    $controller('WardController', {$scope: $rootScope.$new(), $state: {params: stateParams}, CurrentSession: sessionSpy});
                 }
             });
         });
 
         describe('loading a ward controller', function () {
             it('should save the ward uuid', function () {
-                this.expect(currentSession.getRecentWard()).toEqual("");
                 initController({uuid: "NEW WARD"})
-                this.expect(currentSession.getRecentWard()).toEqual("NEW WARD");
+                expect(sessionSpy.setRecentWard).toHaveBeenCalledWith('NEW WARD');
             })
         })
     });

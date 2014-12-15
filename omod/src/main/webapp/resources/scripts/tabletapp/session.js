@@ -1,11 +1,10 @@
-angular.module("session", ["ui.router", "constants", "resources", "patients"])
+angular.module("session", ["ui.router", "constants", "resources", "patients", "ngCookies"])
 
-    .factory("CurrentSession", ["$http", "Constants", "EncounterResource",
-        function ($http, Constants, EncounterResource) {
+    .factory("CurrentSession", ["$http", "Constants", "EncounterResource", "$cookies",
+        function ($http, Constants, EncounterResource, $cookies) {
             var cachedInfo,
                 cachedEncounter,
-                cachedEncounterPatientUUID,
-                mostRecentWardUUIDD;
+                cachedEncounterPatientUUID;
 
             return {
                 getInfo: function () {
@@ -27,10 +26,10 @@ angular.module("session", ["ui.router", "constants", "resources", "patients"])
                     return cachedEncounter;
                 },
                 setRecentWard: function (uuid) {
-                    mostRecentWardUUIDD = uuid;
+                    $cookies[Constants.wardKey] = uuid;
                 },
                 getRecentWard: function () {
-                    return mostRecentWardUUIDD || "";
+                    return $cookies[Constants.wardKey];
                 }
             };
         }]);

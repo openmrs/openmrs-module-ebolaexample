@@ -1,6 +1,7 @@
 angular.module("constants", [])
     .factory("Constants", function () {
         return {
+            wardKey: 'wardKey',
             encounterType: {
                 ebolaInpatientFollowup: "83413734-587d-11e4-af12-660e112eb3f5"
             },
