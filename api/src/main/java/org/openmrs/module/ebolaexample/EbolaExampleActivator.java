@@ -29,6 +29,7 @@ import org.openmrs.module.ModuleFactory;
 import org.openmrs.module.appframework.AppFrameworkConstants;
 import org.openmrs.module.appframework.service.AppFrameworkService;
 import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
+import org.openmrs.module.ebolaexample.metadata.KerryTownMetadata;
 import org.openmrs.module.emrapi.EmrApiConstants;
 import org.openmrs.module.emrapi.EmrApiProperties;
 import org.openmrs.module.htmlformentry.HtmlFormEntryService;
@@ -134,12 +135,14 @@ public class EbolaExampleActivator extends BaseModuleActivator {
 
     public void deployMetadataPackages(MetadataDeployService service) {
         MetadataBundle ebola = Context.getRegisteredComponent("ebolaMetadata", MetadataBundle.class);
+        MetadataBundle kerryTownMetadata = Context.getRegisteredComponent("kerryTownMetadata", MetadataBundle.class);
         MetadataBundle ebolaDemoData = Context.getRegisteredComponent("ebolaDemoData", MetadataBundle.class);
-        service.installBundles(Arrays.asList(ebola, ebolaDemoData));
+        service.installBundles(Arrays.asList(ebola, kerryTownMetadata, ebolaDemoData));
     }
 
     public void setupEmrApiGlobalProperties(AdministrationService administrationService) {
         setGlobalProperty(administrationService, EmrApiConstants.GP_CLINICIAN_ENCOUNTER_ROLE, EbolaMetadata._EncounterRole.CLINICIAN);
+        setGlobalProperty(administrationService, EmrApiConstants.PRIMARY_IDENTIFIER_TYPE, KerryTownMetadata._PatientIdentifierType.KERRY_TOWN_IDENTIFIER);
     }
 
     void disableApps(AppFrameworkService service) {

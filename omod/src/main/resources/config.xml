@@ -28,6 +28,9 @@
         <require_module version="${emrapiVersion}">
             org.openmrs.module.emrapi
         </require_module>
+        <require_module version="${registrationappVersion}">
+            org.openmrs.module.registrationapp
+        </require_module>
         <require_module version="${metadatadeployVersion}">
             org.openmrs.module.metadatadeploy
         </require_module>
