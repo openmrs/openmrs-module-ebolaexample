@@ -17,13 +17,16 @@ ul.list-items {
 
 	em {
 		padding: 0;
+		font-size: 0.9em;
+		display: block;
+		width: 80%;
 	}
 
 	button {
 		font-size: 0.95em;
 		float: right;
 		position: relative;
-		top: -46px;
+		top: -60px;
 		margin-right: 0;
 	}
 }
