@@ -9,7 +9,7 @@
     ]
 </script>
 
-<h2>Pharmacy Overview ${ ui.format(today)}</h2>
+<h2>Pharmacy Overview  ${ ui.format(today)}</h2>
 
 <table>
     <thead>
@@ -33,7 +33,8 @@
             <% identifiers.each { identifier ->
                 def pIdentifier = identifier
                 location = identifier.location
-            %> ${pIdentifier.identifier} <% } %>
+            %> <a href="${ ui.pageLink("ebolaexample", "ebolaOverview",
+                [ patient: ebolaPatient.patient.uuid]) }" >${pIdentifier.identifier} </a> <% } %>
         </td>
 
         <td>

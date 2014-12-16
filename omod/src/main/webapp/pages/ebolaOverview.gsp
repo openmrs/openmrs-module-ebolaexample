@@ -31,6 +31,8 @@
         { icon: "icon-home", link: '/' + OPENMRS_CONTEXT_PATH + '/index.htm' },
         { label: "${ ui.format(patient.patient.familyName) }, ${ ui.format(patient.patient.givenName) }" ,
             link: '${ui.pageLink("coreapps", "clinicianfacing/patient", [patientId: patient.patient.id])}'},
+        { label: "${ ui.format(ui.message("ebolaexample.ebolaPharmacy.title")) }" ,
+            link: '${ui.pageLink("ebolaexample", "ebolaPharmacy?app=ebolaexample.ebolaPharmacy")}'},
         { label: "${ ui.escapeJs(ui.message("ebolaexample.ebolaOverview.title")) }" }
     ]
     var patient = { id: ${ patient.id } };
@@ -60,15 +62,20 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient, a
     <div class="dashboard clear">
         <div class="info-container column">
 
-            ${ ui.includeFragment("ebolaexample", "overview/ebolaProgram",
-                    [ patient: patient ]) }
+            ${ ui.includeFragment("ebolaexample", "overview/newAndUpdatedPrescriptions", [ patient: patient ]) }
+
+        </div>
+
+        <div class="info-container column" style="display: none">
+
+            ${ ui.includeFragment("ebolaexample", "overview/ebolaProgram", [ patient: patient ]) }
 
             ${ ui.includeFragment("ebolaexample", "overview/inpatientLocation",
                     [ patient: patient, activeVisit: activeVisit ]) }
 
         </div>
 
-        <div class="info-container column">
+        <div class="info-container column" style="display: none">
 
             ${ ui.includeFragment("ebolaexample", "overview/inpatientFollowups",
                     [ patient: patient, activeVisit: activeVisit ]) }
@@ -78,7 +85,7 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient, a
 
         </div>
 
-        <div class="action-container column">
+        <div class="action-container column"  style="display: none">
             <div class="action-section">
                 <ul>
                     <li>More actions here?</li>

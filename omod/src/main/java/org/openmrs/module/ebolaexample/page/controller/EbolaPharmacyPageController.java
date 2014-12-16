@@ -21,10 +21,10 @@ public class EbolaPharmacyPageController {
         List<EbolaPatient> ebolaPatients = new ArrayList<EbolaPatient>();
         List<Patient> patients = patientService.getAllPatients();
 
+        OrderType orderType = Context.getOrderService().getOrderTypeByUuid(OrderType.DRUG_ORDER_TYPE_UUID);
+
         for (Patient patient : patients) {
-            OrderType orderType = Context.getOrderService().getOrderTypeByUuid(OrderType.DRUG_ORDER_TYPE_UUID);
             List<Order> orders = Context.getOrderService().getActiveOrders(patient, orderType, null, null);
-            System.out.println(patient + " has " + orders.size() + " active orders");
             EbolaPatient ebolaPatient = new EbolaPatient(patient);
 
             List<DrugOrder> drugOrders = new ArrayList<DrugOrder>();
