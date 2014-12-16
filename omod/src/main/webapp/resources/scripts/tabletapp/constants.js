@@ -97,6 +97,17 @@ angular.module("constants", [])
                 "Anxiety",
                 "Constipation",
                 "Cough"
+            ],
+            administrationStatuses: {
+                full: "Fully Given",
+                partial: "Partially Given",
+                notGiven: "Not Given"
+            },
+            reasonsNotAdministered: [
+                "Patient asleep",
+                "Patient vomiting",
+                "Aggressive mood",
+                "Cannot access vein for IV"
             ]
         }
     });

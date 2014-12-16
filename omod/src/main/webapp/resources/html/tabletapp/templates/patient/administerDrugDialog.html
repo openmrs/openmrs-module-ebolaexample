@@ -1,0 +1,29 @@
+<div class="ngdialog-message administer-drug">
+    <b>Administering: {{administerOrder.display}}</b>
+
+    <form name="administeredDose" ng-submit="saveAdministeredDose(administeredDose)">
+        <div>
+            <span class="question-title" ng-class="{error: hasErrors}">AMOUNT GIVEN
+                <em ng-class="{error: hasErrors }">(Select one)</em>
+            </span>
+            <span ng-repeat="status in administrationStatuses" class="checkboxes">
+                <input id="status_{{status}}" type="radio" true-value="{{status}}" value="{{status}}"
+                       ng-model="administeredDose.status"/>
+                <label for="status_{{status}}" class="radio-button small">{{status}}</label>
+            </span>
+        </div>
+        <div ng-show="needsAReason(administeredDose)">
+            <span class="question-title" ng-class="{error: hasErrors}">REASON
+                <em ng-class="{error: hasErrors }">(Select one)</em>
+            </span>
+            <span class="select-arrow" ng-class="{error: hasErrors}">
+                <select ng-model="administeredDose.reasonNotAdministered" name="reasonNotAdministered"
+                        ng-required="needsAReason">
+                    <option ng-repeat="reason in reasonsNotAdministered" value="{{reason}}">{{reason}}
+                    </option>
+                </select>
+            </span>
+        </div>
+        <input type="submit" id="submit" value="Administer"/>
+    </form>
+</div>

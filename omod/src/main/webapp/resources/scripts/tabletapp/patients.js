@@ -38,8 +38,8 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             };
         }])
 
-    .controller("PatientController", [ "$state", "$scope", "PatientResource", "OrderResource", "ngDialog", "$rootScope",
-        function ($state, $scope, PatientResource, OrderResource, ngDialog, $rootScope) {
+    .controller("PatientController", [ "$state", "$scope", "PatientResource", "OrderResource", "ngDialog", "$rootScope", "Constants",
+        function ($state, $scope, PatientResource, OrderResource, ngDialog, $rootScope, Constants) {
             var patientId = $state.params.patientUUID;
 
             $scope.patient = PatientResource.get({ uuid: patientId });
@@ -65,7 +65,7 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             };
 
             $scope.showAdminister = function (order) {
-                $scope.administerDialogFor = order;
+                $scope.administerOrder = order;
                 ngDialog.open({
                     template: "administerDialog",
                     controller: "PatientController",
@@ -74,5 +74,19 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                     scope: $scope
                 });
             };
+
+            $scope.administrationStatuses = _.map(Constants.administrationStatuses, function(i,k) {
+                return Constants.administrationStatuses[k];
+            });
+            $scope.reasonsNotAdministered = Constants.reasonsNotAdministered;
+            $scope.needsAReason = function(administeredDose) {
+                if(administeredDose && administeredDose.status) {
+                    return administeredDose.status == Constants.administrationStatuses.partial
+                        || administeredDose.status == Constants.administrationStatuses.notGiven
+                }
+                return false;
+            };
+            $scope.saveAdministeredDose = function (dose) {};
+
         }]);
 
