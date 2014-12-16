@@ -58,11 +58,10 @@
                 </div>
 
                 <div>
-                    <span class="question-title">DURATION<em ng-class="{error: addOrder.form.duration.$invalid && hasErrors}">(Required)</em></span>
+                    <span class="question-title">DURATION<em>(Optional)</em></span>
 
-                    <div class="input-container" ng-class="{error: addOrder.form.duration.$invalid && hasErrors}">
+                    <div class="input-container">
                         <input ng-model="addOrder.drug.duration" type="number"
-                               ng-required="!addOrder.freeTextInstructions"
                                name="duration" 
                                ng-focus="focusInput($event)" 
                                ng-blur="blurInput($event)">

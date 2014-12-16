@@ -76,15 +76,6 @@ public class RoundBasedDosingInstructionsTest extends BaseModuleContextSensitive
     }
 
     @Test
-    public void validate_shouldValidateDurationIsNotEmpty() throws Exception {
-        DrugOrder order = createValidDrugOrder();
-        order.setDuration(null);
-        Errors errors = new BindException(order, "drugOrder");
-        new RoundBasedDosingInstructions().validate(order, errors);
-        assertEquals(true, errors.hasErrors());
-    }
-
-    @Test
     public void validate_shouldValidateDosingInstructions() throws Exception {
         assertValidityOfDosingInstructions("", false);
         assertValidityOfDosingInstructions("Invalid", false);
