@@ -1,8 +1,32 @@
+<header>
+    <div class="patient-header">
+        <span class="patient-id">
+            <small>PATIENT ID</small>
+            {{ getPatientId() }}
+        </span>
+        <span class="patient-id">
+            <small>NAME</small>
+            {{ patient.person.display }}
+        </span>
+        <span class="patient-id">
+            <small>GENDER / AGE</small>
+            {{ patient.person.gender }} - {{ patient.person.age }}
+        </span>
+        <span class="patient-info">
+            <small>WARD</small>
+            12
+        </span>
+        <span class="patient-info">
+            <small>BED</small>
+            27
+        </span>
+    </div>
+</header>
 <div class="page-wrap-smaller">
     <span class="question-title">Active Prescriptions</span>
     <ul class="list-items">
         <li ng-repeat="order in activeOrders">
-            {{ order.display }}
+            {{ order.concept.display }}
             <div>
                 <em>
                     {{ order.drug.display }}
@@ -17,9 +41,10 @@
 
     <script type="text/ng-template" id="administerDialog">
        <ng-include src="'templates/patient/administerDrugDialog.html'"></ng-include>
-    </script>
+    </script>    
 </div>
 <div class="actions small">
     <back-button></back-button>
     <button class="small right" ui-sref="patient.addPrescription">Add new prescription</button>
 </div>
+

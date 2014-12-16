@@ -11,6 +11,12 @@ body {
 	font-size: 16px;
 }
 
+.full-content, .main-div > .ng-scope, body > .ng-scope {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+
 header {
 	background: #aaa;
 }
@@ -116,26 +122,15 @@ h1 {
 }
 
 .page-wrap-smaller {
-  min-height: 81%;
-  padding: 0 20px;
-
-  &:after {
-	  content: "";
-	  display: block;
-	}
+	padding: 0 20px;	
+	flex: 1;
 }
 
 .page-wrap {
-  min-height: 100%;
-  margin-bottom: -110px;
+	flex: 1;
   
-  &.spaced {
-  	padding: 0 20px;	
-  }
-  
-  &:after {
-	  content: "";
-	  display: block;
+	&.spaced {
+		padding: 0 20px;	
 	}
 }
 

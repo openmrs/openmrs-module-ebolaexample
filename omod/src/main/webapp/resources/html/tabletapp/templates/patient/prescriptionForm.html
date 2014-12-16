@@ -1,93 +1,115 @@
-<div ng-controller="NewPrescriptionDetailsController" xmlns="http://www.w3.org/1999/html">
-    <form ng-show="addOrder.drug" name="addOrder.form">
-        <span class="error-message" ng-show="serverError">There was an error saving this prescription</span>
-        <div class="page-wrap-smaller">
-            <h1>{{ addOrder.drug.concept.display }}<em>{{ addOrder.drug.display }}</em></h1>
+<form class="full-content" ng-controller="NewPrescriptionDetailsController" xmlns="http://www.w3.org/1999/html" ng-show="addOrder.drug" name="addOrder.form">
+    <header>
+        <div class="patient-header">
+            <span class="patient-id">
+                <small>PATIENT ID</small>
+                {{ getPatientId() }}
+            </span>
+            <span class="patient-id">
+                <small>NAME</small>
+                {{ patient.person.display }}
+            </span>
+            <span class="patient-id">
+                <small>GENDER / AGE</small>
+                {{ patient.person.gender }} - {{ patient.person.age }}
+            </span>
+            <span class="patient-info">
+                <small>WARD</small>
+                12
+            </span>
+            <span class="patient-info">
+                <small>BED</small>
+                27
+            </span>
+        </div>
+    </header>
+    <span class="error-message" ng-show="serverError">There was an error saving this prescription</span>
+    <div class="page-wrap-smaller">
+        <h1>{{ addOrder.drug.concept.display }}<em>{{ addOrder.drug.display }}</em></h1>
+
+        <div>
+            <input class="checkbox" type="checkbox" id="free-text-instructions-checkbox"
+                   ng-model="addOrder.freeTextInstructions"/>
+            <label for="free-text-instructions-checkbox">I will fill this later</label>
+        </div>
+        <div ng-show="addOrder.freeTextInstructions">
+            <span class="question-title">INSTRUCTIONS</span>
+            <textarea ng-model="addOrder.instructions" rows="5" cols="60"></textarea>
+        </div>
+        <div ng-show="!addOrder.freeTextInstructions">
+            <div ng-hide="routeProvided">
+                <span class="question-title">ROUTE<em ng-class="{error: addOrder.form.route.$invalid && hasErrors}">(Required)</em></span>
+                <span class="select-arrow" ng-class="{error: addOrder.form.route.$invalid && hasErrors}">
+                    <select ng-model="addOrder.drug.route.uuid"
+                            ng-required="!addOrder.freeTextInstructions && !routeProvided"
+                            name="route"
+                            ng-class="{error: addOrder.form.route.$invalid && hasErrors}"
+                            ng-focus="focusInput($event)" 
+                            ng-blur="blurInput($event)">
+                        <option></option>
+                        <option ng-repeat="route in routes" value="{{route.uuid}}">{{route.display}}</option>
+                    </select>
+                </span>
+            </div>
+            <span class="inline">
+                <span class="question-title">DOSE<em ng-class="{error: addOrder.form.dose.$invalid && hasErrors}">(Required)</em></span>
+                <div ng-class="{error: addOrder.form.dose.$invalid && hasErrors}" class="input-container no-unit">
+                    <input ng-focus="focusInput($event)" ng-blur="blurInput($event)" ng-model="addOrder.drug.dose" type="number" ng-required="!addOrder.freeTextInstructions"
+                           name="dose">
+                </div>
+                <span class="select-arrow" ng-class="{error: addOrder.form.doseUnits.$invalid && hasErrors}">
+                    <select ng-model="addOrder.drug.doseUnits"
+                            ng-required="!addOrder.freeTextInstructions"
+                            name="doseUnits"
+                            ng-focus="focusInput($event)" 
+                            ng-blur="blurInput($event)">
+                        <option></option>
+                        <option ng-repeat="doseUnit in doseUnits" value="{{doseUnit.uuid}}">{{doseUnit.display}}
+                        </option>
+                    </select>
+                </span>
+            </span>
 
             <div>
-                <input class="checkbox" type="checkbox" id="free-text-instructions-checkbox"
-                       ng-model="addOrder.freeTextInstructions"/>
-                <label for="free-text-instructions-checkbox">I will fill this later</label>
-            </div>
-            <div ng-show="addOrder.freeTextInstructions">
-                <span class="question-title">INSTRUCTIONS</span>
-                <textarea ng-model="addOrder.instructions" rows="5" cols="60"></textarea>
-            </div>
-            <div ng-show="!addOrder.freeTextInstructions">
-                <div ng-hide="routeProvided">
-                    <span class="question-title">ROUTE<em ng-class="{error: addOrder.form.route.$invalid && hasErrors}">(Required)</em></span>
-                    <span class="select-arrow" ng-class="{error: addOrder.form.route.$invalid && hasErrors}">
-                        <select ng-model="addOrder.drug.route.uuid"
-                                ng-required="!addOrder.freeTextInstructions && !routeProvided"
-                                name="route"
-                                ng-class="{error: addOrder.form.route.$invalid && hasErrors}"
-                                ng-focus="focusInput($event)" 
-                                ng-blur="blurInput($event)">
-                            <option></option>
-                            <option ng-repeat="route in routes" value="{{route.uuid}}">{{route.display}}</option>
-                        </select>
-                    </span>
-                </div>
-                <span class="inline">
-                    <span class="question-title">DOSE<em ng-class="{error: addOrder.form.dose.$invalid && hasErrors}">(Required)</em></span>
-                    <div ng-class="{error: addOrder.form.dose.$invalid && hasErrors}" class="input-container no-unit">
-                        <input ng-focus="focusInput($event)" ng-blur="blurInput($event)" ng-model="addOrder.drug.dose" type="number" ng-required="!addOrder.freeTextInstructions"
-                               name="dose">
-                    </div>
-                    <span class="select-arrow" ng-class="{error: addOrder.form.doseUnits.$invalid && hasErrors}">
-                        <select ng-model="addOrder.drug.doseUnits"
-                                ng-required="!addOrder.freeTextInstructions"
-                                name="doseUnits"
-                                ng-focus="focusInput($event)" 
-                                ng-blur="blurInput($event)">
-                            <option></option>
-                            <option ng-repeat="doseUnit in doseUnits" value="{{doseUnit.uuid}}">{{doseUnit.display}}
-                            </option>
-                        </select>
-                    </span>
+                <span class="question-title" ng-class="{error: hasErrors && !roundSelected}">TIME OF DAY<em ng-class="{error: hasErrors && !roundSelected}">(Select one or more)</em></span>
+                <span ng-repeat="roundKey in orderedRoundNames"
+                      class="checkboxes">
+                    <input id="round_{{roundKey}}" type="checkbox" value="{{roundKey}}"
+                           ng-model="addOrder.rounds[roundKey]"/>
+                    <label for="round_{{roundKey}}" class="radio-button small">{{roundKey}}</label>
                 </span>
+            </div>
 
-                <div>
-                    <span class="question-title" ng-class="{error: hasErrors && !roundSelected}">TIME OF DAY<em ng-class="{error: hasErrors && !roundSelected}">(Select one or more)</em></span>
-                    <span ng-repeat="roundKey in orderedRoundNames"
-                          class="checkboxes">
-                        <input id="round_{{roundKey}}" type="checkbox" value="{{roundKey}}"
-                               ng-model="addOrder.rounds[roundKey]"/>
-                        <label for="round_{{roundKey}}" class="radio-button small">{{roundKey}}</label>
-                    </span>
-                </div>
+            <div>
+                <span class="question-title">DURATION<em>(Optional)</em></span>
 
-                <div>
-                    <span class="question-title">DURATION<em>(Optional)</em></span>
-
-                    <div class="input-container">
-                        <input ng-model="addOrder.drug.duration" type="number"
-                               name="duration" 
-                               ng-focus="focusInput($event)" 
-                               ng-blur="blurInput($event)">
-                        <span class="unit">days</span>
-                    </div>
-                </div>
-
-                <div>
-                    <span class="question-title">OPTIONS</span>
-
-                    <input class="checkbox" type="checkbox" id="as-needed-checkbox"
-                           ng-model="addOrder.drug.asNeeded"/>
-                    <label for="as-needed-checkbox">PRN</label>
-                    <span ng-show="addOrder.drug.asNeeded" class="select-arrow">
-                        <select ng-options="condition for condition in asNeededConditions"
-                                ng-model="addOrder.drug.asNeededCondition"
-                                ng-required="!addOrder.freeTextInstructions && addOrder.drug.asNeeded"></select>
-                    </span>
+                <div class="input-container">
+                    <input ng-model="addOrder.drug.duration" type="number"
+                           name="duration" 
+                           ng-focus="focusInput($event)" 
+                           ng-blur="blurInput($event)">
+                    <span class="unit">days</span>
                 </div>
             </div>
+
+            <div>
+                <span class="question-title">OPTIONS</span>
+
+                <input class="checkbox" type="checkbox" id="as-needed-checkbox"
+                       ng-model="addOrder.drug.asNeeded"/>
+                <label for="as-needed-checkbox">PRN</label>
+                <span ng-show="addOrder.drug.asNeeded" class="select-arrow">
+                    <select ng-options="condition for condition in asNeededConditions"
+                            ng-model="addOrder.drug.asNeededCondition"
+                            ng-required="!addOrder.freeTextInstructions && addOrder.drug.asNeeded"></select>
+                </span>
+            </div>
         </div>
-        <div class="actions small">
-            <back-button></back-button>
-            <button class="right small" type="submit" ng-click="save(addOrder, 'ward')">Finish</button>
-            <button class="right small" type="submit" ng-click="save(addOrder, 'patient.addPrescription')">Save and add more
-            </button>
-        </div>
-    </form>
-</div>
+    </div>
+    <div class="actions small">
+        <back-button></back-button>
+        <button class="right small" type="submit" ng-click="save(addOrder, 'ward')">Finish</button>
+        <button class="right small" type="submit" ng-click="save(addOrder, 'patient.addPrescription')">Save and add more
+        </button>
+    </div>
+</form>

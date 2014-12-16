@@ -1,29 +1,3 @@
-<div ng-controller="PatientController">
-
-    <header>
-        <div class="patient-header">
-            <span class="patient-id">
-                <small>PATIENT ID</small>
-                {{ getPatientId() }}
-            </span>
-            <span class="patient-id">
-                <small>NAME</small>
-                {{ patient.person.display }}
-            </span>
-            <span class="patient-id">
-                <small>GENDER / AGE</small>
-                {{ patient.person.gender }} - {{ patient.person.age }}
-            </span>
-            <span class="patient-info">
-                <small>WARD</small>
-                12
-            </span>
-            <span class="patient-info">
-                <small>BED</small>
-                27
-            </span>
-        </div>
-    </header>
-
+<div class="main-div" ng-controller="PatientController">
     <ui-view></ui-view>    
 </div>
