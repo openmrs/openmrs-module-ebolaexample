@@ -1,7 +1,6 @@
+<header><div class="patient-header"><h1>Please select a ward</h1></div></header>
 <div class="page-wrap spaced" ng-controller="ListWardsController">
-    <h1>Please select a ward</h1>
-
-    <span class="question-title">Suspect</span>
+    <span class="question-title">Suspect Wards</span>
     <ul class="tablet-list">
         <li ng-repeat="ward in suspectWards">
             <a class="radio-button small" ui-sref="ward({uuid: ward.uuid})"><span>{{ ward.display }}
@@ -9,7 +8,7 @@
         </li>
     </ul>
 
-    <span class="question-title">Confirmed</span>
+    <span class="question-title">Confirmed Wards</span>
     <ul class="tablet-list">
         <li ng-repeat="ward in confirmedWards">
             <a class="radio-button small" ui-sref="ward({uuid: ward.uuid})"><span>{{ ward.display }}
@@ -17,7 +16,7 @@
         </li>
     </ul>
 
-    <span class="question-title">Recovery</span>
+    <span class="question-title">Recovery Wards</span>
     <ul class="tablet-list">
         <li ng-repeat="ward in recoveryWards">
             <a class="radio-button small" ui-sref="ward({uuid: ward.uuid})"><span>{{ ward.display }}
