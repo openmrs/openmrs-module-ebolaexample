@@ -50,17 +50,12 @@ describe('patients', function () {
         });
 
         describe('loading a patient controller', function () {
-            it('should set the statuses as an array of strings', function () {
-                initController()
-                expect(scope.administrationStatuses).toEqual(["Fully Given","Partially Given","Not Given"]);
-            })
-
             it('needsAReason returns true if the status is not full', function () {
                 initController()
                 expect(scope.needsAReason({ })).toBeFalsy();
-                expect(scope.needsAReason({status: constants.administrationStatuses.full })).toBeFalsy();
-                expect(scope.needsAReason({status: constants.administrationStatuses.partial })).toBeTruthy();
-                expect(scope.needsAReason({status: constants.administrationStatuses.notGiven })).toBeTruthy();
+                expect(scope.needsAReason({status: 'full' })).toBeFalsy();
+                expect(scope.needsAReason({status: 'partial' })).toBeTruthy();
+                expect(scope.needsAReason({status: 'not_given' })).toBeTruthy();
             })
         })
     });

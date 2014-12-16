@@ -101,7 +101,7 @@ angular.module("constants", [])
             administrationStatuses: {
                 full: "Fully Given",
                 partial: "Partially Given",
-                notGiven: "Not Given"
+                not_given: "Not Given"
             },
             reasonsNotAdministered: [
                 "Patient asleep",

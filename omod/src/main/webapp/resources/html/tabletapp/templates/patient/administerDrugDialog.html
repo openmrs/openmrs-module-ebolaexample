@@ -6,10 +6,10 @@
             <span class="question-title" ng-class="{error: hasErrors}">AMOUNT GIVEN
                 <em ng-class="{error: hasErrors }">(Select one)</em>
             </span>
-            <span ng-repeat="status in administrationStatuses" class="checkboxes">
-                <input id="status_{{status}}" type="radio" true-value="{{status}}" value="{{status}}"
+            <span ng-repeat="(statusKey,statusDisplay) in administrationStatuses" class="checkboxes">
+                <input id="status_{{statusKey}}" type="radio" true-value="{{statusKey}}" value="{{statusKey}}"
                        ng-model="administeredDose.status"/>
-                <label for="status_{{status}}" class="radio-button small">{{status}}</label>
+                <label for="status_{{statusKey}}" class="radio-button small">{{statusDisplay}}</label>
             </span>
         </div>
         <div ng-show="needsAReason(administeredDose)">

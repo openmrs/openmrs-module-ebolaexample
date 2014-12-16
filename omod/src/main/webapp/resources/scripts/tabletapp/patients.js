@@ -75,18 +75,18 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                 });
             };
 
-            $scope.administrationStatuses = _.map(Constants.administrationStatuses, function(i,k) {
-                return Constants.administrationStatuses[k];
-            });
+            $scope.administrationStatuses = Constants.administrationStatuses;
             $scope.reasonsNotAdministered = Constants.reasonsNotAdministered;
             $scope.needsAReason = function(administeredDose) {
                 if(administeredDose && administeredDose.status) {
-                    return administeredDose.status == Constants.administrationStatuses.partial
-                        || administeredDose.status == Constants.administrationStatuses.notGiven
+                    return administeredDose.status == 'partial'
+                        || administeredDose.status == 'not_given'
                 }
                 return false;
             };
-            $scope.saveAdministeredDose = function (dose) {};
+            $scope.saveAdministeredDose = function (dose) {
+                console.log(dose);
+            };
 
         }]);
 
