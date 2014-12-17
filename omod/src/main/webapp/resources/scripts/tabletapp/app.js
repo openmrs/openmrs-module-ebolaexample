@@ -13,7 +13,7 @@ angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "selec
                 templateUrl: "templates/wards.html"
             })
             .state("ward", {
-                url: "/wards/:uuid",
+                url: "/wards/:uuid/:prescriptionSuccess",
                 templateUrl: "templates/ward.html"
             })
             .state("patient", {

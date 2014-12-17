@@ -48,3 +48,13 @@ form {
 	padding: 15px 20px;
 	background: $error;
 }
+
+.success-message {
+	display: block;
+	vertical-align: top;
+	font-size: 1.4em;
+	font-family: "OpenSansBold";
+	color: white;
+	padding: 15px 20px;
+	background: $success;
+}

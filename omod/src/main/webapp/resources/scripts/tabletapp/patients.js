@@ -27,7 +27,11 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                     out += (idx === 0 ? add : add[0].toUpperCase() + add.slice(1) + ' ');
                 });
                 return out;
-            }
+            };
+
+            $scope.comeFromPrescriptionForm = function() {
+                return $state.params.prescriptionSuccess == 'true';
+            };
 
             $scope.getPatientName = function (display) {
                 return toCamelCase(display.split( / (.+)/)[1].split('-')[1]);
