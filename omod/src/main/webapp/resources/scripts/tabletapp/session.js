@@ -19,7 +19,6 @@ angular.module("session", ["ui.router", "constants", "resources", "patients", "n
                     }
                     cachedEncounterPatientUUID = patientUUID;
                     cachedEncounter = new EncounterResource({
-                        "encounterDatetime": new Date().toJSON(),
                         "patient": patientUUID,
                         "encounterType": Constants.encounterType.ebolaInpatientFollowup
                     }).$save();

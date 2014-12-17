@@ -30,9 +30,8 @@ describe('app', function () {
                 httpMock.expectPOST(apiUrl + 'encounter', function (dataString) {
                     var data = JSON.parse(dataString),
                         patietnUUIDMatches = data['patient'] == 'PATIENT UUID',
-                        dateExists = data['encounterDatetime'] != undefined,
                         encounterTypeMatches = data['encounterType'] == '83413734-587d-11e4-af12-660e112eb3f5';
-                    return patietnUUIDMatches && dateExists && encounterTypeMatches;
+                    return patietnUUIDMatches && encounterTypeMatches;
                 })
                 currentSession.getEncounter('PATIENT UUID');
                 httpMock.flush();
@@ -42,9 +41,8 @@ describe('app', function () {
                 httpMock.expectPOST(apiUrl + 'encounter', function (dataString) {
                     var data = JSON.parse(dataString),
                         patietnUUIDMatches = data['patient'] == 'PATIENT UUID',
-                        dateExists = data['encounterDatetime'] != undefined,
                         encounterTypeMatches = data['encounterType'] == '83413734-587d-11e4-af12-660e112eb3f5';
-                    return patietnUUIDMatches && dateExists && encounterTypeMatches;
+                    return patietnUUIDMatches && encounterTypeMatches;
                 })
                 currentSession.getEncounter('PATIENT UUID');
                 httpMock.flush();
@@ -57,9 +55,8 @@ describe('app', function () {
                 httpMock.expectPOST(apiUrl + 'encounter', function (dataString) {
                     var data = JSON.parse(dataString),
                         patietnUUIDMatches = data['patient'] == 'PATIENT UUID',
-                        dateExists = data['encounterDatetime'] != undefined,
                         encounterTypeMatches = data['encounterType'] == '83413734-587d-11e4-af12-660e112eb3f5';
-                    return patietnUUIDMatches && dateExists && encounterTypeMatches;
+                    return patietnUUIDMatches && encounterTypeMatches;
                 })
                 currentSession.getEncounter('PATIENT UUID');
                 httpMock.flush();
