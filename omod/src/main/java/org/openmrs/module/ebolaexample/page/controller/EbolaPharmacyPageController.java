@@ -6,6 +6,7 @@ import org.openmrs.OrderType;
 import org.openmrs.Patient;
 import org.openmrs.api.PatientService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.ebolaexample.DateUtil;
 import org.openmrs.module.ebolaexample.EbolaPatient;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.page.PageModel;
@@ -29,7 +30,9 @@ public class EbolaPharmacyPageController {
 
             List<DrugOrder> drugOrders = new ArrayList<DrugOrder>();
             for (Order order : orders) {
-                drugOrders.add((DrugOrder) order);
+                if(DateUtil.isInLast24Hours(order.getDateCreated())) {
+                    drugOrders.add((DrugOrder) order);
+                }
             }
             ebolaPatient.setDrugOrders(drugOrders);
             ebolaPatients.add(ebolaPatient);
