@@ -55,4 +55,13 @@
 		</property>
 	</bean>
 
+    <bean parent="serviceContext">
+		<property name="moduleService">
+			<list merge="true">
+				<value>${project.parent.groupId}.${project.parent.artifactId}.api.PharmacyService</value>
+				<ref local="pharmacyService"/>
+			</list>
+		</property>
+	</bean>
+
 </beans>

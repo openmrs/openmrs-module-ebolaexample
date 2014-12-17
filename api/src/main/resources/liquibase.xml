@@ -42,4 +42,12 @@
                                  referencedTableName="users" referencedColumnNames="user_id" />
     </changeSet>
 
+    <changeSet id="ebola-update-scheduled-dose-table-add-status-and-reasons" author="ThoughtWorks">
+        <addColumn tableName="ebola_scheduled_dose">
+            <column name="reason_not_administered_non_coded" type="varchar(255)"/>
+            <column name="status" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+
+
 </databaseChangeLog>

@@ -64,6 +64,7 @@ public abstract class BaseEbolaResourceTest extends BaseModuleWebContextSensitiv
         ebolaTestBaseMetadata.install();
         ebolaMetadata.install();
         ebolaTestData.install();
+        initializeInMemoryDatabase();
     }
 
     protected void admit(Patient patient, Location ward) {

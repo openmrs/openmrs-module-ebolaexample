@@ -5,4 +5,6 @@ import org.openmrs.ui.framework.db.SingleClassDAO;
 
 public interface ScheduledDoseDAO extends SingleClassDAO<ScheduledDose> {
 
+    public ScheduledDose getScheduledDoseByUuid(String uuid);
+
 }
