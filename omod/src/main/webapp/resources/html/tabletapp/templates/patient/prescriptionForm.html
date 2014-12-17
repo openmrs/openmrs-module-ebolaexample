@@ -39,7 +39,7 @@
         <div ng-show="!addOrder.freeTextInstructions">
             <div ng-hide="routeProvided">
                 <span class="question-title">ROUTE<em ng-class="{error: addOrder.form.route.$invalid && hasErrors}">(Required)</em></span>
-                <span class="select-arrow" ng-class="{error: addOrder.form.route.$invalid && hasErrors}">
+                <span class="select-arrow no-padding" ng-class="{error: addOrder.form.route.$invalid && hasErrors}">
                     <select ng-model="addOrder.drug.route.uuid"
                             ng-required="!addOrder.freeTextInstructions && !routeProvided"
                             name="route"
