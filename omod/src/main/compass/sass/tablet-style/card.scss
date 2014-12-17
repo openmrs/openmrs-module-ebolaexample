@@ -3,8 +3,8 @@
 .card.radio-button.small.long {
 	display: block;
 	text-align: left;
-	width: 352px;
-	max-width: 352px;
+	width: 320px;
+	max-width: 320px;
 
 	span {
 		display: block;
@@ -21,10 +21,11 @@
 		float: right;
 		width: auto;
 		position: relative;
-		top: -32px;
+		top: -7px;
 		background: white;
 		border-radius: 7px;
 		color: $grey4;
-		padding: 5px;
+		padding: 3px;
+		font-size: 0.9em;
 	}
 }
