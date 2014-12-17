@@ -2,7 +2,7 @@
     <span class="error-message" ng-show="problemSaving">Error saving! Try again later</span>
     <b>Administering: {{administerOrder.display}}</b>
 
-    <form name="administeredDose" ng-submit="saveAdministeredDose(administeredDose, administerOrder, closeThisDialog)">
+    <form name="administeredDose">
         <div>
             <span class="question-title" ng-class="{error: hasErrors}">AMOUNT GIVEN
                     <em ng-class="{error: hasErrors }">(Select one)</em>
@@ -14,8 +14,7 @@
             </span>
         </div>
         <div ng-show="needsAReason(administeredDose)">
-            <span class="question-title" ng-class="{error: hasErrors}">REASON
-                <em ng-class="{error: hasErrors }">(Select one)</em>
+            <span class="question-title">REASON<em>(Select one)</em>
             </span>
             <span class="select-arrow">
                 <select ng-model="administeredDose.reasonNotAdministeredNonCoded" name="reason">
@@ -24,6 +23,9 @@
                 </select>
             </span>
         </div>
-        <input type="submit" id="submit" value="Administer"/>
+        <div class="submit-button actions">
+            <button class="small right" ng-click="saveAdministeredDose(administeredDose, administerOrder, closeThisDialog)">
+                Administer</button>
+        </div>
     </form>
 </div>

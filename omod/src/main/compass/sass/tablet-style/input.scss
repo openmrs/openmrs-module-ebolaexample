@@ -169,6 +169,10 @@ input[type="number"] {
 		height: 60px;
 	}
 
+    &.white-background {
+      background: #FFF;
+    }
+
 	button {
 		font-size: 2.4em;
 		margin: 0 0.2em;

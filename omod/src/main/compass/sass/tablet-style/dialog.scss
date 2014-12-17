@@ -1,7 +1,16 @@
 @import "variables";
 
+.ngdialog.ngdialog-theme-plain {
+  padding-top: 160px;
+  padding-bottom: 0px !important;
+}
+
 .ngdialog-theme-plain {
   .ngdialog-content {
     width: 600px !important;
   }
+}
+
+.submit-button {
+  background: #FFF;
 }
