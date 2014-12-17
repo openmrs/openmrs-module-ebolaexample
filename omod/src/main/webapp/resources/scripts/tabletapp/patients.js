@@ -34,10 +34,6 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                 return out;
             };
 
-            $scope.comeFromPrescriptionForm = function() {
-                return $state.params.prescriptionSuccess == 'true';
-            };
-
             $scope.getPatientName = function (display) {
                 return toCamelCase(display.split( / (.+)/)[1].split('-')[1]);
             };
@@ -48,9 +44,9 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
         }])
 
     .controller("PatientController", [ "$state", "$scope", "PatientResource", "OrderResource", "ngDialog",
-        "$rootScope", "Constants", "ScheduledDoseResource",
+        "$rootScope", "Constants", "ScheduledDoseResource", "CurrentSession",
         function ($state, $scope, PatientResource, OrderResource,
-                  ngDialog, $rootScope, Constants, ScheduledDoseResource) {
+                  ngDialog, $rootScope, Constants, ScheduledDoseResource, CurrentSession) {
             var patientId = $state.params.patientUUID;
 
             $scope.patient = PatientResource.get({ uuid: patientId });
@@ -75,6 +71,14 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
 
             $scope.getPatientId = function () {
                 return $scope.patient && $scope.patient.display && $scope.patient.display.split(" ")[0];
+            };
+
+            $scope.comeFromPrescriptionForm = function() {
+                return $state.params.prescriptionSuccess == 'true';
+            };
+
+            $scope.getWard = function() {
+                return CurrentSession.getRecentWard();
             };
 
             $scope.showAdminister = function (order) {

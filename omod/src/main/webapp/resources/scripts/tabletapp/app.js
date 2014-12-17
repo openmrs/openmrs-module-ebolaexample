@@ -13,7 +13,7 @@ angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "selec
                 templateUrl: "templates/wards.html"
             })
             .state("ward", {
-                url: "/wards/:uuid/:prescriptionSuccess",
+                url: "/wards/:uuid",
                 templateUrl: "templates/ward.html"
             })
             .state("patient", {
@@ -21,7 +21,7 @@ angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "selec
                 templateUrl: "templates/patient.html"
             })
             .state("patient.overview", {
-                url: "/overview/:patientUUID",
+                url: "/overview/:patientUUID/:prescriptionSuccess",
                 templateUrl: "templates/patient/overview.html"
             })
             .state("patient.addPrescription", {

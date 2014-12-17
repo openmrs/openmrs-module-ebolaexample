@@ -22,6 +22,7 @@
         </span>
     </div>
 </header>
+<span class="success-message" ng-show="comeFromPrescriptionForm()">Prescription added succesfully!</span>
 <div class="page-wrap-smaller">
     <div ng-show="loading" class="loading-spinner"></div>
     <span ng-show="!loading" class="question-title">Active Prescriptions</span>
@@ -47,5 +48,6 @@
 <div class="actions small">
     <back-button></back-button>
     <button class="small right" ui-sref="patient.addPrescription">Add new prescription</button>
+    <button class="small right" ui-sref="ward({uuid: getWard()})">Select another patient</button>
 </div>
 
