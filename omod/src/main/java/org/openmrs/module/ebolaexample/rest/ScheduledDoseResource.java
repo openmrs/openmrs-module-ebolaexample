@@ -2,29 +2,50 @@ package org.openmrs.module.ebolaexample.rest;
 
 import org.openmrs.api.context.Context;
 import org.openmrs.module.ebolaexample.api.PharmacyService;
-import org.openmrs.module.ebolaexample.api.impl.PharmacyServiceImpl;
 import org.openmrs.module.ebolaexample.domain.ScheduledDose;
 import org.openmrs.module.webservices.rest.web.RequestContext;
 import org.openmrs.module.webservices.rest.web.RestConstants;
 import org.openmrs.module.webservices.rest.web.annotation.PropertyGetter;
 import org.openmrs.module.webservices.rest.web.annotation.Resource;
 import org.openmrs.module.webservices.rest.web.representation.Representation;
-import org.openmrs.module.webservices.rest.web.resource.api.PageableResult;
+import org.openmrs.module.webservices.rest.web.resource.api.Retrievable;
+import org.openmrs.module.webservices.rest.web.resource.impl.DelegatingCrudResource;
 import org.openmrs.module.webservices.rest.web.resource.impl.DelegatingResourceDescription;
-import org.openmrs.module.webservices.rest.web.resource.impl.NeedsPaging;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.openmrs.module.webservices.rest.web.response.ResourceDoesNotSupportOperationException;
+import org.openmrs.module.webservices.rest.web.response.ResponseException;
+
+import java.util.Date;
 
 @Resource(name = RestConstants.VERSION_1 + "/ebola/scheduled-dose", supportedClass = ScheduledDose.class, supportedOpenmrsVersions = "1.10.*")
-public class ScheduledDoseResource extends ReadableDelegatingResource {
+public class ScheduledDoseResource extends DelegatingCrudResource<ScheduledDose> implements Retrievable {
 
     @Override
-    public Object getByUniqueId(String uuid) {
+    public ScheduledDose getByUniqueId(String uuid) {
         return Context.getService(PharmacyService.class).getScheduledDoseByUuid(uuid);
+    }
+
+    @Override
+    protected void delete(ScheduledDose delegate, String reason, RequestContext context) throws ResponseException {
+        throw new ResourceDoesNotSupportOperationException();
+    }
+
+    @Override
+    public void purge(ScheduledDose delegate, RequestContext context) throws ResponseException {
+        throw new ResourceDoesNotSupportOperationException();
     }
 
     @Override
     public ScheduledDose newDelegate() {
         return new ScheduledDose();
+    }
+
+    @Override
+    public ScheduledDose save(ScheduledDose delegate) {
+        PharmacyService service = Context.getService(PharmacyService.class);
+        if(delegate.getDateCreated() == null) {
+            delegate.setDateCreated(new Date());
+        }
+        return service.saveScheduledDose(delegate);
     }
 
     @Override
@@ -41,18 +62,23 @@ public class ScheduledDoseResource extends ReadableDelegatingResource {
         return description;
     }
 
-    @Override
-    public PageableResult doGetAll(RequestContext context) {
-        return new NeedsPaging<ScheduledDose>(Context.getService(PharmacyService.class).getAllScheduledDoses(), context);
-    }
-
     @PropertyGetter("display")
     public String getDisplay(ScheduledDose delegate) {
         StringBuilder display = new StringBuilder();
         display.append(delegate.getStatus());
-        display.append(" - ");
-        display.append(delegate.getDateCreated().toString());
+        if(delegate.getDateCreated() != null) {
+            display.append(" - ");
+            display.append(delegate.getDateCreated().toString());
+        }
         return display.toString();
     }
 
+    @Override
+    public DelegatingResourceDescription getCreatableProperties() throws ResourceDoesNotSupportOperationException {
+        DelegatingResourceDescription properties = new DelegatingResourceDescription();
+        properties.addProperty("status");
+        properties.addProperty("reasonNotAdministeredNonCoded");
+        properties.addProperty("drugOrder");
+        return properties;
+    }
 }

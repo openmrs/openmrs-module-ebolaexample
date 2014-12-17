@@ -1,34 +1,21 @@
 package org.openmrs.module.ebolaexample.rest;
 
-import org.joda.time.DateTime;
-import org.junit.Before;
 import org.junit.Test;
 import org.openmrs.DrugOrder;
-import org.openmrs.api.OrderService;
 import org.openmrs.api.context.Context;
-import org.openmrs.api.context.ServiceContext;
 import org.openmrs.module.ebolaexample.api.PharmacyService;
-import org.openmrs.module.ebolaexample.db.HibernateScheduledDoseDAO;
 import org.openmrs.module.ebolaexample.domain.ScheduledDose;
-import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
-import org.openmrs.module.ebolaexample.metadata.EbolaTestBaseMetadata;
-import org.openmrs.module.ebolaexample.metadata.EbolaTestData;
 import org.openmrs.module.webservices.rest.SimpleObject;
 import org.openmrs.module.webservices.rest.web.RestConstants;
-import org.openmrs.test.BaseModuleContextSensitiveTest;
-import org.openmrs.web.test.BaseModuleWebContextSensitiveTest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import java.util.Date;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
 
 public class ScheduledDoseResourceTest extends BaseEbolaResourceTest {
-
-    @Autowired
-    PharmacyService pharmacyService;
 
     private String requestURI = "ebola/scheduled-dose";
 
@@ -47,17 +34,44 @@ public class ScheduledDoseResourceTest extends BaseEbolaResourceTest {
         assertEquals("PARTIAL - " + scheduledDose.getDateCreated().toString(), response.get("display"));
     }
 
-    private ScheduledDose createScheduledDose() {
-        DrugOrder order = (DrugOrder) Context.getOrderService().getOrder(1);
+    @Test
+    public void testSaveOne() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest("POST", "/rest/" + RestConstants.VERSION_1 + "/"
+                + requestURI);
+        request.addHeader("content-type", "application/json");
+        request.setContent(("{\"status\": \"FULL\", " +
+                "\"reasonNotAdministeredNonCoded\": \"Patient Illnesses\"}").getBytes());
+        MockHttpServletResponse handled = handle(request);
+        SimpleObject response = toSimpleObject(handled);
+        assertEquals("FULL", response.get("status"));
+        assertEquals("Patient Illnesses", response.get("reasonNotAdministeredNonCoded"));
+    }
 
+    @Test
+    public void testSavingSetsDateCreated() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest("POST", "/rest/" + RestConstants.VERSION_1 + "/"
+                + requestURI);
+        request.addHeader("content-type", "application/json");
+        request.setContent(("{\"status\": \"FULL\", " +
+                "\"reasonNotAdministeredNonCoded\": \"Patient Illnesses\"}").getBytes());
+        MockHttpServletResponse handled = handle(request);
+        SimpleObject response = toSimpleObject(handled);
+        assertNotNull(response.get("dateCreated"));
+    }
+
+    private ScheduledDose createScheduledDose() {
+        PharmacyService pharmacyService = Context.getService(PharmacyService.class);
+        return pharmacyService.saveScheduledDose(buildScheduledDose());
+    }
+
+    private ScheduledDose buildScheduledDose() {
+        DrugOrder order = (DrugOrder) Context.getOrderService().getOrder(1);
         ScheduledDose dose = new ScheduledDose();
         dose.setOrder(order);
         dose.setDateCreated(new Date());
         dose.setStatus("PARTIAL");
         dose.setReasonNotAdministeredNonCoded("Illnesses");
         dose.setScheduledDatetime(new Date());
-
-        pharmacyService.saveScheduledDose(dose);
         return dose;
     }
 }
