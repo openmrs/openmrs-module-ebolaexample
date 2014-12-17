@@ -143,6 +143,10 @@ angular.module("prescriptions", ["tabletapp", "constants"])
                     $scope.drugs = _.uniq(mappedDrugs, function (elem) {
                         return JSON.stringify(elem);
                     });
+
+                    if($scope.drugs.length === 1) {
+                        $state.go('patient.addPrescriptionDetails', { prescriptionInfo: $scope.drugs[0] });
+                    }
                 });
             }
 
