@@ -42,8 +42,9 @@ describe('patients', function () {
                 httpMock = $httpBackend;
                 scope = $rootScope.$new();
                 initController = function (stateParams) {
-                    httpMock.expectGET(apiUrl + 'patient').respond({});
-                    httpMock.expectGET(apiUrl + 'order?t=drugorder&v=full').respond({});
+                    httpMock.when('GET', 'templates/wards.html').respond({});
+                    httpMock.when('GET', apiUrl + 'order?t=drugorder&v=full').respond({});
+                    httpMock.when('GET', apiUrl + 'patient').respond({});
                     $controller('PatientController', {$scope: scope});
                 }
             });
@@ -56,6 +57,35 @@ describe('patients', function () {
                 expect(scope.needsAReason({status: 'full' })).toBeFalsy();
                 expect(scope.needsAReason({status: 'partial' })).toBeTruthy();
                 expect(scope.needsAReason({status: 'not_given' })).toBeTruthy();
+            })
+        })
+
+        describe('administering a dose', function () {
+            it('sends data to server', function () {
+                initController()
+                var order = {uuid: 'ORDER UUID'},
+                    dose = {status: 'FULL'},
+                    expectedScheduledDosePost = {
+                        status: 'FULL',
+                        order: 'ORDER UUID'
+                    };
+                httpMock.expectPOST(apiUrl + 'ebola/scheduled-dose', expectedScheduledDosePost).respond({});
+                scope.saveAdministeredDose(dose, order);
+                httpMock.flush();
+            })
+
+            it('includes reason if needed', function () {
+                initController()
+                var order = {uuid: 'ORDER UUID'},
+                    dose = {status: 'not_given', reasonNotAdministered: 'Patient Illnesses'},
+                    expectedScheduledDosePost = {
+                        status: 'not_given',
+                        order: 'ORDER UUID',
+                        reasonNotAdministeredNonCoded: 'Patient Illnesses'
+                    };
+                httpMock.expectPOST(apiUrl + 'ebola/scheduled-dose', expectedScheduledDosePost).respond({});
+                scope.saveAdministeredDose(dose, order);
+                httpMock.flush();
             })
         })
     });

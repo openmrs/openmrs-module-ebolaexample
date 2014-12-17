@@ -38,8 +38,10 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             };
         }])
 
-    .controller("PatientController", [ "$state", "$scope", "PatientResource", "OrderResource", "ngDialog", "$rootScope", "Constants",
-        function ($state, $scope, PatientResource, OrderResource, ngDialog, $rootScope, Constants) {
+    .controller("PatientController", [ "$state", "$scope", "PatientResource", "OrderResource", "ngDialog",
+        "$rootScope", "Constants", "ScheduledDoseResource",
+        function ($state, $scope, PatientResource, OrderResource,
+                  ngDialog, $rootScope, Constants, ScheduledDoseResource) {
             var patientId = $state.params.patientUUID;
 
             $scope.patient = PatientResource.get({ uuid: patientId });
@@ -77,16 +79,23 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
 
             $scope.administrationStatuses = Constants.administrationStatuses;
             $scope.reasonsNotAdministered = Constants.reasonsNotAdministered;
-            $scope.needsAReason = function(administeredDose) {
+            var needsAReason = function(administeredDose) {
                 if(administeredDose && administeredDose.status) {
                     return administeredDose.status == 'partial'
                         || administeredDose.status == 'not_given'
                 }
                 return false;
             };
-            $scope.saveAdministeredDose = function (dose) {
-                console.log(dose);
+            $scope.needsAReason = needsAReason;
+            $scope.saveAdministeredDose = function (dose, order) {
+                var doseJSON = {
+                    status: dose.status,
+                    order: order.uuid
+                };
+                if(needsAReason(dose)) {
+                    doseJSON['reasonNotAdministeredNonCoded'] = dose.reasonNotAdministered;
+                }
+                new ScheduledDoseResource(doseJSON).$save();
             };
-
         }]);
 

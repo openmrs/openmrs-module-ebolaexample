@@ -1,7 +1,7 @@
 <div class="ngdialog-message administer-drug">
     <b>Administering: {{administerOrder.display}}</b>
 
-    <form name="administeredDose" ng-submit="saveAdministeredDose(administeredDose)">
+    <form name="administeredDose" ng-submit="saveAdministeredDose(administeredDose, administerOrder)">
         <div>
             <span class="question-title" ng-class="{error: hasErrors}">AMOUNT GIVEN
                 <em ng-class="{error: hasErrors }">(Select one)</em>
