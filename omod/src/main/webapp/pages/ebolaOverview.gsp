@@ -29,8 +29,6 @@
 <script type="text/javascript">
     var breadcrumbs = [
         { icon: "icon-home", link: '/' + OPENMRS_CONTEXT_PATH + '/index.htm' },
-        { label: "${ ui.format(patient.patient.familyName) }, ${ ui.format(patient.patient.givenName) }" ,
-            link: '${ui.pageLink("coreapps", "clinicianfacing/patient", [patientId: patient.patient.id])}'},
         { label: "${ ui.format(ui.message("ebolaexample.ebolaPharmacy.title")) }" ,
             link: '${ui.pageLink("ebolaexample", "ebolaPharmacy?app=ebolaexample.ebolaPharmacy")}'},
         { label: "${ ui.escapeJs(ui.message("ebolaexample.ebolaOverview.title")) }" }
@@ -60,9 +58,11 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient, a
 
 <div class="container">
     <div class="dashboard clear">
-        <div class="info-container column">
+        <div class="long-info-container column">
 
-            ${ ui.includeFragment("ebolaexample", "overview/newAndUpdatedPrescriptions", [ patient: patient ]) }
+            ${ ui.includeFragment("ebolaexample", "overview/todaysPrescriptions", [ patient: patient ]) }
+
+            ${ ui.includeFragment("ebolaexample", "overview/pastPrescriptions", [ patient: patient ]) }
 
         </div>
 

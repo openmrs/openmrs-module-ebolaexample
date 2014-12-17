@@ -9,7 +9,7 @@
     ]
 </script>
 
-<h2>Pharmacy Overview  ${ ui.format(today)}</h2>
+<h2>Pharmacy Overview:  ${ today.format('dd MMM yyyy')}</h2>
 
 <table>
     <thead>

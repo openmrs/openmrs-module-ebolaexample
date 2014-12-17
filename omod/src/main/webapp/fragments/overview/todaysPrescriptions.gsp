@@ -1,17 +1,18 @@
-<div class="info-section">
+<div class="long-info-section">
 
     <div class="info-header">
         <i class="icon-medkit"></i>
 
-        <h3>New/Updated Prescriptions</h3>
+        <h3>Today's Prescriptions</h3>
     </div>
 
     <div class="info-body">
-        <% if (newUpdatedDrugOrders && newUpdatedDrugOrders.size() > 0) { %>
+        <% if (todaysDrugOrders && todaysDrugOrders.size() > 0) { %>
         <ul>
-            <% newUpdatedDrugOrders.each { %>
+            <% todaysDrugOrders.each { %>
             <li class="clear">
-                ${it.concept.displayString}<br>
+                <span class="left">${it.concept.displayString}</span>
+                <span class="right recent-lozenge">Today</span><br>
                 <em>${it.drug.name}
                 ${it.route.displayString } - ${it.duration } Days - ${it.dose } - ${it.dosingInstructions}</em>
             </li>
