@@ -246,7 +246,7 @@ describe('prescriptions', function () {
             httpMock.expectPOST(apiUrl + 'order', expectedPost)
             scope.save(order, 'anywhere');
             httpMock.flush();
-            expect(state.go).toHaveBeenCalledWith('anywhere', {prescriptionInfo: 'some wild params', uuid: 'ward uuid'});
+            expect(state.go).toHaveBeenCalledWith('anywhere', {prescriptionInfo: 'some wild params', uuid: 'ward uuid', prescriptionSuccess: true});
         });
 
         it('should save newly created order with round based instructions', function () {
