@@ -41,6 +41,28 @@ public class ScheduledDose {
     @Column(name = "reason_not_administered_non_coded")
     private String reasonNotAdministeredNonCoded;
 
+    @ManyToOne
+    @JoinColumn(name = "creator")
+    protected User creator;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "date_created" )
+    private Date dateCreated;
+
+    @ManyToOne
+    @JoinColumn(name = "changed_by")
+    private User changedBy;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "date_changed" )
+    private Date dateChanged;
+
+    @Basic
+    @Column(name = "uuid", length = 38, unique = true)
+    private String uuid  = UUID.randomUUID().toString();
+
+    private DoseStatus status;
+
     public User getCreator() {
         return creator;
     }
@@ -76,28 +98,6 @@ public class ScheduledDose {
     public void setStatus(DoseStatus status) {
         this.status = status;
     }
-
-    @ManyToOne
-    @JoinColumn(name = "creator")
-    protected User creator;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "date_created" )
-    private Date dateCreated;
-
-    @ManyToOne
-    @JoinColumn(name = "changed_by")
-    private User changedBy;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "date_changed" )
-    private Date dateChanged;
-
-    @Basic
-    @Column(name = "uuid", length = 38, unique = true)
-    private String uuid  = UUID.randomUUID().toString();
-
-    private DoseStatus status;
 
     public void setUuid(String uuid) {
         this.uuid = uuid;

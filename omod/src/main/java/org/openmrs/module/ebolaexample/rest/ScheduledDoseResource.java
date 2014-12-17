@@ -14,7 +14,10 @@ import org.openmrs.module.webservices.rest.web.resource.impl.DelegatingResourceD
 import org.openmrs.module.webservices.rest.web.response.ResourceDoesNotSupportOperationException;
 import org.openmrs.module.webservices.rest.web.response.ResponseException;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 @Resource(name = RestConstants.VERSION_1 + "/ebola/scheduled-dose", supportedClass = ScheduledDose.class, supportedOpenmrsVersions = "1.10.*")
 public class ScheduledDoseResource extends DelegatingCrudResource<ScheduledDose> implements Retrievable {
@@ -57,6 +60,7 @@ public class ScheduledDoseResource extends DelegatingCrudResource<ScheduledDose>
             description.addProperty("status");
             description.addProperty("dateCreated");
             description.addProperty("reasonNotAdministeredNonCoded");
+            description.addProperty("order", Representation.REF);
         }
         description.addSelfLink();
         return description;
@@ -78,7 +82,13 @@ public class ScheduledDoseResource extends DelegatingCrudResource<ScheduledDose>
         DelegatingResourceDescription properties = new DelegatingResourceDescription();
         properties.addProperty("status");
         properties.addProperty("reasonNotAdministeredNonCoded");
-        properties.addProperty("drugOrder");
+        properties.addProperty("order");
         return properties;
     }
+
+    @Override
+    public List<String> getPropertiesToExposeAsSubResources() {
+        return Arrays.asList("order");
+    }
+
 }

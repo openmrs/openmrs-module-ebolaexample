@@ -11,6 +11,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -35,16 +36,20 @@ public class ScheduledDoseResourceTest extends BaseEbolaResourceTest {
     }
 
     @Test
-    public void testSaveOne() throws Exception {
+    public void testSaveSingleScheduledDose() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest("POST", "/rest/" + RestConstants.VERSION_1 + "/"
                 + requestURI);
         request.addHeader("content-type", "application/json");
+        DrugOrder drugOrder = (DrugOrder) Context.getOrderService().getOrder(1);
         request.setContent(("{\"status\": \"FULL\", " +
-                "\"reasonNotAdministeredNonCoded\": \"Patient Illnesses\"}").getBytes());
+                "\"reasonNotAdministeredNonCoded\": \"Patient Illnesses\"," +
+                "\"order\": \"" + drugOrder.getUuid() + "\"}").getBytes());
         MockHttpServletResponse handled = handle(request);
         SimpleObject response = toSimpleObject(handled);
         assertEquals("FULL", response.get("status"));
         assertEquals("Patient Illnesses", response.get("reasonNotAdministeredNonCoded"));
+        LinkedHashMap<String, String> order = (LinkedHashMap<String, String>) response.get("order");
+        assertEquals(drugOrder.getUuid(), order.get("uuid"));
     }
 
     @Test
