@@ -5,20 +5,25 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
         $scope.suspectWards = [];
         $scope.confirmedWards = [];
         $scope.recoveryWards = [];
+        $scope.loading = true;
 
         WardResource.query({ v: "default" }, function (response) {
             var results = response.results;
             $scope.suspectWards = _.where(results, { type: "suspect"});
             $scope.confirmedWards = _.where(results, { type: "confirmed"});
             $scope.recoveryWards = _.where(results, { type: "recovery"});
+            $scope.loading = false;
         });
     }])
 
     .controller("WardController", [ "$state", "$scope", "WardResource", "CurrentSession",
         function ($state, $scope, WardResource, CurrentSession) {
+            $scope.loading = true;
             var wardId = $state.params.uuid;
             CurrentSession.setRecentWard(wardId);
-            $scope.ward = WardResource.get({ uuid: wardId });
+            $scope.ward = WardResource.get({ uuid: wardId }, function() {
+                $scope.loading = false;
+            });
 
             function toCamelCase(sentenceCase) {
                 var out = "";
@@ -50,8 +55,10 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
 
             $scope.patient = PatientResource.get({ uuid: patientId });
             function reloadActiveOrders() {
+                $scope.loading = true;
                 OrderResource.query({ t: "drugorder", v: 'full', patient: patientId }, function (response) {
                     $scope.activeOrders = response.results;
+                    $scope.loading = false;
                 });
             }
 

@@ -23,8 +23,9 @@
     </div>
 </header>
 <div class="page-wrap-smaller">
-    <span class="question-title">Active Prescriptions</span>
-    <ul class="list-items">
+    <div ng-show="loading" class="loading-spinner"></div>
+    <span ng-show="!loading" class="question-title">Active Prescriptions</span>
+    <ul ng-show="!loading" class="list-items">
         <li ng-repeat="order in activeOrders">
             {{ order.concept.display }}
             <div>

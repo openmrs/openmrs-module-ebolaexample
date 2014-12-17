@@ -23,8 +23,9 @@
     </div>
 </header>
 <div class="page-wrap-smaller" ng-controller="NewPrescriptionController" class="page-wrap" xmlns="http://www.w3.org/1999/html">
-    <span class="question-title">New Prescription</span>
-    <div>
+    <div ng-show="loading" class="loading-spinner"></div>
+    <span ng-show="!loading" class="question-title">New Prescription</span>
+    <div ng-show="!loading">
         <select-drug-name ng-model="concept" placeholder="Search for a drug name" size="40"></select-drug-name>
 
         <div ng-show="commonDrugConcepts.results">
