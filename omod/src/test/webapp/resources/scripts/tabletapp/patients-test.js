@@ -53,10 +53,11 @@ describe('patients', function () {
         describe('loading a patient controller', function () {
             it('needsAReason returns true if the status is not full', function () {
                 initController()
+                scope.closeThisDialog = function(){};
                 expect(scope.needsAReason({ })).toBeFalsy();
-                expect(scope.needsAReason({status: 'full' })).toBeFalsy();
-                expect(scope.needsAReason({status: 'partial' })).toBeTruthy();
-                expect(scope.needsAReason({status: 'not_given' })).toBeTruthy();
+                expect(scope.needsAReason({status: 'FULL' })).toBeFalsy();
+                expect(scope.needsAReason({status: 'PARTIAL' })).toBeTruthy();
+                expect(scope.needsAReason({status: 'NOT_GIVEN' })).toBeTruthy();
             })
         })
 
@@ -70,22 +71,47 @@ describe('patients', function () {
                         order: 'ORDER UUID'
                     };
                 httpMock.expectPOST(apiUrl + 'ebola/scheduled-dose', expectedScheduledDosePost).respond({});
-                scope.saveAdministeredDose(dose, order);
+                scope.saveAdministeredDose(dose, order, function() {});
                 httpMock.flush();
             })
 
             it('includes reason if needed', function () {
                 initController()
                 var order = {uuid: 'ORDER UUID'},
-                    dose = {status: 'not_given', reasonNotAdministered: 'Patient Illnesses'},
+                    dose = {status: 'NOT_GIVEN', reasonNotAdministeredNonCoded: 'Patient Illnesses'},
                     expectedScheduledDosePost = {
-                        status: 'not_given',
+                        status: 'NOT_GIVEN',
                         order: 'ORDER UUID',
                         reasonNotAdministeredNonCoded: 'Patient Illnesses'
                     };
                 httpMock.expectPOST(apiUrl + 'ebola/scheduled-dose', expectedScheduledDosePost).respond({});
-                scope.saveAdministeredDose(dose, order);
+                scope.saveAdministeredDose(dose, order, function() {});
                 httpMock.flush();
+            })
+
+            it('uses the callback', function () {
+                initController()
+                var order = {uuid: 'ORDER UUID'},
+                    dose = {status: 'FULL', reasonNotAdministeredNonCoded: ''},
+                    expectedScheduledDosePost = { status: 'FULL', order: 'ORDER UUID' };
+                httpMock.expectPOST(apiUrl + 'ebola/scheduled-dose', expectedScheduledDosePost).respond({});
+                var called = false;
+                scope.saveAdministeredDose(dose, order, function() {
+                    called = true;
+                });
+                httpMock.flush();
+                expect(called).toBeTruthy();
+            })
+
+            it('dont save without status', function () {
+                initController()
+                httpMock.flush();
+                var order = {uuid: 'ORDER UUID'},
+                    dose = {status: null, reasonNotAdministeredNonCoded: ''};
+                scope.saveAdministeredDose(dose, order, function() {});
+                httpMock.verifyNoOutstandingExpectation();
+                httpMock.verifyNoOutstandingRequest();
+                expect(scope.hasErrors).toBeTruthy();
             })
         })
     });

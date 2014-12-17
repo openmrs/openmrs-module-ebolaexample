@@ -45,9 +45,9 @@ public class ScheduledDoseResource extends DelegatingCrudResource<ScheduledDose>
     @Override
     public ScheduledDose save(ScheduledDose delegate) {
         PharmacyService service = Context.getService(PharmacyService.class);
-        if(delegate.getDateCreated() == null) {
-            delegate.setDateCreated(new Date());
-        }
+        delegate.setDateCreated(new Date());
+        delegate.setCreator(Context.getAuthenticatedUser());
+        delegate.setScheduledDatetime(new Date());
         return service.saveScheduledDose(delegate);
     }
 

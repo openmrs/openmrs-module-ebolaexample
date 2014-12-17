@@ -53,7 +53,7 @@ public class ScheduledDoseResourceTest extends BaseEbolaResourceTest {
     }
 
     @Test
-    public void testSavingSetsDateCreated() throws Exception {
+    public void testSavingSetsRequiredFields() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest("POST", "/rest/" + RestConstants.VERSION_1 + "/"
                 + requestURI);
         request.addHeader("content-type", "application/json");
@@ -62,6 +62,13 @@ public class ScheduledDoseResourceTest extends BaseEbolaResourceTest {
         MockHttpServletResponse handled = handle(request);
         SimpleObject response = toSimpleObject(handled);
         assertNotNull(response.get("dateCreated"));
+
+        PharmacyService pharmacyService = Context.getService(PharmacyService.class);
+        ScheduledDose scheduledDose = pharmacyService.getScheduledDoseByUuid((String) response.get("uuid"));
+
+        assertNotNull(scheduledDose.getScheduledDoseId());
+        assertNotNull(scheduledDose.getScheduledDatetime());
+        assertNotNull(scheduledDose.getCreator());
     }
 
     private ScheduledDose createScheduledDose() {

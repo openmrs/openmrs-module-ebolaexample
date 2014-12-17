@@ -67,6 +67,8 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             };
 
             $scope.showAdminister = function (order) {
+                $scope.problemSaving = false;
+                $scope.hasErrors = false;
                 $scope.administerOrder = order;
                 ngDialog.open({
                     template: "administerDialog",
@@ -81,21 +83,29 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             $scope.reasonsNotAdministered = Constants.reasonsNotAdministered;
             var needsAReason = function(administeredDose) {
                 if(administeredDose && administeredDose.status) {
-                    return administeredDose.status == 'partial'
-                        || administeredDose.status == 'not_given'
+                    return administeredDose.status == 'PARTIAL'
+                        || administeredDose.status == 'NOT_GIVEN'
                 }
                 return false;
             };
             $scope.needsAReason = needsAReason;
-            $scope.saveAdministeredDose = function (dose, order) {
-                var doseJSON = {
-                    status: dose.status,
-                    order: order.uuid
-                };
-                if(needsAReason(dose)) {
-                    doseJSON['reasonNotAdministeredNonCoded'] = dose.reasonNotAdministered;
+            $scope.saveAdministeredDose = function (dose, order, callback) {
+                if(dose.status) {
+                    var doseJSON = {
+                        status: dose.status,
+                        order: order.uuid
+                    };
+                    if(needsAReason(dose)) {
+                        doseJSON['reasonNotAdministeredNonCoded'] = dose.reasonNotAdministeredNonCoded;
+                    }
+                    new ScheduledDoseResource(doseJSON).$save().then(function() {
+                        callback();
+                    }, function () {
+                        $scope.problemSaving = true;
+                    });
+                } else {
+                    $scope.hasErrors = true;
                 }
-                new ScheduledDoseResource(doseJSON).$save();
             };
         }]);
 
