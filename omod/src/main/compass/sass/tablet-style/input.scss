@@ -74,6 +74,17 @@
 		height: auto;
 		vertical-align: top;
 	}
+
+	&.disabled {
+		background: #ddd;
+		box-shadow: none;
+		cursor: normal;
+		pointer-events: none;
+
+		.inpatient-number {
+			color: #ddd;
+		}
+	}
 }
 
 .radio-button span.inpatient-number {
