@@ -28,22 +28,29 @@
     <span ng-show="!loading" class="question-title">Active Prescriptions</span>
     <ul ng-show="!loading" class="list-items">
         <li ng-repeat="order in activeOrders">
-            {{ order.concept.display }}
-            <div>
-                <em>
-                    {{ order.drug.display }}
-                    {{ order.route.display }}
-                    {{ order.dosingInstructions }}
-                    <span ng-show="order.duration">for {{ order.duration }} days</span>
-                </em>
-            </div>
-            <button ng-click="showAdminister(order)">Administer</button>
+            <span class="left">
+                {{ order.concept.display }}
+                <span>
+                    <em>
+                        {{ order.drug.display }}
+                        {{ order.route.display }}
+                        {{ order.dosingInstructions }}
+                        <span ng-show="order.duration">for {{ order.duration }} days</span>
+                    </em>
+                </span>
+            </span>
+            <span class="right">
+                <button ng-click="showAdminister(order)">Administer</button>
+                <a id="stop_{{order.uuid}}" ng-click="stopOrder(order)" class="action-icon">
+                    <i class="fa fa-remove"></i>
+                </a>
+            </span>
         </li>
     </ul>
 
     <script type="text/ng-template" id="administerDialog">
-       <ng-include src="'templates/patient/administerDrugDialog.html'"></ng-include>
-    </script>    
+        <ng-include src="'templates/patient/administerDrugDialog.html'"></ng-include>
+    </script>
 </div>
 <div class="actions small">
     <back-button></back-button>
