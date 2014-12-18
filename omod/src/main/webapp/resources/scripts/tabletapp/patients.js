@@ -52,6 +52,7 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             $scope.patient = PatientResource.get({ uuid: patientId });
             function reloadActiveOrders(event, toState, toParams, fromState, fromParams) {
                 $scope.loading = true;
+                $rootScope.administeredDrug = false;
                 $scope.comeFromPrescriptionForm = $state.params.prescriptionSuccess == 'true' && fromState && fromState.name == 'patient.addPrescriptionDetails';
                 OrderResource.query({ t: "drugorder", v: 'full', patient: patientId }, function (response) {
                     $scope.activeOrders = response.results;
@@ -111,6 +112,7 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                         doseJSON['reasonNotAdministeredNonCoded'] = dose.reasonNotAdministeredNonCoded;
                     }
                     new ScheduledDoseResource(doseJSON).$save().then(function() {
+                        $rootScope.administeredDrug = true;
                         callback();
                     }, function () {
                         $scope.problemSaving = true;
