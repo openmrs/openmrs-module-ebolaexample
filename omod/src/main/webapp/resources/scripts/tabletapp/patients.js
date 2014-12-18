@@ -50,8 +50,9 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             var patientId = $state.params.patientUUID;
 
             $scope.patient = PatientResource.get({ uuid: patientId });
-            function reloadActiveOrders() {
+            function reloadActiveOrders(event, toState, toParams, fromState, fromParams) {
                 $scope.loading = true;
+                $scope.comeFromPrescriptionForm = $state.params.prescriptionSuccess == 'true' && fromState && fromState.name == 'patient.addPrescriptionDetails';
                 OrderResource.query({ t: "drugorder", v: 'full', patient: patientId }, function (response) {
                     $scope.activeOrders = response.results;
                     $scope.loading = false;
@@ -71,10 +72,6 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
 
             $scope.getPatientId = function () {
                 return $scope.patient && $scope.patient.display && $scope.patient.display.split(" ")[0];
-            };
-
-            $scope.comeFromPrescriptionForm = function() {
-                return $state.params.prescriptionSuccess == 'true';
             };
 
             $scope.getWard = function() {
