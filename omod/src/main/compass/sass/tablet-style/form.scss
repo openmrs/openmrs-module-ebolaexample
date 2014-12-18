@@ -2,6 +2,13 @@
 
 form {
 	margin: 0;
+
+	.question-title em {
+		font-size: 0.7em;
+		position: relative;
+		top: -3px;
+		padding-left: 10px;
+	}
 }
 
 .tablet-list {
@@ -19,7 +26,7 @@ form {
 
 .question-title {
 	display: block;
-	font-size: 1.8em;
+	font-size: 1.65em;
 	font-family: "OpenSansBold";
 	color: $grey1;
 	margin-top: 0.5em;

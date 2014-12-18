@@ -1,30 +1,38 @@
 <div class="ngdialog-message administer-drug">
     <span class="error-message" ng-show="problemSaving">Error saving! Try again later</span>
-    <b>Administering: {{administerOrder.display}}</b>
-
     <form name="administeredDose">
-        <div>
+        <div class="dialog-form">
+            <h2>{{ administerOrder.concept.display }}</h2>
+            <em>
+                {{ administerOrder.drug.display }}
+                {{ administerOrder.route.display }}
+                {{ administerOrder.dosingInstructions }}
+                <span ng-show="administerOrder.duration">for {{ administerOrder.duration }} days</span>
+            </em>
+
             <span class="question-title" ng-class="{error: hasErrors}">AMOUNT GIVEN
-                    <em ng-class="{error: hasErrors }">(Select one)</em>
+                <em ng-class="{error: hasErrors }">(Select one)</em>
             </span>
-            <span ng-repeat="(statusKey,statusDisplay) in administrationStatuses" class="checkboxes">
-                <input id="status_{{statusKey}}" type="radio" true-value="{{statusKey}}" value="{{statusKey}}"
-                       ng-model="administeredDose.status"/>
-                <label for="status_{{statusKey}}" class="radio-button small">{{statusDisplay}}</label>
-            </span>
+            <div>
+                <span ng-repeat="(statusKey,statusDisplay) in administrationStatuses" class="checkboxes">
+                    <input id="status_{{statusKey}}" type="radio" true-value="{{statusKey}}" value="{{statusKey}}"
+                           ng-model="administeredDose.status"/>
+                    <label for="status_{{statusKey}}" class="radio-button small">{{statusDisplay}}</label>
+                </span>
+            </div>
+            <div ng-show="needsAReason(administeredDose)">
+                <span class="question-title">REASON<em>(Select one)</em>
+                </span>
+                <span class="select-arrow">
+                    <select ng-model="administeredDose.reasonNotAdministeredNonCoded" name="reason">
+                        <option ng-repeat="reason in reasonsNotAdministered" value="{{reason}}">{{reason}}
+                        </option>
+                    </select>
+                </span>
+            </div>
         </div>
-        <div ng-show="needsAReason(administeredDose)">
-            <span class="question-title">REASON<em>(Select one)</em>
-            </span>
-            <span class="select-arrow">
-                <select ng-model="administeredDose.reasonNotAdministeredNonCoded" name="reason">
-                    <option ng-repeat="reason in reasonsNotAdministered" value="{{reason}}">{{reason}}
-                    </option>
-                </select>
-            </span>
-        </div>
-        <div class="submit-button actions">
-            <button class="small right" ng-click="saveAdministeredDose(administeredDose, administerOrder, closeThisDialog)">
+        <div class="actions small">
+            <button class="small left" ng-click="saveAdministeredDose(administeredDose, administerOrder, closeThisDialog)">
                 Administer</button>
         </div>
     </form>

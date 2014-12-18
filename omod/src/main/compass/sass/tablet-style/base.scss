@@ -25,6 +25,10 @@ header {
 		color: $primaryColor;
 		font-size: 0.7em;
 	}
+
+	em {
+		padding-left: 10px;
+	}
 }
 
 small {
@@ -35,8 +39,7 @@ small {
 
 em {
 	font-family: "OpenSansLight";
-	font-size: 0.65em;
-	padding-left: 10px;
+	font-size: 0.9em;
 
 	&.error {
 		color: $error;
