@@ -66,12 +66,11 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient, a
 
         </div>
 
-        <div class="info-container column" style="display: none">
+        <div class="info-container column">
 
             ${ ui.includeFragment("ebolaexample", "overview/ebolaProgram", [ patient: patient ]) }
 
-            ${ ui.includeFragment("ebolaexample", "overview/inpatientLocation",
-                    [ patient: patient, activeVisit: activeVisit ]) }
+            ${ ui.includeFragment("ebolaexample", "overview/inpatientLocation", [ patient: patient, activeVisit: activeVisit ]) }
 
         </div>
 

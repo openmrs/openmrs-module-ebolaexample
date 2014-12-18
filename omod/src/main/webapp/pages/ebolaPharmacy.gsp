@@ -9,7 +9,16 @@
     ]
 </script>
 
-<h2>Pharmacy Overview:  ${ today.format('dd MMM yyyy')}</h2>
+<h2>Pharmacy Overview:  ${today.format('dd MMM yyyy')}</h2>
+
+<form action="ebolaPharmacy.page" style="margin-bottom: 20px;">
+    <span>Ward: <select name="ward" style="display: inline;">
+        <% wards.each {
+        %> <option value="${it.uuid}">${it}</option> <% } %>
+    </select>
+        <button type="submit">Load</button>
+    </span>
+</form>
 
 <table>
     <thead>
@@ -17,7 +26,7 @@
         <th>Patient Number</th>
         <th>Patient Name</th>
         <th>Ward</th>
-        <th>Drug</th>
+        <th>Latest Prescriptions (24 hours)</th>
     </tr>
     </thead>
     <tbody>
@@ -33,8 +42,8 @@
             <% identifiers.each { identifier ->
                 def pIdentifier = identifier
                 location = identifier.location
-            %> <a href="${ ui.pageLink("ebolaexample", "ebolaOverview",
-                [ patient: ebolaPatient.patient.uuid]) }" >${pIdentifier.identifier} </a> <% } %>
+            %> <a href="${ui.pageLink("ebolaexample", "ebolaOverview",
+                [patient: ebolaPatient.patient.uuid])}">${pIdentifier.identifier}</a> <% } %>
         </td>
 
         <td>
@@ -42,12 +51,14 @@
         </td>
 
         <td>
-             ${location.name}
+            <% if(location!=null && location.name != null) {%>
+            ${location.name}
+            <% }%>
         </td>
         <td>
             <% drugOrders.each { drugOrder ->
                 def pDrugOrder = drugOrder
-            %> ${pDrugOrder.drug.name }<br> <% } %>
+            %> ${pDrugOrder.drug.name}<br> <% } %>
         </td>
     </tr>
     <% } %>
