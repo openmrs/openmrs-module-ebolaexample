@@ -3,7 +3,7 @@
 form {
 	margin: 0;
 
-	.question-title em, h1 em {
+	.question-title em {
 		font-size: 0.7em;
 		position: relative;
 		top: -3px;
@@ -64,11 +64,4 @@ form {
 	color: white;
 	padding: 15px 20px;
 	background: $success;
-}
-
-.row-action {
-  font-size: 1.7em;
-  padding-top: 2px;
-  padding-left: .5em;
-  padding-right: .5em;
 }
