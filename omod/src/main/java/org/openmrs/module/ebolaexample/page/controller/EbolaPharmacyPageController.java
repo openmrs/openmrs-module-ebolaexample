@@ -15,6 +15,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static org.openmrs.module.ebolaexample.metadata.EbolaMetadata._VisitAttributeType.ASSIGNED_BED;
+import static org.openmrs.module.ebolaexample.metadata.EbolaMetadata._VisitAttributeType.ASSIGNED_WARD;
+
 public class EbolaPharmacyPageController {
 
     public void get(@SpringBean("patientService") PatientService patientService,
@@ -23,9 +26,11 @@ public class EbolaPharmacyPageController {
         List<Patient> patients = patientService.getAllPatients();
 
         Location ward = null;
-        if(StringUtils.isNotBlank(wardId)){
+        if (StringUtils.isNotBlank(wardId)) {
             ward = Context.getLocationService().getLocationByUuid(wardId);
         }
+        model.put("selectedWard", ward);
+
         OrderType orderType = Context.getOrderService().getOrderTypeByUuid(OrderType.DRUG_ORDER_TYPE_UUID);
 
         List<Location> locations = new ArrayList<Location>();
@@ -36,21 +41,47 @@ public class EbolaPharmacyPageController {
             EbolaPatient ebolaPatient = new EbolaPatient(patient);
 
             List<DrugOrder> drugOrders = new ArrayList<DrugOrder>();
+
             for (Order order : orders) {
                 if (DateUtil.isInLast24Hours(order.getDateCreated())) {
                     drugOrders.add((DrugOrder) order);
                 }
             }
+
             if (drugOrders != null && drugOrders.size() > 0) {
-                PatientIdentifier identifier = null;
-                for (PatientIdentifier patientIdentifier : patient.getIdentifiers()) {
-                    identifier = patientIdentifier;
-                    break;
+
+                Location patientWard = null;
+                Location patientBed = null;
+
+                List<Visit> visits = Context.getVisitService().getActiveVisitsByPatient(patient);
+                VisitAttributeType assignedWardType = Context.getVisitService().getVisitAttributeTypeByUuid(ASSIGNED_WARD);
+                VisitAttributeType assignedBedType = Context.getVisitService().getVisitAttributeTypeByUuid(ASSIGNED_BED);
+
+                if (visits != null && visits.size() > 0) {
+                    for (Visit visit : visits) {
+                        if (visit.getVoided()) {
+                            continue;
+                        }
+                        for (VisitAttribute va : visits.get(0).getAttributes()) {
+                            if (va.getAttributeType().equals(assignedBedType)) {
+                                patientBed = (Location) va.getValue();
+                            }
+                            if (va.getAttributeType().equals(assignedWardType)) {
+                                patientWard = (Location) va.getValue();
+                            }
+                        }
+                    }
+                } else {
+                    System.out.println("No visit found");
                 }
 
-                locations.add(identifier.getLocation());
+                ebolaPatient.setBed(patientBed);
+                ebolaPatient.setWard(patientWard);
 
-                if(ward==null || ward!=null && ward.equals(identifier.getLocation())) {
+
+                locations.add(patientWard);
+
+                if (ward == null || (ward != null && patientWard != null && ward.equals(patientWard))) {
                     ebolaPatient.setDrugOrders(drugOrders);
                     ebolaPatients.add(ebolaPatient);
                 }

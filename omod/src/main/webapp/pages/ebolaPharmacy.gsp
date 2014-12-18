@@ -13,8 +13,10 @@
 
 <form action="ebolaPharmacy.page" style="margin-bottom: 20px;">
     <span>Ward: <select name="ward" style="display: inline;">
-        <% wards.each {
-        %> <option value="${it.uuid}">${it}</option> <% } %>
+        <% wards.each { %>
+        <option value="${it.uuid}"
+            <% if (selectedWard && it.equals(selectedWard)) { %> selected <% } %>>${it}
+        </option> <% } %>
     </select>
         <button type="submit">Load</button>
     </span>
@@ -33,7 +35,8 @@
     <% ebolaPatients.each { ebolaPatient ->
         def names = ebolaPatient.patient.names
         def identifiers = ebolaPatient.patient.identifiers
-        def location
+        def ward = ebolaPatient.ward
+        def bed = ebolaPatient.bed
         def drugOrders = ebolaPatient.drugOrders
 
     %>
@@ -51,9 +54,8 @@
         </td>
 
         <td>
-            <% if(location!=null && location.name != null) {%>
-            ${location.name}
-            <% }%>
+            <% if (ward != null) { %> ${ward.name} <% } %>
+            <% if (bed != null) { %> ( ${bed.name} ) <% } %>
         </td>
         <td>
             <% drugOrders.each { drugOrder ->
