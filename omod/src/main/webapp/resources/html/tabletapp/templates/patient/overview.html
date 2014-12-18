@@ -29,7 +29,7 @@
     <ul ng-show="!loading" class="list-items">
         <li ng-repeat="order in activeOrders">
             <span class="left">
-                {{ order.concept.display }}
+                {{ order.concept.display }} <span class="date">{{ order.dateActivated | date: 'dd MMM' }}</span>
                 <span>
                     <em>
                         {{ order.drug.display }}
