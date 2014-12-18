@@ -45,3 +45,13 @@ ul.list-items {
 	color: $grey5;
 	margin-left: 5px;
 }
+
+.tag {
+	background: $primaryColor;
+	font-family: "OpenSansBold";
+	font-size: 0.7em;
+	padding: 2px 5px;
+	border-radius: 15px;
+	font-style: normal;
+	margin-left: 5px;
+}

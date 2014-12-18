@@ -29,7 +29,9 @@
     <ul ng-show="!loading" class="list-items">
         <li ng-repeat="order in activeOrders">
             <span class="left">
-                {{ order.concept.display }} <span class="date">{{ order.dateActivated | date: 'dd MMM' }}</span>
+                {{ order.concept.display }} 
+                <span class="date">{{ order.dateActivated | date: 'dd MMM' }}</span>
+                <span class="tag" ng-show="order.asNeeded">In case of {{ order.asNeededCondition }}</span>
                 <span>
                     <em>
                         {{ order.drug.display }}
@@ -53,8 +55,7 @@
     </script>
 </div>
 <div class="actions small">
-    <back-button></back-button>
+    <button class="small left secondary" ui-sref="ward({uuid: getWard()})">Back</button>
     <button class="small right" ui-sref="patient.addPrescription">Add new prescription</button>
-    <button class="small right" ui-sref="ward({uuid: getWard()})">Select another patient</button>
 </div>
 
