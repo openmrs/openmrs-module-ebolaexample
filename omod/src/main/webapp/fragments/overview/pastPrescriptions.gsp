@@ -12,9 +12,16 @@
             <% pastDrugOrders.each { %>
             <li class="clear">
                 <span class="left">${it.concept.displayString}</span>
-                <span class="right recent-lozenge">${ it.dateCreated.format('dd MMM yyyy')}</span><br>
+                <span class="right recent-lozenge">${it.dateCreated.format('dd MMM yyyy')}</span><br>
                 <em>${it.drug.name}
-                    ${it.route.displayString} - ${it.duration} Days - ${it.dose} - ${it.dosingInstructions}</em>
+                    <% if (it.route != null) { %>
+                    ${it.route.displayString}
+                    <% } %>
+                    - ${it.duration} Days - ${it.dose} - ${it.dosingInstructions} </em>
+                <% if (it.asNeededCondition != null) { %>
+                <br>
+                In case of ${it.asNeededCondition}
+                <% } %>
             </li>
             <% } %>
         </ul>

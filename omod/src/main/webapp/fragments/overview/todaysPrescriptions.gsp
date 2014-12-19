@@ -14,7 +14,11 @@
                 <span class="left">${it.concept.displayString}</span>
                 <span class="right recent-lozenge">Today</span><br>
                 <em>${it.drug.name}
-                ${it.route.displayString } - ${it.duration } Days - ${it.dose } - ${it.dosingInstructions}</em>
+                    ${it.route.displayString} - ${it.duration} Days - ${it.dose} - ${it.dosingInstructions}</em>
+                <% if (it.asNeededCondition != null) { %>
+                <br>
+                In case of ${it.asNeededCondition}
+                <% } %>
             </li>
             <% } %>
         </ul>
