@@ -37,7 +37,7 @@
                     <em>
                         {{ order.drug.display }}
                         {{ order.route.display }}
-                        {{ order.dosingInstructions }}
+                        each {{ order.dosingInstructions }}
                         <span ng-show="order.duration">for {{ order.duration }} days</span>
                     </em>
                 </span>
