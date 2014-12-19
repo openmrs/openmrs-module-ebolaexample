@@ -19,6 +19,12 @@
     </div>
 
     <div class="info-body">
+        <% if (mostRecentWeight) { %>
+            Weight: ${ ui.format(mostRecentWeight) } <small>(as of ${ ui.format(mostRecentWeight.obsDatetime) })</small>
+        <% } else { %>
+            Weight: not recorded
+        <% } %>
+
         <% if (currentEnrollment == null) { %>
 
             <p>Not currently enrolled</p>

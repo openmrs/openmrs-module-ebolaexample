@@ -1,7 +1,10 @@
 package org.openmrs.module.ebolaexample.metadata;
 
 import org.apache.commons.lang.StringUtils;
-import org.openmrs.*;
+import org.openmrs.Concept;
+import org.openmrs.ConceptAnswer;
+import org.openmrs.GlobalProperty;
+import org.openmrs.OrderFrequency;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.OrderService;
@@ -22,8 +25,9 @@ import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.visitAtt
 @Component("ebolaMetadata")
 public class EbolaMetadata extends AbstractMetadataBundle {
 
-    public static class _Concept {
-        public static final String EBOLA_PROGRAM = "162637AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"; // from CIEL
+    public static class _Concept { // all of these are from CIEL and we don't create them here
+        public static final String EBOLA_PROGRAM = "162637AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+        public static final String WEIGHT_IN_KG = "5089AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
     }
 
     public static class _Program {
@@ -31,6 +35,7 @@ public class EbolaMetadata extends AbstractMetadataBundle {
     }
 
     public static class _EncounterType {
+        public static final String EBOLA_REGISTRATION = "98963e52-863d-11e4-9fc5-eede903351fb";
         public static final String EBOLA_CASE_INVESTIGATION = "4b408f26-5763-11e4-af12-660e112eb3f5";
         public static final String EBOLA_INPATIENT_FOLLOWUP = "83413734-587d-11e4-af12-660e112eb3f5";
         public static final String EBOLA_TREATMENT_ADMISSION = "8a08cc50-0139-4679-bc19-19dceec3b8ca";
@@ -104,6 +109,7 @@ public class EbolaMetadata extends AbstractMetadataBundle {
 
         install(encounterRole("Clinician", "Clinician", _EncounterRole.CLINICIAN));
 
+        install(encounterType("Ebola Registration", "Creating a new patient record", _EncounterType.EBOLA_REGISTRATION));
         install(encounterType("Ebola Inpatient Followup", "Clinical checkup on a hospitalized Ebola patient or suspect", _EncounterType.EBOLA_INPATIENT_FOLLOWUP));
         install(encounterType("Ebola Case Investigation", "To Do", _EncounterType.EBOLA_CASE_INVESTIGATION));
         install(encounterType("ETU Admission", "Admission to the Ebola Treatment Unit (ETU)",  _EncounterType.EBOLA_TREATMENT_ADMISSION));

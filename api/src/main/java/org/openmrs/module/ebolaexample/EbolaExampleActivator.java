@@ -69,27 +69,30 @@ public class EbolaExampleActivator extends BaseModuleActivator {
             removeTagsFromUnknownLocation(locationService, emrApiProperties);
             
             // hack to set the SCI-requested address format for Sierra Leone
-            GlobalProperty etuAddressTemplate = new GlobalProperty("layout.address.format",
+            GlobalProperty sciAddressTemplate = new GlobalProperty("layout.address.format",
             		"<org.openmrs.layout.web.address.AddressTemplate>"
             		+ "<nameMappings class=\"properties\">"
             		+ "<property name=\"countyDistrict\" value=\"Location.district\"/>"
             		+ "<property name=\"address2\" value=\"Chiefdom\"/>"
             		+ "<property name=\"cityVillage\" value=\"Location.cityVillage\"/>"
+                    + "<property name=\"address1\" value=\"Address\"/>"
             		+ "</nameMappings>"
             		+ "<sizeMappings class=\"properties\">"
-            				+ "<property name=\"countyDistrict\" value=\"40\"/>"
+            				+ "<property name=\"countyDistrict\" value=\"20\"/>"
             				+ "<property name=\"address2\" value=\"40\"/>"
-            				+ "<property name=\"cityVillage\" value=\"10\"/>"
+            				+ "<property name=\"cityVillage\" value=\"20\"/>"
+            				+ "<property name=\"address1\" value=\"40\"/>"
             		+ "</sizeMappings>"
             		+ "<lineByLineFormat>"
             		+ "<string>countyDistrict</string>"
             		+ "<string>address2</string>"
             		+ "<string>cityVillage</string>"
+            		+ "<string>address1</string>"
             		+ "</lineByLineFormat>"
             		+ "</org.openmrs.layout.web.address.AddressTemplate>",
                     "XML description of address formats");
             
-            administrationService.saveGlobalProperty(etuAddressTemplate);
+            administrationService.saveGlobalProperty(sciAddressTemplate);
 
             log.info("Started Ebola Example module");
         }
