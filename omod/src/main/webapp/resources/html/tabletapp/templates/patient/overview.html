@@ -28,7 +28,7 @@
     <div ng-show="loading" class="loading-spinner"></div>
     <span ng-show="!loading" class="question-title">Active Prescriptions</span>
     <ul ng-show="!loading" class="list-items">
-        <li ng-repeat="order in activeOrders">
+        <li ng-repeat="order in activeOrders | orderBy:'dateActivated':true">
             <span class="left">
                 <span class="drug-name">{{ order.concept.display }}</span><em>{{ order.drug.display }}</em>
                 <span class="date">({{ order.dateActivated | date: 'dd MMM' }})</span>
@@ -37,7 +37,7 @@
                         {{order.dose}}
                         {{order.doseUnits.names[0].display}}
                         <span ng-show="order.route.display">by {{ order.route.display }}</span>
-                        <span ng-show="order.dosingInstructions">each {{ order.dosingInstructions }}</span>
+                        <span ng-show="order.dose">each</span> {{ order.dosingInstructions }}
                         <span ng-show="order.duration">for {{ order.duration }} days</span>
                         <span class="tag" ng-show="order.asNeeded">In case of {{ order.asNeededCondition }}</span>
                     </em>
