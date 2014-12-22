@@ -95,6 +95,10 @@
   animation: ngdialog-fadein 0.5s;
 }
 
+.ngdialog-message {
+  border: 2px solid #666;
+}
+
 .ngdialog.ngdialog-closing .ngdialog-overlay {
   -webkit-animation: ngdialog-fadeout 0.5s;
   animation: ngdialog-fadeout 0.5s;
@@ -146,10 +150,10 @@ body.ngdialog-open {
 
 .ngdialog.ngdialog-theme-plain .ngdialog-close:before {
   background: transparent;
-  color: #bbb;
+  color: #595959;
   content: "\00D7";
-  font-size: 26px;
-  font-weight: 400;
+  font-size: 40px;
+  font-weight: 700;
   height: 30px;
   line-height: 26px;
   position: absolute;

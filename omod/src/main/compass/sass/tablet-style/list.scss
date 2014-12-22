@@ -26,7 +26,6 @@ ul.list-items {
 	em {
 		padding: 0;
 		font-size: 0.9em;
-		display: block;
 	}
 
 	button {
@@ -48,6 +47,10 @@ ul.list-items {
 	font-size: 0.75em;
 	color: $grey5;
 	margin-left: 5px;
+}
+
+.drug-name {
+	margin-right: 0.5em;
 }
 
 .tag {
