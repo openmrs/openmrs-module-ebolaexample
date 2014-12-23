@@ -28,7 +28,7 @@
                 </span>
                 <span class="select-arrow">
                     <select ng-model="administeredDose.reasonNotAdministeredNonCoded" name="reason">
-                        <option ng-repeat="reason in reasonsNotAdministered" value="{{reason}}">{{ reason }}
+                        <option ng-repeat="reason in reasonsNotAdministered | orderBy:'toString()'" value="{{reason}}">{{ reason }}
                         </option>
                     </select>
                 </span>
