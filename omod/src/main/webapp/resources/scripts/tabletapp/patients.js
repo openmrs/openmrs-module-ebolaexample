@@ -44,23 +44,22 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
         }])
 
     .controller("PatientController", [ "$state", "$scope", "PatientResource", "OrderResource", "ngDialog",
-        "$rootScope", "Constants", "ScheduledDoseResource", "CurrentSession", "StopOrderService",
-        function ($state, $scope, PatientResource, OrderResource, ngDialog, $rootScope, Constants, ScheduledDoseResource, CurrentSession, StopOrderService) {
-            var patientId = $state.params.patientUUID;
+        "$rootScope", "Constants", "ScheduledDoseResource", "CurrentSession", "StopOrderService", "ActiveOrders",
+        function ($state, $scope, PatientResource, OrderResource, ngDialog, $rootScope, Constants,
+                  ScheduledDoseResource, CurrentSession, StopOrderService, ActiveOrders) {
+            var patientUuid = $state.params.patientUUID;
 
-            $scope.patient = PatientResource.get({ uuid: patientId });
-            function reloadActiveOrders(event, toState, toParams, fromState, fromParams) {
-                $scope.loading = true;
-                $rootScope.administeredDrug = false;
+            $scope.patient = PatientResource.get({ uuid: patientUuid });
+
+            $scope.activeOrders = ActiveOrders.reload($scope, patientUuid);
+            $scope.$watch(ActiveOrders.get, function(newOrders) {
+                $scope.activeOrders = newOrders;
+            }, true);
+            $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+                $scope.administeredDrug = false;
+                ActiveOrders.reload($scope, patientUuid);
                 $scope.comeFromPrescriptionForm = $state.params.prescriptionSuccess == 'true' && fromState && fromState.name == 'patient.addPrescriptionDetails';
-                OrderResource.query({ t: "drugorder", v: 'full', patient: patientId }, function (response) {
-                    $scope.activeOrders = response.results;
-                    $scope.loading = false;
-                });
-            }
-
-            reloadActiveOrders();
-            $rootScope.$on('$stateChangeSuccess', reloadActiveOrders);
+            });
 
             $scope.focusInput = function ($event) {
                 angular.element($event.target).parent().addClass('highlight');
@@ -84,7 +83,6 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                 $scope.administerOrder = order;
                 ngDialog.open({
                     template: "administerDialog",
-                    controller: "PatientController",
                     className: "ngdialog-theme-plain",
                     closeByDocument: false,
                     scope: $scope
@@ -127,6 +125,11 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                 $scope.problemStopping = true;
             }
 
+            $scope.onStopOrderSuccess = function() {
+                ActiveOrders.reload($scope, patientUuid);
+                $scope.closeThisDialog();
+            }
+
             $scope.openStopOrderDialog = function (order) {
                 $scope.order = order;
                 ngDialog.open({
@@ -138,6 +141,25 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                 });
             };
         }])
+
+    .factory("ActiveOrders", ['OrderResource', function (OrderResource) {
+        var cachedOrders,
+            getOrders = function (scope, patientUuid) {
+                scope.loading = true;
+                return OrderResource.query({ t: "drugorder", v: 'full', patient: patientUuid }, function (response) {
+                    scope.loading = false;
+                });
+            };
+        return {
+            reload: function(scope, patientUuid) {
+                cachedOrders = getOrders(scope, patientUuid);
+                return cachedOrders;
+            },
+            get: function() {
+                return cachedOrders;
+            }
+        }
+    }])
 
     .factory('StopOrderService', ['CurrentSession', 'OrderResource', 'Constants',
         function (CurrentSession, OrderResource, Constants) {
