@@ -154,7 +154,8 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                                 "encounter": encounter.uuid,
                                 "careSetting": Constants.careSetting.inpatient,
                                 "orderer": response.data.providers[0]["uuid"],
-                                "previousOrder": order.uuid
+                                "previousOrder": order.uuid,
+                                "dosingType": Constants.dosingType.unvalidatedFreeText
                             };
 
                             if(order.drug) {
