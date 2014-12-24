@@ -289,7 +289,7 @@ describe('prescriptions', function () {
             var expectedPost = $.extend({}, expectedOrderPost, {
                 "dosingType": "org.openmrs.module.ebolaexample.domain.RoundBasedDosingInstructions",
                 "frequency": "",
-                "dosingInstructions": "Afternoon,Evening",
+                "dosingInstructions": "Afternoon, Evening",
                 "durationUnits": "1072AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
             });
             httpMock.expectPOST(apiUrl + 'order', expectedPost)

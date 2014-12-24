@@ -9,7 +9,7 @@ angular.module("prescriptions", ["tabletapp", "constants"])
                 } else {
                     var rounds = _.filter(Object.keys(order.rounds),function (key) {
                         return order.rounds[key];
-                    }).join();
+                    }).join(", ");
                     orderJson["dosingType"] = Constants.dosingType.roundBased;
                     orderJson["dose"] = order.drug.dose;
                     orderJson["doseUnits"] = order.drug.doseUnits;

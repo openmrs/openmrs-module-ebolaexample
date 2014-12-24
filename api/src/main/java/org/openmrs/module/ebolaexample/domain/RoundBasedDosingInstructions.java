@@ -92,7 +92,7 @@ public class RoundBasedDosingInstructions implements DosingInstructions {
         ValidationUtils.rejectIfEmpty(errors, "dose", "DrugOrder.error.doseIsNullForDosingTypeRoundBased");
         ValidationUtils.rejectIfEmpty(errors, "doseUnits", "DrugOrder.error.doseUnitsIsNullForDosingTypeRoundBased");
 
-        String[] rounds = order.getDosingInstructions().split(",");
+        String[] rounds = order.getDosingInstructions().split(", ");
         for (String round : rounds) {
             boolean validRoundName = Arrays.asList(new String[]{"Morning", "Afternoon", "Evening", "Night"}).contains(round);
             if(!validRoundName) {

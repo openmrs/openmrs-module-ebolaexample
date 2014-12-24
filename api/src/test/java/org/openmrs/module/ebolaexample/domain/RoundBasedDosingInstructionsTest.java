@@ -21,7 +21,7 @@ public class RoundBasedDosingInstructionsTest extends BaseModuleContextSensitive
                 (RoundBasedDosingInstructions) new RoundBasedDosingInstructions().getDosingInstructions(order);
         String dosingInstructionsAsString = dosingInstructions.getDosingInstructionsAsString(Context.getLocale());
 
-        assertEquals("10.0 ml IV Morning,Evening", dosingInstructionsAsString);
+        assertEquals("10.0 ml IV Morning, Evening", dosingInstructionsAsString);
     }
 
     @Test
@@ -34,7 +34,7 @@ public class RoundBasedDosingInstructionsTest extends BaseModuleContextSensitive
                 (RoundBasedDosingInstructions) new RoundBasedDosingInstructions().getDosingInstructions(order);
         String dosingInstructionsAsString = dosingInstructions.getDosingInstructionsAsString(Context.getLocale());
 
-        assertEquals("10.0 ml IV PRN Pain Morning,Evening", dosingInstructionsAsString);
+        assertEquals("10.0 ml IV PRN Pain Morning, Evening", dosingInstructionsAsString);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class RoundBasedDosingInstructionsTest extends BaseModuleContextSensitive
         RoundBasedDosingInstructions dosingInstructions =
                 (RoundBasedDosingInstructions) new RoundBasedDosingInstructions().getDosingInstructions(order);
         String dosingInstructionsAsString = dosingInstructions.getDosingInstructionsAsString(Context.getLocale());
-        assertEquals("10.0 ml IV 7 Days Morning,Evening", dosingInstructionsAsString);
+        assertEquals("10.0 ml IV 7 Days Morning, Evening", dosingInstructionsAsString);
     }
 
     @Test
@@ -79,9 +79,9 @@ public class RoundBasedDosingInstructionsTest extends BaseModuleContextSensitive
     public void validate_shouldValidateDosingInstructions() throws Exception {
         assertValidityOfDosingInstructions("", false);
         assertValidityOfDosingInstructions("Invalid", false);
-        assertValidityOfDosingInstructions("Invalid,Morning,Evening", false);
+        assertValidityOfDosingInstructions("Invalid, Morning, Evening", false);
         assertValidityOfDosingInstructions("Morning", true);
-        assertValidityOfDosingInstructions("Morning,Evening,Night,Afternoon", true);
+        assertValidityOfDosingInstructions("Morning, Evening, Night, Afternoon", true);
     }
 
     private void assertValidityOfDosingInstructions(String dosingInstructions, boolean expectedToBeValid) {
@@ -97,7 +97,7 @@ public class RoundBasedDosingInstructionsTest extends BaseModuleContextSensitive
         drugOrder.setDose(10.0);
         drugOrder.setDoseUnits(createConceptWithName("ml"));
         drugOrder.setRoute(createConceptWithName("IV"));
-        drugOrder.setDosingInstructions("Morning,Evening");
+        drugOrder.setDosingInstructions("Morning, Evening");
         drugOrder.setDosingType(RoundBasedDosingInstructions.class);
         drugOrder.setDuration(5);
         drugOrder.setDurationUnits(createConceptWithName("days"));
