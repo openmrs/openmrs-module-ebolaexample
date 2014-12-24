@@ -20,6 +20,9 @@ angular.module("constants", [])
             orderType: {
                 drugorder: "drugorder"
             },
+            orderAction: {
+                discontinue: "DISCONTINUE"
+            },
             rounds: [
                 { name: "Morning"},
                 { name: "Afternoon"},

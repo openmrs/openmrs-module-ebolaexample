@@ -21,7 +21,7 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             $scope.loading = true;
             var wardId = $state.params.uuid;
             CurrentSession.setRecentWard(wardId);
-            $scope.ward = WardResource.get({ uuid: wardId }, function() {
+            $scope.ward = WardResource.get({ uuid: wardId }, function () {
                 $scope.loading = false;
             });
 
@@ -35,18 +35,17 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             };
 
             $scope.getPatientName = function (display) {
-                return toCamelCase(display.split( / (.+)/)[1].split('-')[1]);
+                return toCamelCase(display.split(/ (.+)/)[1].split('-')[1]);
             };
 
             $scope.getPatientId = function (display) {
-                return display.split( / (.+)/)[0];
+                return display.split(/ (.+)/)[0];
             };
         }])
 
     .controller("PatientController", [ "$state", "$scope", "PatientResource", "OrderResource", "ngDialog",
-        "$rootScope", "Constants", "ScheduledDoseResource", "CurrentSession",
-        function ($state, $scope, PatientResource, OrderResource,
-                  ngDialog, $rootScope, Constants, ScheduledDoseResource, CurrentSession) {
+        "$rootScope", "Constants", "ScheduledDoseResource", "CurrentSession", "StopOrderService",
+        function ($state, $scope, PatientResource, OrderResource, ngDialog, $rootScope, Constants, ScheduledDoseResource, CurrentSession, StopOrderService) {
             var patientId = $state.params.patientUUID;
 
             $scope.patient = PatientResource.get({ uuid: patientId });
@@ -75,7 +74,7 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                 return $scope.patient && $scope.patient.display && $scope.patient.display.split(" ")[0];
             };
 
-            $scope.getWard = function() {
+            $scope.getWard = function () {
                 return CurrentSession.getRecentWard();
             };
 
@@ -94,8 +93,8 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
 
             $scope.administrationStatuses = Constants.administrationStatuses;
             $scope.reasonsNotAdministered = Constants.reasonsNotAdministered;
-            var needsAReason = function(administeredDose) {
-                if(administeredDose && administeredDose.status) {
+            var needsAReason = function (administeredDose) {
+                if (administeredDose && administeredDose.status) {
                     return administeredDose.status == 'PARTIAL'
                         || administeredDose.status == 'NOT_GIVEN'
                 }
@@ -103,15 +102,15 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             };
             $scope.needsAReason = needsAReason;
             $scope.saveAdministeredDose = function (dose, order, callback) {
-                if(dose.status) {
+                if (dose.status) {
                     var doseJSON = {
                         status: dose.status,
                         order: order.uuid
                     };
-                    if(needsAReason(dose)) {
+                    if (needsAReason(dose)) {
                         doseJSON['reasonNotAdministeredNonCoded'] = dose.reasonNotAdministeredNonCoded;
                     }
-                    new ScheduledDoseResource(doseJSON).$save().then(function() {
+                    new ScheduledDoseResource(doseJSON).$save().then(function () {
                         $rootScope.administeredDrug = true;
                         callback();
                     }, function () {
@@ -121,5 +120,35 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                     $scope.hasErrors = true;
                 }
             };
+
+            $scope.stopOrder = StopOrderService.stopOrder;
+        }])
+
+    .factory('StopOrderService', ['CurrentSession', 'OrderResource', 'Constants',
+        function (CurrentSession, OrderResource, Constants) {
+
+            return {
+                stopOrder: function (order) {
+                    CurrentSession.getEncounter(order.patient.uuid).then(function (encounter) {
+                        CurrentSession.getInfo().then(function (response) {
+                            orderJson = {
+                                "action": Constants.orderAction.discontinue,
+                                "orderReasonNonCoded": "",
+                                "type": Constants.orderType.drugorder,
+                                "patient": order.patient.uuid,
+                                "encounter": encounter.uuid,
+                                "careSetting": Constants.careSetting.inpatient,
+                                "orderer": response.data.providers[0]["uuid"],
+                                "previousOrder": order.uuid,
+                                "drug": order.drug.uuid
+                            };
+
+                            new OrderResource(orderJson).$save().then(function (order) {
+                                console.log(order);
+                            });
+                        });
+                    });
+                }
+            }
         }]);
 
