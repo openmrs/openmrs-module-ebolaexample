@@ -1,0 +1,31 @@
+<div class="ngdialog-message stop-order">
+    <span class="error-message" ng-show="problemStopping">Error stopping! Try again later</span>
+    <div class="dialog-form">
+        <h2>
+            <span class="drug-name">{{ order.concept.display }}</span><em>{{ order.drug.display }}</em>
+        </h2>
+        <span class="date">({{ order.dateActivated | date: 'dd MMM' }})</span>
+        <div>
+            <em>
+                {{order.dose}}
+                {{order.doseUnits.names[0].display}}
+                <span ng-show="order.route.display">by {{ order.route.display }}</span>
+                <span ng-show="order.dose">each</span> {{ order.dosingInstructions }}
+                <span ng-show="order.duration">for {{ order.duration }} days</span>
+                <span class="tag" ng-show="order.asNeeded">In case of {{ order.asNeededCondition }}</span>
+            </em>
+        </div>
+
+        <div class="dialog-form-content">
+
+            <em>
+                Are you sure you want to stop this order?
+            </em>
+
+        </div>
+    </div>
+    <div class="actions small">
+        <button class="small left" ng-click="stopOrder(order, closeThisDialog, showStoppingError)">
+            Stop</button>
+    </div>
+</div>

@@ -45,13 +45,17 @@
             </span>
             <span class="right">
                 <button ng-click="showAdminister(order)">Administer</button>
-                <button id="stop_{{order.uuid}}" ng-click="stopOrder(order)">Stop</button>
+                <button id="stop_{{order.uuid}}" ng-click="openStopOrderDialog(order)">Stop</button>
             </span>
         </li>
     </ul>
 
     <script type="text/ng-template" id="administerDialog">
         <ng-include src="'templates/patient/administerDrugDialog.html'"></ng-include>
+    </script>
+
+    <script type="text/ng-template" id="stopOrderDialog">
+        <ng-include src="'templates/patient/stopOrderDialog.html'"></ng-include>
     </script>
 </div>
 <div class="actions small">
