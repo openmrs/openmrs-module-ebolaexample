@@ -1,7 +1,8 @@
-angular.module("prescriptions", ["tabletapp", "constants"])
+angular.module("prescriptions", ["tabletapp", "constants", "patients"])
 
     .controller("NewPrescriptionDetailsController", [ "$state", "$scope", "OrderResource", "Constants", "CurrentSession", "DrugResource",
-        function ($state, $scope, OrderResource, Constants, CurrentSession, DrugResource) {
+        "ActiveOrders",
+        function ($state, $scope, OrderResource, Constants, CurrentSession, DrugResource, ActiveOrders) {
             function setDosing(order, orderJson) {
                 if (order.freeTextInstructions) {
                     orderJson["dosingType"] = Constants.dosingType.unvalidatedFreeText;
@@ -78,6 +79,7 @@ angular.module("prescriptions", ["tabletapp", "constants"])
                             new OrderResource(orderJson).$save().then(function (order) {
                                 $state.params['uuid'] = CurrentSession.getRecentWard();
                                 $state.params['prescriptionSuccess'] = true;
+                                ActiveOrders.reload($scope, $state.params['patientUUID']);
                                 $state.go(newState, $state.params);
                             }, function() {
                                 $scope.serverError = true;

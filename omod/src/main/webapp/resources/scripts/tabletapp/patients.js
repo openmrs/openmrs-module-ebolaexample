@@ -48,7 +48,7 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
         function ($state, $scope, PatientResource, OrderResource, ngDialog, $rootScope, Constants,
                   ScheduledDoseResource, CurrentSession, StopOrderService, ActiveOrders) {
             var patientUuid = $state.params.patientUUID;
-
+            $scope.hasErrors = false;
             $scope.patient = PatientResource.get({ uuid: patientUuid });
 
             $scope.activeOrders = ActiveOrders.reload($scope, patientUuid);
@@ -57,7 +57,6 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             }, true);
             $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
                 $scope.administeredDrug = false;
-                ActiveOrders.reload($scope, patientUuid);
                 $scope.comeFromPrescriptionForm = $state.params.prescriptionSuccess == 'true' && fromState && fromState.name == 'patient.addPrescriptionDetails';
             });
 
@@ -126,8 +125,8 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             }
 
             $scope.onStopOrderSuccess = function() {
-                ActiveOrders.reload($scope, patientUuid);
                 $scope.closeThisDialog();
+                ActiveOrders.reload($scope, patientUuid);
             }
 
             $scope.openStopOrderDialog = function (order) {
@@ -143,17 +142,14 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
         }])
 
     .factory("ActiveOrders", ['OrderResource', function (OrderResource) {
-        var cachedOrders,
-            getOrders = function (scope, patientUuid) {
+        var cachedOrders;
+        return {
+            reload: function (scope, patientUuid) {
                 scope.loading = true;
                 return OrderResource.query({ t: "drugorder", v: 'full', patient: patientUuid }, function (response) {
                     scope.loading = false;
-                });
-            };
-        return {
-            reload: function(scope, patientUuid) {
-                cachedOrders = getOrders(scope, patientUuid);
-                return cachedOrders;
+                    cachedOrders = response.results;
+                })
             },
             get: function() {
                 return cachedOrders;
