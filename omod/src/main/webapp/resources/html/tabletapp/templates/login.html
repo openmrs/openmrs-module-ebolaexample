@@ -1,0 +1,24 @@
+<header>
+    <div class="patient-header">
+        <h1>Login</h1>
+    </div>
+</header>
+<div class="page-wrap spaced" ng-controller="LoginController">
+    <form ng-name="login">
+        <span class="question-title">IDENTIFICATION NUMBER</span>
+
+        <div class="login-form">
+                <div>
+                    <span><h1 class="input-prefix">C</h1></span>
+                    <span class="input-container no-unit">
+                        <input ng-model="login.id" type="number" required="required"
+                               name="id">
+                    </span>
+                </div>
+
+        </div>
+    </form>
+</div>
+<div class="actions small">
+    <button class="right small" type="submit" ng-click="login()">Login</button>
+</div>

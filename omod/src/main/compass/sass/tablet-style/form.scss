@@ -65,3 +65,13 @@ form {
 	padding: 15px 20px;
 	background: $success;
 }
+
+.input-prefix {
+  display: inline-block;
+  padding-right: 0.6em;
+  margin-top: 0.5em !important;
+}
+
+.login-form {
+  padding: 1em;
+}

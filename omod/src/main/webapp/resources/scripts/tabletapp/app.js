@@ -8,6 +8,10 @@ angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "selec
         $urlRouterProvider.otherwise("/wards");
 
         $stateProvider
+            .state("login", {
+                url: "/login",
+                templateUrl: "templates/login.html"
+            })
             .state("wards", {
                 url: "/wards",
                 templateUrl: "templates/wards.html"
