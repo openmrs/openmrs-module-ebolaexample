@@ -21,7 +21,6 @@ import org.openmrs.module.webservices.rest.web.resource.impl.NeedsPaging;
 import org.openmrs.module.webservices.rest.web.response.ResponseException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -55,15 +54,7 @@ public class WardResource extends ReadableDelegatingResource<WardBedAssignments>
     @Override
     public PageableResult doGetAll(RequestContext context) throws ResponseException {
         BedAssignmentService bedAssignmentService = Context.getService(BedAssignmentService.class);
-        List<Location> wards = Context.getLocationService().getLocationsHavingAnyTag(Arrays.asList(
-                MetadataUtils.existing(LocationTag.class, EbolaMetadata._LocationTag.EBOLA_SUSPECT_WARD),
-                MetadataUtils.existing(LocationTag.class, EbolaMetadata._LocationTag.EBOLA_CONFIRMED_WARD),
-                MetadataUtils.existing(LocationTag.class, EbolaMetadata._LocationTag.EBOLA_RECOVERY_WARD)));
-
-        List<WardBedAssignments> wardBedAssignments = new ArrayList<WardBedAssignments>();
-        for (Location ward : wards) {
-            wardBedAssignments.add(bedAssignmentService.getBedAssignments(ward));
-        }
+        List<WardBedAssignments> wardBedAssignments = bedAssignmentService.getAllBedAssignments();
         return new NeedsPaging<WardBedAssignments>(wardBedAssignments, context);
     }
 

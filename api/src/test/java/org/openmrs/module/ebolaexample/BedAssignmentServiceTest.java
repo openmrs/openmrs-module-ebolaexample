@@ -17,6 +17,8 @@ import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.openmrs.test.Verifies;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -84,6 +86,37 @@ public class BedAssignmentServiceTest extends BaseModuleContextSensitiveTest {
 
         Patient assigned = bedAssignmentService.getPatientAssignedTo(bed);
         assertThat(assigned, is(patient));
+    }
+
+    @Test
+    public void testGetBedAssignments() throws Exception {
+        Patient patient = Context.getPatientService().getPatient(7);
+        Location bed = Context.getLocationService().getLocation(6);
+        Location ward = Context.getLocationService().getLocation(5);
+        bedAssignmentService.assign(patient, bed);
+
+        WardBedAssignments assignment = bedAssignmentService.getBedAssignments(ward);
+        assertThat(assignment.getBedAssignments().size(), is(1));
+        assertThat(assignment.getBedAssignments().get(bed), is(patient));
+    }
+
+    @Test
+    public void testGetAllBedAssignments() throws Exception {
+        Patient patient = Context.getPatientService().getPatient(7);
+        Location bed = Context.getLocationService().getLocation(6);
+        Location ward = Context.getLocationService().getLocation(5);
+        bedAssignmentService.assign(patient, bed);
+
+        List<WardBedAssignments> assignments = bedAssignmentService.getAllBedAssignments();
+        for (WardBedAssignments assignment : assignments) {
+            if (assignment.getWard().equals(ward)) {
+                assertThat(assignment.getBedAssignments().size(), is(1));
+                assertThat(assignment.getBedAssignments().get(bed), is(patient));
+            }
+            else {
+                assertThat(assignment.getBedAssignments().size(), is(0));
+            }
+        }
     }
 
 }

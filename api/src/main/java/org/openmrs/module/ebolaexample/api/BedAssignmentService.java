@@ -5,6 +5,8 @@ import org.openmrs.Patient;
 import org.openmrs.api.OpenmrsService;
 import org.openmrs.module.ebolaexample.WardBedAssignments;
 
+import java.util.List;
+
 public interface BedAssignmentService extends OpenmrsService {
 
 	/**
@@ -18,6 +20,10 @@ public interface BedAssignmentService extends OpenmrsService {
 	public void assign(Patient patient, Location bed);
 
     public Patient getPatientAssignedTo(Location bed);
+
+    public List<Location> getAllWards();
+
+    public List<WardBedAssignments> getAllBedAssignments();
 
 	public WardBedAssignments getBedAssignments(Location ward);
 }

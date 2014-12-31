@@ -2,6 +2,7 @@ package org.openmrs.module.ebolaexample.api.impl;
 
 import org.openmrs.EncounterRole;
 import org.openmrs.Location;
+import org.openmrs.LocationTag;
 import org.openmrs.Patient;
 import org.openmrs.Provider;
 import org.openmrs.Visit;
@@ -24,6 +25,7 @@ import org.openmrs.module.emrapi.visit.VisitDomainWrapper;
 import org.openmrs.module.metadatadeploy.MetadataUtils;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -134,7 +136,51 @@ public class BedAssignmentServiceImpl extends BaseOpenmrsService implements BedA
 		adtService.createAdtEncounterFor(adtAction);
 	}
 
-	@Override
+    @Override
+    @Transactional(readOnly=true)
+    public List<Location> getAllWards() {
+        List<Location> wards = new ArrayList<Location>();
+        wards.addAll(locationService.getLocationsByTag(MetadataUtils.existing(LocationTag.class, EbolaMetadata._LocationTag.EBOLA_SUSPECT_WARD)));
+        wards.addAll(locationService.getLocationsByTag(MetadataUtils.existing(LocationTag.class, EbolaMetadata._LocationTag.EBOLA_CONFIRMED_WARD)));
+        wards.addAll(locationService.getLocationsByTag(MetadataUtils.existing(LocationTag.class, EbolaMetadata._LocationTag.EBOLA_RECOVERY_WARD)));
+        return wards;
+    }
+
+    @Override
+    @Transactional(readOnly=true)
+    public List<WardBedAssignments> getAllBedAssignments() {
+        List<Location> wards = getAllWards();
+        Set<Location> facilities = new HashSet<Location>();
+        Map<Location, Map<Location, Patient>> bedAssignments = new HashMap<Location, Map<Location, Patient>>();
+        for (Location ward : wards) {
+            facilities.add(adtService.getLocationThatSupportsVisits(ward));
+            bedAssignments.put(ward, new HashMap<Location, Patient>());
+        }
+
+        VisitAttributeType assignedWard = visitService.getVisitAttributeTypeByUuid(
+                EbolaMetadata._VisitAttributeType.ASSIGNED_WARD);
+        VisitAttributeType assignedBed = visitService.getVisitAttributeTypeByUuid(
+                EbolaMetadata._VisitAttributeType.ASSIGNED_BED);
+
+        for (Location facility : facilities) {
+            for (VisitDomainWrapper visit : adtService.getActiveVisits(facility)) {
+                Location ward = getAttribute(assignedWard, visit);
+                Location bed = getAttribute(assignedBed, visit);
+                if (bed != null) {
+                    Patient patient = visit.getVisit().getPatient();
+                    bedAssignments.get(ward).put(bed, patient);
+                }
+            }
+        }
+
+        List<WardBedAssignments> ret = new ArrayList<WardBedAssignments>();
+        for (Location ward : wards) {
+            ret.add(new WardBedAssignments(ward, bedAssignments.get(ward)));
+        }
+        return ret;
+    }
+
+    @Override
 	@Transactional(readOnly=true)
 	public WardBedAssignments getBedAssignments(Location ward) {
         VisitAttributeType assignedWard = visitService.getVisitAttributeTypeByUuid(
@@ -148,7 +194,7 @@ public class BedAssignmentServiceImpl extends BaseOpenmrsService implements BedA
         for (VisitDomainWrapper visit : adtService.getActiveVisits(facility)) {
             if (ward.equals(getAttribute(assignedWard, visit))) {
                 Location bed = getAttribute(assignedBed, visit);
-                Patient patient = getPatientAssignedTo(bed);
+                Patient patient = visit.getVisit().getPatient();
                 bedAssignments.put(bed, patient);
             }
         }
