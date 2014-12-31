@@ -2,6 +2,7 @@ package org.openmrs.module.ebolaexample.api;
 
 import org.openmrs.Location;
 import org.openmrs.Patient;
+import org.openmrs.Visit;
 import org.openmrs.api.OpenmrsService;
 import org.openmrs.module.ebolaexample.WardBedAssignments;
 
@@ -20,6 +21,8 @@ public interface BedAssignmentService extends OpenmrsService {
 	public void assign(Patient patient, Location bed);
 
     public Patient getPatientAssignedTo(Location bed);
+
+    public WardAndBed getAssignedWardAndBedFor(Visit visit);
 
     public List<Location> getAllWards();
 

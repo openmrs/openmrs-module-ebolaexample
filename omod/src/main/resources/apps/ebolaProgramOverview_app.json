@@ -2,7 +2,7 @@
     {
         "id": "ebolaexample.ebolaDashboard",
         "description": "Dashboard showing current status of Ebola program",
-        "order": 3,
+        "order": 999,
         "requiredPrivilege": "App: ebolaexample.ebolaDashboard",
         "extensions": [
             {

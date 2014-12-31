@@ -29,8 +29,10 @@
 <script type="text/javascript">
     var breadcrumbs = [
         { icon: "icon-home", link: '/' + OPENMRS_CONTEXT_PATH + '/index.htm' },
-        { label: "${ ui.format(ui.message("ebolaexample.ebolaPharmacy.title")) }" ,
-            link: '${ui.pageLink("ebolaexample", "ebolaPharmacy?app=ebolaexample.ebolaPharmacy")}'},
+    <% if (wardAndBed && wardAndBed.ward) { %>
+        { label: "${ ui.format(wardAndBed.ward) }",
+            link: '${ ui.escapeJs(ui.pageLink("ebolaexample", "findPatientByWard", [ ward: wardAndBed.ward.uuid ])) }' },
+    <% } %>
         { label: "${ ui.escapeJs(ui.message("ebolaexample.ebolaOverview.title")) }" }
     ]
     var patient = { id: ${ patient.id } };

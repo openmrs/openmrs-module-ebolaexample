@@ -18,6 +18,7 @@ import org.openmrs.api.context.Context;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.ebolaexample.WardBedAssignments;
 import org.openmrs.module.ebolaexample.api.BedAssignmentService;
+import org.openmrs.module.ebolaexample.api.WardAndBed;
 import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
 import org.openmrs.module.emrapi.adt.AdtAction;
 import org.openmrs.module.emrapi.adt.AdtService;
@@ -79,6 +80,17 @@ public class BedAssignmentServiceImpl extends BaseOpenmrsService implements BedA
             }
         }
         return null;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public WardAndBed getAssignedWardAndBedFor(Visit visit) {
+        VisitAttributeType assignedWard = MetadataUtils.existing(VisitAttributeType.class, EbolaMetadata._VisitAttributeType.ASSIGNED_WARD);
+        VisitAttributeType assignedBed = MetadataUtils.existing(VisitAttributeType.class, EbolaMetadata._VisitAttributeType.ASSIGNED_BED);
+
+        Location ward = getAttribute(assignedWard, visit);
+        Location bed = ward == null ? null : getAttribute(assignedBed, visit);
+        return new WardAndBed(ward, bed);
     }
 
     @Override
@@ -202,8 +214,12 @@ public class BedAssignmentServiceImpl extends BaseOpenmrsService implements BedA
 	}
 
     private Location getAttribute(VisitAttributeType assignedWardType, VisitDomainWrapper visit) {
+        return getAttribute(assignedWardType, visit.getVisit());
+    }
+
+    private Location getAttribute(VisitAttributeType attributeType, Visit visit) {
         Location assignedWard = null;
-        List<VisitAttribute> activeAttributes = visit.getVisit().getActiveAttributes(assignedWardType);
+        List<VisitAttribute> activeAttributes = visit.getActiveAttributes(attributeType);
         if (activeAttributes.size() > 0) {
             assignedWard = (Location) activeAttributes.get(0).getValue();
         }

@@ -10,8 +10,10 @@ import org.openmrs.Patient;
 import org.openmrs.api.LocationService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.ebolaexample.api.BedAssignmentService;
+import org.openmrs.module.ebolaexample.api.WardAndBed;
 import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
 import org.openmrs.module.emrapi.adt.AdtService;
+import org.openmrs.module.emrapi.visit.VisitDomainWrapper;
 import org.openmrs.module.metadatadeploy.MetadataUtils;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.openmrs.test.Verifies;
@@ -117,6 +119,20 @@ public class BedAssignmentServiceTest extends BaseModuleContextSensitiveTest {
                 assertThat(assignment.getBedAssignments().size(), is(0));
             }
         }
+    }
+
+    @Test
+    public void testGetAssignedWardAndBed() throws Exception {
+        Patient patient = Context.getPatientService().getPatient(7);
+        Location bed = Context.getLocationService().getLocation(6);
+        Location ward = Context.getLocationService().getLocation(5);
+        bedAssignmentService.assign(patient, bed);
+
+        VisitDomainWrapper activeVisit = adtService.getActiveVisit(patient, ward);
+        WardAndBed wardAndBed = bedAssignmentService.getAssignedWardAndBedFor(activeVisit.getVisit());
+
+        assertThat(wardAndBed.getWard(), is(ward));
+        assertThat(wardAndBed.getBed(), is(bed));
     }
 
 }
