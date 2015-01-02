@@ -11,11 +11,11 @@
         <ul>
             <% pastDrugOrders.each { %>
             <li class="clear">
-                <span class="left">${it.concept.displayString}</span>
+                <span class="left">${ui.format(it.concept)}</span>
                 <span class="right recent-lozenge">${it.dateCreated.format('dd MMM yyyy')}</span><br>
                 <em>${it.drug.name}
                     <% if (it.route != null) { %>
-                    ${it.route.displayString}
+                    ${ui.format(it.route)}
                     <% } %>
                     - ${it.duration} Days - ${it.dose} - ${it.dosingInstructions} </em>
                 <% if (it.asNeededCondition != null) { %>
