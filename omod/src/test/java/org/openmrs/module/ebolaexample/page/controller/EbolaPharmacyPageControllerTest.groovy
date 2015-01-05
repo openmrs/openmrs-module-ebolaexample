@@ -12,13 +12,15 @@ class EbolaPharmacyPageControllerTest extends BaseModuleWebContextSensitiveTest 
 
     @Test
     public void shouldReturnModelAttributes() throws Exception {
-        EbolaPharmacyPageController controller =
-                (EbolaPharmacyPageController) applicationContext.getBean("ebolaPharmacyPageController");
+        EbolaPharmacyPageController controller = (EbolaPharmacyPageController) applicationContext.getBean("ebolaPharmacyPageController");
         PatientService patientService = (PatientService) applicationContext.getBean("patientService");
         PageModel mav = new PageModel();
-        controller.get(patientService, mav);
-        assertNotNull(mav);
+        controller.get(patientService, null, mav);
         assertTrue(mav.containsKey("ebolaPatients"))
+        assertTrue(mav.containsKey("selectedWard"))
+        assertTrue(mav.containsKey("today"))
+        assertTrue(mav.containsKey("wards"))
     }
+
 
 }
