@@ -1,6 +1,9 @@
 package org.openmrs.module.ebolaexample.domain;
 
-import org.openmrs.*;
+import org.openmrs.Concept;
+import org.openmrs.DosingInstructions;
+import org.openmrs.DrugOrder;
+import org.openmrs.SimpleDosingInstructions;
 import org.openmrs.api.APIException;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -103,7 +106,7 @@ public class RoundBasedDosingInstructions implements DosingInstructions {
 
     @Override
     public Date getAutoExpireDate(DrugOrder order) {
-        return null;
+        return new SimpleDosingInstructions().getAutoExpireDate(order);
     }
 
     public void setDose(Double dose) {
