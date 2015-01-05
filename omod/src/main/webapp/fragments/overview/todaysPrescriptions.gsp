@@ -3,7 +3,7 @@
     <div class="info-header">
         <i class="icon-medkit"></i>
 
-        <h3>Today's Prescriptions</h3>
+        <h3>Latest Prescription Changes (Last 24 hours)</h3>
     </div>
 
     <div class="info-body">
