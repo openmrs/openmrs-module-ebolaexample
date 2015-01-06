@@ -1,0 +1,24 @@
+.lozenge {
+  display: inline-block;
+  padding: 0px 8px;
+  border: 1px solid black;
+  border-radius: 3px;
+  font-size: 0.7em;
+  text-transform: uppercase;
+
+  &.recent {
+    color: #4a6785;
+    border-color: #4a6785;
+  }
+
+  &.prn {
+    background-color: #f6c342;
+    border-color: #f6c342;
+  }
+
+  &.stopped {
+    background-color: darkred;
+    border-color: darkred;
+    color: white;
+  }
+}

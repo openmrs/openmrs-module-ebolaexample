@@ -38,7 +38,7 @@
         <distro.groupId>org.openmrs.distro</distro.groupId>
         <distro.artifactId>referenceapplication</distro.artifactId>
         <distro.version>2.2-SNAPSHOT</distro.version>
-        <openMRSVersion>1.9.8</openMRSVersion>
+        <openMRSVersion>1.10.1</openMRSVersion>
         <openmrsTestutilsVersion>1.5</openmrsTestutilsVersion>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>

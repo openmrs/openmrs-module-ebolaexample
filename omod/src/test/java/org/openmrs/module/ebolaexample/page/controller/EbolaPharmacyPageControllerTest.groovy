@@ -1,11 +1,12 @@
 package org.openmrs.module.ebolaexample.page.controller
 
 import org.junit.Test
+import org.openmrs.Location
 import org.openmrs.api.PatientService
 import org.openmrs.ui.framework.page.PageModel
 import org.openmrs.web.test.BaseModuleWebContextSensitiveTest
 
-import static org.junit.Assert.assertNotNull
+import static org.junit.Assert.assertEquals
 import static org.junit.Assert.assertTrue
 
 class EbolaPharmacyPageControllerTest extends BaseModuleWebContextSensitiveTest {
@@ -22,5 +23,16 @@ class EbolaPharmacyPageControllerTest extends BaseModuleWebContextSensitiveTest 
         assertTrue(mav.containsKey("wards"))
     }
 
+    @Test
+    public void shouldReturnCorrectModelAttributesForParticularWard() throws Exception {
+        //Uuid for location "Never Never Land" is 167ce20c-4785-4285-9119-d197268f7f4a
+        Location ward = locationService.getLocationByUuid("167ce20c-4785-4285-9119-d197268f7f4a")
+
+        EbolaPharmacyPageController controller = (EbolaPharmacyPageController) applicationContext.getBean("ebolaPharmacyPageController");
+        PatientService patientService = (PatientService) applicationContext.getBean("patientService");
+        PageModel mav = new PageModel();
+        controller.get(patientService, ward.getUuid(), mav);
+        assertEquals(mav.getAttribute("selectedWard"), ward)
+    }
 
 }

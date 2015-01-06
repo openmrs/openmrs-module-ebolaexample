@@ -1,5 +1,6 @@
 <%
     ui.includeJavascript("uicommons", "handlebars/handlebars.min.js")
+    ui.includeCss("ebolaexample", "overview/ebolaOverview.css")
     ui.decorateWith("appui", "standardEmrPage")
 %>
 <script type="text/template" id="last-encounter-template">
@@ -62,9 +63,7 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient, a
     <div class="dashboard clear">
         <div class="long-info-container column">
 
-            ${ ui.includeFragment("ebolaexample", "overview/todaysPrescriptions", [ patient: patient ]) }
-
-            ${ ui.includeFragment("ebolaexample", "overview/pastPrescriptions", [ patient: patient ]) }
+            ${ ui.includeFragment("ebolaexample", "overview/prescriptions", [ patient: patient ]) }
 
         </div>
 
