@@ -42,7 +42,6 @@ public class DrugsByConceptSearchHandlerTest extends BaseModuleWebContextSensiti
 
     private WardResource resource;
     private MockHttpServletResponse response;
-    private String requestURI;
 
     @Before
     public void setUp() throws Exception {
@@ -51,7 +50,6 @@ public class DrugsByConceptSearchHandlerTest extends BaseModuleWebContextSensiti
         ebolaTestData.install();
         initializeInMemoryDatabase();
         response = new MockHttpServletResponse();
-        requestURI = "concept";
     }
 
     @Test
