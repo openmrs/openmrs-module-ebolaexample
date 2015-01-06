@@ -88,7 +88,7 @@ public class PrescriptionsFragmentController {
 
         @Override
         public int hashCode() {
-            return concept.hashCode() + route.hashCode();
+            return (concept == null ? 1 : concept.hashCode()) + (route == null ? 1 : route.hashCode());
         }
 
         @Override
