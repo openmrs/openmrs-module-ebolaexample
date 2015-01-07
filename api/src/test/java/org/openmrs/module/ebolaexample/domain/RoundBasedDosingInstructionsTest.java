@@ -1,7 +1,10 @@
 package org.openmrs.module.ebolaexample.domain;
 
 import org.junit.Test;
-import org.openmrs.*;
+import org.openmrs.Concept;
+import org.openmrs.ConceptName;
+import org.openmrs.DrugOrder;
+import org.openmrs.OrderFrequency;
 import org.openmrs.api.context.Context;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.springframework.validation.BindException;
@@ -21,7 +24,7 @@ public class RoundBasedDosingInstructionsTest extends BaseModuleContextSensitive
                 (RoundBasedDosingInstructions) new RoundBasedDosingInstructions().getDosingInstructions(order);
         String dosingInstructionsAsString = dosingInstructions.getDosingInstructionsAsString(Context.getLocale());
 
-        assertEquals("10.0 ml IV Morning, Evening", dosingInstructionsAsString);
+        assertEquals("10 ml IV each Morning, Evening", dosingInstructionsAsString);
     }
 
     @Test
@@ -34,7 +37,7 @@ public class RoundBasedDosingInstructionsTest extends BaseModuleContextSensitive
                 (RoundBasedDosingInstructions) new RoundBasedDosingInstructions().getDosingInstructions(order);
         String dosingInstructionsAsString = dosingInstructions.getDosingInstructionsAsString(Context.getLocale());
 
-        assertEquals("10.0 ml IV PRN Pain Morning, Evening", dosingInstructionsAsString);
+        assertEquals("10 ml IV each Morning, Evening <span class=\"lozenge prn\">PRN Pain</span>", dosingInstructionsAsString);
     }
 
     @Test
@@ -45,7 +48,7 @@ public class RoundBasedDosingInstructionsTest extends BaseModuleContextSensitive
         RoundBasedDosingInstructions dosingInstructions =
                 (RoundBasedDosingInstructions) new RoundBasedDosingInstructions().getDosingInstructions(order);
         String dosingInstructionsAsString = dosingInstructions.getDosingInstructionsAsString(Context.getLocale());
-        assertEquals("10.0 ml IV 7 Days Morning, Evening", dosingInstructionsAsString);
+        assertEquals("10 ml IV each Morning, Evening for 7 Days", dosingInstructionsAsString);
     }
 
     @Test
