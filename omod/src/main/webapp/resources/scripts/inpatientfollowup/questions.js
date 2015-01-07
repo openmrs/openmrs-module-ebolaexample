@@ -10,13 +10,13 @@ angular.module('tabletForm')
                 ]),
             temperature: questionBuilder.simpleNumeric("TEMPERATURE", "5088AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "˚C", 30, 45),
             o2sat: questionBuilder.simpleNumeric("OXYGEN SATURATION", "5092AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "%", 0, 100),
-            respiratoryRate: questionBuilder.simpleNumeric("RESPIRATORY RATE", "5242AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "breaths/ min", 0, 100),
+            respiratoryRate: questionBuilder.simpleNumeric("RESPIRATORY RATE", "5242AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "breaths/ min", 0, 120),
             heartRate: questionBuilder.simpleNumeric("HEART RATE", "5087AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "beats/ min", 0, 999),
             systolicBP: questionBuilder.simpleNumeric("SYSTOLIC BP", "5085AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "mmHg", 0, 250),
             diastolicBP: questionBuilder.simpleNumeric("DIASTOLIC BP", "5086AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "mmHg", 0, 200),
 
-            raisedJVP: questionBuilder.simpleNumeric("RAISED JVP", "162646AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "cm", 0, 100),
-            capillaryRefillTime: questionBuilder.simpleNumeric("CAPILLARY REFILL", "162513AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "sec", 0, 100),
+            raisedJVP: questionBuilder.simpleNumeric("RAISED JVP", "162646AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "cm", 0, 19),
+            capillaryRefillTime: questionBuilder.simpleNumeric("CAPILLARY REFILL", "162513AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "sec", 0, 60),
             abdomenTender: questionBuilder.symptomPresent("ABDOMEN TENDER", "5105AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"),
             paleAnemia: questionBuilder.symptomSeverity("PALE/ANAEMIA", "131004AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"),
 
@@ -30,7 +30,7 @@ angular.module('tabletForm')
             ]),
             vomiting: questionBuilder.symptomSeverity("VOMITING", "122983AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"),
 
-            stoolFrequency: questionBuilder.simpleNumeric("STOOL FREQUENCY", "1837AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "#/24h", 0, 15),
+            stoolFrequency: questionBuilder.simpleNumeric("STOOL FREQUENCY", "1837AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "#/24h", 0, 9),
             mainStoolType: questionBuilder.selectOneObs("MAIN STOOL TYPE", "162654AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", [
                     { label: "None", value: concepts.none },
                     { label: "Formed", value: "162655AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
