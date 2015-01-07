@@ -1,0 +1,111 @@
+<htmlform formUuid="2541a157-fd45-41e0-ad2b-f6a24c65463a" formName="Discharge"
+          formEncounterType="181820aa-88c9-479b-9077-af92f5364329" formVersion="2.0">
+
+    <script type="text/javascript">
+        $(function() {
+        $('#location-container select').focus();
+        });
+    </script>
+
+    <h2>
+        <label>Discharge</label>
+    </h2>
+
+    <section id="discharge">
+        <p>
+            <label>
+                <uimessage code="referenceapplication.simpleDischarge.dischargeDate"/>
+            </label>
+            <encounterDate id="encounterDate" showTime="false" default="now"/>
+        </p>
+
+        <p>
+            <label>
+                <uimessage code="referenceapplication.simpleDischarge.dischargingClinician"/>
+            </label>
+            <encounterProviderAndRole default="currentUser" encounterRole="1" required="true"/>
+        </p>
+
+        <p id="location-container">
+            <label>
+                <uimessage code="referenceapplication.simpleDischarge.dischargedFrom"/>
+            </label>
+            <encounterLocation required="true"/>
+        </p>
+
+        <p>
+            <label>Final outcome</label>
+            <obs conceptId="CIEL:160433" answerConceptIds="CIEL:159,CIEL:1692,CIEL:1693"
+                 answerLabels="Deceased, Discharged,Transferred to other facility"/>
+        </p>
+
+        <p>
+            <label>Exit from care</label>
+            <exitFromCare/>
+        </p>
+
+        <p>
+            <label>If deceased, date of death:</label>
+            <markPatientDead deathDateFromEncounter="true"/>
+        </p>
+
+        <p>
+            <label>If discharged,</label>
+        </p>
+
+        <p>
+            <label>Discharge type:</label>
+            <obs conceptId="CIEL:1695" answerConceptIds="CIEL:1692,CIEL:1694,CIEL:162705,CIEL:1067"
+                 answerLabels="By staff,Self-discharged,Removed by family,Unknown"/>
+        </p>
+
+        <p>
+            <label>Did the patient have a confirmed negative test for Ebola?</label>
+            <obs conceptId="CIEL:162684" style="yes_no"/>
+        </p>
+
+        <p>
+            <label>If yes</label>
+            <obs conceptId="CIEL:162682" style="radio" answerConceptIds="CIEL:162681,CIEL:162680"
+                 answerLabels="never had ebola (discharged from suspect ward),recovered from ebola (discharged from recovery ward)"/>
+        </p>
+
+        <p>
+            <label>Discharge medications provided? List:</label>
+            <obs conceptId="CIEL:162692"/>
+        </p>
+
+        <p>
+            <label>If transferred to other facility,</label>
+        </p>
+
+        <p>
+            <label>Reason for transfer:</label>
+            <obs conceptId="CIEL:162720"/>
+        </p>
+
+        <p>
+            <label>Name of new facility:</label>
+            <obs conceptId="CIEL:161562"/>
+        </p>
+
+        <p>
+            <label>District/town of new facility:</label>
+            <obs conceptId="CIEL:161564"/>
+        </p>
+
+        <p>
+            <label>Discharge medications provided? List:</label>
+            <obs conceptId="CIEL:162692"/>
+        </p>
+    </section>
+
+    <submit submitClass="confirm right" submitCode="uicommons.saveForm"/>
+
+    <ifMode mode="VIEW" include="false">
+        <button class="cancel">
+            <uimessage code="uicommons.cancelForm"/>
+        </button>
+    </ifMode>
+
+</htmlform>

@@ -17,8 +17,37 @@
             }
         ],
         "config": {
-            "afterCreatedUrl": "htmlformentryui/htmlform/enterHtmlFormWithSimpleUi.page?patientId={{patientId}}&visitId=&definitionUiResource=ebolaexample%3Ahtmlforms%2Ftriage.xml&returnUrl=%2Fopenmrs%2Febolaexample%2FebolaOverview.page%3Fpatient%3D8%26&",
+            // when we implement triage, switch to this line (but add a returnUrl, or else put a redirect from the coreapps patient dashboard to the ebola one
+            // "afterCreatedUrl": "htmlformentryui/htmlform/enterHtmlFormWithSimpleUi.page?patientId={{patientId}}&visitId=&definitionUiResource=ebolaexample%3Ahtmlforms%2Ftriage.xml",
+            "afterCreatedUrl": "ebolaexample/ebolaOverview.page?patient={{patientId}}",
+            "afterCreatedActions": [
+                "bean:enrollInEbolaProgramAfterPatientCreatedAction",
+                "bean:kerryTownAfterPatientCreatedAction"
+            ],
+            "registrationEncounter": {
+                "encounterType": "98963e52-863d-11e4-9fc5-eede903351fb", // Ebola Registration
+                "encounterRole": "a0b03050-c99b-11e0-9572-0800200c9a66" // Unknown EncounterRole
+            },
             "sections": [
+                {
+                    "id": "identifiers",
+                    "label": "ID Number",
+                    "questions": [
+                        {
+                            "legend": "ID Number",
+                            "fields": [
+                                {
+                                    "type": "custom",
+                                    "label": "Kerry Town ID",
+                                    "widget": {
+                                        "providerName": "ebolaexample",
+                                        "fragmentId": "field/kerrytownId"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
                 {
                     "id": "contactInfo",
                     "label": "registrationapp.patient.contactInfo.label",
@@ -33,6 +62,32 @@
                                         "providerName": "uicommons",
                                         "fragmentId": "field/personAddress"
                                     }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "quickAssessment",
+                    "label": "Quick Assessment",
+                    "questions": [
+                        {
+                            "legend": "Weight",
+                            "fields": [
+                                {
+                                    "type": "obs",
+                                    "formFieldName": "obs.5089AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                                    "label": "Weight (kg)",
+                                    "widget": {
+                                        "providerName": "uicommons",
+                                        "fragmentId": "field/text",
+                                        "config": {
+                                            "min": "0.5",
+                                            "max": "199",
+                                            "appendToValue": "kg"
+                                        }
+                                    },
+                                    "cssClasses": [ "numeric-range" ]
                                 }
                             ]
                         }

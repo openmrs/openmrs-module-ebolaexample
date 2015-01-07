@@ -1,0 +1,65 @@
+@import "compass";
+@import "variables";
+
+ul.list-items {
+	margin: 0;
+	padding: 0;
+	border: 4px solid #eee;
+
+	li {
+        @include clearfix;
+		list-style: none;
+		font-size: 1.3em;
+		padding: 0.3em 0.5em;
+		color: #555;
+		font-family: "OpenSansBold";
+
+		&:nth-child(even) {
+			background: #eee;
+		}
+	}
+
+	.left {
+		width: 70%;
+	}
+
+	em {
+		padding: 0;
+		font-size: 0.9em;
+	}
+
+	button {
+		font-size: 0.95em;
+		float: right;
+		margin-right: 0.5em;
+	}
+
+    .action-icon {
+      font-size: 1.7em;
+      padding-top: 2px;
+      padding-left: .5em;
+      padding-right: .5em;
+    }
+}
+
+.date {
+	font-family: "OpenSansBold";
+	font-size: 0.75em;
+	color: $grey5;
+	margin-left: 5px;
+}
+
+.drug-name {
+	margin-right: 0.5em;
+}
+
+.tag {
+	background: $primaryColor;
+	font-family: "OpenSansBold";
+	font-size: 0.7em;
+	padding: 2px 5px;
+	border-radius: 15px;
+	font-style: normal;
+	margin-left: 5px;
+	display: inline-block;
+}

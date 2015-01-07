@@ -1,0 +1,42 @@
+<div class="ngdialog-message administer-drug">
+    <span class="error-message" ng-show="problemSaving">Error saving! Try again later</span>
+    <form name="administeredDose">
+        <div class="dialog-form">
+            <h2>
+                <span class="drug-name">{{ administerOrder.concept.display }}</span><em>{{ administerOrder.drug.display }}</em>
+            </h2>
+            <em>
+                {{ administerOrder.dose }}
+                {{ administerOrder.doseUnits.names[0].display }}
+                by {{ administerOrder.route.display }}
+                each {{ administerOrder.dosingInstructions }}
+                <span ng-show="administerOrder.duration">for {{ administerOrder.duration }} days</span>
+            </em>
+
+            <span class="question-title" ng-class="{error: hasErrors}">AMOUNT GIVEN
+                <em ng-class="{error: hasErrors }">(Select one)</em>
+            </span>
+            <div>
+                <span ng-repeat="(statusKey,statusDisplay) in administrationStatuses" class="checkboxes">
+                    <input id="status_{{statusKey}}" type="radio" true-value="{{statusKey}}" value="{{statusKey}}"
+                           ng-model="administeredDose.status"/>
+                    <label for="status_{{statusKey}}" class="radio-button small">{{ statusDisplay }}</label>
+                </span>
+            </div>
+            <div ng-show="needsAReason(administeredDose)">
+                <span class="question-title">REASON<em>(Optional)</em>
+                </span>
+                <span class="select-arrow">
+                    <select ng-model="administeredDose.reasonNotAdministeredNonCoded" name="reason">
+                        <option ng-repeat="reason in reasonsNotAdministered | orderBy:'toString()'" value="{{reason}}">{{ reason }}
+                        </option>
+                    </select>
+                </span>
+            </div>
+        </div>
+        <div class="actions small">
+            <button class="small left" ng-click="saveAdministeredDose(administeredDose, administerOrder, closeThisDialog)">
+                Administer</button>
+        </div>
+    </form>
+</div>

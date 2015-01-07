@@ -7,5 +7,7 @@
     <bean class="org.openmrs.ui.framework.StandardModuleUiConfiguration">
         <property name="moduleId" value="${project.parent.artifactId}"/>
     </bean>
-		
+
+    <bean id="ebolaPharmacyPageController"
+          class="org.openmrs.module.ebolaexample.page.controller.EbolaPharmacyPageController"/>
 </beans>

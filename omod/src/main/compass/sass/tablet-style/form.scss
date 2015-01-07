@@ -1,0 +1,77 @@
+@import "variables";
+
+form {
+	margin: 0;
+
+	.question-title em {
+		font-size: 0.7em;
+		position: relative;
+		top: -3px;
+		padding-left: 10px;
+	}
+}
+
+.tablet-list {
+	list-style: none;
+	padding: 0 10px;
+
+	li {
+		display: inline-block;
+
+		a {
+			text-decoration: none;
+		}
+	}
+}
+
+.question-title {
+	display: block;
+	font-size: 1.65em;
+	font-family: "OpenSansBold";
+	color: $grey1;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+
+	&.error {
+		color: $error;
+	}
+}
+
+.info {
+	font-size: 2em;
+	border: 4px solid $grey2;
+	padding: 10px;
+	border-radius: 5px;
+	background: $grey3;
+	margin-top: 10px;
+}
+
+.error-message {
+	display: block;
+	vertical-align: top;
+	font-size: 1.4em;
+	font-family: "OpenSansBold";
+	color: white;
+	padding: 15px 20px;
+	background: $error;
+}
+
+.success-message {
+	display: block;
+	vertical-align: top;
+	font-size: 1.4em;
+	font-family: "OpenSansBold";
+	color: white;
+	padding: 15px 20px;
+	background: $success;
+}
+
+.input-prefix {
+  display: inline-block;
+  padding-right: 0.6em;
+  margin-top: 0.5em !important;
+}
+
+.login-form {
+  padding: 1em;
+}

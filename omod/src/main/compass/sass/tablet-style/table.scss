@@ -1,0 +1,45 @@
+table {
+  width: 100%;
+
+  th, td {
+    padding: 5px 10px;
+    border: 1px solid #DDD;
+  }
+  
+  tr {
+    border: 1px solid #eee;
+  }
+  
+  tr:nth-child(even) {
+    background: #fffdf7;
+  }
+  
+  tr:nth-child(odd) {
+    background: white;
+  }
+  
+  tr.hover{
+    background: lighten(desaturate(#007fff, 20%), 20%);
+    color: white;
+    cursor: pointer;
+  }
+  
+  tr.selected{
+    background: #007fff;
+    color: white;
+
+    a {
+      color: white
+    }
+  }
+  
+  thead th {
+    border-bottom: 1px solid #DDD;
+    background: #f3f3f3;
+    width: auto;
+    text-align: left;
+    word-break: normal;
+    font-weight: normal;
+    font-family: "OpenSansBold";
+  }
+}

@@ -10,11 +10,19 @@ import org.openmrs.Patient;
 import org.openmrs.api.LocationService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.ebolaexample.api.BedAssignmentService;
+import org.openmrs.module.ebolaexample.api.WardAndBed;
 import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
 import org.openmrs.module.emrapi.adt.AdtService;
+import org.openmrs.module.emrapi.visit.VisitDomainWrapper;
+import org.openmrs.module.metadatadeploy.MetadataUtils;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.openmrs.test.Verifies;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 public class BedAssignmentServiceTest extends BaseModuleContextSensitiveTest {
 
@@ -40,6 +48,7 @@ public class BedAssignmentServiceTest extends BaseModuleContextSensitiveTest {
 		ebolaMetadata.install();
 		executeDataSet(INITIAL_DATA_XML);
 		LocationTag inpatientBedTag = locationService.getLocationTagByUuid(EbolaMetadata._LocationTag.INPATIENT_BED);
+        locationService.getLocation(5).addTag(MetadataUtils.existing(LocationTag.class, EbolaMetadata._LocationTag.VISIT_LOCATION));
 		locationService.getLocation(6).getTags().add(inpatientBedTag);
 	}
 
@@ -70,5 +79,60 @@ public class BedAssignmentServiceTest extends BaseModuleContextSensitiveTest {
 		Assert.assertTrue(assignments.getBedAssignments().size() == 1);
 		Assert.assertTrue(assignments.getBedAssignments().get(bed) != null);
 	}
+
+    @Test
+    public void getPatientAssignedTo_shouldGetPatientAssignedToABed() throws Exception {
+        Patient patient = Context.getPatientService().getPatient(7);
+        Location bed = Context.getLocationService().getLocation(6);
+        bedAssignmentService.assign(patient, bed);
+
+        Patient assigned = bedAssignmentService.getPatientAssignedTo(bed);
+        assertThat(assigned, is(patient));
+    }
+
+    @Test
+    public void testGetBedAssignments() throws Exception {
+        Patient patient = Context.getPatientService().getPatient(7);
+        Location bed = Context.getLocationService().getLocation(6);
+        Location ward = Context.getLocationService().getLocation(5);
+        bedAssignmentService.assign(patient, bed);
+
+        WardBedAssignments assignment = bedAssignmentService.getBedAssignments(ward);
+        assertThat(assignment.getBedAssignments().size(), is(1));
+        assertThat(assignment.getBedAssignments().get(bed), is(patient));
+    }
+
+    @Test
+    public void testGetAllBedAssignments() throws Exception {
+        Patient patient = Context.getPatientService().getPatient(7);
+        Location bed = Context.getLocationService().getLocation(6);
+        Location ward = Context.getLocationService().getLocation(5);
+        bedAssignmentService.assign(patient, bed);
+
+        List<WardBedAssignments> assignments = bedAssignmentService.getAllBedAssignments();
+        for (WardBedAssignments assignment : assignments) {
+            if (assignment.getWard().equals(ward)) {
+                assertThat(assignment.getBedAssignments().size(), is(1));
+                assertThat(assignment.getBedAssignments().get(bed), is(patient));
+            }
+            else {
+                assertThat(assignment.getBedAssignments().size(), is(0));
+            }
+        }
+    }
+
+    @Test
+    public void testGetAssignedWardAndBed() throws Exception {
+        Patient patient = Context.getPatientService().getPatient(7);
+        Location bed = Context.getLocationService().getLocation(6);
+        Location ward = Context.getLocationService().getLocation(5);
+        bedAssignmentService.assign(patient, bed);
+
+        VisitDomainWrapper activeVisit = adtService.getActiveVisit(patient, ward);
+        WardAndBed wardAndBed = bedAssignmentService.getAssignedWardAndBedFor(activeVisit.getVisit());
+
+        assertThat(wardAndBed.getWard(), is(ward));
+        assertThat(wardAndBed.getBed(), is(bed));
+    }
 
 }

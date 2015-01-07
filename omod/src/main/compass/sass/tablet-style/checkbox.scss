@@ -1,0 +1,25 @@
+@import "variables";
+@import "../../sass-external/uicommons-scss/variables";
+@import "../../sass-external/uicommons-scss/fragments/checkboxes";
+
+[type="checkbox"].checkbox {
+  @include check-box; 
+  padding: 15px;
+  cursor: pointer;
+  outline: none;
+
+  &:checked:after {
+  	font-size: 2em;
+    cursor: pointer;
+  	color: $grey1;
+    outline: none;
+  }
+
+  & + label {
+    vertical-align: top;
+    cursor: pointer;
+	  font-size: 1.7em;
+	  font-family: "OpenSansBold";
+	  color: $grey1;
+  }
+}

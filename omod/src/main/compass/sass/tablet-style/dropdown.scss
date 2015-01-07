@@ -1,0 +1,36 @@
+@import "variables";
+
+.dropdown-menu {
+	padding: 0;
+	list-style: none;
+	border-radius: 5px;
+	width: 89%;
+	margin-top: 8px;
+	position: absolute;
+
+	li {
+		padding: 10px 15px;
+		border: 2px solid $grey2;
+		border-bottom: none;
+		cursor: pointer;
+		background: white;
+		
+		&:nth-child(odd) {
+			background: $grey3;
+		}
+
+		&:last-child {
+			border-bottom: 2px solid $grey2;
+		}
+
+		&.active {
+			background: $primaryColor;
+		}
+	}
+
+	a {
+		font-family: "OpenSansBold";
+		font-size: 1.3em;
+		color: $grey1;
+	}
+}

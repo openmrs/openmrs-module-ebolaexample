@@ -27,6 +27,25 @@
 		</property>
 	</bean>
 
+    <bean id="pharmacyService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="transactionManager">
+            <ref bean="transactionManager" />
+        </property>
+        <property name="target">
+            <bean class="${project.parent.groupId}.${project.parent.artifactId}.api.impl.PharmacyServiceImpl">
+                <property name="scheduledDoseDAO">
+                    <bean class="org.openmrs.module.ebolaexample.db.HibernateScheduledDoseDAO"/>
+                </property>
+            </bean>
+        </property>
+        <property name="preInterceptors">
+            <ref bean="serviceInterceptors" />
+        </property>
+        <property name="transactionAttributeSource">
+            <ref bean="transactionAttributeSource" />
+        </property>
+    </bean>
+
 	<bean parent="serviceContext">
 		<property name="moduleService">
 			<list merge="true">
@@ -35,5 +54,14 @@
 			</list>
 		</property>
 	</bean>
-	
+
+    <bean parent="serviceContext">
+		<property name="moduleService">
+			<list merge="true">
+				<value>${project.parent.groupId}.${project.parent.artifactId}.api.PharmacyService</value>
+				<ref local="pharmacyService"/>
+			</list>
+		</property>
+	</bean>
+
 </beans>

@@ -1,0 +1,165 @@
+@import "variables";
+
+html, body {
+  height: 100%;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	font-family: "OpenSans";
+	font-size: 16px;
+}
+
+.full-content, .main-div > .ng-scope, body > .ng-scope {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+
+header {
+	background: #aaa;
+
+	h1 {
+		margin: 0.5em 0.6em;
+		color: $primaryColor;
+		font-size: 0.7em;
+	}
+
+	em {
+		padding-left: 10px;
+	}
+}
+
+small {
+	color: white;
+	display: block;
+	font-size: 0.45em;
+}
+
+em {
+	font-family: "OpenSansLight";
+	font-size: 0.9em;
+
+	&.error {
+		color: $error;
+		font-family: "OpenSans";
+	}
+}
+
+h1, h2, h3, h4, h5 {
+	color: $grey1;
+}
+
+h1 {
+	margin-top: 1em;
+}
+
+.right {
+	float: right;
+}
+
+.left {
+	float: left;
+}
+
+.category {
+	width: 24%;
+	display: inline-block;
+	text-align: center;
+}
+
+.unit {
+	font-family: "OpenSansBold";
+	font-size: 1.8em;
+	color: $grey1;
+	padding-right: 10px;
+	display: inline-block;
+	text-align: right;
+	float: right;
+	margin-top: 22px;
+
+	&.small {
+		font-size: 1.2em;
+		width: 80px;
+		margin-top: 17px;
+	}
+}
+
+.one-column {
+	width: 100%;
+}
+
+.two-column {
+	width: 47.5%;
+	margin-right: 2%;
+	display: inline-block;
+}
+
+.three-column {
+	width: 31%;
+	margin-right: 1%;
+	display: inline-block;
+}
+
+.inline {
+	display: inline-block;
+	margin-right: 1.5em;
+}
+
+.separator {
+	margin-top: 0.9em;
+}
+
+.condition {
+	font-size: 1.5em;
+	margin-left: 0.5em;
+	color: $grey1;
+	top: -10px;
+	position: relative;
+	font-family: "OpenSansBold";
+}
+
+.section {
+	display: table;
+	border-collapse: separate;
+	border-spacing: 10px;
+
+	& > div {
+		padding: 0 15px;	
+	}
+}
+
+.page-wrap-smaller {
+	padding: 0 20px;	
+	flex: 1;
+}
+
+.page-wrap {
+	flex: 1;
+  
+	&.spaced {
+		padding: 0 20px;	
+	}
+}
+
+.patient-number {
+	display: block;
+	font-size: 0.8em;
+	font-family: "OpenSansLight";
+}
+
+.page-wrap:after {
+  height: 110px;
+}
+
+.no-padding.select-arrow {
+	padding: 0;
+	margin: 0;
+}
+
+.radio-button.align-left {
+	text-align: left;
+	padding: 7px 0;
+	padding-left: 10px;
+}

@@ -13,7 +13,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Component("ebolaDemoData")
@@ -152,11 +154,13 @@ public class EbolaDemoData extends AbstractMetadataBundle {
         if (parentLocationUuid != null) {
             obj.setParentLocation(MetadataUtils.existing(Location.class, parentLocationUuid));
         }
+        Set<LocationTag> tags = new HashSet<LocationTag>();
         if (tagUuids != null) {
             for (String tagUuid : tagUuids) {
-                obj.addTag(MetadataUtils.existing(LocationTag.class, tagUuid));
+                tags.add(MetadataUtils.existing(LocationTag.class, tagUuid));
             }
         }
+        obj.setTags(tags);
         return obj;
     }
 

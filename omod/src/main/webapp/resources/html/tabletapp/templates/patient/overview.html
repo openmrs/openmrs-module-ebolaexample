@@ -1,0 +1,65 @@
+<header>
+    <div class="patient-header">
+        <span class="patient-id">
+            <small>PATIENT ID</small>
+            {{ getPatientId() }}
+        </span>
+        <span class="patient-id">
+            <small>NAME</small>
+            {{ patient.person.display }}
+        </span>
+        <span class="patient-id">
+            <small>GENDER - AGE</small>
+            {{ patient.person.gender }} - {{ patient.person.age }}
+        </span>
+        <span class="patient-info">
+            <small>WARD</small>
+            12
+        </span>
+        <span class="patient-info">
+            <small>BED</small>
+            27
+        </span>
+    </div>
+</header>
+<span class="success-message" ng-show="comeFromPrescriptionForm">Prescription added succesfully!</span>
+<span class="success-message" ng-show="administeredDrug">Drug administered succesfully!</span>
+<div class="page-wrap-smaller">
+    <div ng-show="loading" class="loading-spinner"></div>
+    <span ng-show="!loading" class="question-title">Active Prescriptions</span>
+    <ul ng-show="!loading" class="list-items">
+        <li ng-repeat="order in activeOrders | orderBy:'dateActivated':true">
+            <span class="left">
+                <span class="drug-name">{{ order.concept.display }}</span><em>{{ order.drug.display }}</em>
+                <span class="date">({{ order.dateActivated | date: 'dd MMM' }})</span>
+                <div>
+                    <em>
+                        {{order.dose}}
+                        {{order.doseUnits.names[0].display}}
+                        <span ng-show="order.route.display">by {{ order.route.display }}</span>
+                        <span ng-show="order.dose">each</span> {{ order.dosingInstructions }}
+                        <span ng-show="order.duration">for {{ order.duration }} days</span>
+                        <span class="tag" ng-show="order.asNeeded">In case of {{ order.asNeededCondition }}</span>
+                    </em>
+                </div>
+            </span>
+            <span class="right">
+                <button ng-click="showAdminister(order)">Administer</button>
+                <button id="stop_{{order.uuid}}" ng-click="openStopOrderDialog(order)">Stop</button>
+            </span>
+        </li>
+    </ul>
+
+    <script type="text/ng-template" id="administerDialog">
+        <ng-include src="'templates/patient/administerDrugDialog.html'"></ng-include>
+    </script>
+
+    <script type="text/ng-template" id="stopOrderDialog">
+        <ng-include src="'templates/patient/stopOrderDialog.html'"></ng-include>
+    </script>
+</div>
+<div class="actions small">
+    <button class="small left secondary" ui-sref="ward({uuid: getWard()})">Back</button>
+    <button class="small right" ui-sref="patient.addPrescription">Add new prescription</button>
+</div>
+

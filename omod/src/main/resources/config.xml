@@ -28,6 +28,9 @@
         <require_module version="${emrapiVersion}">
             org.openmrs.module.emrapi
         </require_module>
+        <require_module version="${registrationappVersion}">
+            org.openmrs.module.registrationapp
+        </require_module>
         <require_module version="${metadatadeployVersion}">
             org.openmrs.module.metadatadeploy
         </require_module>
@@ -45,8 +48,9 @@
 	<!-- Module Activator -->
 	<activator>${project.parent.groupId}.${project.parent.artifactId}.EbolaExampleActivator</activator>
 
-	<mappingFiles>
-	</mappingFiles>
+    <packagesWithMappedClasses>
+        org.openmrs.module.ebolaexample.domain
+    </packagesWithMappedClasses>
 
 	<!-- Internationalization -->
 	<!-- All message codes should start with ${project.parent.artifactId}. -->

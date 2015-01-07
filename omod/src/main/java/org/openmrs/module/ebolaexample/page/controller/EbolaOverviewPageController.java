@@ -10,6 +10,7 @@ import org.openmrs.module.appframework.service.AppFrameworkService;
 import org.openmrs.module.appui.UiSessionContext;
 import org.openmrs.module.coreapps.contextmodel.PatientContextModel;
 import org.openmrs.module.coreapps.contextmodel.VisitContextModel;
+import org.openmrs.module.ebolaexample.api.BedAssignmentService;
 import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
 import org.openmrs.module.emrapi.adt.AdtService;
 import org.openmrs.module.emrapi.event.ApplicationEventService;
@@ -37,6 +38,7 @@ public class EbolaOverviewPageController {
                     @SpringBean AppFrameworkService appFrameworkService,
                     @SpringBean("applicationEventService") ApplicationEventService applicationEventService,
                     @SpringBean HtmlFormEntryService htmlFormEntryService,
+                    @SpringBean BedAssignmentService bedAssignmentService,
                     UiSessionContext sessionContext,
                     UiUtils ui,
                     PageModel model) {
@@ -65,6 +67,7 @@ public class EbolaOverviewPageController {
         model.addAttribute("triageEncounterType", triageEncounterType);
         model.addAttribute("patient", patientDomainWrapper);
         model.addAttribute("activeVisit", activeVisit);
+        model.addAttribute("wardAndBed", activeVisit == null ? null : bedAssignmentService.getAssignedWardAndBedFor(activeVisit.getVisit()));
 
         AppContextModel contextModel = sessionContext.generateAppContextModel();
         contextModel.put("patient", new PatientContextModel(patient));

@@ -2,10 +2,14 @@ package org.openmrs.module.ebolaexample.api;
 
 import org.openmrs.Location;
 import org.openmrs.Patient;
+import org.openmrs.Visit;
 import org.openmrs.api.OpenmrsService;
 import org.openmrs.module.ebolaexample.WardBedAssignments;
 
+import java.util.List;
+
 public interface BedAssignmentService extends OpenmrsService {
+
 	/**
 	 * Creates a transfer encounter; also updates visit attributes (active visit is inferred from patient and location)
 	 * Exception if the patient has no active visit
@@ -15,6 +19,14 @@ public interface BedAssignmentService extends OpenmrsService {
 	 * Exception if the bed already has a patient assigned
 	 */
 	public void assign(Patient patient, Location bed);
+
+    public Patient getPatientAssignedTo(Location bed);
+
+    public WardAndBed getAssignedWardAndBedFor(Visit visit);
+
+    public List<Location> getAllWards();
+
+    public List<WardBedAssignments> getAllBedAssignments();
 
 	public WardBedAssignments getBedAssignments(Location ward);
 }

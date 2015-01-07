@@ -1,0 +1,18 @@
+[
+  {
+    "id": "ebolaexample.ebolaPharmacy",
+    "description": "Dashboard for the pharmacy under Ebola program",
+    "order": 11,
+    "requiredPrivilege": "App: ebolaexample.ebolaPharmacy",
+    "extensions": [
+      {
+        "id": "ebolaexample.ebolaDashboardHomepageLink",
+        "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
+        "type": "link",
+        "label": "Ebola Pharmacy",
+        "url": "ebolaexample/ebolaPharmacy.page?app=ebolaexample.ebolaPharmacy",
+        "icon": "icon-th"
+      }
+    ]
+  }
+]

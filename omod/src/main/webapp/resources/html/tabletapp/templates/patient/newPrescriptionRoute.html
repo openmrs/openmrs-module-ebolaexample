@@ -1,0 +1,38 @@
+<header>
+    <div class="patient-header">
+        <span class="patient-id">
+            <small>PATIENT ID</small>
+            {{ getPatientId() }}
+        </span>
+        <span class="patient-id">
+            <small>NAME</small>
+            {{ patient.person.display }}
+        </span>
+        <span class="patient-id">
+            <small>GENDER - AGE</small>
+            {{ patient.person.gender }} - {{ patient.person.age }}
+        </span>
+        <span class="patient-info">
+            <small>WARD</small>
+            12
+        </span>
+        <span class="patient-info">
+            <small>BED</small>
+            27
+        </span>
+    </div>
+</header>
+<div class="page-wrap-smaller" ng-controller="NewPrescriptionRouteController" class="page-wrap" xmlns="http://www.w3.org/1999/html">
+    <span class="question-title">Choose Route/Form</span>
+    <div>
+        <div ng-show="drugs">
+            <a class="radio-button small full" ng-repeat="drug in drugs"
+               ui-sref="patient.addPrescriptionDetails({ prescriptionInfo: drug })" type="button">
+                {{ drug.display}}
+            </a>
+        </div>
+    </div>
+</div>
+<div class="actions small">
+    <back-button></back-button>
+</div>

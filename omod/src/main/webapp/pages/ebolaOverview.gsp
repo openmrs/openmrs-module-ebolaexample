@@ -1,5 +1,6 @@
 <%
     ui.includeJavascript("uicommons", "handlebars/handlebars.min.js")
+    ui.includeCss("ebolaexample", "overview/ebolaOverview.css")
     ui.decorateWith("appui", "standardEmrPage")
 %>
 <script type="text/template" id="last-encounter-template">
@@ -29,8 +30,10 @@
 <script type="text/javascript">
     var breadcrumbs = [
         { icon: "icon-home", link: '/' + OPENMRS_CONTEXT_PATH + '/index.htm' },
-        { label: "${ ui.format(patient.patient.familyName) }, ${ ui.format(patient.patient.givenName) }" ,
-            link: '${ui.pageLink("coreapps", "clinicianfacing/patient", [patientId: patient.patient.id])}'},
+    <% if (wardAndBed && wardAndBed.ward) { %>
+        { label: "${ ui.format(wardAndBed.ward) }",
+            link: '${ ui.escapeJs(ui.pageLink("ebolaexample", "findPatientByWard", [ ward: wardAndBed.ward.uuid ])) }' },
+    <% } %>
         { label: "${ ui.escapeJs(ui.message("ebolaexample.ebolaOverview.title")) }" }
     ]
     var patient = { id: ${ patient.id } };
@@ -58,17 +61,21 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient, a
 
 <div class="container">
     <div class="dashboard clear">
-        <div class="info-container column">
+        <div class="long-info-container column">
 
-            ${ ui.includeFragment("ebolaexample", "overview/ebolaProgram",
-                    [ patient: patient ]) }
-
-            ${ ui.includeFragment("ebolaexample", "overview/inpatientLocation",
-                    [ patient: patient, activeVisit: activeVisit ]) }
+            ${ ui.includeFragment("ebolaexample", "overview/prescriptions", [ patient: patient ]) }
 
         </div>
 
         <div class="info-container column">
+
+            ${ ui.includeFragment("ebolaexample", "overview/ebolaProgram", [ patient: patient ]) }
+
+            ${ ui.includeFragment("ebolaexample", "overview/inpatientLocation", [ patient: patient, activeVisit: activeVisit ]) }
+
+        </div>
+
+        <div class="info-container column" style="display: none">
 
             ${ ui.includeFragment("ebolaexample", "overview/inpatientFollowups",
                     [ patient: patient, activeVisit: activeVisit ]) }
@@ -78,7 +85,7 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient, a
 
         </div>
 
-        <div class="action-container column">
+        <div class="action-container column"  style="display: none">
             <div class="action-section">
                 <ul>
                     <li>More actions here?</li>

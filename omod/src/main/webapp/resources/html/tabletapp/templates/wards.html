@@ -1,0 +1,30 @@
+<header><div class="patient-header"><h1>Please select a ward</h1></div></header>
+<div class="page-wrap spaced" ng-controller="ListWardsController">
+    <div ng-show="loading" class="loading-spinner"></div>
+    <span ng-show="!loading" class="question-title">Suspect Wards</span>
+    <ul class="tablet-list">
+        <li ng-repeat="ward in suspectWards">
+            <a class="radio-button small align-left" ng-class="{ 'disabled': ward.bedAssignments.length === 0}" ui-sref="ward({uuid: ward.uuid})"><span>{{ ward.display }}
+            <span class="patient-number"><span class="inpatient-number">{{ ward.bedAssignments.length }}</span> patients</span></span><a>
+        </li>
+    </ul>
+
+    <span ng-show="!loading" class="question-title">Confirmed Wards</span>
+    <ul class="tablet-list">
+        <li ng-repeat="ward in confirmedWards">
+            <a class="radio-button small align-left" ng-class="{ 'disabled': ward.bedAssignments.length === 0}" ui-sref="ward({uuid: ward.uuid})"><span>{{ ward.display }}
+            <span class="patient-number"><span class="inpatient-number">{{ ward.bedAssignments.length }}</span> patients</span></span><a>
+        </li>
+    </ul>
+
+    <span ng-show="!loading" class="question-title">Recovery Wards</span>
+    <ul class="tablet-list">
+        <li ng-repeat="ward in recoveryWards">
+            <a class="radio-button small align-left" ng-class="{ 'disabled': ward.bedAssignments.length === 0}" ui-sref="ward({uuid: ward.uuid})"><span>{{ ward.display }}
+            <span class="patient-number"><span class="inpatient-number">{{ ward.bedAssignments.length }}</span> patients</span></span></a>
+        </li>
+    </ul>
+</div>
+<div class="actions small">
+    <back-button></back-button>
+</div>

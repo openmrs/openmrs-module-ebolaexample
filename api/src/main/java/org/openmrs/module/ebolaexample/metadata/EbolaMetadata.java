@@ -1,8 +1,18 @@
 package org.openmrs.module.ebolaexample.metadata;
 
+import org.apache.commons.lang.StringUtils;
+import org.openmrs.Concept;
+import org.openmrs.ConceptAnswer;
+import org.openmrs.GlobalProperty;
+import org.openmrs.OrderFrequency;
+import org.openmrs.api.AdministrationService;
+import org.openmrs.api.ConceptService;
+import org.openmrs.api.OrderService;
+import org.openmrs.api.context.Context;
 import org.openmrs.module.ebolaexample.customdatatype.datatype.LocationDatatype;
 import org.openmrs.module.emrapi.EmrApiConstants;
 import org.openmrs.module.metadatadeploy.bundle.AbstractMetadataBundle;
+import org.openmrs.util.OpenmrsConstants;
 import org.springframework.stereotype.Component;
 
 import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.encounterRole;
@@ -15,8 +25,9 @@ import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.visitAtt
 @Component("ebolaMetadata")
 public class EbolaMetadata extends AbstractMetadataBundle {
 
-    public static class _Concept {
-        public static final String EBOLA_PROGRAM = "162637AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"; // from CIEL
+    public static class _Concept { // all of these are from CIEL and we don't create them here
+        public static final String EBOLA_PROGRAM = "162637AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+        public static final String WEIGHT_IN_KG = "5089AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
     }
 
     public static class _Program {
@@ -24,11 +35,13 @@ public class EbolaMetadata extends AbstractMetadataBundle {
     }
 
     public static class _EncounterType {
+        public static final String EBOLA_REGISTRATION = "98963e52-863d-11e4-9fc5-eede903351fb";
         public static final String EBOLA_CASE_INVESTIGATION = "4b408f26-5763-11e4-af12-660e112eb3f5";
         public static final String EBOLA_INPATIENT_FOLLOWUP = "83413734-587d-11e4-af12-660e112eb3f5";
         public static final String EBOLA_TREATMENT_ADMISSION = "8a08cc50-0139-4679-bc19-19dceec3b8ca";
         public static final String EBOLA_TRIAGE = "4a8da825-2896-4f3f-be07-2c3d9214c040";
-        public static final String EBOLA_ASSESSMENT = "181820aa-88c9-479b-9077-af92f5364329";
+        public static final String EBOLA_ASSESSMENT = "c49903a6-af3f-44ec-8ed3-abcfbfcea6e7";
+        public static final String EBOLA_DISCHARGE = "181820aa-88c9-479b-9077-af92f5364329";
     }
 
     public static class _EncounterRole {
@@ -50,12 +63,39 @@ public class EbolaMetadata extends AbstractMetadataBundle {
         public static final String INPATIENT_OBSERVATIONS_AND_TREATMENT = "ab215dd2-59ff-11e4-af12-660e112eb3f5";
         public static final String EBOLA_TRIAGE_FORM = "787608c8-512d-44fe-b793-fe54b660987a";
         public static final String EBOLA_ASSESSMENT_FORM = "230af74f-f1b5-4e43-ae6a-27208ed46540";
+        public static final String EBOLA_DISCHARGE_FORM = "2541a157-fd45-41e0-ad2b-f6a24c65463a";
     }
 
 	public static class _VisitAttributeType {
 		public static final String ASSIGNED_WARD = "c7d117f0-6ff4-11e4-9803-0800200c9a66";
 		public static final String ASSIGNED_BED = "c7d117f1-6ff4-11e4-9803-0800200c9a66";
 	}
+
+    private void maybeSetGP(AdministrationService service, String prop, String val) {
+        GlobalProperty gp = service.getGlobalPropertyObject(prop);
+        if (gp == null) {
+            service.saveGlobalProperty(new GlobalProperty(prop, val));
+        } else if (StringUtils.isEmpty(gp.getPropertyValue())) {
+            gp.setPropertyValue(val);
+            service.saveGlobalProperty(gp);
+        }
+    }
+
+    private void ensureOrderFrequencies(OrderService orderService, ConceptService conceptService, String uuid) {
+        if (orderService.getOrderFrequencies(true).size() == 0) {
+            Concept set = conceptService.getConceptByUuid(uuid);
+            if (set != null) {
+                for (ConceptAnswer conceptAnswer : set.getAnswers()) {
+                    Concept concept = conceptAnswer.getAnswerConcept();
+                    if (concept != null) {
+                        OrderFrequency frequency = new OrderFrequency();
+                        frequency.setConcept(concept);
+                        orderService.saveOrderFrequency(frequency);
+                    }
+                }
+            }
+        }
+    }
 
     @Override
     public void install() throws Exception {
@@ -69,19 +109,29 @@ public class EbolaMetadata extends AbstractMetadataBundle {
 
         install(encounterRole("Clinician", "Clinician", _EncounterRole.CLINICIAN));
 
+        install(encounterType("Ebola Registration", "Creating a new patient record", _EncounterType.EBOLA_REGISTRATION));
         install(encounterType("Ebola Inpatient Followup", "Clinical checkup on a hospitalized Ebola patient or suspect", _EncounterType.EBOLA_INPATIENT_FOLLOWUP));
         install(encounterType("Ebola Case Investigation", "To Do", _EncounterType.EBOLA_CASE_INVESTIGATION));
         install(encounterType("ETU Admission", "Admission to the Ebola Treatment Unit (ETU)",  _EncounterType.EBOLA_TREATMENT_ADMISSION));
         install(encounterType("ETU Triage", "Triage of patients arriving at Ebola Treatment Unit (ETU)",  _EncounterType.EBOLA_TRIAGE));
         install(encounterType("ETU Assessment", "Assessment of patients at Ebola Treatment Unit (ETU)",  _EncounterType.EBOLA_ASSESSMENT));
+        install(encounterType("ETU Discharge", "Discharge patients at Ebola Treatment Unit (ETU)",  _EncounterType.EBOLA_DISCHARGE));
 
         install(form("Ebola Inpatient Observations and Treatment", "", _EncounterType.EBOLA_INPATIENT_FOLLOWUP, "0.1", _Form.INPATIENT_OBSERVATIONS_AND_TREATMENT));
         install(form("Ebola Clinical Signs and Symptoms", "", _EncounterType.EBOLA_CASE_INVESTIGATION, "0.1", _Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS));
         install(form("Ebola Triage", "", _EncounterType.EBOLA_TRIAGE, "2.0", _Form.EBOLA_TRIAGE_FORM));
         install(form("Ebola Assessment", "", _EncounterType.EBOLA_ASSESSMENT, "2.0", _Form.EBOLA_ASSESSMENT_FORM));
+        install(form("Ebola Assessment", "", _EncounterType.EBOLA_DISCHARGE, "2.0", _Form.EBOLA_DISCHARGE_FORM));
      		
 		install(visitAttributeType("Assigned ward", "", LocationDatatype.class, null, 0, 1, _VisitAttributeType.ASSIGNED_WARD));
 		install(visitAttributeType("Assigned bed", "", LocationDatatype.class, null, 0, 1, _VisitAttributeType.ASSIGNED_BED));
+
+        AdministrationService administrationService = Context.getAdministrationService();
+        maybeSetGP(administrationService, OpenmrsConstants.GP_DRUG_ROUTES_CONCEPT_UUID, "162394AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        maybeSetGP(administrationService, OpenmrsConstants.GP_DRUG_DOSING_UNITS_CONCEPT_UUID, "162384AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        maybeSetGP(administrationService, OpenmrsConstants.GP_DRUG_DISPENSING_UNITS_CONCEPT_UUID, "162402AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        maybeSetGP(administrationService, OpenmrsConstants.GP_DURATION_UNITS_CONCEPT_UUID, "1732AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        ensureOrderFrequencies(Context.getOrderService(), Context.getConceptService(), "160855AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     }
 
 }

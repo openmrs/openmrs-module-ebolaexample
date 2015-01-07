@@ -1,5 +1,5 @@
-angular.module('inpatientLocation', [ 'locationService', 'ui.bootstrap' ]).
-    controller('InpatientLocationCtrl', [ '$scope', '$http', 'LocationService', function($scope, $http, LocationService) {
+angular.module('inpatientLocation', ['locationService', 'ui.bootstrap']).
+    controller('InpatientLocationCtrl', ['$scope', '$http', 'LocationService', function ($scope, $http, LocationService) {
 
         var allLocations = [];
         var config = {};
@@ -20,7 +20,7 @@ angular.module('inpatientLocation', [ 'locationService', 'ui.bootstrap' ]).
             }
         ]
 
-        $scope.init = function(setConfig) {
+        $scope.init = function (setConfig) {
             config = setConfig;
         }
 
@@ -30,51 +30,53 @@ angular.module('inpatientLocation', [ 'locationService', 'ui.bootstrap' ]).
         $scope.changeToWard = null;
         $scope.changeToBed = null;
 
-        $scope.$watch('changeToWardType', function() {
+        $scope.$watch('changeToWardType', function () {
             $scope.changeToWard = null;
             $scope.changeToBed = null;
         });
 
-        $scope.$watch('changeToWard', function() {
+        $scope.$watch('changeToWard', function () {
             $scope.changeToBed = null;
         });
 
-        $scope.doTransfer = function() {
+        $scope.doTransfer = function () {
             var url = emr.fragmentActionLink("ebolaexample", "overview/inpatientLocation", "transfer", {
                 patient: config.patientUuid,
                 location: $scope.changeToBed ? $scope.changeToBed.uuid : $scope.changeToWard.uuid
             });
-            $http.post(url).success(function(data) {
+            $http.post(url).success(function (data) {
                 location.href = location.href;
             });
         }
 
-        $scope.wardsOfType = function(wardType) {
+        $scope.wardsOfType = function (wardType) {
             if (!wardType) {
                 return [];
             }
-            return _.filter(allLocations, function(item) {
-                return _.some(item.tags, function(tag) {
+            return _.filter(allLocations, function (item) {
+                return _.some(item.tags, function (tag) {
                     return tag.uuid === wardType.uuid;
                 });
             });
         }
 
-        $scope.bedsForWard = function(ward) {
+        $scope.bedsForWard = function (ward) {
             if (!ward) {
                 return [];
             }
-            return _.filter(allLocations, function(item) {
+            return _.filter(allLocations, function (item) {
                 return item.parentLocation
                     && item.parentLocation.uuid == ward.uuid
-                    && _.some(item.tags, function(tag) { return tag.uuid === bedTagUuid; });
+                    && _.some(item.tags, function (tag) {
+                        return tag.uuid === bedTagUuid;
+                    });
             })
         }
 
-        LocationService.getLocations({v:"default", limit:100}).then(function(result) {
+        LocationService.getLocations({v: "default", limit: 100}).then(function (result) {
             allLocations = result;
             if (result.length == 100) {
-                LocationService.getLocations({v:"default", limit:100, startIndex:100}).then(function(more) {
+                LocationService.getLocations({v: "default", limit: 100, startIndex: 100}).then(function (more) {
                     allLocations = _.union(allLocations, more);
                 });
             }

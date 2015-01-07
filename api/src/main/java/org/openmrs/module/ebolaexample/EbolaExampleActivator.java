@@ -29,6 +29,7 @@ import org.openmrs.module.ModuleFactory;
 import org.openmrs.module.appframework.AppFrameworkConstants;
 import org.openmrs.module.appframework.service.AppFrameworkService;
 import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
+import org.openmrs.module.ebolaexample.metadata.KerryTownMetadata;
 import org.openmrs.module.emrapi.EmrApiConstants;
 import org.openmrs.module.emrapi.EmrApiProperties;
 import org.openmrs.module.htmlformentry.HtmlFormEntryService;
@@ -68,27 +69,30 @@ public class EbolaExampleActivator extends BaseModuleActivator {
             removeTagsFromUnknownLocation(locationService, emrApiProperties);
             
             // hack to set the SCI-requested address format for Sierra Leone
-            GlobalProperty etuAddressTemplate = new GlobalProperty("layout.address.format",
+            GlobalProperty sciAddressTemplate = new GlobalProperty("layout.address.format",
             		"<org.openmrs.layout.web.address.AddressTemplate>"
             		+ "<nameMappings class=\"properties\">"
             		+ "<property name=\"countyDistrict\" value=\"Location.district\"/>"
             		+ "<property name=\"address2\" value=\"Chiefdom\"/>"
             		+ "<property name=\"cityVillage\" value=\"Location.cityVillage\"/>"
+                    + "<property name=\"address1\" value=\"Address\"/>"
             		+ "</nameMappings>"
             		+ "<sizeMappings class=\"properties\">"
-            				+ "<property name=\"countyDistrict\" value=\"40\"/>"
+            				+ "<property name=\"countyDistrict\" value=\"20\"/>"
             				+ "<property name=\"address2\" value=\"40\"/>"
-            				+ "<property name=\"cityVillage\" value=\"10\"/>"
+            				+ "<property name=\"cityVillage\" value=\"20\"/>"
+            				+ "<property name=\"address1\" value=\"40\"/>"
             		+ "</sizeMappings>"
             		+ "<lineByLineFormat>"
             		+ "<string>countyDistrict</string>"
             		+ "<string>address2</string>"
             		+ "<string>cityVillage</string>"
+            		+ "<string>address1</string>"
             		+ "</lineByLineFormat>"
             		+ "</org.openmrs.layout.web.address.AddressTemplate>",
                     "XML description of address formats");
             
-            administrationService.saveGlobalProperty(etuAddressTemplate);
+            administrationService.saveGlobalProperty(sciAddressTemplate);
 
             log.info("Started Ebola Example module");
         }
@@ -134,12 +138,14 @@ public class EbolaExampleActivator extends BaseModuleActivator {
 
     public void deployMetadataPackages(MetadataDeployService service) {
         MetadataBundle ebola = Context.getRegisteredComponent("ebolaMetadata", MetadataBundle.class);
+        MetadataBundle kerryTownMetadata = Context.getRegisteredComponent("kerryTownMetadata", MetadataBundle.class);
         MetadataBundle ebolaDemoData = Context.getRegisteredComponent("ebolaDemoData", MetadataBundle.class);
-        service.installBundles(Arrays.asList(ebola, ebolaDemoData));
+        service.installBundles(Arrays.asList(ebola, kerryTownMetadata, ebolaDemoData));
     }
 
     public void setupEmrApiGlobalProperties(AdministrationService administrationService) {
         setGlobalProperty(administrationService, EmrApiConstants.GP_CLINICIAN_ENCOUNTER_ROLE, EbolaMetadata._EncounterRole.CLINICIAN);
+        setGlobalProperty(administrationService, EmrApiConstants.PRIMARY_IDENTIFIER_TYPE, KerryTownMetadata._PatientIdentifierType.KERRY_TOWN_IDENTIFIER);
     }
 
     void disableApps(AppFrameworkService service) {

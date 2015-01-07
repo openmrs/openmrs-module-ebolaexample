@@ -1,0 +1,22 @@
+@import "compass";
+@import "tablet-style/variables";
+
+//style from reference application
+@import "../../sass-external/uicommons-scss/variables";
+@import "../../sass-external/uicommons-scss/fragments/checkboxes";
+
+@import "tablet-style/icomoon";
+@import "tablet-style/font-awesome";
+@import "tablet-style/fonts";
+@import "tablet-style/base";
+@import "tablet-style/header";
+@import "tablet-style/form";
+@import "tablet-style/input";
+@import "tablet-style/dropdown";
+@import "tablet-style/checkbox";
+@import "tablet-style/dialog";
+@import "tablet-style/select";
+@import "tablet-style/table";
+@import "tablet-style/list";
+@import "tablet-style/card";
+@import "tablet-style/loading";

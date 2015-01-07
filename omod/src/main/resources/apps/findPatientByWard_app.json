@@ -1,0 +1,18 @@
+[
+    {
+        "id": "ebolaexample.findPatientByWard",
+        "description": "Pick a ward, then a patient assigned to it",
+        "order": 3,
+        "requiredPrivilege": "App: ebolaexample.findPatientByWard",
+        "extensions": [
+            {
+                "id": "ebolaexample.findPatientByWardHomepageLink",
+                "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
+                "type": "link",
+                "label": "ebolaexample.findPatientByWard.title",
+                "url": "ebolaexample/findPatientByWard.page?app=ebolaexample.findPatientByWard",
+                "icon": "icon-th"
+            }
+        ]
+    }
+]
