@@ -13,9 +13,12 @@
  */
 package org.openmrs.module.ebolaexample.rest.search;
 
+import org.openmrs.Provider;
 import org.openmrs.Role;
 import org.openmrs.User;
 import org.openmrs.api.context.Context;
+import org.openmrs.api.context.ContextAuthenticationException;
+import org.openmrs.module.ebolaexample.rest.controller.PasswordlessContextDao;
 import org.openmrs.module.webservices.rest.web.RequestContext;
 import org.openmrs.module.webservices.rest.web.RestConstants;
 import org.openmrs.module.webservices.rest.web.resource.api.PageableResult;
@@ -24,7 +27,10 @@ import org.openmrs.module.webservices.rest.web.resource.api.SearchHandler;
 import org.openmrs.module.webservices.rest.web.resource.api.SearchQuery;
 import org.openmrs.module.webservices.rest.web.resource.impl.NeedsPaging;
 import org.openmrs.module.webservices.rest.web.response.ResponseException;
+import org.openmrs.module.webservices.rest.web.v1_0.resource.openmrs1_8.UserResource1_8;
+import org.openmrs.module.webservices.rest.web.v1_0.resource.openmrs1_9.ProviderResource1_9;
 import org.openmrs.module.webservices.rest.web.v1_0.wrapper.openmrs1_8.UserAndPassword1_8;
+import org.openmrs.util.PrivilegeConstants;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -59,13 +65,25 @@ public class UsersByRoleSearchHandler implements SearchHandler {
      */
     @Override
     public PageableResult search(RequestContext context) throws ResponseException {
-        String roleDescription = context.getParameter(REQUEST_PARAM_ROLE);
-        Role role = Context.getUserService().getRole(roleDescription);
-        List<User> usersByRole = Context.getUserService().getUsersByRole(role);
-        ArrayList<UserAndPassword1_8> pageableUsers = new ArrayList<UserAndPassword1_8>();
-        for (User user : usersByRole) {
-            pageableUsers.add(new UserAndPassword1_8(user));
+        try {
+            Context.addProxyPrivilege(PrivilegeConstants.VIEW_USERS);
+            String roleDescription = context.getParameter(REQUEST_PARAM_ROLE);
+            Role role = Context.getUserService().getRole(roleDescription);
+            List<User> usersByRole = Context.getUserService().getUsersByRole(role);
+            ArrayList<UserAndPassword1_8> pageableUsers = new ArrayList<UserAndPassword1_8>();
+            for (User user : usersByRole) {
+                pageableUsers.add(new UserAndPassword1_8(user));
+            }
+            return new NeedsPaging<UserAndPassword1_8>(pageableUsers, context);
+        } catch (ResponseException e) {
+            Context.removeProxyPrivilege(PrivilegeConstants.VIEW_USERS);
+            throw e;
+        } catch (Exception e) {
+            //pass
         }
-        return new NeedsPaging<UserAndPassword1_8>(pageableUsers, context);
+        finally {
+            Context.removeProxyPrivilege(PrivilegeConstants.VIEW_USERS);
+        }
+        return null;
     }
 }
