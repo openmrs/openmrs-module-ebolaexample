@@ -15,11 +15,15 @@ import org.openmrs.module.metadatadeploy.bundle.AbstractMetadataBundle;
 import org.openmrs.util.OpenmrsConstants;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+
 import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.encounterRole;
 import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.encounterType;
 import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.form;
 import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.locationTag;
 import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.program;
+import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.role;
 import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.visitAttributeType;
 
 @Component("ebolaMetadata")
@@ -125,6 +129,8 @@ public class EbolaMetadata extends AbstractMetadataBundle {
      		
 		install(visitAttributeType("Assigned ward", "", LocationDatatype.class, null, 0, 1, _VisitAttributeType.ASSIGNED_WARD));
 		install(visitAttributeType("Assigned bed", "", LocationDatatype.class, null, 0, 1, _VisitAttributeType.ASSIGNED_BED));
+
+        install(role("Ward Rounding Team", "Role for all users who are actually ward rounding teams", new HashSet<String>(), new HashSet<String>()));
 
         AdministrationService administrationService = Context.getAdministrationService();
         maybeSetGP(administrationService, OpenmrsConstants.GP_DRUG_ROUTES_CONCEPT_UUID, "162394AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
