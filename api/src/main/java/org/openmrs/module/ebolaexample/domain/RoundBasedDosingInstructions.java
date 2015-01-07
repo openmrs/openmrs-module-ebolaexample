@@ -33,28 +33,41 @@ public class RoundBasedDosingInstructions implements DosingInstructions {
     @Override
     public String getDosingInstructionsAsString(Locale locale) {
         StringBuilder dosingInstructions = new StringBuilder();
-        dosingInstructions.append(this.dose);
+        dosingInstructions.append(prettyDouble(this.dose));
         dosingInstructions.append(" ");
         dosingInstructions.append(this.doseUnits.getName(locale).getName());
         dosingInstructions.append(" ");
         dosingInstructions.append(this.route.getName(locale).getName());
+        dosingInstructions.append(" each ");
+        dosingInstructions.append(this.roundInstructions);
         if (duration != null) {
-            dosingInstructions.append(" ");
+            dosingInstructions.append(" for ");
             dosingInstructions.append(this.duration);
             dosingInstructions.append(" ");
             dosingInstructions.append(this.durationUnits.getName(locale).getName());
         }
         if (this.asNeeded) {
-            dosingInstructions.append(" ");
+            dosingInstructions.append(" <span class=\"lozenge prn\">");
             dosingInstructions.append("PRN");
             if (this.asNeededCondition != null) {
                 dosingInstructions.append(" ");
                 dosingInstructions.append(this.asNeededCondition);
             }
+            dosingInstructions.append("</span>");
         }
-        dosingInstructions.append(" ");
-        dosingInstructions.append(this.roundInstructions);
         return dosingInstructions.toString();
+    }
+
+    private String prettyDouble(Double dbl) {
+        if (dbl == null) {
+            return "";
+        }
+        if (dbl == Math.round(dbl)) {
+            return Long.toString(Math.round(dbl));
+        }
+        else {
+            return Double.toString(dbl);
+        }
     }
 
     @Override

@@ -1,3 +1,6 @@
+<%
+    def dateFormat = new java.text.SimpleDateFormat("d.MMM HH:mm")
+%>
 <div class="long-info-section">
 
     <div class="info-header">
@@ -10,35 +13,33 @@
         <% if (groupedOrders.size() > 0) { %>
             <ul>
                 <% groupedOrders.each { group -> %>
-                    <li>
+                    <li class="prescription-group<% if (group.key.flags.contains("inactive")) { %> inactive<% } %>">
+                        <% if (group.key.flags.contains("recent")) { %>
+                            <span class="lozenge recent">RECENT</span>
+                        <% } %>
                         <strong>
                             ${ ui.format(group.key.concept) }
-                            ${ ui.format(group.key.route) }
                         </strong>
+                        <% if (group.key.drug) { %>
+                            <em>
+                                ${ ui.format(group.key.drug) }
+                            </em>
+                        <% } %>
                         <ul>
                             <% group.value.each { %>
                                 <li class="clear">
                                     <span class="right">
-                                        ${ ui.format(it.dateActivated) }
+                                        ${ dateFormat.format(it.dateActivated) }
                                         <% if (it.dateStopped) { %>
-                                            <br/>
-                                            ${ ui.format(it.dateStopped) }
+                                            -
+                                            ${ dateFormat.format(it.dateStopped) }
                                         <% } else if (it.autoExpireDate) { %>
-                                            <br/>
-                                            <em>- ${ ui.format(it.autoExpireDate) }</em>
+                                            -
+                                            <em>${ dateFormat.format(it.autoExpireDate) }</em>
                                         <% } %>
                                     </span>
                                     <% if (!it.active) { %>
-                                        <span class="lozenge stopped">STOPPED ${ ui.format(it.effectiveStopDate) }</span>
-                                    <% } %>
-                                    <% if (recentOrders.contains(it)) { %>
-                                        <span class="lozenge recent">RECENT</span>
-                                    <% } %>
-                                    <% if (it.asNeeded) { %>
-                                        <span class="lozenge prn">${it.asNeededCondition ?: "As Needed"}</span>
-                                    <% } %>
-                                    <% if (it.drug) { %>
-                                        ${ ui.format(it.drug) }
+                                        <span class="lozenge stopped">STOPPED</span>
                                     <% } %>
                                     ${ it.dosingInstructionsInstance.getDosingInstructionsAsString(context.locale) }
                                 </li>

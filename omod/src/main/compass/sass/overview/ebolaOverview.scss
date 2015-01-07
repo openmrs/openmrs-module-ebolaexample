@@ -7,6 +7,7 @@
   text-transform: uppercase;
 
   &.recent {
+    background-color: white;
     color: #4a6785;
     border-color: #4a6785;
   }
@@ -20,5 +21,11 @@
     background-color: darkred;
     border-color: darkred;
     color: white;
+  }
+}
+
+.prescription-group {
+  &.inactive {
+    background-color: darkgray;
   }
 }

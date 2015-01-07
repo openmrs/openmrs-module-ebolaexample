@@ -2,7 +2,9 @@ package org.openmrs.module.ebolaexample.fragment.controller.overview;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.joda.time.DateTime;
 import org.openmrs.Concept;
+import org.openmrs.Drug;
 import org.openmrs.DrugOrder;
 import org.openmrs.Order;
 import org.openmrs.OrderType;
@@ -15,7 +17,6 @@ import org.openmrs.ui.framework.fragment.FragmentModel;
 import org.openmrs.util.OpenmrsUtil;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -38,21 +39,41 @@ public class PrescriptionsFragmentController {
         for (Order order : orders) {
             groups.add((DrugOrder) order);
         }
-        model.put("groupedOrders", groups.getAsList());
+        List<Map.Entry<ConceptAndDrug, List<DrugOrder>>> groupList = groups.getAsList();
 
-        Set<DrugOrder> recentOrders = new HashSet<DrugOrder>();
-        Calendar temp = Calendar.getInstance();
-        temp.add(Calendar.HOUR_OF_DAY, -24);
-        Date cutoff = temp.getTime();
-        for (Order order : orders) {
-            DrugOrder drugOrder = (DrugOrder) order;
-//            Date changed = mostRecentChange(drugOrder);
-            Date changed = drugOrder.getDateActivated();
-            if (changed.after(cutoff)) {
-                recentOrders.add(drugOrder);
+        applyFlag(groupList, "inactive", new Predicate() {
+            @Override
+            public boolean evaluate(Object o) {
+                List<DrugOrder> orders = (List<DrugOrder>) o;
+                boolean anyActive = false;
+                for (DrugOrder order : orders) {
+                    if (order.isActive()) {
+                        anyActive = true;
+                    }
+                }
+                return !anyActive;
+            }
+        });
+
+        final Date cutoff = new DateTime().minusHours(24).toDate();
+        applyFlag(groupList, "recent", new Predicate() {
+            @Override
+            public boolean evaluate(Object o) {
+                List<DrugOrder> orders = (List<DrugOrder>) o;
+                Date changed = mostRecentChange(orders.get(0));
+                return changed.after(cutoff);
+            }
+        });
+
+        model.put("groupedOrders", groupList);
+    }
+
+    private void applyFlag(List<Map.Entry<ConceptAndDrug, List<DrugOrder>>> groupList, String flag, Predicate predicate) {
+        for (Map.Entry<ConceptAndDrug, List<DrugOrder>> entry : groupList) {
+            if (predicate.evaluate(entry.getValue())) {
+                entry.getKey().addFlag(flag);
             }
         }
-        model.put("recentOrders", recentOrders);
     }
 
     private List<Order> getActiveAndRecentOrders(OrderService orderService, Patient patient, OrderType orderType) {
@@ -77,27 +98,33 @@ public class PrescriptionsFragmentController {
         return orders;
     }
 
-    class ConceptAndRoute {
+    class ConceptAndDrug {
         private Concept concept;
-        private Concept route;
+        private Drug drug;
 
-        ConceptAndRoute(Concept concept, Concept route) {
+        private transient Set<String> flags = new HashSet<String>();
+
+        ConceptAndDrug(Concept concept, Drug drug) {
             this.concept = concept;
-            this.route = route;
+            this.drug = drug;
+        }
+
+        public void addFlag(String flag) {
+            flags.add(flag);
         }
 
         @Override
         public int hashCode() {
-            return (concept == null ? 1 : concept.hashCode()) + (route == null ? 1 : route.hashCode());
+            return concept.hashCode() * 13 + (drug == null ? 0 : drug.hashCode());
         }
 
         @Override
         public boolean equals(Object o) {
-            if (!(o instanceof ConceptAndRoute)) {
+            if (!(o instanceof ConceptAndDrug)) {
                 return false;
             }
-            ConceptAndRoute other = (ConceptAndRoute) o;
-            return OpenmrsUtil.nullSafeEquals(concept, other.concept) && OpenmrsUtil.nullSafeEquals(route, other.route);
+            ConceptAndDrug other = (ConceptAndDrug) o;
+            return OpenmrsUtil.nullSafeEquals(concept, other.concept) && OpenmrsUtil.nullSafeEquals(drug, other.drug);
         }
 
         public Concept getConcept() {
@@ -108,34 +135,38 @@ public class PrescriptionsFragmentController {
             this.concept = concept;
         }
 
-        public Concept getRoute() {
-            return route;
+        public Drug getDrug() {
+            return drug;
         }
 
-        public void setRoute(Concept route) {
-            this.route = route;
+        public void setDrug(Drug drug) {
+            this.drug = drug;
+        }
+
+        public Set<String> getFlags() {
+            return flags;
         }
     }
 
-    class DrugGroupMapping extends HashMap<ConceptAndRoute, List<DrugOrder>> {
+    class DrugGroupMapping extends HashMap<ConceptAndDrug, List<DrugOrder>> {
 
         public void add(DrugOrder o) {
-            ConceptAndRoute key = new ConceptAndRoute(o.getConcept(), o.getRoute());
+            ConceptAndDrug key = new ConceptAndDrug(o.getConcept(), o.getDrug());
             if (!containsKey(key)) {
                 put(key, new ArrayList<DrugOrder>());
             }
             get(key).add(o);
         }
 
-        public List<Map.Entry<ConceptAndRoute, List<DrugOrder>>> getAsList() {
-            List<Map.Entry<ConceptAndRoute, List<DrugOrder>>> list = new ArrayList<Map.Entry<ConceptAndRoute, List<DrugOrder>>>(this.entrySet());
-            Collections.sort(list, new Comparator<Map.Entry<ConceptAndRoute, List<DrugOrder>>>() {
+        public List<Map.Entry<ConceptAndDrug, List<DrugOrder>>> getAsList() {
+            List<Map.Entry<ConceptAndDrug, List<DrugOrder>>> list = new ArrayList<Map.Entry<ConceptAndDrug, List<DrugOrder>>>(this.entrySet());
+            Collections.sort(list, new Comparator<Map.Entry<ConceptAndDrug, List<DrugOrder>>>() {
                 @Override
-                public int compare(Map.Entry<ConceptAndRoute, List<DrugOrder>> left, Map.Entry<ConceptAndRoute, List<DrugOrder>> right) {
+                public int compare(Map.Entry<ConceptAndDrug, List<DrugOrder>> left, Map.Entry<ConceptAndDrug, List<DrugOrder>> right) {
                     return -OpenmrsUtil.compareWithNullAsEarliest(mostRecentChange(left.getValue()), mostRecentChange(right.getValue()));
                 }
             });
-            for (Map.Entry<ConceptAndRoute, List<DrugOrder>> entry : list) {
+            for (Map.Entry<ConceptAndDrug, List<DrugOrder>> entry : list) {
                 Collections.sort(entry.getValue(), new Comparator<DrugOrder>() {
                     @Override
                     public int compare(DrugOrder left, DrugOrder right) {
