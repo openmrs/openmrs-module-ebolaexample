@@ -13,11 +13,8 @@
  */
 package org.openmrs.module.ebolaexample.rest.search;
 
-import org.openmrs.Concept;
-import org.openmrs.Drug;
 import org.openmrs.Role;
 import org.openmrs.User;
-import org.openmrs.api.ConceptService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.webservices.rest.web.RequestContext;
 import org.openmrs.module.webservices.rest.web.RestConstants;
@@ -25,20 +22,14 @@ import org.openmrs.module.webservices.rest.web.resource.api.PageableResult;
 import org.openmrs.module.webservices.rest.web.resource.api.SearchConfig;
 import org.openmrs.module.webservices.rest.web.resource.api.SearchHandler;
 import org.openmrs.module.webservices.rest.web.resource.api.SearchQuery;
-import org.openmrs.module.webservices.rest.web.resource.impl.EmptySearchResult;
 import org.openmrs.module.webservices.rest.web.resource.impl.NeedsPaging;
 import org.openmrs.module.webservices.rest.web.response.ResponseException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.openmrs.module.webservices.rest.web.v1_0.wrapper.openmrs1_8.UserAndPassword1_8;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Allows finding a drug by mapping
@@ -71,6 +62,10 @@ public class UsersByRoleSearchHandler implements SearchHandler {
         String roleDescription = context.getParameter(REQUEST_PARAM_ROLE);
         Role role = Context.getUserService().getRole(roleDescription);
         List<User> usersByRole = Context.getUserService().getUsersByRole(role);
-        return new NeedsPaging<User>(usersByRole, context);
+        ArrayList<UserAndPassword1_8> pageableUsers = new ArrayList<UserAndPassword1_8>();
+        for (User user : usersByRole) {
+            pageableUsers.add(new UserAndPassword1_8(user));
+        }
+        return new NeedsPaging<UserAndPassword1_8>(pageableUsers, context);
     }
 }

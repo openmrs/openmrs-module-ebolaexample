@@ -67,7 +67,6 @@ public class UsersByRoleSearchHandlerTest extends BaseModuleWebContextSensitiveT
 
         MockHttpServletRequest request = new MockHttpServletRequest("GET", "/rest/v1/user");
         request.addParameter("role", role.getRole());
-        request.addParameter("rep", "");
         request.addHeader("content-type", "application/json");
 
         response = webMethods.handle(request);
@@ -77,6 +76,8 @@ public class UsersByRoleSearchHandlerTest extends BaseModuleWebContextSensitiveT
         boolean userInResults = false;
         for (LinkedHashMap result : results) {
             userInResults = userInResults || result.get("display").equals(user.getUsername());
+            String uuid = (String) result.get("uuid");
+            assertTrue(Context.getUserService().getUserByUuid(uuid).getRoles().contains(role));
         }
         assertTrue(userInResults);
     }
