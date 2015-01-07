@@ -22,21 +22,37 @@ angular.module('inpatientLocation', ['locationService', 'ui.bootstrap']).
 
         $scope.init = function (setConfig) {
             config = setConfig;
+            if (typeof config.currentWard !== 'undefined') {
+                console.log(config.currentWard);
+                for (x = 0; x < $scope.wardTypes.length; x++) {
+                    if (config.currentWard.display.indexOf($scope.wardTypes[x].display) != -1) {
+                        $scope.changeToWardType = $scope.wardTypes[x];
+                        break;
+                    }
+                }
+                $scope.changeToWard = config.currentWard;
+
+            } else {
+                $scope.changeToWardType = null;
+                $scope.changeToWard = null;
+            }
+
+            $scope.changeToBed = typeof config.currentBed !== 'undefined' ? config.currentBed : null;
         }
 
         $scope.makingChange = false;
 
-        $scope.changeToWardType = null;
-        $scope.changeToWard = null;
-        $scope.changeToBed = null;
-
-        $scope.$watch('changeToWardType', function () {
-            $scope.changeToWard = null;
-            $scope.changeToBed = null;
+        $scope.$watch('changeToWardType', function (changeToWardType) {
+            if (typeof changeToWardType === 'undefined') {
+                $scope.changeToWard = null;
+                $scope.changeToBed = null;
+            }
         });
 
-        $scope.$watch('changeToWard', function () {
-            $scope.changeToBed = null;
+        $scope.$watch('changeToWard', function (changeToWard) {
+            if (typeof changeToWard === 'undefined') {
+                $scope.changeToBed = null;
+            }
         });
 
         $scope.doTransfer = function () {

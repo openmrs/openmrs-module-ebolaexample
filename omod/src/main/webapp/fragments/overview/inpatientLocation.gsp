@@ -21,7 +21,11 @@
     </div>
 
     <div class="info-body" ng-app="inpatientLocation" ng-controller="InpatientLocationCtrl"
-         ng-init="init({patientUuid:'${patient.patient.uuid}'})">
+         ng-init="init({patientUuid:'${patient.patient.uuid}',
+            currentWard:{display:'${currentWard }', uuid:'${currentWard.uuid}'},
+            currentBed:{display:'${currentBed}', uuid:'${currentBed.uuid}'}
+            })">
+
         <% if (!config.activeVisit) { %>
 
         No active visit. <br/>
@@ -38,8 +42,7 @@
 
         <em>(To Do: Triage form should automatically admit.)</em>
 
-        <form method="POST" action="${ui.actionLink("ebolaexample", "overview/inpatientLocation", "admit",
-                [patient: patient.patient.uuid])}">
+        <form method="POST" action="${ui.actionLink("ebolaexample", "overview/inpatientLocation", "admit", [patient: patient.patient.uuid])}">
             ${ui.includeFragment("uicommons", "field/location", [
                     label        : "Admit to",
                     formFieldName: "location",
@@ -58,26 +61,35 @@
 
         <button class="small" ng-hide="makingChange" ng-click="makingChange = true">Change</button>
 
-        <div id="making-changes" ng-show="makingChange" ng-init="currentWardVar = '${currentWard }'" >
-            <div>
-                <label ng-repeat="wardType in wardTypes" class="button {{currentWardVar.indexOf(wardType.display)!=-1?'assigned':''}}"
-                       ng-model="\$parent.changeToWardType" btn-radio="wardType"
-                       uncheckable ng-hide="\$parent.changeToWardType && \$parent.changeToWardType != wardType">
+       <div id="making-changes" ng-show="makingChange" >
+
+            <div class="locationFormDiv">
+                <h2>Select type of ward </h2>
+                <label ng-repeat="wardType in wardTypes"
+                       class="button {{changeToWardType.uuid == wardType.uuid ?'assigned':''}}"
+                       ng-model="\$parent.changeToWardType" btn-radio="wardType" uncheckable>
                     {{ wardType.display }}
                 </label>
             </div>
 
-            <div ng-show="changeToWardType">
-                <label ng-repeat="ward in wardsOfType(changeToWardType)" class="button" ng-model="\$parent.changeToWard" btn-radio="ward"
-                       uncheckable ng-hide="\$parent.changeToWard && \$parent.changeToWard != ward">
+            <div ng-show="changeToWardType" class="locationFormDiv">
+
+                <h2>Select the ward</h2>
+
+                <label ng-repeat="ward in wardsOfType(changeToWardType)"
+                       class="button {{changeToWard.uuid == ward.uuid ?'assigned':''}}"
+                       ng-model="\$parent.changeToWard" btn-radio="ward" uncheckable >
                     {{ ward.display }}
                 </label>
             </div>
 
 
-            <div ng-show="changeToWard">
+            <div ng-show="changeToWard" class="locationFormDiv">
+
+                <h2>Select the bed</h2>
+
                 <div class="button-group" ng-show="changeToWard">
-                    <label ng-repeat="bed in bedsForWard(changeToWard)" class="button" ng-model="\$parent.changeToBed" btn-radio="bed"
+                    <label ng-repeat="bed in bedsForWard(changeToWard)" class="button {{changeToBed.uuid == bed.uuid ?'assigned':''}}" ng-model="\$parent.changeToBed" btn-radio="bed"
                            uncheckable>
                         {{ bed.display }}
                     </label>
