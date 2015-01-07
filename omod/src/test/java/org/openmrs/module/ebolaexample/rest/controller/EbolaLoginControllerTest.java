@@ -18,6 +18,8 @@ import org.openmrs.module.webservices.rest.web.RestConstants;
 import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.web.test.BaseModuleWebContextSensitiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.annotation.ExpectedException;
@@ -64,9 +66,10 @@ public class EbolaLoginControllerTest extends BaseModuleWebContextSensitiveTest 
 
         MockHttpServletRequest request = new MockHttpServletRequest("POST", "/rest/" + RestConstants.VERSION_1 + "/"
                 + requestURI);
+        request.setContentType(MediaType.APPLICATION_JSON.toString());
         request.addHeader("content-type", "application/json");
-        request.addParameter("username", teamUsername);
-        request.addParameter("provider", providerId);
+        String content = "{\"username\": \"" + teamUsername + "\", \"provider\": \"" + providerId + "\"}";
+        request.setContent(content.getBytes());
         response = webMethods.handle(request);
         SimpleObject responseObject = new ObjectMapper().readValue(response.getContentAsString(), SimpleObject.class);
 
@@ -86,8 +89,8 @@ public class EbolaLoginControllerTest extends BaseModuleWebContextSensitiveTest 
         MockHttpServletRequest request = new MockHttpServletRequest("POST", "/rest/" + RestConstants.VERSION_1 + "/"
                 + requestURI);
         request.addHeader("content-type", "application/json");
-        request.addParameter("username", teamUsername);
-        request.addParameter("provider", providerId);
+        String content = "{\"username\": \"" + teamUsername + "\", \"provider\": \"" + providerId + "\"}";
+        request.setContent(content.getBytes());
         webMethods.handle(request);
 
         assertEquals(Context.getAuthenticatedUser().getUuid(), user.getUuid());
@@ -102,8 +105,8 @@ public class EbolaLoginControllerTest extends BaseModuleWebContextSensitiveTest 
         MockHttpServletRequest request = new MockHttpServletRequest("POST", "/rest/" + RestConstants.VERSION_1 + "/"
                 + requestURI);
         request.addHeader("content-type", "application/json");
-        request.addParameter("username", teamUsername);
-        request.addParameter("provider", "Nonsense provider id");
+        String content = "{\"username\": \"" + teamUsername + "\", \"provider\": \"Nonsense provider id\"}";
+        request.setContent(content.getBytes());
         response = webMethods.handle(request);
         SimpleObject responseObject = new ObjectMapper().readValue(response.getContentAsString(), SimpleObject.class);
 
@@ -117,14 +120,9 @@ public class EbolaLoginControllerTest extends BaseModuleWebContextSensitiveTest 
         MockHttpServletRequest request = new MockHttpServletRequest("POST", "/rest/" + RestConstants.VERSION_1 + "/"
                 + requestURI);
         request.addHeader("content-type", "application/json");
-        request.addParameter("username", "Nonsense username");
-        request.addParameter("provider", "Nonsense provider id");
+        String content = "{\"username\": \"Nonsense username\", \"provider\": \"Nonsense provider id\"}";
+        request.setContent(content.getBytes());
         response = webMethods.handle(request);
-        SimpleObject responseObject = new ObjectMapper().readValue(response.getContentAsString(), SimpleObject.class);
-
-        LinkedHashMap parsedProvider = (LinkedHashMap) responseObject.get("provider");
-        Provider unknownProvider = Context.getProviderService().getUnknownProvider();
-        assertEquals(parsedProvider.get("uuid"), unknownProvider.getUuid());
     }
 
     public void setupUnknownProvider() {
