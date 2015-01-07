@@ -1,5 +1,6 @@
 angular.module("login", [])
-    .controller("LoginController", [function() {
-        $scope.login = function() {};
-    }]);
-
+    .controller("LoginController", ["$scope", "UserResource", "Constants",
+        function ($scope, UserResource, Constants) {
+            $scope.login = function () {};
+            $scope.teams = UserResource.query({role: Constants.roles.wardRoundingTeam});
+        }]);

@@ -48,6 +48,14 @@ angular.module("resources", ["ngResource"])
         });
     }])
 
+    .factory("UserResource", [ "$resource", function ($resource) {
+        return $resource("/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/user/:uuid", {
+            uuid: "@uuid"
+        }, {
+            query: { method: "GET" }
+        });
+    }])
+
     .factory("ScheduledDoseResource", [ "$resource", function ($resource) {
         return $resource("/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/scheduled-dose/:uuid", {
             uuid: "@uuid"

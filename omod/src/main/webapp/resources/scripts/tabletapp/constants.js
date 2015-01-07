@@ -111,6 +111,9 @@ angular.module("constants", [])
                 "Patient vomiting",
                 "Aggressive mood",
                 "Cannot access vein for IV"
-            ]
+            ],
+            roles: {
+                wardRoundingTeam: "Ward Rounding Team"
+            }
         }
     });
