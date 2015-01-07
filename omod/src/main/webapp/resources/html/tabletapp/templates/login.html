@@ -3,29 +3,34 @@
         <h1>Login</h1>
     </div>
 </header>
-<div class="page-wrap spaced" ng-controller="LoginController">
-    <form ng-name="login">
-        <div>
-            <span class="question-title">TEAM<em>(Select one)</em></span>
-                <span ng-repeat="team in teams.results" class="checkboxes">
-                    <input id="team_{{team.uuid}}" type="checkbox" value="{{team.uuid}}"
-                           ng-model="addOrder.rounds[roundKey]"/>
-                    <label for="team_{{team.uuid}}" class="radio-button small">{{team.display}}</label>
-                </span>
-        </div>
-        <span class="question-title">IDENTIFICATION NUMBER</span>
-
-        <div class="login-form">
+<div ng-controller="LoginController">
+    <form ng-name="loginForm">
+        <div class="page-wrap spaced">
             <div>
-                <span><h1 class="input-prefix">C</h1></span>
-                <span class="input-container no-unit">
-                    <input ng-model="login.id" type="number " required="required"
-                           name="id">
+                <span class="question-title">TEAM<em>(Select one)</em></span>
+                <span ng-repeat="team in teams.results" class="checkboxes">
+                    <input type="radio"
+                           id="team_{{team.display}}"
+                           value="{{team.display}}"
+                           ng-model="loginForm.username"/>
+                    <label for="team_{{team.display}}"
+                           class="radio-button small">{{team.display}}</label>
                 </span>
             </div>
+            <span class="question-title">IDENTIFICATION NUMBER</span>
+
+            <div class="login-form">
+                <div>
+                    <span><h1 class="input-prefix">C</h1></span>
+                <span class="input-container no-unit">
+                    <input ng-model="loginForm.provider" type="number"
+                           required="required" name="id">
+                </span>
+                </div>
+            </div>
+        </div>
+        <div class="actions small">
+            <button class="right small" type="submit" ng-click="login(loginForm)">Login</button>
         </div>
     </form>
-</div>
-<div class="actions small">
-    <button class="right small" type="submit" ng-click="login()">Login</button>
 </div>
