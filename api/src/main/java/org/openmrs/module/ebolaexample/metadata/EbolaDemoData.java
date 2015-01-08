@@ -2,7 +2,12 @@ package org.openmrs.module.ebolaexample.metadata;
 
 import org.openmrs.Location;
 import org.openmrs.LocationTag;
+import org.openmrs.Person;
+import org.openmrs.PersonName;
+import org.openmrs.Role;
+import org.openmrs.User;
 import org.openmrs.api.LocationService;
+import org.openmrs.api.context.Context;
 import org.openmrs.module.appframework.AppFrameworkConstants;
 import org.openmrs.module.emrapi.EmrApiConstants;
 import org.openmrs.module.metadatadeploy.MetadataUtils;
@@ -14,6 +19,7 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -133,6 +139,36 @@ public class EbolaDemoData extends AbstractMetadataBundle {
         installBeds(_Location.CONFIRMED_WARD_6, 10, tagsForInpatientBed);
         installBeds(_Location.RECOVERY_WARD_1, 6, tagsForInpatientBed);
         installBeds(_Location.RECOVERY_WARD_2, 6, tagsForInpatientBed);
+
+        installUser(buildTeam("1"), "Team1234");
+        installUser(buildTeam("2"), "Team1234");
+        installUser(buildTeam("3"), "Team1234");
+    }
+
+    private void installUser(User user, String password) {
+        if(Context.getUserService().getUserByUsername(user.getUsername()) == null) {
+            Context.getUserService().saveUser(user, password);
+        }
+    }
+
+    private User buildTeam(String teamNumber) {
+        User user = new User();
+        HashSet<Role> roles = new HashSet<Role>();
+        roles.add(Context.getUserService().getRole(EbolaMetadata._Role.WARD_ROUNDING_TEAM));
+        user.setRoles(roles);
+        user.setUsername("Team" + teamNumber);
+        user.setName("Team " + teamNumber);
+        user.setDescription("Team " + teamNumber);
+        Person person = buildPersonForTeam(teamNumber);
+        user.setPerson(person);
+        return user;
+    }
+
+    private Person buildPersonForTeam(String teamNumber) {
+        Person person = new Person();
+        person.setGender("Female");
+        person.addName(new PersonName("Team " + teamNumber, "", ""));
+        return person;
     }
 
     private void installBeds(String parentLocation, int numBeds, Collection<String> tags) {

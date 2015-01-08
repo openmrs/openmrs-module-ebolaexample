@@ -75,6 +75,10 @@ public class EbolaMetadata extends AbstractMetadataBundle {
 		public static final String ASSIGNED_BED = "c7d117f1-6ff4-11e4-9803-0800200c9a66";
 	}
 
+    public static class _Role {
+        public static final String WARD_ROUNDING_TEAM = "Ward Rounding Team";
+    }
+
     private void maybeSetGP(AdministrationService service, String prop, String val) {
         GlobalProperty gp = service.getGlobalPropertyObject(prop);
         if (gp == null) {
@@ -130,7 +134,7 @@ public class EbolaMetadata extends AbstractMetadataBundle {
 		install(visitAttributeType("Assigned ward", "", LocationDatatype.class, null, 0, 1, _VisitAttributeType.ASSIGNED_WARD));
 		install(visitAttributeType("Assigned bed", "", LocationDatatype.class, null, 0, 1, _VisitAttributeType.ASSIGNED_BED));
 
-        install(role("Ward Rounding Team", "Role for all users who are actually ward rounding teams", new HashSet<String>(), new HashSet<String>()));
+        install(role(_Role.WARD_ROUNDING_TEAM, "Role for all users who are actually ward rounding teams", new HashSet<String>(), new HashSet<String>()));
 
         AdministrationService administrationService = Context.getAdministrationService();
         maybeSetGP(administrationService, OpenmrsConstants.GP_DRUG_ROUTES_CONCEPT_UUID, "162394AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
