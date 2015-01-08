@@ -4,9 +4,9 @@ import org.openmrs.Provider;
 import org.openmrs.User;
 import org.openmrs.api.context.Context;
 import org.openmrs.api.context.ContextAuthenticationException;
-import org.openmrs.api.db.ContextDAO;
 import org.openmrs.module.webservices.rest.SimpleObject;
 import org.openmrs.module.webservices.rest.web.RestConstants;
+import org.openmrs.module.webservices.rest.web.v1_0.resource.openmrs1_8.PersonResource1_8;
 import org.openmrs.module.webservices.rest.web.v1_0.resource.openmrs1_8.UserResource1_8;
 import org.openmrs.module.webservices.rest.web.v1_0.resource.openmrs1_9.ProviderResource1_9;
 import org.openmrs.module.webservices.rest.web.v1_0.wrapper.openmrs1_8.UserAndPassword1_8;
@@ -15,10 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -35,11 +33,9 @@ public class EbolaLoginController {
 
             UserAndPassword1_8 authenticatedUserResource = new UserResource1_8().getByUniqueId(authenticatedUser.getUuid());
             response.add("user", new UserResource1_8().asDefaultRep(authenticatedUserResource));
-            Provider providerByIdentifier = Context.getProviderService().getProviderByIdentifier((String) map.get("provider"));
-            if(providerByIdentifier == null) {
-                providerByIdentifier = Context.getProviderService().getUnknownProvider();
-            }
-            response.add("provider", new ProviderResource1_9().asDefaultRep(providerByIdentifier));
+            Provider provider = buildProvider(map);
+            response.add("provider", new ProviderResource1_9().asDefaultRep(provider));
+            response.add("person", new PersonResource1_8().asDefaultRep(provider.getPerson()));
         }
         catch (ContextAuthenticationException ex) {
             Context.removeProxyPrivilege(PrivilegeConstants.VIEW_USERS);
@@ -51,6 +47,14 @@ public class EbolaLoginController {
             Context.removeProxyPrivilege(PrivilegeConstants.VIEW_USERS);
         }
         return response;
+    }
+
+    private Provider buildProvider(Map<String, Object> map) {
+        Provider providerByIdentifier = Context.getProviderService().getProviderByIdentifier((String) map.get("provider"));
+        if(providerByIdentifier == null) {
+            providerByIdentifier = Context.getProviderService().getUnknownProvider();
+        }
+        return providerByIdentifier;
     }
 
     public class LoginInfo {

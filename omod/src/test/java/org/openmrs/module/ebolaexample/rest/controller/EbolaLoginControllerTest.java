@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.TestCase.assertNull;
 
 public class EbolaLoginControllerTest extends BaseModuleWebContextSensitiveTest {
 
@@ -97,6 +98,26 @@ public class EbolaLoginControllerTest extends BaseModuleWebContextSensitiveTest 
     }
 
     @Test
+    public void shouldReturnUserProviderAndPerson() throws Exception {
+        User user = Context.getAuthenticatedUser();
+        String teamUsername = user.getUsername();
+        Provider provider = Context.getProviderService().getProvidersByPerson(user.getPerson()).iterator().next();
+        String providerId = provider.getIdentifier();
+
+        MockHttpServletRequest request = new MockHttpServletRequest("POST", "/rest/" + RestConstants.VERSION_1 + "/"
+                + requestURI);
+        request.addHeader("content-type", "application/json");
+        String content = "{\"username\": \"" + teamUsername + "\", \"provider\": \"" + providerId + "\"}";
+        request.setContent(content.getBytes());
+        MockHttpServletResponse response = webMethods.handle(request);
+        SimpleObject responseObject = new ObjectMapper().readValue(response.getContentAsString(), SimpleObject.class);
+
+        assertEquals(((LinkedHashMap) responseObject.get("person")).get("uuid"), provider.getPerson().getUuid());
+        assertEquals(((LinkedHashMap) responseObject.get("user")).get("uuid"), user.getUuid());
+        assertEquals(((LinkedHashMap) responseObject.get("person")).get("uuid"), provider.getPerson().getUuid());
+    }
+
+    @Test
     public void shouldReturnUnknownProviderForAuthenticatedUserWithInvalidProviderId() throws Exception {
         setupUnknownProvider();
         User user = Context.getAuthenticatedUser();
@@ -113,6 +134,7 @@ public class EbolaLoginControllerTest extends BaseModuleWebContextSensitiveTest 
         LinkedHashMap parsedProvider = (LinkedHashMap) responseObject.get("provider");
         Provider unknownProvider = Context.getProviderService().getUnknownProvider();
         assertEquals(parsedProvider.get("uuid"), unknownProvider.getUuid());
+        assertNull(responseObject.get("person"));
     }
 
     @Test(expected=ContextAuthenticationException.class)
