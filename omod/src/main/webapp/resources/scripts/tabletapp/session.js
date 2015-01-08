@@ -8,7 +8,11 @@ angular.module("session", ["ui.router", "constants", "resources", "patients", "n
 
             return {
                 getInfo: function () {
-                    return JSON.parse($cookies['session']);
+                    var sessionInfo = $cookies['session'];
+                    if(sessionInfo) {
+                        return JSON.parse(sessionInfo);
+                    }
+                    return sessionInfo;
                 },
                 setInfo: function(info) {
                     $cookies['session'] = JSON.stringify(info);

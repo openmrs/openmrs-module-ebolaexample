@@ -288,6 +288,7 @@
                         <source>src/main/webapp/resources/scripts/lib/angular/angular-resource.js</source>
                         <source>src/main/webapp/resources/scripts/lib/angular/angular-cookies.js</source>
                         <source>src/main/webapp/resources/scripts/lib/angular/angular-mocks.js</source>
+                        <source>src/main/webapp/resources/scripts/lib/angular-permission/angular-permission.js</source>
                         <source>src/main/webapp/resources/scripts/lib/ui-router/angular-ui-router.js</source>
                         <source>src/main/webapp/resources/scripts/lib/lodash/dist/lodash.js</source>
                         <source>src/main/webapp/resources/scripts/lib/jquery/jquery-2.1.1.min.js</source>
