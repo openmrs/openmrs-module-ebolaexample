@@ -153,18 +153,27 @@ public class EbolaDemoData extends AbstractMetadataBundle {
 
     private User buildTeam(String teamNumber) {
         User user = new User();
-        HashSet<Role> roles = new HashSet<Role>();
-        roles.add(Context.getUserService().getRole(EbolaMetadata._Role.WARD_ROUNDING_TEAM));
-        roles.add(Context.getUserService().getRole("Organizational: System Administrator"));
-        roles.add(Context.getUserService().getRole("Privilege Level: Full"));
-        roles.addAll(Context.getUserService().getAllRoles());
-        user.setRoles(roles);
+        user.setRoles(getRolesForTeam());
         user.setUsername("Team" + teamNumber);
         user.setName("Team " + teamNumber);
         user.setDescription("Team " + teamNumber);
         Person person = buildPersonForTeam(teamNumber);
         user.setPerson(person);
         return user;
+    }
+
+    private HashSet<Role> getRolesForTeam() {
+        HashSet<Role> roles = new HashSet<Role>();
+        roles.add(Context.getUserService().getRole(EbolaMetadata._Role.WARD_ROUNDING_TEAM));
+        Role sysAdminRole = Context.getUserService().getRole("Organizational: System Administrator");
+        if(sysAdminRole != null) {
+            roles.add(sysAdminRole);
+        }
+        Role fullApiRole = Context.getUserService().getRole("Privilege Level: Full");
+        if(fullApiRole != null) {
+            roles.add(fullApiRole);
+        }
+        return roles;
     }
 
     private Person buildPersonForTeam(String teamNumber) {
