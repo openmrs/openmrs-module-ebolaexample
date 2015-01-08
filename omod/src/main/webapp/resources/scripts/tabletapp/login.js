@@ -12,7 +12,7 @@ angular.module("login", [])
         function ($http, CurrentSession) {
             return {
                 login: function (username, provider) {
-                    $http.post("/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/login", {'username': username, 'provider': provider})
+                    $http.post("/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/login", {'username': username, 'provider': String(provider)})
                         .success(function (response) {
                             CurrentSession.setInfo(response);
                         });

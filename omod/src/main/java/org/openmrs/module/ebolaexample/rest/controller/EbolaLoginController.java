@@ -11,6 +11,7 @@ import org.openmrs.module.webservices.rest.web.v1_0.resource.openmrs1_8.PersonRe
 import org.openmrs.module.webservices.rest.web.v1_0.resource.openmrs1_8.UserResource1_8;
 import org.openmrs.module.webservices.rest.web.v1_0.resource.openmrs1_9.ProviderResource1_9;
 import org.openmrs.module.webservices.rest.web.v1_0.wrapper.openmrs1_8.UserAndPassword1_8;
+import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.util.PrivilegeConstants;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +31,7 @@ public class EbolaLoginController {
         SimpleObject response = new SimpleObject();
         try {
             Context.addProxyPrivilege(PrivilegeConstants.VIEW_USERS);
+            Context.addProxyPrivilege(PrivilegeConstants.VIEW_PROVIDERS);
             User authenticatedUser = Context.getUserContext().authenticate((String) map.get("username"), "", new PasswordlessContextDao());
 
             UserAndPassword1_8 authenticatedUserResource = new UserResource1_8().getByUniqueId(authenticatedUser.getUuid());
@@ -40,18 +42,23 @@ public class EbolaLoginController {
         }
         catch (ContextAuthenticationException ex) {
             Context.removeProxyPrivilege(PrivilegeConstants.VIEW_USERS);
+            Context.removeProxyPrivilege(PrivilegeConstants.VIEW_PROVIDERS);
+            response.add("error", ex);
             throw ex;
         } catch (Exception e) {
+            response.add("error", e);
             // pass
         }
         finally {
             Context.removeProxyPrivilege(PrivilegeConstants.VIEW_USERS);
+            Context.removeProxyPrivilege(PrivilegeConstants.VIEW_PROVIDERS);
         }
         return response;
     }
 
     private Provider buildProvider(Map<String, Object> map) {
-        Provider providerByIdentifier = Context.getProviderService().getProviderByIdentifier((String) map.get("provider"));
+        String providerId = (String) map.get("provider");
+        Provider providerByIdentifier = Context.getProviderService().getProviderByIdentifier(providerId);
         if(providerByIdentifier == null) {
             providerByIdentifier = Context.getProviderService().getUnknownProvider();
 
