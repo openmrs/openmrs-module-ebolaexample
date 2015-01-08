@@ -40,7 +40,7 @@ angular.module('inpatientLocation', ['locationService', 'ui.bootstrap']).
             $scope.changeToBed = typeof config.currentBed !== 'undefined' ? config.currentBed : null;
         }
 
-        $scope.makingChange = false;
+        $scope.makingChange = true;
 
         $scope.$watch('changeToWardType', function (changeToWardType) {
             if (typeof changeToWardType === 'undefined') {
@@ -98,5 +98,8 @@ angular.module('inpatientLocation', ['locationService', 'ui.bootstrap']).
             }
         });
 
+        $scope.changeLocationPatient = function() {
+            location.href = '/' + OPENMRS_CONTEXT_PATH + '/ebolaexample/changeInPatientLocation.page?patientUuid=' + config.patientUuid;
+        }
     }]);
 
