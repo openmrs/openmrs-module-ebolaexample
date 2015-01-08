@@ -65,27 +65,25 @@ angular.module("prescriptions", ["tabletapp", "constants", "patients"])
             $scope.save = function (order, newState) {
                 if (order.form.$valid && (order.freeTextInstructions || $scope.roundSelected)) {
                     CurrentSession.getEncounter(order.patient.uuid).then(function (encounter) {
-                        CurrentSession.getInfo().then(function (response) {
-                            var orderJson = {
-                                "type": Constants.orderType.drugorder,
-                                "patient": order.patient.uuid,
-                                "drug": order.drug.uuid,
-                                "encounter": encounter.uuid,
-                                "careSetting": Constants.careSetting.inpatient,
-                                "orderer": response.data.providers[0]["uuid"],
-                                "concept": order.drug.concept.uuid
-                            }
-                            setDosing(order, orderJson);
-                            new OrderResource(orderJson).$save().then(function (order) {
-                                $state.params['uuid'] = CurrentSession.getRecentWard();
-                                $state.params['prescriptionSuccess'] = true;
-                                ActiveOrders.reload($scope, $state.params['patientUUID']);
-                                $state.go(newState, $state.params);
-                            }, function() {
-                                $scope.serverError = true;
-                            });
-                        })
-
+                        var sessionInfo = CurrentSession.getInfo();
+                        var orderJson = {
+                            "type": Constants.orderType.drugorder,
+                            "patient": order.patient.uuid,
+                            "drug": order.drug.uuid,
+                            "encounter": encounter.uuid,
+                            "careSetting": Constants.careSetting.inpatient,
+                            "orderer": sessionInfo["provider"]["uuid"],
+                            "concept": order.drug.concept.uuid
+                        }
+                        setDosing(order, orderJson);
+                        new OrderResource(orderJson).$save().then(function (order) {
+                            $state.params['uuid'] = CurrentSession.getRecentWard();
+                            $state.params['prescriptionSuccess'] = true;
+                            ActiveOrders.reload($scope, $state.params['patientUUID']);
+                            $state.go(newState, $state.params);
+                        }, function() {
+                            $scope.serverError = true;
+                        });
                     })
                 } else {
                     $scope.hasErrors = true;

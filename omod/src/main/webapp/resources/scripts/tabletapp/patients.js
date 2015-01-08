@@ -163,30 +163,29 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             return {
                 stopOrder: function (order, success, error) {
                     CurrentSession.getEncounter(order.patient.uuid).then(function (encounter) {
-                        CurrentSession.getInfo().then(function (response) {
-                            orderJson = {
-                                "action": Constants.orderAction.discontinue,
-                                "orderReasonNonCoded": "",
-                                "type": Constants.orderType.drugorder,
-                                "patient": order.patient.uuid,
-                                "encounter": encounter.uuid,
-                                "careSetting": Constants.careSetting.inpatient,
-                                "orderer": response.data.providers[0]["uuid"],
-                                "previousOrder": order.uuid,
-                                "dosingType": Constants.dosingType.unvalidatedFreeText
-                            };
+                        sessionInfo = CurrentSession.getInfo();
+                        orderJson = {
+                            "action": Constants.orderAction.discontinue,
+                            "orderReasonNonCoded": "",
+                            "type": Constants.orderType.drugorder,
+                            "patient": order.patient.uuid,
+                            "encounter": encounter.uuid,
+                            "careSetting": Constants.careSetting.inpatient,
+                            "orderer": sessionInfo["provider"]["uuid"],
+                            "previousOrder": order.uuid,
+                            "dosingType": Constants.dosingType.unvalidatedFreeText
+                        };
 
-                            if(order.drug) {
-                                orderJson["drug"] = order.drug.uuid;
-                            } else {
-                                orderJson["concept"] = order.concept.uuid;
-                            }
+                        if(order.drug) {
+                            orderJson["drug"] = order.drug.uuid;
+                        } else {
+                            orderJson["concept"] = order.concept.uuid;
+                        }
 
-                            new OrderResource(orderJson).$save().then(function (order) {
-                                success();
-                            }, function(response) {
-                                error();
-                            });
+                        new OrderResource(orderJson).$save().then(function (order) {
+                            success();
+                        }, function(response) {
+                            error();
                         });
                     });
                 }

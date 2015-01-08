@@ -8,10 +8,10 @@ angular.module("session", ["ui.router", "constants", "resources", "patients", "n
 
             return {
                 getInfo: function () {
-                    if (!cachedInfo) {
-                        cachedInfo = $http.get("/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/session-info");
-                    }
-                    return cachedInfo;
+                    return $cookies['session'];
+                },
+                setInfo: function(info) {
+                    $cookies['session'] = info;
                 },
                 getEncounter: function (patientUUID) {
                     if (cachedEncounter && cachedEncounterPatientUUID == patientUUID) {

@@ -119,9 +119,7 @@ describe('prescriptions', function () {
             sessionInfoResponseStub = {
                 user: { uuid: "USER_UUID" },
                 person: { uuid: "PERSON_UUID" },
-                providers: [
-                    { uuid: "PROVIDER_1_UUID" }
-                ]
+                provider: { uuid: "PROVIDER_1_UUID" }
             },
             order,
             expectedOrderPost,
@@ -161,11 +159,11 @@ describe('prescriptions', function () {
                 injector = $injector;
                 httpMock.when('POST', apiUrl + 'encounter').respond(encounterResponseStub);
                 httpMock.when('POST', apiUrl + 'order').respond(orderResponseStub);
-                httpMock.when('GET', apiUrl + 'ebola/session-info').respond(sessionInfoResponseStub);
                 httpMock.when('GET', apiUrl + 'drug/999').respond({concept: {uuid: '0987654'}});
                 httpMock.when('GET', apiUrl + 'order?t=drugorder&v=full').respond({});
                 initController = function (stateParams, session) {
-                    session = session || $injector.get('CurrentSession')
+                    session = session || $injector.get('CurrentSession');
+                    spyOn(session, "getInfo").andReturn(sessionInfoResponseStub);
                     state['params'] = stateParams || {prescriptionInfo: {uuid: '999'}};
                     $controller('NewPrescriptionDetailsController', {$scope: scope, $state: state});
                 }
