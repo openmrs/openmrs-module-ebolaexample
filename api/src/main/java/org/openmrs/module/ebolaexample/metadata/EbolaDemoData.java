@@ -155,6 +155,9 @@ public class EbolaDemoData extends AbstractMetadataBundle {
         User user = new User();
         HashSet<Role> roles = new HashSet<Role>();
         roles.add(Context.getUserService().getRole(EbolaMetadata._Role.WARD_ROUNDING_TEAM));
+        roles.add(Context.getUserService().getRole("Organizational: System Administrator"));
+        roles.add(Context.getUserService().getRole("Privilege Level: Full"));
+        roles.addAll(Context.getUserService().getAllRoles());
         user.setRoles(roles);
         user.setUsername("Team" + teamNumber);
         user.setName("Team " + teamNumber);
