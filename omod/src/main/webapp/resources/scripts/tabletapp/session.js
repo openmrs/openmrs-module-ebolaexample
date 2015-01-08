@@ -8,10 +8,10 @@ angular.module("session", ["ui.router", "constants", "resources", "patients", "n
 
             return {
                 getInfo: function () {
-                    return $cookies['session'];
+                    return JSON.parse($cookies['session']);
                 },
                 setInfo: function(info) {
-                    $cookies['session'] = info;
+                    $cookies['session'] = JSON.stringify(info);
                 },
                 getEncounter: function (patientUUID) {
                     if (cachedEncounter && cachedEncounterPatientUUID == patientUUID) {
