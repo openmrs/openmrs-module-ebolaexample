@@ -13,6 +13,7 @@ import org.openmrs.module.ebolaexample.metadata.EbolaTestBaseMetadata;
 import org.openmrs.module.ebolaexample.metadata.EbolaTestData;
 import org.openmrs.module.ebolaexample.rest.WardResource;
 import org.openmrs.module.ebolaexample.rest.WebMethods;
+import org.openmrs.module.emrapi.EmrApiConstants;
 import org.openmrs.module.webservices.rest.SimpleObject;
 import org.openmrs.module.webservices.rest.web.RestConstants;
 import org.openmrs.util.OpenmrsConstants;
@@ -153,6 +154,10 @@ public class EbolaLoginControllerTest extends BaseModuleWebContextSensitiveTest 
         provider.setIdentifier("Test Unknown Provider");
         provider = Context.getProviderService().saveProvider(provider);
         GlobalProperty gp = new GlobalProperty(OpenmrsConstants.GP_UNKNOWN_PROVIDER_UUID, provider.getUuid(), null);
+        Context.getAdministrationService().saveGlobalProperty(gp);
+        // Delete this EMR reference once EMR fixes https://issues.openmrs.org/browse/EA-56.
+        // We should only need the OpenMRSConstants GP above, but the EMRApi created their own property.
+        gp = new GlobalProperty(EmrApiConstants.GP_UNKNOWN_PROVIDER, provider.getUuid(), null);
         Context.getAdministrationService().saveGlobalProperty(gp);
     }
 }

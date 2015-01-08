@@ -4,6 +4,7 @@ import org.openmrs.Provider;
 import org.openmrs.User;
 import org.openmrs.api.context.Context;
 import org.openmrs.api.context.ContextAuthenticationException;
+import org.openmrs.module.emrapi.EmrApiConstants;
 import org.openmrs.module.webservices.rest.SimpleObject;
 import org.openmrs.module.webservices.rest.web.RestConstants;
 import org.openmrs.module.webservices.rest.web.v1_0.resource.openmrs1_8.PersonResource1_8;
@@ -53,6 +54,13 @@ public class EbolaLoginController {
         Provider providerByIdentifier = Context.getProviderService().getProviderByIdentifier((String) map.get("provider"));
         if(providerByIdentifier == null) {
             providerByIdentifier = Context.getProviderService().getUnknownProvider();
+
+            // Remove the following once EMR API https://issues.openmrs.org/browse/EA-56.
+            // We should just be able to use Context.getProviderService().getUnknownProvider() above.
+            if(providerByIdentifier == null) {
+                String unknownProviderUuid = Context.getAdministrationService().getGlobalProperty(EmrApiConstants.GP_UNKNOWN_PROVIDER);
+                providerByIdentifier = Context.getProviderService().getProviderByUuid(unknownProviderUuid);
+            }
         }
         return providerByIdentifier;
     }
