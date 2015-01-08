@@ -22,8 +22,8 @@
 
     <div class="info-body" ng-app="inpatientLocation" ng-controller="InpatientLocationCtrl"
          ng-init="init({patientUuid:'${patient.patient.uuid}',
-            currentWard:{display:'${currentWard }', uuid:'${currentWard.uuid}'},
-            currentBed:{display:'${currentBed}', uuid:'${currentBed.uuid}'}
+            currentWard: <% if (currentWard) { %>{display:'${currentWard }', uuid:'${currentWard.uuid}'}<% } else { %>null<% } %>,
+            currentBed: <% if (currentBed) { %>{display:'${currentBed}', uuid:'${currentBed.uuid}'}<% } else { %>null<% } %>
             })">
 
         <% if (!config.activeVisit) { %>
