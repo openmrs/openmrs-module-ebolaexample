@@ -1,4 +1,4 @@
-angular.module('inpatientLocation', [ 'locationService', 'ui.bootstrap'])
+angular.module('inpatientLocation', ['locationService', 'ui.bootstrap'])
     .controller('InpatientLocationCtrl', ['$scope', '$http', 'LocationService',
         function ($scope, $http, LocationService) {
 
@@ -60,10 +60,8 @@ angular.module('inpatientLocation', [ 'locationService', 'ui.bootstrap'])
                     location: $scope.changeToBed ? $scope.changeToBed.uuid : $scope.changeToWard.uuid
                 });
                 $http.post(url).success(function (data) {
-                    alert(location.href);
                     baseURL = location.protocol + "//" + location.hostname + (location.port && ":" + location.port) + "/"
                     location.href = baseURL + "openmrs/ebolaexample/ebolaOverview.page?patient=" + config.patientUuid;
-                    ;
                 });
             }
 
@@ -99,7 +97,7 @@ angular.module('inpatientLocation', [ 'locationService', 'ui.bootstrap'])
             }
 
             function getBedAssignments(ward) {
-                return WardResource.get({ uuid: ward.uuid });
+                return WardResource.get({uuid: ward.uuid});
             }
 
             LocationService.getLocations({v: "default", limit: 100}).then(function (result) {
