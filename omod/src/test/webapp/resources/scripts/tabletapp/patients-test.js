@@ -6,6 +6,12 @@ describe('patients', function () {
         module('tabletapp');
     });
 
+    beforeEach(function () {
+        inject(function ($injector) {
+            $injector.get('CurrentSession').setInfo({});
+        })
+    });
+
     describe('WardController', function () {
         var httpMock,
             sessionSpy,

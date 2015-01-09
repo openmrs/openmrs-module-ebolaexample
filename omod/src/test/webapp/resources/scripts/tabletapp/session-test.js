@@ -6,6 +6,12 @@ describe('app', function () {
         module('tabletapp');
     });
 
+    beforeEach(function () {
+        inject(function ($injector) {
+            $injector.get('CurrentSession').setInfo({});
+        })
+    });
+
     describe('CurrentSession', function () {
         var httpMock,
             scope,

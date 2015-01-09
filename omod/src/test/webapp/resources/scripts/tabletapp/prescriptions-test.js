@@ -6,6 +6,12 @@ describe('prescriptions', function () {
         module('prescriptions');
     });
 
+    beforeEach(function () {
+        inject(function ($injector) {
+            $injector.get('CurrentSession').setInfo({});
+        })
+    });
+
     describe('NewPrescriptionRouteController', function () {
 
         var httpMock,
