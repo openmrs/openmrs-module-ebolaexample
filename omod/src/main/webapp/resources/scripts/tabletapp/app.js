@@ -16,10 +16,10 @@ angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "selec
                 url: "/wards",
                 templateUrl: "templates/wards.html",
                 data: {
-                    permissions: {
-                        only: ['loggedIn'],
-                        redirectTo: 'login'
-                    }
+//                    permissions: {
+//                        only: ['loggedIn'],
+//                        redirectTo: 'login'
+//                    }
                 }
             })
             .state("ward", {

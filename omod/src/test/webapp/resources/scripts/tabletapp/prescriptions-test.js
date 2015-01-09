@@ -68,6 +68,7 @@ describe('prescriptions', function () {
                 scope = $rootScope.$new();
                 httpMock.when('GET', apiUrl + 'concept/654321').respond({uuid: '654321'});
                 httpMock.when('GET', apiUrl + 'drug?concept=654321&v=full').respond(drugsResponse);
+                httpMock.when('GET', 'templates/wards.html').respond({});
                 initController = function (stateParams) {
                     var state = stateParams || { params: {concept: {uuid: '654321'} } };
                     $controller('NewPrescriptionRouteController', {$scope: scope, $state: state});

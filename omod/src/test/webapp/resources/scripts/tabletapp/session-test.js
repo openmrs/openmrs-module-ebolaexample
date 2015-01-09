@@ -18,6 +18,7 @@ describe('app', function () {
         beforeEach(function () {
             inject(function ($controller, $rootScope, $httpBackend, $injector, Constants) {
                 httpMock = $httpBackend;
+                httpMock.when('GET', 'templates/wards.html').respond({});
                 constants = Constants;
                 scope = $rootScope.$new();
                 httpMock.when('POST', apiUrl + 'encounter').respond(encounterResponseStub);
