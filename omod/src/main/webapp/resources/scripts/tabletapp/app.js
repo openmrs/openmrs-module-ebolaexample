@@ -75,3 +75,30 @@ angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "selec
             }
         });
     }]);
+
+angular.module('uicommons.common', []).
+
+    factory('http-auth-interceptor', function($q, $rootScope) {
+        return {
+            responseError: function(response) {
+                if (response.status === 401 || response.status === 403) {
+                    $rootScope.$broadcast('event:auth-loginRequired');
+                }
+                return $q.reject(response);
+            }
+        }
+    }).
+
+    config(function($httpProvider) {
+        $httpProvider.interceptors.push('http-auth-interceptor');
+
+        // to prevent the browser from displaying a password pop-up in case of an authentication error
+        $httpProvider.defaults.headers.common['Disable-WWW-Authenticate'] = 'true';
+    }).
+
+    run(['$rootScope', '$location', function ($rootScope, $location) {
+        $rootScope.$on('event:auth-loginRequired', function () {
+            console.log('AUTH REQUIRED');
+            $location.path("/login");
+        });
+    }]);
