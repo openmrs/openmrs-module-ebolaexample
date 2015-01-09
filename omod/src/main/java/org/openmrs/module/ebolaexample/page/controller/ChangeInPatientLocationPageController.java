@@ -3,20 +3,15 @@ package org.openmrs.module.ebolaexample.page.controller;
 import org.openmrs.*;
 import org.openmrs.api.APIException;
 import org.openmrs.api.PatientService;
-import org.openmrs.module.appframework.service.AppFrameworkService;
 import org.openmrs.module.appui.UiSessionContext;
 import org.openmrs.module.ebolaexample.api.BedAssignmentService;
 import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
 import org.openmrs.module.emrapi.EmrApiProperties;
 import org.openmrs.module.emrapi.adt.AdtAction;
 import org.openmrs.module.emrapi.adt.AdtService;
-import org.openmrs.module.emrapi.event.ApplicationEventService;
 import org.openmrs.module.emrapi.visit.VisitDomainWrapper;
-import org.openmrs.module.htmlformentry.HtmlFormEntryService;
 import org.openmrs.module.metadatadeploy.MetadataUtils;
-import org.openmrs.ui.framework.annotation.FragmentParam;
 import org.openmrs.ui.framework.annotation.SpringBean;
-import org.openmrs.ui.framework.fragment.FragmentModel;
 import org.openmrs.ui.framework.fragment.action.FailureResult;
 import org.openmrs.ui.framework.fragment.action.SuccessResult;
 import org.openmrs.ui.framework.page.PageModel;
@@ -25,12 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.*;
 
 public class ChangeInPatientLocationPageController {
-
-//    public void get(@SpringBean("patientService") PatientService patientService,
-//                    @RequestParam(value = "patientUuid", required = false) String patientUuid, PageModel model) {
-//        System.out.println("Patient id is " + patientUuid);
-//        model.put("patientId", patientUuid);
-//    }
 
     public void controller(@SpringBean("patientService") PatientService patientService,
                            @RequestParam(value = "patientUuid", required = false) String patientUuid,
@@ -72,8 +61,7 @@ public class ChangeInPatientLocationPageController {
         Location visitLocation = null;
         try {
             visitLocation = adtService.getLocationThatSupportsVisits(sessionContext.getSessionLocation());
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             // location does not support visits
         }
         return visitLocation == null ? null : adtService.getActiveVisit(patient, visitLocation);
@@ -116,11 +104,7 @@ public class ChangeInPatientLocationPageController {
 
     public Object transfer(@RequestParam("patient") Patient patient,
                            @RequestParam("location") Location location,
-                           UiSessionContext uiSessionContext,
-                           @SpringBean EmrApiProperties emrApiProperties,
-                           @SpringBean AdtService adtService,
                            @SpringBean BedAssignmentService bedAssignmentService) {
-
         try {
             bedAssignmentService.assign(patient, location);
             return new SuccessResult("Transferred");
