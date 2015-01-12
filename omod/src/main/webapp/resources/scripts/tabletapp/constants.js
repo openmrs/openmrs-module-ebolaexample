@@ -65,8 +65,8 @@ angular.module("constants", [])
             ],
             routes: [
                 {
-                    display: 'Rectal suppository',
-                    uuid: '162458AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+                    display: 'Rectal',
+                    uuid: '162393AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
                 },
                 {
                     display: 'IV',
@@ -82,7 +82,7 @@ angular.module("constants", [])
                 },
                 {
                     display: 'Nasogastric',
-                    uuid: '1766AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+                    uuid: '162798AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
                 },
                 {
                     display: 'IO',
