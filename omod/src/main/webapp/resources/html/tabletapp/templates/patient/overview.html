@@ -1,5 +1,6 @@
 <header>
     <div class="patient-header">
+        <back-button></back-button>
         <span class="patient-id">
             <small>PATIENT ID</small>
             {{ getPatientId() }}
@@ -59,7 +60,6 @@
     </script>
 </div>
 <div class="actions small">
-    <button class="small left secondary" ui-sref="ward({uuid: getWard()})">Back</button>
     <button class="small right" ui-sref="patient.addPrescription">Add new prescription</button>
 </div>
 

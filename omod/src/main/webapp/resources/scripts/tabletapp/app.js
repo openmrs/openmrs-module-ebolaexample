@@ -23,28 +23,44 @@ angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "selec
                 url: "/wards/:uuid",
                 templateUrl: "templates/ward.html",
                 data: {
-                    requiresLogin: true
+                    requiresLogin: true,
+                    back: {
+                        description: "Wards",
+                        target: "wards"
+                    }
                 }
             })
             .state("patient", {
                 url: "/patients/:patientUUID",
                 templateUrl: "templates/patient.html",
                 data: {
-                    requiresLogin: true
+                    requiresLogin: true,
+                    back: {
+                        description: "Patients",
+                        target: "ward"
+                    }
                 }
             })
             .state("patient.overview", {
                 url: "/overview/:patientUUID/:prescriptionSuccess",
                 templateUrl: "templates/patient/overview.html",
                 data: {
-                    requiresLogin: true
+                    requiresLogin: true,
+                    back: {
+                        description: "Patients",
+                        target: "ward"
+                    }
                 }
             })
             .state("patient.addPrescription", {
                 url: "/addPrescription",
                 templateUrl: "templates/patient/newPrescription.html",
                 data: {
-                    requiresLogin: true
+                    requiresLogin: true,
+                    back: {
+                        description: "Overview",
+                        target: "patient.overview"
+                    }
                 }
             })
             .state("patient.addPrescriptionRoute", {
@@ -52,7 +68,11 @@ angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "selec
                 templateUrl: "templates/patient/newPrescriptionRoute.html",
                 params: { concept: null },
                 data: {
-                    requiresLogin: true
+                    requiresLogin: true,
+                    back: {
+                        description: "Overview",
+                        target: "patient.overview"
+                    }
                 }
             })
             .state("patient.addPrescriptionDetails", {
@@ -60,7 +80,11 @@ angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "selec
                 templateUrl: "templates/patient/prescriptionForm.html",
                 params: { prescriptionInfo: null },
                 data: {
-                    requiresLogin: true
+                    requiresLogin: true,
+                    back: {
+                        description: "Overview",
+                        target: "patient.overview"
+                    }
                 }
             });
     })

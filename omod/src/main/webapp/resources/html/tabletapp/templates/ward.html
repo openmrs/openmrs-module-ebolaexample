@@ -1,16 +1,19 @@
-<header ng-controller="WardController"><div class="patient-header"><h1>Please select a patient<em>{{ ward.display }}</em></h1></div></header>
+<header ng-controller="WardController">
+    <div class="patient-header">
+        <back-button></back-button>
+        <h1>Please select a patient<em>{{ ward.display }}</em></h1>
+    </div>
+</header>
 <div class="page-wrap spaced" ng-controller="WardController">
     <div ng-show="loading" class="loading-spinner"></div>
     <ul class="tablet-list">
         <li ng-repeat="bedAssignment in ward.bedAssignments">
-            <a class="radio-button card long small" ui-sref="patient.overview({patientUUID: bedAssignment.patient.uuid})">
-    	        <span>{{ getPatientName(bedAssignment.patient.display) }}</span>
-    	        <em>{{ getPatientId(bedAssignment.patient.display) }}</em>
-				<span class="number">{{ bedAssignment.bed.display}}</span>
+            <a class="radio-button card long small"
+               ui-sref="patient.overview({patientUUID: bedAssignment.patient.uuid})">
+                <span>{{ getPatientName(bedAssignment.patient.display) }}</span>
+                <em>{{ getPatientId(bedAssignment.patient.display) }}</em>
+                <span class="number">{{ bedAssignment.bed.display}}</span>
             </a>
         </li>
     </ul>
-</div>
-<div class="actions small">
-    <button class="small left secondary" ui-sref="wards">Back</button>
 </div>
