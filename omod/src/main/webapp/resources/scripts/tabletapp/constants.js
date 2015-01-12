@@ -36,7 +36,7 @@ angular.module("constants", [])
                 },
                 {
                     display: "mg/kg",
-                    uuid: ""
+                    uuid: "162761AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                 },
                 {
                     display: "mL",
@@ -44,7 +44,7 @@ angular.module("constants", [])
                 },
                 {
                     display: "mL/kg",
-                    uuid: ""
+                    uuid: "162762AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                 },
                 {
                     display: "IU",
@@ -56,7 +56,7 @@ angular.module("constants", [])
                 },
                 {
                     display: "mcg/kg",
-                    uuid: ""
+                    uuid: "162766AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                 },
                 {
                     display: "grams",
