@@ -28,11 +28,15 @@ angular.module("session", ["ui.router", "constants", "resources", "patients", "n
                     }).$save();
                     return cachedEncounter;
                 },
-                setRecentWard: function (uuid) {
-                    $cookies[Constants.wardKey] = uuid;
+                setRecentWard: function (ward) {
+                    $cookies[Constants.wardKey] = JSON.stringify(ward);
                 },
                 getRecentWard: function () {
-                    return $cookies[Constants.wardKey];
+                    var ward = $cookies[Constants.wardKey];
+                    if(ward) {
+                        return JSON.parse(ward);
+                    }
+                    return ward;
                 }
             };
         }]);

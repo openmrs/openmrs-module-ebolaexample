@@ -5,7 +5,7 @@ angular.module("directives", [])
                 return function()
                 {
                     var params = $state.params;
-                    params['uuid'] = CurrentSession.getRecentWard();
+                    params['uuid'] = CurrentSession.getRecentWard().uuid;
                     $state.go($state.current.data.back.target, params, {reload: true});
                 }
             }
@@ -14,10 +14,11 @@ angular.module("directives", [])
     .directive('backButton', ['$state', 'BackService', function ($state, BackService) {
         return {
             link: function (scope, element, attrs) {
+                var description = $state.current.data.back.description || attrs.name;
                 element.html('<div class="tablet-navigation">' +
                     '<button class="left small">' +
                     '<i class="fa fa-chevron-left"></i>' +
-                    $state.current.data.back.description +
+                    description +
                     '</button>' +
                     '</div>');
                 element.bind('click', BackService.buildHandler($state));

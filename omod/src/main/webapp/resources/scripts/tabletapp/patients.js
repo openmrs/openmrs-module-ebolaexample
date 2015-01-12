@@ -20,8 +20,8 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
         function ($state, $scope, WardResource, CurrentSession) {
             $scope.loading = true;
             var wardId = $state.params.uuid;
-            CurrentSession.setRecentWard(wardId);
-            $scope.ward = WardResource.get({ uuid: wardId }, function () {
+            $scope.ward = WardResource.get({ uuid: wardId }, function (response) {
+                CurrentSession.setRecentWard(response.toJSON());
                 $scope.loading = false;
             });
 

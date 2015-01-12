@@ -77,7 +77,7 @@ angular.module("prescriptions", ["tabletapp", "constants", "patients"])
                         }
                         setDosing(order, orderJson);
                         new OrderResource(orderJson).$save().then(function (order) {
-                            $state.params['uuid'] = CurrentSession.getRecentWard();
+                            $state.params['uuid'] = CurrentSession.getRecentWard().uuid;
                             $state.params['prescriptionSuccess'] = true;
                             ActiveOrders.reload($scope, $state.params['patientUUID']);
                             $state.go(newState, $state.params);

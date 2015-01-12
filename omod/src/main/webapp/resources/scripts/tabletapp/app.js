@@ -36,7 +36,6 @@ angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "selec
                 data: {
                     requiresLogin: true,
                     back: {
-                        description: "Patients",
                         target: "ward"
                     }
                 }
@@ -47,7 +46,6 @@ angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "selec
                 data: {
                     requiresLogin: true,
                     back: {
-                        description: "Patients",
                         target: "ward"
                     }
                 }

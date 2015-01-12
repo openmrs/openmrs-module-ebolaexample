@@ -169,7 +169,10 @@ describe('prescriptions', function () {
                 httpMock.when('GET', apiUrl + 'drug/999').respond({concept: {uuid: '0987654'}});
                 httpMock.when('GET', apiUrl + 'order?t=drugorder&v=full').respond({});
                 initController = function (stateParams, session) {
-                    session = session || $injector.get('CurrentSession');
+                    if(!session) {
+                        session = $injector.get('CurrentSession');
+                        spyOn(session, 'getRecentWard').andReturn({uuid: 'ward uuid'});
+                    }
                     spyOn(session, "getInfo").andReturn(sessionInfoResponseStub);
                     state['params'] = stateParams || {prescriptionInfo: {uuid: '999'}};
                     $controller('NewPrescriptionDetailsController', {$scope: scope, $state: state});
@@ -235,7 +238,7 @@ describe('prescriptions', function () {
 
         it('should save direct to desired state', function () {
             var currentSession = injector.get('CurrentSession');
-            spyOn(currentSession, 'getRecentWard').andReturn('ward uuid');
+            spyOn(currentSession, 'getRecentWard').andReturn({uuid: 'ward uuid'});
             initController({prescriptionInfo: 'some wild params'}, currentSession);
             order['freeTextInstructions'] = true;
             scope.addOrder['rounds'] = {
