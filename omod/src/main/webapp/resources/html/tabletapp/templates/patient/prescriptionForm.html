@@ -1,7 +1,6 @@
 <form class="full-content" ng-controller="NewPrescriptionDetailsController" xmlns="http://www.w3.org/1999/html" ng-show="addOrder.drug" name="addOrder.form">
     <header>
         <div class="patient-header">
-            <back-button></back-button>
             <span class="patient-id">
                 <small>PATIENT ID</small>
                 {{ getPatientId() }}
@@ -112,6 +111,7 @@
         </div>
     </div>
     <div class="actions small">
+        <cancel-button></cancel-button>
         <button class="right small" type="submit" ng-click="save(addOrder, 'patient.overview')">Save</button>
     </div>
 </form>
