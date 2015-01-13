@@ -2,66 +2,7 @@
     ui.includeJavascript("uicommons", "handlebars/handlebars.min.js")
     ui.includeCss("ebolaexample", "overview/ebolaOverview.css")
     ui.decorateWith("appui", "standardEmrPage")
-%>
-<script type="text/template" id="last-encounter-template">
-<!-- TO DO: do not make this template more complex! We need to provide a better representation, e.g. that knows about symptoms  -->
-<ul>
-    <li>
-        <em>
-            {{display location}}
-            -
-            {{date encounterDatetime}}
-        </em>
-    </li>
-    {{#each obs}}
-    <li>
-        {{#if this.value}}
-        {{display this.concept}}: {{display this.value}}
-        {{else}}
-        {{#each this.groupMembers}}
-        {{display this.value}}
-        {{/each}}
-        {{/if}}
-    </li>
-    {{/each}}
-</ul>
-</script>
 
-<script type="text/javascript">
-    var breadcrumbs = [
-        {icon: "icon-home", link: '/' + OPENMRS_CONTEXT_PATH + '/index.htm'},
-
-        <% if (wardAndBed && wardAndBed.ward) { %>
-        {
-            label: "${ ui.format(wardAndBed.ward) }",
-            link: '${ ui.escapeJs(ui.pageLink("ebolaexample", "findPatientByWard", [ ward: wardAndBed.ward.uuid ])) }'
-        },
-        <% } %>
-
-        <% if (patient) { %>
-        {
-            label: "<% patient.names.each { name -> def pName = name %> ${pName.fullName} <% } %>",
-            link: '${ ui.escapeJs(ui.pageLink("ebolaexample", "ebolaOverview", [ patient: patient.uuid ])) }'
-        },
-        <% } %>
-
-        {label: "Assign Bed"}
-    ]
-    var patient = {id: ${ patient.id }};
-
-    Handlebars.registerHelper('display', function (obj) {
-        return obj ? (obj.display ? obj.display : obj) : "";
-    });
-    Handlebars.registerHelper('date', function (obj) {
-        return obj ? new Date(obj).toLocaleString() : "";
-    });
-
-    var lastEncounterTemplate = Handlebars.compile(jq('#last-encounter-template').html());
-</script>
-
-<div class="clear"></div>
-
-<%
     def EmrApiConstants = context.loadClass("org.openmrs.module.emrapi.EmrApiConstants")
 
     ui.includeJavascript("uicommons", "angular.min.js")
@@ -71,6 +12,7 @@
     ui.includeJavascript("uicommons", "angular-ui/ui-bootstrap-tpls-0.11.2.js")
     ui.includeJavascript("uicommons", "services/locationService.js")
 
+    ui.includeJavascript("ebolaexample", "tabletapp/resources.js")
     ui.includeJavascript("ebolaexample", "overview/inpatientLocation.js")
 
     ui.includeCss("ebolaexample", "overview/inpatientLocation.css")
@@ -148,10 +90,11 @@
 
                 <h2>Select the bed</h2>
 
-                <div class="button-group" ng-show="changeToWard">
-                    <label ng-repeat="bed in bedsForWard(changeToWard)" class="button {{changeToBed.uuid == bed.uuid ?'assigned':''}}"
-                           ng-model="\$parent.changeToBed" btn-radio="bed"
-                           uncheckable>
+                <div class="button-group">
+                    <label ng-repeat="bed in bedsInWard"
+                           class="button {{changeToBed.uuid == bed.uuid ?'assigned':''}} {{strContains(bed.display, occupied)?'occupied-bed':''}}"
+                           ng-model="\$parent.changeToBed" btn-radio="bed" uncheckable
+                            >
                         {{ bed.display }}
                     </label>
                 </div>

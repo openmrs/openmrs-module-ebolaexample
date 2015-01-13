@@ -8,6 +8,7 @@
     ui.includeJavascript("uicommons", "angular-ui/ui-bootstrap-tpls-0.11.2.js")
     ui.includeJavascript("uicommons", "services/locationService.js")
 
+    ui.includeJavascript("ebolaexample", "tabletapp/resources.js")
     ui.includeJavascript("ebolaexample", "overview/inpatientLocation.js")
 
     ui.includeCss("ebolaexample", "overview/inpatientLocation.css")

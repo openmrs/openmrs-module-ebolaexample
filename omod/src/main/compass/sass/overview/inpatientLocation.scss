@@ -1,5 +1,5 @@
 .current-ward, .current-bed {
-  font-size: 2em;
+  font-size: 1em;
 }
 
 #making-changes {
@@ -7,4 +7,22 @@
     padding: 8px 4px;
     margin: 2px;
   }
+}
+
+.assigned {
+  background: #88C418 !important;
+  color: #fff !important;
+}
+
+.locationFormDiv {
+  border: 1px solid #E2E2E2;
+  background: #F5F5F5;
+  padding: 3px;
+  border-radius: 2px;
+  margin-bottom: 5px;
+}
+
+.occupied-bed {
+  color: #F9444C !important;
+  font-style: italic;
 }
