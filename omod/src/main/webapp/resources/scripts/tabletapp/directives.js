@@ -34,4 +34,18 @@ angular.module("directives", [])
                 element.bind('click', BackService.buildHandler($state));
             }
         }
+    }])
+    .directive('patientHeader', [function() {
+        return {
+            templateUrl: 'templates/patient/patientHeader.html',
+            transclude: true,
+            link: function(scope, element, attrs)  {
+                scope.$watch(attrs.patient, function(value) {
+                    scope.patient = value;
+                });
+                scope.$watch(attrs.patientId, function(value) {
+                    scope.patientId = value;
+                })
+            }
+        }
     }]);

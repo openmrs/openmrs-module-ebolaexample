@@ -1,27 +1,7 @@
 <form class="full-content" ng-controller="NewPrescriptionDetailsController" xmlns="http://www.w3.org/1999/html" ng-show="addOrder.drug" name="addOrder.form">
     <header>
-        <div class="patient-header">
-            <span class="patient-id">
-                <small>PATIENT ID</small>
-                {{ getPatientId() }}
-            </span>
-            <span class="patient-id">
-                <small>NAME</small>
-                {{ patient.person.display }}
-            </span>
-            <span class="patient-id">
-                <small>GENDER - AGE</small>
-                {{ patient.person.gender }} - {{ patient.person.age }}
-            </span>
-            <span class="patient-info">
-                <small>WARD</small>
-                12
-            </span>
-            <span class="patient-info">
-                <small>BED</small>
-                27
-            </span>
-        </div>
+        <patient-header patient-id="getPatientId()"
+                        patient="patient"></patient-header>
     </header>
     <span class="error-message" ng-show="serverError">There was an error saving this prescription</span>
     <div class="page-wrap-smaller">
