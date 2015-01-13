@@ -45,8 +45,9 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
 
     .controller("PatientController", [ "$state", "$scope", "PatientResource", "OrderResource", "ngDialog",
         "$rootScope", "Constants", "ScheduledDoseResource", "CurrentSession", "StopOrderService", "ActiveOrders",
+        "PastOrders",
         function ($state, $scope, PatientResource, OrderResource, ngDialog, $rootScope, Constants,
-                  ScheduledDoseResource, CurrentSession, StopOrderService, ActiveOrders) {
+                  ScheduledDoseResource, CurrentSession, StopOrderService, ActiveOrders, PastOrders) {
             var patientUuid = $state.params.patientUUID;
             $scope.hasErrors = false;
             $scope.patient = PatientResource.get({ uuid: patientUuid });
@@ -74,6 +75,11 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
 
             $scope.getWard = function () {
                 return CurrentSession.getRecentWard();
+            };
+
+            $scope.loadPastOrders = function(patientUuid) {
+                $scope.loadingPastOrders = true;
+                $scope.pastOrders = PastOrders.get($scope, patientUuid);
             };
 
             $scope.showAdminister = function (order) {
@@ -153,6 +159,23 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             },
             get: function() {
                 return cachedOrders;
+            }
+        }
+    }])
+
+    .factory("PastOrders", ['OrderResource', function (OrderResource) {
+        var cachedOrders;
+        return {
+            get: function(scope, patientUuid) {
+                if(cachedOrders) {
+                    return cachedOrders;
+                } else {
+                    return OrderResource.query({ t: "drugorder", v: 'full', patient: patientUuid, expired: true}, function (response) {
+                        scope.loadedPastOrders = true;
+                        scope.loadingPastOrders = false;
+                        cachedOrders = response;
+                    })
+                }
             }
         }
     }])

@@ -32,6 +32,30 @@
         </li>
     </ul>
 
+    <span ng-show="!loading" class="question-title">Past Prescriptions</span>
+    <div ng-show="loadingPastOrders" class="loading-spinner"></div>
+    <ul ng-show="!loading && loadedPastOrders" class="list-items">
+        <li ng-repeat="order in pastOrders.results | orderBy:'dateActivated':true">
+            <span class="left">
+                <span class="drug-name">{{ order.concept.display }}</span><em>{{ order.drug.display }}</em>
+                <span class="date">({{ order.dateActivated | date: 'dd MMM' }})</span>
+                <div>
+                    <em>
+                        {{order.dose}}
+                        {{order.doseUnits.names[0].display}}
+                        <span ng-show="order.route.display">by {{ order.route.display }}</span>
+                        <span ng-show="order.dose">each</span> {{ order.dosingInstructions }}
+                        <span ng-show="order.duration">for {{ order.duration }} days</span>
+                        <span class="tag" ng-show="order.asNeeded">In case of {{ order.asNeededCondition }}</span>
+                    </em>
+                </div>
+            </span>
+        </li>
+    </ul>
+    <div class="yellow-button-container">
+        <button class="small left" ng-show="!loadedPastOrders" ng-click="loadPastOrders(patient.uuid)">Show Past Orders</button>
+    </div>
+
     <script type="text/ng-template" id="administerDialog">
         <ng-include src="'templates/patient/administerDrugDialog.html'"></ng-include>
     </script>

@@ -159,20 +159,7 @@ input[type="number"] {
   }
 }
 
-.actions {
-  padding: 10px;
-  background: #666;
-  margin-top: 10px;
-  height: 80px;
-
-  &.small {
-    height: 60px;
-  }
-
-  &.white-background {
-    background: #FFF;
-  }
-
+@mixin yellow-button {
   button {
     font-size: 2.4em;
     margin: 0 0.2em;
@@ -189,6 +176,27 @@ input[type="number"] {
       font-size: 1.7em;
     }
   }
+}
+
+.yellow-button-container {
+  @include yellow-button;
+}
+
+.actions {
+  padding: 10px;
+  background: #666;
+  margin-top: 10px;
+  height: 80px;
+
+  &.small {
+    height: 60px;
+  }
+
+  &.white-background {
+    background: #FFF;
+  }
+
+  @include yellow-button;
 }
 
 .tablet-navigation {
