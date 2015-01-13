@@ -5,8 +5,7 @@
             if (val == '') {
                 return emrMessages['requiredField']; //"Required";
             }
-            // var query = { s: "patientByIdentifier", identifier: val }; for some reason this search handler isn't registered in my running app
-            var query = { q: val };
+            var query = { s: "patientByIdentifier", identifier: val };
             jq.getJSON('/' + OPENMRS_CONTEXT_PATH + '/ws/rest/v1/patient', query, function(result) {
                 if (result.results.length > 0) {
                     console.log(field);
