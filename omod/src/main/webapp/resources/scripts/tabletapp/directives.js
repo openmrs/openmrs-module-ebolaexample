@@ -35,17 +35,19 @@ angular.module("directives", [])
             }
         }
     }])
-    .directive('patientHeader', [function() {
+    .directive('patientHeader', ['WardService', function(WardService) {
         return {
             templateUrl: 'templates/patient/patientHeader.html',
             transclude: true,
             link: function(scope, element, attrs)  {
-                scope.$watch(attrs.patient, function(value) {
-                    scope.patient = value;
+                scope.$watch(attrs.patient, function(patient) {
+                    scope.patientInfo = patient;
                 });
                 scope.$watch(attrs.patientId, function(value) {
                     scope.patientId = value;
-                })
+                });
+                scope.bed = WardService.getBedDescriptionFor(scope.patient);
+                scope.ward = WardService.getWardDescription();
             }
         }
     }]);

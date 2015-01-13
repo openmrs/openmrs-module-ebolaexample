@@ -6,18 +6,18 @@
     </span>
     <span class="patient-id">
         <small>NAME</small>
-        {{ patient.person.display }}
+        {{ patientInfo.person.display }}
     </span>
     <span class="patient-id">
         <small>GENDER - AGE</small>
-        {{ patient.person.gender }} - {{ patient.person.age }}
+        {{ patientInfo.person.gender }} - {{ patientInfo.person.age }}
     </span>
     <span class="patient-info">
         <small>WARD</small>
-        12
+        {{ ward }}
     </span>
     <span class="patient-info">
         <small>BED</small>
-        27
+        {{ bed.display }}
     </span>
 </div>
