@@ -1,5 +1,6 @@
 package org.openmrs.module.ebolaexample.domain;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openmrs.DosingInstructions;
 import org.openmrs.DrugOrder;
 import org.openmrs.FreeTextDosingInstructions;
@@ -28,7 +29,10 @@ public class UnvalidatedFreeTextDosingInstructions extends FreeTextDosingInstruc
     @Override
     public String getDosingInstructionsAsString(Locale locale) {
         String instructions = this.getInstructions();
-        return instructions == null ? "" : instructions;
+        if (StringUtils.isEmpty(instructions)) {
+            instructions = "<em>Instructions were left blank</em>";
+        }
+        return instructions;
     }
 
 }

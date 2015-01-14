@@ -7,13 +7,26 @@
         <i class="icon-medkit"></i>
 
         <h3>Prescriptions</h3>
+
+        <% if (showAll) { %>
+            <a class="right" href="${ ui.pageLink("ebolaexample", "ebolaOverview", [ patient: patient.patient.uuid ]) }">
+                Back to Summary
+            </a>
+        <% } else { %>
+            <a class="right" href="${ui.pageLink("ebolaexample", "allPrescriptions", [ patient: patient.patient.id ])}">
+                View All
+            </a>
+        <% } %>
+
     </div>
 
     <div class="info-body">
         <% if (groupedOrders.size() > 0) { %>
             <ul>
-                <% groupedOrders.each { group -> %>
-                    <li class="prescription-group<% if (group.key.flags.contains("inactive")) { %> inactive<% } %>">
+                <% groupedOrders.each { group ->
+                    def groupInactive = group.key.flags.contains("inactive");
+                %>
+                    <li class="prescription-group<% if (groupInactive) { %> inactive<% } %>">
                         <% if (group.key.flags.contains("recent")) { %>
                             <span class="lozenge recent">RECENT</span>
                         <% } %>
@@ -39,7 +52,13 @@
                                         <% } %>
                                     </span>
                                     <% if (!it.active) { %>
-                                        <span class="lozenge stopped">STOPPED</span>
+                                        <% if (!groupInactive) { %>
+                                            <span class="lozenge stopped">
+                                        <% } %>
+                                        ${ it.dateStopped ? "STOPPED" : "EXPIRED" }
+                                        <% if (!groupInactive) { %>
+                                            </span>
+                                        <% } %>
                                     <% } %>
                                     ${ it.dosingInstructionsInstance.getDosingInstructionsAsString(context.locale) }
                                 </li>

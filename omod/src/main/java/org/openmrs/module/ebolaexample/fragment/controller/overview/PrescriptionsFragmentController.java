@@ -29,11 +29,13 @@ import java.util.Set;
 public class PrescriptionsFragmentController {
 
     public void controller(@FragmentParam("patient") PatientDomainWrapper patient,
+                           @FragmentParam(value = "showAll", defaultValue = "false") Boolean showAll,
                            @SpringBean("orderService") OrderService orderService,
                            FragmentModel model) {
         OrderType orderType = orderService.getOrderTypeByUuid(OrderType.DRUG_ORDER_TYPE_UUID);
 
-        List<Order> orders = getActiveAndRecentOrders(orderService, patient.getPatient(), orderType);
+        boolean onlyRecent = !showAll;
+        List<Order> orders = getOrders(orderService, patient.getPatient(), orderType, onlyRecent);
 
         DrugGroupMapping groups = new DrugGroupMapping();
         for (Order order : orders) {
@@ -66,6 +68,7 @@ public class PrescriptionsFragmentController {
         });
 
         model.put("groupedOrders", groupList);
+        model.put("showAll", showAll);
     }
 
     private void applyFlag(List<Map.Entry<ConceptAndDrug, List<DrugOrder>>> groupList, String flag, Predicate predicate) {
@@ -76,7 +79,7 @@ public class PrescriptionsFragmentController {
         }
     }
 
-    private List<Order> getActiveAndRecentOrders(OrderService orderService, Patient patient, OrderType orderType) {
+    private List<Order> getOrders(OrderService orderService, Patient patient, OrderType orderType, final boolean onlyRecent) {
         final Date cutoff = new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000); // 24 hours ago
         List<Order> orders = orderService.getAllOrdersByPatient(patient);
         CollectionUtils.filter(orders, new Predicate() {
@@ -89,10 +92,15 @@ public class PrescriptionsFragmentController {
                 if (candidate.isVoided() || candidate.getAction() == Order.Action.DISCONTINUE) {
                     return false;
                 }
-                // since as far as OpenMRS 1.10.1 the "isActive" method is wrong (it doesn't include active orders
-                // scheduled for the future) we avoid using it.
-                Date endDate = candidate.getEffectiveStopDate();
-                return endDate == null || endDate.after(cutoff);
+                if (onlyRecent) {
+                    // since as far as OpenMRS 1.10.1 the "isActive" method is wrong (it doesn't include active orders
+                    // scheduled for the future) we avoid using it.
+                    Date endDate = candidate.getEffectiveStopDate();
+                    return endDate == null || endDate.after(cutoff);
+                }
+                else {
+                    return true;
+                }
             }
         });
         return orders;
@@ -182,13 +190,23 @@ public class PrescriptionsFragmentController {
     private Date mostRecentChange(List<DrugOrder> list) {
         Date mostRecent = null;
         for (DrugOrder drugOrder : list) {
-            mostRecent = max(mostRecent, drugOrder.getDateActivated(), drugOrder.getDateStopped(), drugOrder.getDateChanged());
+            mostRecent = max(mostRecent, drugOrder.getDateActivated(), actualStopDate(drugOrder), drugOrder.getDateChanged());
         }
         return mostRecent;
     }
 
     private Date mostRecentChange(DrugOrder order) {
-        return max(order.getDateActivated(), order.getDateStopped(), order.getDateChanged());
+        return max(order.getDateActivated(), actualStopDate(order), order.getDateChanged());
+    }
+
+    private Date actualStopDate(DrugOrder order) {
+        if (order.getDateStopped() != null) {
+            return order.getDateStopped();
+        }
+        if (order.getAutoExpireDate() != null && OpenmrsUtil.compare(order.getAutoExpireDate(), new Date()) < 0) {
+            return order.getAutoExpireDate();
+        }
+        return null;
     }
 
     private Date max(Date... dates) {

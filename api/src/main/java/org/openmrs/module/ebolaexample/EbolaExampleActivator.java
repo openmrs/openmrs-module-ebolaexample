@@ -16,10 +16,13 @@ package org.openmrs.module.ebolaexample;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.Concept;
+import org.openmrs.ConceptName;
 import org.openmrs.GlobalProperty;
 import org.openmrs.Location;
 import org.openmrs.LocationTag;
 import org.openmrs.api.AdministrationService;
+import org.openmrs.api.ConceptService;
 import org.openmrs.api.FormService;
 import org.openmrs.api.LocationService;
 import org.openmrs.api.context.Context;
@@ -40,6 +43,7 @@ import org.openmrs.ui.framework.resource.ResourceFactory;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * This class contains the logic that is run every time this module is either started or stopped.
@@ -56,6 +60,7 @@ public class EbolaExampleActivator extends BaseModuleActivator {
             FormService formService = Context.getFormService();
             HtmlFormEntryService htmlFormEntryService = Context.getService(HtmlFormEntryService.class);
             LocationService locationService = Context.getLocationService();
+            ConceptService conceptService = Context.getConceptService();
             EmrApiProperties emrApiProperties = Context.getRegisteredComponents(EmrApiProperties.class).get(0);
 
             deployMetadataPackages(metadataDeployService);
@@ -67,7 +72,9 @@ public class EbolaExampleActivator extends BaseModuleActivator {
             disableApps(Context.getService(AppFrameworkService.class));
 
             removeTagsFromUnknownLocation(locationService, emrApiProperties);
-            
+
+            setPreferredConceptNames(conceptService);
+
             // hack to set the SCI-requested address format for Sierra Leone
             GlobalProperty sciAddressTemplate = new GlobalProperty("layout.address.format",
             		"<org.openmrs.layout.web.address.AddressTemplate>"
@@ -101,6 +108,41 @@ public class EbolaExampleActivator extends BaseModuleActivator {
             ModuleFactory.stopModule(mod);
             throw new RuntimeException("Failed to set up the ebolaexample module", ex);
         }
+    }
+
+    private void setPreferredConceptNames(ConceptService service) {
+        setPreferredConceptName(service, "160240AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Oral");
+//        setPreferredConceptName(service, "162394AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "IV");
+//        setPreferredConceptName(service, "160243AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "IM");
+//        setPreferredConceptName(service, "161553AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "mg");
+//        setPreferredConceptName(service, "161554AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "g");
+//        setPreferredConceptName(service, "162263AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "mL");
+//        setPreferredConceptName(service, "162761AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "mg/kg");
+    }
+
+    // not private so we can test it
+    void setPreferredConceptName(ConceptService service, String uuid, String preferredEnglishName) {
+        Concept concept = service.getConceptByUuid(uuid);
+        if (concept == null) {
+            log.warn("Cannot find concept with uuid " + uuid + " (so not setting preferred name to " + preferredEnglishName);
+            return;
+        }
+        ConceptName old = concept.getPreferredName(Locale.ENGLISH);
+        if (old != null && old.getName().equals(preferredEnglishName)) {
+            // already set correctly
+            return;
+        }
+        for (ConceptName candidate : concept.getNames(Locale.ENGLISH)) {
+            if (candidate.getName().equals(preferredEnglishName)) {
+                candidate.setLocalePreferred(true);
+                old.setLocalePreferred(false);
+                service.saveConcept(concept);
+                return;
+            }
+        }
+
+        // if we get here that means we didn't find the wanted name in the loop above
+        log.warn("Cannot find a name \"" + preferredEnglishName + "\" on concept " + uuid);
     }
 
     private void setupHtmlForms(FormService formService, HtmlFormEntryService htmlFormEntryService) throws Exception {
