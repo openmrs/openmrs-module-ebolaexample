@@ -52,8 +52,8 @@
             </span>
         </li>
     </ul>
-    <div class="yellow-button-container">
-        <button class="small left" ng-show="!loadedPastOrders" ng-click="loadPastOrders(patient.uuid)">Show Past Orders</button>
+    <div class="yellow-button-container" ng-show="!loadingPastOrders">
+        <button class="small left" ng-show="!loadedPastOrders" ng-click="loadPastOrders(patient.uuid)">Load Past Prescriptions</button>
     </div>
 
     <script type="text/ng-template" id="administerDialog">
