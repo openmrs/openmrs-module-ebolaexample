@@ -56,8 +56,13 @@ public class KerryTownAfterPatientCreatedAction implements AfterPatientCreatedAc
         if (params.get("kerryTownId") != null && params.get(KERRY_TOWN_ID).length > 0) {
             String kerryTownId = params.get("kerryTownId")[0];
             if (StringUtils.isNotEmpty(kerryTownId)) {
+                if (patient.getPatientIdentifier() != null) {
+                    patient.getPatientIdentifier().setPreferred(false);
+                }
                 PatientIdentifierType identifierType = MetadataUtils.existing(PatientIdentifierType.class, KerryTownMetadata._PatientIdentifierType.KERRY_TOWN_IDENTIFIER);
-                patient.addIdentifier(new PatientIdentifier(kerryTownId, identifierType, null));
+                PatientIdentifier patientIdentifier = new PatientIdentifier(kerryTownId, identifierType, null);
+                patientIdentifier.setPreferred(true);
+                patient.addIdentifier(patientIdentifier);
                 patientService.savePatient(patient);
             }
         }
