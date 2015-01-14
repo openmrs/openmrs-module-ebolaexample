@@ -283,6 +283,7 @@
                     <jsSrcDir>src/main/webapp/resources/scripts/tabletapp</jsSrcDir>
                     <jsTestSrcDir>src/test/webapp/resources/scripts/tabletapp</jsTestSrcDir>
                     <preloadSources>
+                        <source>src/main/webapp/resources/scripts/lib/jquery/jquery-2.1.1.min.js</source>
                         <source>src/main/webapp/resources/bower_components/angular/angular.js</source>
                         <source>src/main/webapp/resources/bower_components/ngDialog/js/ngDialog.js</source>
                         <source>src/main/webapp/resources/scripts/lib/angular/angular-resource.js</source>
@@ -290,7 +291,6 @@
                         <source>src/main/webapp/resources/scripts/lib/angular/angular-mocks.js</source>
                         <source>src/main/webapp/resources/scripts/lib/ui-router/angular-ui-router.js</source>
                         <source>src/main/webapp/resources/scripts/lib/lodash/dist/lodash.js</source>
-                        <source>src/main/webapp/resources/scripts/lib/jquery/jquery-2.1.1.min.js</source>
                         <source>src/main/webapp/resources/scripts/tabletapp/app.js</source>
                         <source>src/main/webapp/resources/scripts/tabletapp/login.js</source>
                         <source>src/main/webapp/resources/scripts/tabletapp/session.js</source>
