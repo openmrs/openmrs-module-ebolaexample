@@ -15,7 +15,9 @@ angular.module("prescriptions", ["tabletapp", "constants", "patients"])
                 var preexistingOrder = PrescriptionService.formOrderFromResponse(response);
                 PrescriptionSetup.setupScopeConstants($scope);
                 PrescriptionSetup.setupDrugOrder($scope, undefined, $scope.patient, preexistingOrder);
-                $scope.save = PrescriptionService.buildSaveHandler($scope, $state);
+                $scope.save = function(order, where) {
+                    var what = '';
+                }
             });
         }])
 

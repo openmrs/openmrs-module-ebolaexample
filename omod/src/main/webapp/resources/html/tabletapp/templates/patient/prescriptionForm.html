@@ -24,11 +24,11 @@
                     <select ng-model="addOrder.drug.route.uuid"
                             ng-required="!addOrder.freeTextInstructions && !routeProvided"
                             name="route"
+                            ng-options="route.uuid as route.display for route in routes"
                             ng-class="{error: addOrder.form.route.$invalid && hasErrors}"
                             ng-focus="focusInput($event)"
                             ng-blur="blurInput($event)">
                         <option></option>
-                        <option ng-repeat="route in routes" value="{{route.uuid}}">{{route.display}}</option>
                     </select>
                 </span>
             </div>
@@ -43,12 +43,10 @@
                     <select ng-model="addOrder.drug.doseUnits"
                             ng-required="!addOrder.freeTextInstructions"
                             name="doseUnits"
+                            ng-options="doseUnit.uuid as doseUnit.display for doseUnit in doseUnits | orderBy:'display'"
                             ng-focus="focusInput($event)"
                             ng-blur="blurInput($event)">
                         <option></option>
-                        <option ng-repeat="doseUnit in doseUnits | orderBy:'display'" value="{{doseUnit.uuid}}">
-                            {{doseUnit.display}}
-                        </option>
                     </select>
                 </span>
             </span>
