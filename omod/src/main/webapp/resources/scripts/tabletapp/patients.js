@@ -127,7 +127,7 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             $scope.stopOrder = StopOrderService.stopOrder;
 
             $scope.editOrder = function(order) {
-                $state.go('patient.editPrescriptionDetails');
+                $state.go('patient.editPrescriptionDetails', { orderUuid: order.uuid });
             }
 
             $scope.showStoppingError = function() {

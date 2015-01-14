@@ -87,10 +87,9 @@ angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "selec
                 }
             })
             .state("patient.editPrescriptionDetails", {
-                url: "/editPrescription",
+                url: "/editPrescription/:orderUuid",
                 controller: "EditPrescriptionDetailsController",
                 templateUrl: "templates/patient/prescriptionForm.html",
-                params: { prescriptionInfo: null },
                 data: {
                     requiresLogin: true,
                     back: {

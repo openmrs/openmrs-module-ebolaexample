@@ -14,7 +14,7 @@
         </div>
         <div ng-show="addOrder.freeTextInstructions">
             <span class="question-title">INSTRUCTIONS</span>
-            <textarea ng-model="addOrder.instructions" rows="5" cols="60"></textarea>
+            <textarea ng-model="addOrder.dosingInstructions" rows="5" cols="60"></textarea>
         </div>
         <div ng-show="!addOrder.freeTextInstructions">
             <div ng-hide="routeProvided">
@@ -24,7 +24,7 @@
                             ng-required="!addOrder.freeTextInstructions && !routeProvided"
                             name="route"
                             ng-class="{error: addOrder.form.route.$invalid && hasErrors}"
-                            ng-focus="focusInput($event)" 
+                            ng-focus="focusInput($event)"
                             ng-blur="blurInput($event)">
                         <option></option>
                         <option ng-repeat="route in routes" value="{{route.uuid}}">{{route.display}}</option>
@@ -41,7 +41,7 @@
                     <select ng-model="addOrder.drug.doseUnits"
                             ng-required="!addOrder.freeTextInstructions"
                             name="doseUnits"
-                            ng-focus="focusInput($event)" 
+                            ng-focus="focusInput($event)"
                             ng-blur="blurInput($event)">
                         <option></option>
                         <option ng-repeat="doseUnit in doseUnits | orderBy:'display'" value="{{doseUnit.uuid}}">{{doseUnit.display}}
@@ -65,8 +65,8 @@
 
                 <div class="input-container">
                     <input ng-model="addOrder.drug.duration" type="number"
-                           name="duration" 
-                           ng-focus="focusInput($event)" 
+                           name="duration"
+                           ng-focus="focusInput($event)"
                            ng-blur="blurInput($event)">
                     <span class="unit">days</span>
                 </div>

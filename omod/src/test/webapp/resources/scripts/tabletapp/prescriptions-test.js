@@ -372,4 +372,72 @@ describe('prescriptions', function () {
             this.expect(scope.routeProvided).toBeFalsy();
         });
     });
+
+    describe('NewPrescriptionDetailsController', function () {
+
+        var httpMock,
+            scope,
+            encounterResponseStub = { uuid: 'ENCOUNTER_ID' },
+            orderResponseStub = { uuid: 'NEW ORDER UUID' },
+            sessionInfoResponseStub = {
+                user: { uuid: "USER_UUID" },
+                person: { uuid: "PERSON_UUID" },
+                provider: { uuid: "PROVIDER_1_UUID" }
+            },
+            order,
+            expectedOrderPost,
+            initController,
+            state,
+            injector;
+
+        beforeEach(function () {
+            expectedOrderPost = {
+                "type": "drugorder",
+                "patient": "PATIENT_UUID",
+                "drug": "DRUG_UUID",
+                "encounter": "ENCOUNTER_ID",
+                "careSetting": "c365e560-c3ec-11e3-9c1a-0800200c9a66",
+                "orderer": "PROVIDER_1_UUID",
+                "concept": 'CONCEPT_UUID'
+            };
+            order = {
+                patient: { uuid: 'PATIENT_UUID' },
+                drug: {
+                    uuid: 'DRUG_UUID',
+                    concept: { uuid: 'CONCEPT_UUID' }},
+                rounds: {Morning: true},
+                instructions: 'Drug instructions',
+                freeTextInstructions: false,
+                form: {$valid: true}
+            };
+
+            inject(function ($state, $controller, $rootScope, $httpBackend, $injector) {
+                httpMock = $httpBackend;
+                scope = $rootScope.$new();
+                scope.addOrder = {};
+                httpMock.when('GET', 'templates/wards.html').respond({});
+                httpMock.flush();
+                state = $state;
+                spyOn(state, 'go');
+                injector = $injector;
+                httpMock.when('POST', apiUrl + 'encounter').respond(encounterResponseStub);
+                httpMock.when('POST', apiUrl + 'order').respond(orderResponseStub);
+                initController = function (stateParams) {
+                    var session = $injector.get('CurrentSession');
+                    spyOn(session, 'getRecentWard').andReturn({uuid: 'ward uuid'});
+                    spyOn(session, 'getInfo').andReturn(sessionInfoResponseStub);
+                    state['params'] = stateParams || {orderUuid: '999'};
+                    $controller('EditPrescriptionDetailsController', {$scope: scope, $state: state});
+                }
+            });
+        });
+
+        it('should load order information from web service', function () {
+            httpMock.expectGET(apiUrl + 'order/4321').respond(order);
+            initController({orderUuid: '4321'});
+            httpMock.flush();
+            this.expect(scope.addOrder.drug).toEqual({ uuid : 'DRUG_UUID', concept : { uuid : 'CONCEPT_UUID' }, asNeededCondition : '' });
+            this.expect(scope.addOrder.rounds).toEqual({ Morning : true, Afternoon : false, Evening : false, Night : false });
+        });
+    });
 });
