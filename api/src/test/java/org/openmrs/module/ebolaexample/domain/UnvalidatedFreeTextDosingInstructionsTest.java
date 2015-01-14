@@ -40,10 +40,10 @@ public class UnvalidatedFreeTextDosingInstructionsTest extends BaseModuleContext
     }
 
     @Test
-    public void getDosingInstructionsAsString_returnsEmptyStringsInsteadOfNull() {
+    public void getDosingInstructionsAsString_returnsPlaceholderStringInsteadOfNull() {
         DrugOrder drugOrder = new DrugOrder();
         drugOrder.setDosingType(UnvalidatedFreeTextDosingInstructions.class);
         DosingInstructions dosingInstructions = new UnvalidatedFreeTextDosingInstructions().getDosingInstructions(drugOrder);
-        assertEquals("", dosingInstructions.getDosingInstructionsAsString(Context.getLocale()));
+        assertEquals("<em>Instructions were left blank</em>", dosingInstructions.getDosingInstructionsAsString(Context.getLocale()));
     }
 }
