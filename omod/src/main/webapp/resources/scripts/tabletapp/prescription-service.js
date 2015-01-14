@@ -51,25 +51,27 @@ angular.module('prescription-service', ['tabletapp'])
             }
 
             return {
-                buildSaveHandler: function($scope, $state) {
-                    return function(order, newState) {
+                buildSaveHandler: function ($scope, $state) {
+                    return function (order, newState) {
                         savePrescription(order, newState, $scope, $state);
                     }
                 },
-                formOrderFromResponse: function(orderJson) {
+                formOrderFromResponse: function (orderJson) {
                     var order = {
                         drug: {
                             route: {}
                         }
                     };
                     order.freeTextInstructions = orderJson["dosingType"] == Constants.dosingType.unvalidatedFreeText;
-                    if(order.freeTextInstructions) {
+                    if (order.freeTextInstructions) {
                         order.dosingInstructions = orderJson["dosingInstructions"];
                     } else {
-                        var rounds = {}
-                        _.each(orderJson["dosingInstructions"].split(", "), function(v, i) {
-                            rounds[v] = true;
-                        });
+                        if (orderJson["dosingInstructions"]) {
+                            var rounds = {}
+                            _.each(orderJson["dosingInstructions"].split(", "), function (v, i) {
+                                rounds[v] = true;
+                            });
+                        }
                         order.rounds = rounds;
                         order.drug.dose = orderJson["dose"];
                         order.drug.doseUnits = orderJson["doseUnits"]["uuid"];

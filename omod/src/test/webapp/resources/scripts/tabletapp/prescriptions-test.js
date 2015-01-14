@@ -148,9 +148,13 @@ describe('prescriptions', function () {
                 patient: { uuid: 'PATIENT_UUID' },
                 drug: {
                     uuid: 'DRUG_UUID',
-                    concept: { uuid: 'CONCEPT_UUID' }},
+                    concept: { uuid: 'CONCEPT_UUID' }
+                },
+                doseUnits: {
+                    uuid: '1234AAAA'
+                },
                 rounds: {Morning: true},
-                instructions: 'Drug instructions',
+                dosingInstructions: 'Drug instructions',
                 freeTextInstructions: false,
                 form: {$valid: true}
             };
@@ -169,7 +173,7 @@ describe('prescriptions', function () {
                 httpMock.when('GET', apiUrl + 'drug/999').respond({concept: {uuid: '0987654'}});
                 httpMock.when('GET', apiUrl + 'order?t=drugorder&v=full').respond({});
                 initController = function (stateParams, session) {
-                    if(!session) {
+                    if (!session) {
                         session = $injector.get('CurrentSession');
                         spyOn(session, 'getRecentWard').andReturn({uuid: 'ward uuid'});
                     }
@@ -373,7 +377,7 @@ describe('prescriptions', function () {
         });
     });
 
-    describe('NewPrescriptionDetailsController', function () {
+    describe('EditPrescriptionDetailsController', function () {
 
         var httpMock,
             scope,
@@ -385,31 +389,31 @@ describe('prescriptions', function () {
                 provider: { uuid: "PROVIDER_1_UUID" }
             },
             order,
-            expectedOrderPost,
+            orderJson,
             initController,
-            state,
-            injector;
+            state;
 
         beforeEach(function () {
-            expectedOrderPost = {
-                "type": "drugorder",
-                "patient": "PATIENT_UUID",
-                "drug": "DRUG_UUID",
-                "encounter": "ENCOUNTER_ID",
-                "careSetting": "c365e560-c3ec-11e3-9c1a-0800200c9a66",
-                "orderer": "PROVIDER_1_UUID",
-                "concept": 'CONCEPT_UUID'
+
+            orderJson = {
+                "uuid":"48d9fbbd-36b6-4c16-be18-01411d41b23e",
+                "instructions":null,
+                "display":"Allopurinol 100 MG Oral Tablet: 33 Microgram Oral administration each Morning, Evening for 4 Days <span class=\"lozenge prn\">PRN Anxiety</span>",
+                "drug":{"uuid":"1361AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF","display":"Allopurinol 100 MG Oral Tablet"},
+                "dosingType":"org.openmrs.module.ebolaexample.domain.RoundBasedDosingInstructions",
+                "dose":33.0,
+                "doseUnits":{"uuid":"162366AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","display":"Microgram"},
+                "asNeeded":true,
+                "asNeededCondition":"Anxiety",
+                "quantity":null,
+                "quantityUnits":null,
+                "dosingInstructions":"Morning, Evening",
+                "duration":4,
+                "durationUnits":{"uuid":"1072AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","display":"Days"},
+                "route":{"uuid":"160240AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","display":"Oral administration"},
+                "type":"drugorder"
             };
-            order = {
-                patient: { uuid: 'PATIENT_UUID' },
-                drug: {
-                    uuid: 'DRUG_UUID',
-                    concept: { uuid: 'CONCEPT_UUID' }},
-                rounds: {Morning: true},
-                instructions: 'Drug instructions',
-                freeTextInstructions: false,
-                form: {$valid: true}
-            };
+
 
             inject(function ($state, $controller, $rootScope, $httpBackend, $injector) {
                 httpMock = $httpBackend;
@@ -419,7 +423,6 @@ describe('prescriptions', function () {
                 httpMock.flush();
                 state = $state;
                 spyOn(state, 'go');
-                injector = $injector;
                 httpMock.when('POST', apiUrl + 'encounter').respond(encounterResponseStub);
                 httpMock.when('POST', apiUrl + 'order').respond(orderResponseStub);
                 initController = function (stateParams) {
@@ -433,11 +436,26 @@ describe('prescriptions', function () {
         });
 
         it('should load order information from web service', function () {
-            httpMock.expectGET(apiUrl + 'order/4321').respond(order);
+            httpMock.expectGET(apiUrl + 'order/4321').respond(orderJson);
             initController({orderUuid: '4321'});
             httpMock.flush();
-            this.expect(scope.addOrder.drug).toEqual({ uuid : 'DRUG_UUID', concept : { uuid : 'CONCEPT_UUID' }, asNeededCondition : '' });
-            this.expect(scope.addOrder.rounds).toEqual({ Morning : true, Afternoon : false, Evening : false, Night : false });
+            this.expect(scope.addOrder.drug).toEqual({
+                route : {
+                    uuid : '160240AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+                    display : 'Oral administration'
+                },
+                dose : 33,
+                doseUnits : '162366AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+                duration : 4,
+                asNeeded : true,
+                asNeededCondition : 'Anxiety'
+            });
+            this.expect(scope.addOrder.rounds).toEqual({
+                Morning : true,
+                Afternoon : false,
+                Evening : true,
+                Night : false
+            });
         });
     });
 });
