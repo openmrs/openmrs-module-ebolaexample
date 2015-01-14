@@ -1,7 +1,7 @@
 var OPENMRS_CONTEXT_PATH = location.pathname.substring(1, location.pathname.indexOf("/", 1));
 
 angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "select-drug-name", "constants",
-        "prescriptions", "resources", "patients", "session", "directives", "login", "ward-service"])
+        "prescriptions", "resources", "patients", "session", "directives", "login", "ward-service", "prescription-service"])
 
     .config(function ($stateProvider, $urlRouterProvider) {
 
@@ -75,6 +75,20 @@ angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "selec
             })
             .state("patient.addPrescriptionDetails", {
                 url: "/addPrescription",
+                controller: "NewPrescriptionDetailsController",
+                templateUrl: "templates/patient/prescriptionForm.html",
+                params: { prescriptionInfo: null },
+                data: {
+                    requiresLogin: true,
+                    back: {
+                        description: "Overview",
+                        target: "patient.overview"
+                    }
+                }
+            })
+            .state("patient.editPrescriptionDetails", {
+                url: "/editPrescription",
+                controller: "EditPrescriptionDetailsController",
                 templateUrl: "templates/patient/prescriptionForm.html",
                 params: { prescriptionInfo: null },
                 data: {
