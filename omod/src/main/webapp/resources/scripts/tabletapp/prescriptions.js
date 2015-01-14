@@ -15,9 +15,7 @@ angular.module("prescriptions", ["tabletapp", "constants", "patients"])
                 var preexistingOrder = PrescriptionService.formOrderFromResponse(response);
                 PrescriptionSetup.setupScopeConstants($scope);
                 PrescriptionSetup.setupDrugOrder($scope, undefined, $scope.patient, preexistingOrder);
-                $scope.save = function(order, where) {
-                    var what = '';
-                }
+                $scope.save = PrescriptionService.buildUpdateHandler($scope, $state);
             });
         }])
 
@@ -42,10 +40,11 @@ angular.module("prescriptions", ["tabletapp", "constants", "patients"])
                         patient: patient,
                         rounds: rounds
                     }
-                    console.log(preexistingOrder);
                     if (preexistingOrder) {
                         order = $.extend(true, {}, order, preexistingOrder);
-                        console.log(order);
+                    }
+                    if($scope.addOrder && $scope.addOrder.form) {
+                        order.form = $scope.addOrder.form;
                     }
                     $scope.addOrder = order;
                     $scope.$watch('addOrder.drug.asNeeded', function () {

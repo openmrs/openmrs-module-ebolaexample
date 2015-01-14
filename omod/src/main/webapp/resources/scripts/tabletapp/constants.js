@@ -21,7 +21,8 @@ angular.module("constants", [])
                 drugorder: "drugorder"
             },
             orderAction: {
-                discontinue: "DISCONTINUE"
+                discontinue: "DISCONTINUE",
+                revise: "REVISE"
             },
             rounds: [
                 { name: "Morning"},

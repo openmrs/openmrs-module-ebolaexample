@@ -237,7 +237,7 @@ describe('prescriptions', function () {
             httpMock.expectPOST(apiUrl + 'order', expectedPost).respond(500, {});
             scope.save(order, 'anywhere');
             httpMock.flush();
-            expect(scope.serverError).toBeTruthy();
+            this.expect(scope.serverError).toBeTruthy();
         });
 
         it('should save direct to desired state', function () {

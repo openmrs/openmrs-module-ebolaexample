@@ -64,6 +64,9 @@ describe('prescription-service', function () {
                 route : {
                     uuid : '160240AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
                     display : 'Oral administration' },
+                concept : {
+                    uuid : '70879AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+                    display : 'ALLOPURINOL SODIUM' },
                 dose : 33,
                 doseUnits : '162366AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
                 duration : 4,
@@ -78,7 +81,7 @@ describe('prescription-service', function () {
             var order = service.formOrderFromResponse(orderJson);
             this.expect(order.freeTextInstructions).toBeTruthy();
             this.expect(order.dosingInstructions).toEqual("Some Free Text");
-            this.expect(order.drug).toEqual({ route: {} });
+            this.expect(order.drug).toEqual({ route: {}, concept : { uuid : '70879AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', display : 'ALLOPURINOL SODIUM' } });
         });
     });
 });
