@@ -1,50 +1,69 @@
 angular.module("prescriptions", ["tabletapp", "constants", "patients"])
 
-    .controller("NewPrescriptionDetailsController", [ "$state", "$scope", "OrderResource", "Constants", "CurrentSession", "DrugResource",
-        "PrescriptionService",
-        function ($state, $scope, OrderResource, Constants, CurrentSession, DrugResource, PrescriptionService) {
-
-            var rounds = _.reduce(angular.copy(Constants.rounds), function (memo, val) {
-                memo[val.name] = false;
-                return memo
-            }, {});
-
-            $scope.orderedRoundNames = _.map(angular.copy(Constants.rounds), function (el) {
-                return el.name;
-            });
-
-            var drug = {}
-            if ($state.params.prescriptionInfo && $state.params.prescriptionInfo.uuid) {
-                drug = DrugResource.get({ uuid: $state.params.prescriptionInfo.uuid }, function (response) {
-                    $scope.routeProvided = drug.route;
-                    drug.route = drug.route || {};
-                });
-            } else {
-                drug = $state.params.prescriptionInfo;
-                $scope.routeProvided = drug.route;
-                drug.route = drug.route || {};
-            }
-            $scope.doseUnits = angular.copy(Constants.doseUnits);
-            $scope.routes = angular.copy(Constants.routes);
-            $scope.asNeededConditions = Constants.asNeededConditions;
-            $scope.addOrder = {
-                drug: drug,
-                patient: $scope.patient,
-                rounds: rounds
-            };
-            $scope.$watch('addOrder.drug.asNeeded', function () {
-                if ($scope.addOrder.drug && !$scope.addOrder.drug.asNeeded) {
-                    $scope.addOrder.drug.asNeededCondition = '';
-                }
-            })
-            $scope.$watch('addOrder.rounds', function() {
-                $scope.roundSelected = _.some(Object.keys($scope.addOrder.rounds), function (key) {
-                    return $scope.addOrder.rounds[key];
-                });
-            }, true);
-
+    .controller("NewPrescriptionDetailsController", [ "$state", "$scope", "PrescriptionService", "PrescriptionSetupService",
+        function ($state, $scope, PrescriptionService, PrescriptionSetupService) {
+            var drug = PrescriptionSetupService.buildDrug($state, $scope);
+            PrescriptionSetupService.setupScopeConstants($scope);
+            PrescriptionSetupService.setupDrugOrder($scope, drug, $scope.patient);
             $scope.save = PrescriptionService.buildSaveHandler($scope, $state);
         }])
+
+    .controller("EditPrescriptionDetailsController", [ "$state", "$scope", "PrescriptionService", "PrescriptionSetupService",
+        function ($state, $scope, PrescriptionService, PrescriptionSetupService) {
+            var drug = PrescriptionSetupService.buildDrug($state, $scope);
+            PrescriptionSetupService.setupScopeConstants($scope);
+            PrescriptionSetupService.setupDrugOrder($scope, drug, $scope.patient);
+            $scope.save = PrescriptionService.buildSaveHandler($scope, $state);
+        }])
+
+    .factory('PrescriptionSetupService', ['Constants', 'DrugResource', function(Constants, DrugResource) {
+        return {
+            setupScopeConstants: function($scope) {
+                $scope.orderedRoundNames = _.map(angular.copy(Constants.rounds), function (el) {
+                    return el.name;
+                });
+                $scope.doseUnits = angular.copy(Constants.doseUnits);
+                $scope.routes = angular.copy(Constants.routes);
+                $scope.asNeededConditions = angular.copy(Constants.asNeededConditions);
+            },
+            setupDrugOrder: function($scope, drug, patient) {
+                var rounds = _.reduce(angular.copy(Constants.rounds), function (memo, val) {
+                    memo[val.name] = false;
+                    return memo
+                }, {});
+                var order = {
+                    drug: drug,
+                    patient: patient,
+                    rounds: rounds
+                }
+                $scope.addOrder = order;
+                $scope.$watch('addOrder.drug.asNeeded', function () {
+                    if ($scope.addOrder.drug && !$scope.addOrder.drug.asNeeded) {
+                        $scope.addOrder.drug.asNeededCondition = '';
+                    }
+                });
+                $scope.$watch('addOrder.rounds', function() {
+                    $scope.roundSelected = _.some(Object.keys($scope.addOrder.rounds), function (key) {
+                        return $scope.addOrder.rounds[key];
+                    });
+                }, true);
+            },
+            buildDrug: function($state, $scope) {
+                var drug = {};
+                if ($state.params.prescriptionInfo && $state.params.prescriptionInfo.uuid) {
+                    drug = DrugResource.get({ uuid: $state.params.prescriptionInfo.uuid }, function (response) {
+                        $scope.routeProvided = drug.route;
+                        drug.route = drug.route || {};
+                    });
+                } else {
+                    drug = $state.params.prescriptionInfo;
+                    $scope.routeProvided = drug.route;
+                    drug.route = drug.route || {};
+                }
+                return drug;
+            }
+        }
+    }])
 
     .controller("NewPrescriptionController", [ '$state', '$scope', 'ConceptResource',
         function ($state, $scope, ConceptResource) {
