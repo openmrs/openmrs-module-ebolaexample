@@ -16,11 +16,7 @@ package org.openmrs.module.ebolaexample;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.Concept;
-import org.openmrs.ConceptName;
-import org.openmrs.GlobalProperty;
-import org.openmrs.Location;
-import org.openmrs.LocationTag;
+import org.openmrs.*;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.FormService;
@@ -31,6 +27,8 @@ import org.openmrs.module.Module;
 import org.openmrs.module.ModuleFactory;
 import org.openmrs.module.appframework.AppFrameworkConstants;
 import org.openmrs.module.appframework.service.AppFrameworkService;
+import org.openmrs.module.ebolaexample.importer.DrugImporter;
+import org.openmrs.module.ebolaexample.importer.ImportNotes;
 import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
 import org.openmrs.module.ebolaexample.metadata.KerryTownMetadata;
 import org.openmrs.module.emrapi.EmrApiConstants;
@@ -41,6 +39,9 @@ import org.openmrs.module.metadatadeploy.api.MetadataDeployService;
 import org.openmrs.module.metadatadeploy.bundle.MetadataBundle;
 import org.openmrs.ui.framework.resource.ResourceFactory;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -49,8 +50,8 @@ import java.util.Locale;
  * This class contains the logic that is run every time this module is either started or stopped.
  */
 public class EbolaExampleActivator extends BaseModuleActivator {
-	
-	protected Log log = LogFactory.getLog(getClass());
+
+    protected Log log = LogFactory.getLog(getClass());
 
     @Override
     public void started() {
@@ -77,33 +78,34 @@ public class EbolaExampleActivator extends BaseModuleActivator {
 
             // hack to set the SCI-requested address format for Sierra Leone
             GlobalProperty sciAddressTemplate = new GlobalProperty("layout.address.format",
-            		"<org.openmrs.layout.web.address.AddressTemplate>"
-            		+ "<nameMappings class=\"properties\">"
-            		+ "<property name=\"countyDistrict\" value=\"Location.district\"/>"
-            		+ "<property name=\"address2\" value=\"Chiefdom\"/>"
-            		+ "<property name=\"cityVillage\" value=\"Location.cityVillage\"/>"
-                    + "<property name=\"address1\" value=\"Address\"/>"
-            		+ "</nameMappings>"
-            		+ "<sizeMappings class=\"properties\">"
-            				+ "<property name=\"countyDistrict\" value=\"20\"/>"
-            				+ "<property name=\"address2\" value=\"40\"/>"
-            				+ "<property name=\"cityVillage\" value=\"20\"/>"
-            				+ "<property name=\"address1\" value=\"40\"/>"
-            		+ "</sizeMappings>"
-            		+ "<lineByLineFormat>"
-            		+ "<string>countyDistrict</string>"
-            		+ "<string>address2</string>"
-            		+ "<string>cityVillage</string>"
-            		+ "<string>address1</string>"
-            		+ "</lineByLineFormat>"
-            		+ "</org.openmrs.layout.web.address.AddressTemplate>",
+                    "<org.openmrs.layout.web.address.AddressTemplate>"
+                            + "<nameMappings class=\"properties\">"
+                            + "<property name=\"countyDistrict\" value=\"Location.district\"/>"
+                            + "<property name=\"address2\" value=\"Chiefdom\"/>"
+                            + "<property name=\"cityVillage\" value=\"Location.cityVillage\"/>"
+                            + "<property name=\"address1\" value=\"Address\"/>"
+                            + "</nameMappings>"
+                            + "<sizeMappings class=\"properties\">"
+                            + "<property name=\"countyDistrict\" value=\"20\"/>"
+                            + "<property name=\"address2\" value=\"40\"/>"
+                            + "<property name=\"cityVillage\" value=\"20\"/>"
+                            + "<property name=\"address1\" value=\"40\"/>"
+                            + "</sizeMappings>"
+                            + "<lineByLineFormat>"
+                            + "<string>countyDistrict</string>"
+                            + "<string>address2</string>"
+                            + "<string>cityVillage</string>"
+                            + "<string>address1</string>"
+                            + "</lineByLineFormat>"
+                            + "</org.openmrs.layout.web.address.AddressTemplate>",
                     "XML description of address formats");
-            
+
             administrationService.saveGlobalProperty(sciAddressTemplate);
 
+            // importDrugs();
+
             log.info("Started Ebola Example module");
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             Module mod = ModuleFactory.getModuleById("ebolaexample");
             ModuleFactory.stopModule(mod);
             throw new RuntimeException("Failed to set up the ebolaexample module", ex);
@@ -143,6 +145,19 @@ public class EbolaExampleActivator extends BaseModuleActivator {
 
         // if we get here that means we didn't find the wanted name in the loop above
         log.warn("Cannot find a name \"" + preferredEnglishName + "\" on concept " + uuid);
+
+    }
+
+    private void importDrugs() throws IOException {
+
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("Kerry_Town_Drugs.csv");
+        InputStreamReader reader = new InputStreamReader(inputStream);
+        ImportNotes notes = new DrugImporter().importSpreadsheet(reader);
+
+        if (notes.hasErrors()) {
+            System.out.println(notes);
+            throw new RuntimeException("Unable to install drug list");
+        }
     }
 
     private void setupHtmlForms(FormService formService, HtmlFormEntryService htmlFormEntryService) throws Exception {
@@ -155,13 +170,11 @@ public class EbolaExampleActivator extends BaseModuleActivator {
             for (String htmlform : htmlforms) {
                 HtmlFormUtil.getHtmlFormFromUiResource(resourceFactory, formService, htmlFormEntryService, htmlform);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             // this is a hack to get component test to pass until we find the proper way to mock this
             if (ResourceFactory.getInstance().getResourceProviders() == null) {
                 log.error("Unable to load HTML forms--this error is expected when running component tests, but it is an error if you see it in production");
-            }
-            else {
+            } else {
                 throw e;
             }
         }
