@@ -1,5 +1,6 @@
 package org.openmrs.module.ebolaexample.api.impl;
 
+import org.openmrs.Order;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.ebolaexample.api.PharmacyService;
 import org.openmrs.module.ebolaexample.db.ScheduledDoseDAO;
@@ -28,5 +29,10 @@ public class PharmacyServiceImpl extends BaseOpenmrsService implements PharmacyS
     @Override
     public ScheduledDose getScheduledDoseByUuid(String uuid) {
         return scheduledDoseDAO.getScheduledDoseByUuid(uuid);
+    }
+
+    @Override
+    public List<ScheduledDose> getScheduledDosesForOrder(Order order) {
+        return scheduledDoseDAO.getScheduledDoseByOrderId(order);
     }
 }

@@ -6,6 +6,7 @@ import org.openmrs.ConceptName;
 import org.openmrs.DrugOrder;
 import org.openmrs.OrderFrequency;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.ebolaexample.TestDataFactory;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
@@ -18,7 +19,7 @@ public class RoundBasedDosingInstructionsTest extends BaseModuleContextSensitive
 
     @Test
     public void getDosingInstructionsAsString_shouldAppendRoundInformationFromDosingInstructions() throws Exception {
-        DrugOrder order = createValidDrugOrder();
+        DrugOrder order = TestDataFactory.createValidDrugOrder();
         order.setDuration(null);
         RoundBasedDosingInstructions dosingInstructions =
                 (RoundBasedDosingInstructions) new RoundBasedDosingInstructions().getDosingInstructions(order);
@@ -29,7 +30,7 @@ public class RoundBasedDosingInstructionsTest extends BaseModuleContextSensitive
 
     @Test
     public void getDosingInstructionsAsString_shouldIncludePRNInformation() throws Exception {
-        DrugOrder order = createValidDrugOrder();
+        DrugOrder order = TestDataFactory.createValidDrugOrder();
         order.setAsNeeded(true);
         order.setDuration(null);
         order.setAsNeededCondition("Pain");
@@ -42,9 +43,9 @@ public class RoundBasedDosingInstructionsTest extends BaseModuleContextSensitive
 
     @Test
     public void getDosingInstructionsAsString_shouldIncludeDurationInformation() throws Exception {
-        DrugOrder order = createValidDrugOrder();
+        DrugOrder order = TestDataFactory.createValidDrugOrder();
         order.setDuration(7);
-        order.setDurationUnits(createConceptWithName("Days"));
+        order.setDurationUnits(TestDataFactory.createConceptWithName("Days"));
         RoundBasedDosingInstructions dosingInstructions =
                 (RoundBasedDosingInstructions) new RoundBasedDosingInstructions().getDosingInstructions(order);
         String dosingInstructionsAsString = dosingInstructions.getDosingInstructionsAsString(Context.getLocale());
@@ -53,7 +54,7 @@ public class RoundBasedDosingInstructionsTest extends BaseModuleContextSensitive
 
     @Test
     public void validate_shouldValidateDoseIsNotEmpty() throws Exception {
-        DrugOrder order = createValidDrugOrder();
+        DrugOrder order = TestDataFactory.createValidDrugOrder();
         order.setDose(null);
         Errors errors = new BindException(order, "drugOrder");
         new RoundBasedDosingInstructions().validate(order, errors);
@@ -62,7 +63,7 @@ public class RoundBasedDosingInstructionsTest extends BaseModuleContextSensitive
 
     @Test
     public void validate_shouldValidateRouteIsNotEmpty() throws Exception {
-        DrugOrder order = createValidDrugOrder();
+        DrugOrder order = TestDataFactory.createValidDrugOrder();
         order.setRoute(null);
         Errors errors = new BindException(order, "drugOrder");
         new RoundBasedDosingInstructions().validate(order, errors);
@@ -71,7 +72,7 @@ public class RoundBasedDosingInstructionsTest extends BaseModuleContextSensitive
 
     @Test
     public void validate_shouldValidateDoseUnitsIsNotEmpty() throws Exception {
-        DrugOrder order = createValidDrugOrder();
+        DrugOrder order = TestDataFactory.createValidDrugOrder();
         order.setDose(null);
         Errors errors = new BindException(order, "drugOrder");
         new RoundBasedDosingInstructions().validate(order, errors);
@@ -88,35 +89,10 @@ public class RoundBasedDosingInstructionsTest extends BaseModuleContextSensitive
     }
 
     private void assertValidityOfDosingInstructions(String dosingInstructions, boolean expectedToBeValid) {
-        DrugOrder order = createValidDrugOrder();
+        DrugOrder order = TestDataFactory.createValidDrugOrder();
         order.setDosingInstructions(dosingInstructions);
         Errors errors = new BindException(order, "drugOrder");
         new RoundBasedDosingInstructions().validate(order, errors);
         assertEquals(!expectedToBeValid, errors.hasErrors());
-    }
-
-    private DrugOrder createValidDrugOrder() {
-        DrugOrder drugOrder = new DrugOrder();
-        drugOrder.setDose(10.0);
-        drugOrder.setDoseUnits(createConceptWithName("ml"));
-        drugOrder.setRoute(createConceptWithName("IV"));
-        drugOrder.setDosingInstructions("Morning, Evening");
-        drugOrder.setDosingType(RoundBasedDosingInstructions.class);
-        drugOrder.setDuration(5);
-        drugOrder.setDurationUnits(createConceptWithName("days"));
-        OrderFrequency frequency = new OrderFrequency();
-        frequency.setConcept(createConceptWithName("Twice a day"));
-        drugOrder.setFrequency(frequency);
-        return drugOrder;
-    }
-
-    private Concept createConceptWithName(String name) {
-        Concept concept = new Concept(new Random().nextInt());
-        ConceptName conceptName = new ConceptName();
-        conceptName.setName(name);
-        conceptName.setLocale(Context.getLocale());
-        conceptName.setLocalePreferred(true);
-        concept.addName(conceptName);
-        return concept;
     }
 }

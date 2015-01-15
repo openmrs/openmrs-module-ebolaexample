@@ -7,6 +7,12 @@
 <span class="success-message" ng-show="comeFromPrescriptionForm">Prescription added succesfully!</span>
 <span class="success-message" ng-show="administeredDrug">Drug administered succesfully!</span>
 <div class="page-wrap-smaller">
+
+    <a class="radio-button card long small"
+       ui-sref="patient.drugHistory">
+        <span>Medication Administration History</span>
+    </a>
+
     <div ng-show="loading" class="loading-spinner"></div>
     <span ng-show="!loading" class="question-title">Active Prescriptions</span>
     <ul ng-show="!loading" class="list-items">

@@ -1,5 +1,6 @@
 package org.openmrs.module.ebolaexample.api;
 
+import org.openmrs.Order;
 import org.openmrs.api.OpenmrsService;
 import org.openmrs.module.ebolaexample.domain.ScheduledDose;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,5 +15,7 @@ public interface PharmacyService extends OpenmrsService {
     List<ScheduledDose> getAllScheduledDoses();
 
     ScheduledDose getScheduledDoseByUuid(String uuid);
+
+    List<ScheduledDose> getScheduledDosesForOrder(Order order);
 
 }
