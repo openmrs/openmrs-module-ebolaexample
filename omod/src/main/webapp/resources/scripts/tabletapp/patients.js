@@ -78,8 +78,10 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             };
 
             $scope.loadPastOrders = function(patientUuid) {
-                $scope.loadingPastOrders = true;
-                $scope.pastOrders = PastOrders.get($scope, patientUuid);
+                PastOrders.reload($scope, patientUuid);
+                $scope.$watch(PastOrders.get, function(orders) {
+                    $scope.pastOrders = orders;
+                }, true);
             };
 
             $scope.showAdminister = function (order) {
@@ -137,6 +139,7 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             $scope.onStopOrderSuccess = function() {
                 $scope.closeThisDialog();
                 ActiveOrders.reload($scope, patientUuid);
+                PastOrders.reload($scope, patientUuid);
             }
 
             $scope.openStopOrderDialog = function (order) {
@@ -170,16 +173,16 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
     .factory("PastOrders", ['OrderResource', function (OrderResource) {
         var cachedOrders;
         return {
-            get: function(scope, patientUuid) {
-                if(cachedOrders) {
-                    return cachedOrders;
-                } else {
-                    return OrderResource.query({ t: "drugorder", v: 'full', patient: patientUuid, expired: true}, function (response) {
-                        scope.loadedPastOrders = true;
-                        scope.loadingPastOrders = false;
-                        cachedOrders = response;
-                    })
-                }
+            reload: function(scope, patientUuid) {
+                scope.loadingPastOrders = true;
+                return OrderResource.query({ t: "drugorder", v: 'full', patient: patientUuid, expired: true}, function (response) {
+                    scope.loadedPastOrders = true;
+                    scope.loadingPastOrders = false;
+                    cachedOrders = response;
+                });
+            },
+            get: function() {
+                return cachedOrders;
             }
         }
     }])
@@ -199,8 +202,7 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                             "encounter": encounter.uuid,
                             "careSetting": Constants.careSetting.inpatient,
                             "orderer": sessionInfo["provider"]["uuid"],
-                            "previousOrder": order.uuid,
-                            "dosingType": Constants.dosingType.unvalidatedFreeText
+                             "dosingType": Constants.dosingType.unvalidatedFreeText
                         };
 
                         if(order.drug) {
