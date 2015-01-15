@@ -444,6 +444,7 @@ describe('prescriptions', function () {
                     uuid : '160240AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
                     display : 'Oral administration'
                 },
+                uuid : '1361AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF',
                 dose : 33,
                 doseUnits : '162366AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
                 duration : 4,

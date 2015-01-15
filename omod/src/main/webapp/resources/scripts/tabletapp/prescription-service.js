@@ -93,6 +93,7 @@ angular.module('prescription-service', ['tabletapp'])
                     order.uuid = orderJson["uuid"];
                     order.freeTextInstructions = orderJson["dosingType"] == Constants.dosingType.unvalidatedFreeText;
                     order.drug.concept = orderJson["concept"];
+                    order.drug.uuid =  orderJson["drug"]["uuid"];
                     if (order.freeTextInstructions) {
                         order.dosingInstructions = orderJson["dosingInstructions"];
                     } else {

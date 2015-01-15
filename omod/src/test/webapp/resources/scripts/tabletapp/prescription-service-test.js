@@ -67,6 +67,7 @@ describe('prescription-service', function () {
                 concept : {
                     uuid : '70879AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
                     display : 'ALLOPURINOL SODIUM' },
+                uuid : '1361AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF',
                 dose : 33,
                 doseUnits : '162366AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
                 duration : 4,
@@ -81,7 +82,7 @@ describe('prescription-service', function () {
             var order = service.formOrderFromResponse(orderJson);
             this.expect(order.freeTextInstructions).toBeTruthy();
             this.expect(order.dosingInstructions).toEqual("Some Free Text");
-            this.expect(order.drug).toEqual({ route: {}, concept : { uuid : '70879AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', display : 'ALLOPURINOL SODIUM' } });
+            this.expect(order.drug).toEqual({ route: {}, concept : { uuid : '70879AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', display : 'ALLOPURINOL SODIUM' }, uuid : '1361AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF'});
         });
     });
 });
