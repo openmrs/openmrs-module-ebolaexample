@@ -10,6 +10,7 @@
     <div ng-show="loading" class="loading-spinner"></div>
     <span ng-show="!loading" class="question-title">Active Prescriptions</span>
     <ul ng-show="!loading" class="list-items">
+        <li ng-show="activeOrders.length == 0">None</li>
         <li ng-repeat="order in activeOrders | orderBy:'dateActivated':true">
             <span class="left">
                 <span class="drug-name">{{ order.concept.display }}</span><em>{{ order.drug.display }}</em>
