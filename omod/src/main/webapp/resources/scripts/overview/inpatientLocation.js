@@ -1,6 +1,6 @@
 angular.module('inpatientLocation', ['resources', 'locationService', 'ui.bootstrap'])
-    .controller('InpatientLocationCtrl', ['$scope', '$http', 'LocationService', 'WardResource',
-        function ($scope, $http, LocationService, WardResource) {
+    .controller('InpatientLocationCtrl', ['$scope', '$http', '$timeout', 'LocationService', 'WardResource',
+        function ($scope, $http, $timeout, LocationService, WardResource) {
 
             var allLocations = [];
             var config = {};
@@ -45,7 +45,6 @@ angular.module('inpatientLocation', ['resources', 'locationService', 'ui.bootstr
                         }
                     }
                     $scope.changeToWard = config.currentWard;
-                    bedsForWard($scope.changeToWard);
 
                 } else {
                     $scope.changeToWardType = null;
@@ -122,8 +121,7 @@ angular.module('inpatientLocation', ['resources', 'locationService', 'ui.bootstr
                     location: $scope.changeToBed ? $scope.changeToBed.uuid : $scope.changeToWard.uuid
                 });
                 $http.post(url).success(function (data) {
-                    baseURL = location.protocol + "//" + location.hostname + (location.port && ":" + location.port) + "/"
-                    location.href = baseURL + "openmrs/ebolaexample/ebolaOverview.page?patient=" + config.patientUuid;
+                    location.href = emr.pageLink('ebolaexample', 'ebolaOverview', { patient: config.patientUuid });
                 });
             }
 
@@ -150,7 +148,11 @@ angular.module('inpatientLocation', ['resources', 'locationService', 'ui.bootstr
             }
 
             $scope.changeLocationPatient = function () {
-                location.href = '/' + OPENMRS_CONTEXT_PATH + '/ebolaexample/changeInPatientLocation.page?patientUuid=' + config.patientUuid;
+                location.href = emr.pageLink('ebolaexample', 'changeInPatientLocation', { patientUuid: config.patientUuid });
+            }
+
+            $scope.cancel = function() {
+                location.href = emr.pageLink('ebolaexample', 'ebolaOverview', { patient: config.patientUuid });
             }
         }]);
 
