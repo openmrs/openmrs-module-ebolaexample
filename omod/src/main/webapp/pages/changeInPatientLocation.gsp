@@ -103,7 +103,7 @@
             <br/>
 
             <button class="confirm right" ng-disabled="!changeToWard" ng-click="doTransfer()">Save</button>
-            <button class="cancel" ng-click="makingChange = false">Cancel</button>
+            <button class="cancel" ng-click="cancel()">Cancel</button>
         </div>
         <% } %>
     </div>
