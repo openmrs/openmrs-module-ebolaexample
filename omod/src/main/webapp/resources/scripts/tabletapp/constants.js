@@ -32,7 +32,7 @@ angular.module("constants", [])
             ],
             doseUnits: [
                 {
-                    display: "tablet",
+                    display: "tablet(s)",
                     uuid: "1513AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                 },
                 {
