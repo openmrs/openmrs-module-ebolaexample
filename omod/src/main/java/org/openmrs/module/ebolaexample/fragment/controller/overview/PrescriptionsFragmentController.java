@@ -178,7 +178,7 @@ public class PrescriptionsFragmentController {
                 Collections.sort(entry.getValue(), new Comparator<DrugOrder>() {
                     @Override
                     public int compare(DrugOrder left, DrugOrder right) {
-                        return mostRecentChange(right).compareTo(mostRecentChange(left));
+                        return right.getEffectiveStartDate().compareTo(left.getEffectiveStartDate());
                     }
                 });
             }
