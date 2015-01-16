@@ -97,18 +97,6 @@ angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "selec
                         target: "patient.overview"
                     }
                 }
-            })
-            .state("patient.drugHistory", {
-                url: "/editPrescription/:orderUuid",
-                controller: "EditPrescriptionDetailsController",
-                templateUrl: "templates/patient/prescriptionForm.html",
-                data: {
-                    requiresLogin: true,
-                    back: {
-                        description: "Overview",
-                        target: "patient.overview"
-                    }
-                }
             });
     })
 
