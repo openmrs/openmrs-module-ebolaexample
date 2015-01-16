@@ -206,7 +206,8 @@ public class EbolaExampleActivator extends BaseModuleActivator {
             ImportNotes notes = drugImporter.importSpreadsheet(reader);
 
             if (notes.hasErrors()) {
-                System.out.println(notes);
+                log.error("Unable to import drug list. Import notes:");
+                log.error(notes.toString());
                 throw new RuntimeException("Unable to install drug list");
             }
         } catch (Exception e) {

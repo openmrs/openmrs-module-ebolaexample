@@ -2,9 +2,13 @@ package org.openmrs.module.ebolaexample.importer;
 
 import org.junit.Test;
 
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
+import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class DrugImporterTest {
 
@@ -52,5 +56,15 @@ public class DrugImporterTest {
         String str = "Vitamin A,\"Vitamin A 200,000 unit Capsule\",,\"200,000 unit\",Capsule,Oral,capsules,Tier 1,,\"1) same capsule comment as above, 2) should default dose unit be capsule, tablet, or unit?\",";
         ArrayList<String> strings = new DrugImporter().splitLine(str);
         assertEquals(strings.size(), 11);
+    }
+
+    @Test
+    public void shouldReadExistingFileWithUuid() throws Exception {
+        Reader reader = new InputStreamReader(getClass().getClassLoader().getResourceAsStream("Kerry_Town_Drugs.csv"));
+        List<DrugImporterRow> rows = new DrugImporter().readSpreadsheet(reader);
+
+        for (DrugImporterRow row : rows) {
+            assertNotNull(row.getName() + " is missing a UUID", row.getUuid());
+        }
     }
 }

@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -78,7 +77,7 @@ public class DrugImporter {
         return notes;
     }
 
-    public ImportNotes importSpreadsheet(InputStreamReader reader) throws IOException {
+    public ImportNotes importSpreadsheet(Reader reader) throws IOException {
 
         List drugList = this.readSpreadsheet(reader);
 
@@ -93,7 +92,7 @@ public class DrugImporter {
                 DrugImporterRow row = (DrugImporterRow) i$.next();
                 Drug drug = getDrug(row);
 
-                log.warn("xxxxxxxxxx - Saving - " + drug.getName());
+                log.debug("xxxxxxxxxx - Saving - " + drug.getName());
                 this.conceptService.saveDrug(drug);
             }
 
@@ -116,7 +115,7 @@ public class DrugImporter {
         if (drug == null) {
             drug = new Drug();
         } else {
-            log.error("Hehe, we found a drug by name or uuid " + drug.getName());
+            log.debug("Found a drug by name or uuid " + drug.getName());
         }
 
         if (StringUtils.isNotBlank(row.getUuid())) {
@@ -139,9 +138,10 @@ public class DrugImporter {
         drug.setDosageForm(dosageFormConcept);
 
         Concept routeConcept = getConceptByName(row.getRoute());
+        // route is deprecated, but it's okay for us to use it
         drug.setRoute(routeConcept);
 
-        drug.setUnits(row.getDefaultDosageUnits());
+        // TODO do something with row.getDefaultDosageUnits()
         return drug;
     }
 
@@ -150,7 +150,8 @@ public class DrugImporter {
         //return this.emrConceptService.getConcept(conceptName);
     }
 
-    private List<DrugImporterRow> readSpreadsheet(Reader csvFileReader) throws IOException {
+    // visible for testing
+    List<DrugImporterRow> readSpreadsheet(Reader csvFileReader) throws IOException {
         ArrayList drugList = new ArrayList();
 
         BufferedReader bufferedReader = null;
@@ -174,14 +175,14 @@ public class DrugImporter {
                 DrugImporterRow drugImporterRow = new DrugImporterRow(genericName, name,
                         combination.equalsIgnoreCase("yes") ? true : false, strength, form, route, defaultDosageUnits, uuid);
 
-                System.out.println("Drug [name= " + strings.get(0)
-                        + " , description=" + strings.get(1)
-                        + " , isCombination=" + strings.get(2)
-                        + " , Strength=" + strings.get(3)
-                        + " , Form=" + strings.get(4)
-                        + " , Route=" + strings.get(5)
-                        + " , Default Dosage Units=" + strings.get(6)
-                        + " , UUID=" + strings.get(8) + "]");
+//                System.out.println("Drug [name= " + strings.get(0)
+//                        + " , description=" + strings.get(1)
+//                        + " , isCombination=" + strings.get(2)
+//                        + " , Strength=" + strings.get(3)
+//                        + " , Form=" + strings.get(4)
+//                        + " , Route=" + strings.get(5)
+//                        + " , Default Dosage Units=" + strings.get(6)
+//                        + " , UUID=" + strings.get(8) + "]");
 
                 drugList.add(drugImporterRow);
             }
