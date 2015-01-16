@@ -28,6 +28,8 @@
                 "encounterType": "98963e52-863d-11e4-9fc5-eede903351fb", // Ebola Registration
                 "encounterRole": "a0b03050-c99b-11e0-9572-0800200c9a66" // Unknown EncounterRole
             },
+            "allowUnknownPatients": false,
+            "allowManualIdentifier": false,
             "sections": [
                 {
                     "id": "identifiers",
@@ -63,6 +65,51 @@
                                         "fragmentId": "field/personAddress"
                                     }
                                 }
+                            ]
+                        },
+                        {
+                            "legend": "Phone",
+                            "id": "phoneNumberLabel",
+                            "fields": [
+                                {
+                                    "type": "personAttribute",
+                                    "label": "Patient Phone Number",
+                                    "formFieldName": "phoneNumber",
+                                    "uuid": "14d4f066-15f5-102d-96e4-000c29c2a5d7",
+                                    "widget": {
+                                        "providerName": "uicommons",
+                                        "fragmentId": "field/text"
+                                    },
+                                    "cssClasses": ["number"]
+                                }
+                            ]
+                        },
+                        {
+                            "legend": "Next of Kin",
+                            "id": "nokLabel",
+                            "fields": [
+                                {
+                                    "type": "personAttribute",
+                                    "label": "Next of Kin Name",
+                                    "formFieldName": "nextOfKinName",
+                                    "uuid": "a7255e8e-9d22-11e4-b773-e0fe58bba1f4",
+                                    "widget": {
+                                        "providerName": "uicommons",
+                                        "fragmentId": "field/text"
+                                    }
+                                },
+                                {
+                                    "type": "personAttribute",
+                                    "label": "Next of Kin Phone Number",
+                                    "formFieldName": "nextOfKinPhone",
+                                    "uuid": "b0022b40-9d22-11e4-b773-e0fe58bba1f4",
+                                    "widget": {
+                                        "providerName": "uicommons",
+                                        "fragmentId": "field/text"
+                                    },
+                                    "cssClasses": ["number"]
+                                }
+
                             ]
                         }
                     ]

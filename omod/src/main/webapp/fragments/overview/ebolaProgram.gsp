@@ -26,33 +26,20 @@
         <% } %>
 
         <% if (currentEnrollment == null) { %>
-
             <p>Not currently enrolled</p>
+        <% } else { %>
+            <p>Enrolled since ${ ui.format(currentEnrollment.dateEnrolled) }</p>
+        <% } %>
 
+        <% if (triageEncounter) { %>
+            <a href="${ triageViewLink }">
+                View Triage
+            </a>
+        <% } else if (false /* disabled */) { %>
             <a class="big button" href="${ triageEntryLink }">
                 Triage
             </a>
-
-            <% if (triageEncounter) { %>
-                <a href="${ triageViewLink }">
-                    View Last Triage
-                </a>
-            <% } %>
-
-        <% } else { %>
-
-            <p>
-                Enrolled since ${ ui.format(currentEnrollment.dateEnrolled) }
-            </p>
-            <% if (triageEncounter) { %>
-                <a href="${ triageViewLink }">
-                    View Triage
-                </a>
-            <% } else { %>
-                <a class="big button" href="${ triageEntryLink }">
-                    Triage
-                </a>
-            <% }%>
         <% } %>
+
     </div>
 </div>

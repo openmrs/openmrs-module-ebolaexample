@@ -22,6 +22,7 @@ import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.encounte
 import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.encounterType;
 import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.form;
 import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.locationTag;
+import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.personAttributeType;
 import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.program;
 import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.role;
 import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.visitAttributeType;
@@ -83,6 +84,12 @@ public class EbolaMetadata extends AbstractMetadataBundle {
         public static final String WARD_ROUNDING_TEAM = "Ward Rounding Team";
     }
 
+    public static class _PersonAttributeType {
+        public static final String TELEPHONE_NUMBER = "14d4f066-15f5-102d-96e4-000c29c2a5d7";
+        public static final String NEXT_OF_KIN_NAME = "a7255e8e-9d22-11e4-b773-e0fe58bba1f4";
+        public static final String NEXT_OF_KIN_PHONE = "b0022b40-9d22-11e4-b773-e0fe58bba1f4";
+    }
+
     private void maybeSetGP(AdministrationService service, String prop, String val) {
         GlobalProperty gp = service.getGlobalPropertyObject(prop);
         if (gp == null) {
@@ -141,6 +148,10 @@ public class EbolaMetadata extends AbstractMetadataBundle {
         install(role(_Role.WARD_ROUNDING_TEAM, "Role for all users who are actually ward rounding teams", new HashSet<String>(), new HashSet<String>()));
 
         install(conceptNameTag("Ebola Preferred", "Preferred name for use in the Ebola ETC EMR", _ConceptNameTag.PREFERRED));
+
+        // this is installed somewhere else, though I don't know where: install(personAttributeType("Telephone Number", "The telephone number for the person", String.class, null, false, 7, _PersonAttributeType.TELEPHONE_NUMBER));
+        install(personAttributeType("Next of Kin Name", "Name of the patient's Next of Kin", String.class, null, false, 8, _PersonAttributeType.NEXT_OF_KIN_NAME));
+        install(personAttributeType("Next of Kin Phone", "Phone number of the patient's Next of Kin", String.class, null, false, 9, _PersonAttributeType.NEXT_OF_KIN_PHONE));
 
         AdministrationService administrationService = Context.getAdministrationService();
         maybeSetGP(administrationService, OpenmrsConstants.GP_DRUG_ROUTES_CONCEPT_UUID, "162394AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");

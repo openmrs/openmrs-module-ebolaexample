@@ -17,7 +17,7 @@
     var patient = { id: ${ patient.id } };
 </script>
 
-${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient, activeVisit: activeVisit, appContextModel: appContextModel ]) }
+${ ui.includeFragment("ebolaexample", "overview/patientHeader", [ patient: patient.patient, activeVisit: activeVisit, appContextModel: appContextModel ]) }
 
 <div class="clear"></div>
 
