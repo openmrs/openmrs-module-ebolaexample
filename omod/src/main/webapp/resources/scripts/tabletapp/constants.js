@@ -66,8 +66,8 @@ angular.module("constants", [])
             ],
             routes: [
                 {
-                    display: 'Rectal',
-                    uuid: '162393AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+                    display: 'Oral',
+                    uuid: '160240AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
                 },
                 {
                     display: 'IV',
@@ -78,15 +78,43 @@ angular.module("constants", [])
                     uuid: '160243AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
                 },
                 {
-                    display: 'Oral',
-                    uuid: '160240AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+                    display: 'Subcutaneous',
+                    uuid: '160245AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+                },
+                {
+                    display: 'Inhaled',
+                    uuid: '160241AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+                },
+                {
+                    display: 'Nasal',
+                    uuid: '161253AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+                },
+                {
+                    display: 'Left Eye',
+                    uuid: '162388AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+                },
+                {
+                    display: 'Right Eye',
+                    uuid: '162389AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+                },
+                {
+                    display: 'Both Eyes',
+                    uuid: '162390AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+                },
+                {
+                    display: 'Vaginal',
+                    uuid: '162392AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+                },
+                {
+                    display: 'Rectal',
+                    uuid: '162393AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
                 },
                 {
                     display: 'Nasogastric',
                     uuid: '162798AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
                 },
                 {
-                    display: 'IO',
+                    display: 'IO Needle',
                     uuid: '162624AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
                 }
             ],

@@ -1,21 +1,31 @@
 package org.openmrs.module.ebolaexample.domain;
 
+import org.junit.Before;
 import org.junit.Test;
-import org.openmrs.Concept;
-import org.openmrs.ConceptName;
+import org.openmrs.ConceptNameTag;
 import org.openmrs.DrugOrder;
-import org.openmrs.OrderFrequency;
+import org.openmrs.api.ConceptService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.ebolaexample.TestDataFactory;
+import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
-
-import java.util.Random;
 
 import static junit.framework.Assert.assertEquals;
 
 public class RoundBasedDosingInstructionsTest extends BaseModuleContextSensitiveTest {
+
+    @Autowired
+    private ConceptService conceptService;
+
+    @Before
+    public void setUp() throws Exception {
+        ConceptNameTag conceptNameTag = new ConceptNameTag("Ebola Preferred", "preferred for ebolaexample");
+        conceptNameTag.setUuid(EbolaMetadata._ConceptNameTag.PREFERRED);
+        conceptService.saveConceptNameTag(conceptNameTag);
+    }
 
     @Test
     public void getDosingInstructionsAsString_shouldAppendRoundInformationFromDosingInstructions() throws Exception {

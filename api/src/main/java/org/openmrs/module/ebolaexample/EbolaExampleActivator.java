@@ -16,7 +16,12 @@ package org.openmrs.module.ebolaexample;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.*;
+import org.openmrs.Concept;
+import org.openmrs.ConceptName;
+import org.openmrs.ConceptNameTag;
+import org.openmrs.GlobalProperty;
+import org.openmrs.Location;
+import org.openmrs.LocationTag;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.FormService;
@@ -35,6 +40,7 @@ import org.openmrs.module.emrapi.EmrApiConstants;
 import org.openmrs.module.emrapi.EmrApiProperties;
 import org.openmrs.module.htmlformentry.HtmlFormEntryService;
 import org.openmrs.module.htmlformentryui.HtmlFormUtil;
+import org.openmrs.module.metadatadeploy.MetadataUtils;
 import org.openmrs.module.metadatadeploy.api.MetadataDeployService;
 import org.openmrs.module.metadatadeploy.bundle.MetadataBundle;
 import org.openmrs.ui.framework.resource.ResourceFactory;
@@ -114,12 +120,27 @@ public class EbolaExampleActivator extends BaseModuleActivator {
 
     private void setPreferredConceptNames(ConceptService service) {
         setPreferredConceptName(service, "160240AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Oral");
-//        setPreferredConceptName(service, "162394AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "IV");
-//        setPreferredConceptName(service, "160243AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "IM");
-//        setPreferredConceptName(service, "161553AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "mg");
-//        setPreferredConceptName(service, "161554AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "g");
-//        setPreferredConceptName(service, "162263AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "mL");
-//        setPreferredConceptName(service, "162761AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "mg/kg");
+        setPreferredConceptName(service, "160242AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "IV");
+        setPreferredConceptName(service, "160243AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "IM");
+        setPreferredConceptName(service, "160245AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Subcutaneous");
+        setPreferredConceptName(service, "160241AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Inhaled");
+        setPreferredConceptName(service, "161253AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Intranasal");
+        setPreferredConceptName(service, "162385AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "In left ear");
+        setPreferredConceptName(service, "162386AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "In right ear");
+        setPreferredConceptName(service, "162387AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "In both ears");
+        setPreferredConceptName(service, "160245AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Subcutaneous");
+        setPreferredConceptName(service, "162388AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "In left eye");
+        setPreferredConceptName(service, "162389AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "In right eye");
+        setPreferredConceptName(service, "162390AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "In both eyes");
+        setPreferredConceptName(service, "162392AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Per vagina");
+        setPreferredConceptName(service, "162393AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Per rectum");
+        setPreferredConceptName(service, "162798AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Per NG tube");
+        setPreferredConceptName(service, "162624AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "IO (intraosseous) needle insertion");
+
+        setPreferredConceptName(service, "161553AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "mg");
+        setPreferredConceptName(service, "161554AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "g");
+        setPreferredConceptName(service, "162263AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "mL");
+        setPreferredConceptName(service, "162761AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "mg/kg");
     }
 
     // not private so we can test it
@@ -129,16 +150,34 @@ public class EbolaExampleActivator extends BaseModuleActivator {
             log.warn("Cannot find concept with uuid " + uuid + " (so not setting preferred name to " + preferredEnglishName);
             return;
         }
+        ConceptNameTag ebolaPreferredName = MetadataUtils.existing(ConceptNameTag.class, EbolaMetadata._ConceptNameTag.PREFERRED);
+        ConceptName taggedName = concept.findNameTaggedWith(ebolaPreferredName);
+        boolean alreadyTagged = taggedName != null && taggedName.getName().equals(preferredEnglishName);
         ConceptName old = concept.getPreferredName(Locale.ENGLISH);
-        if (old != null && old.getName().equals(preferredEnglishName)) {
-            // already set correctly
+        boolean preferredAlreadySet = old != null && old.getName().equals(preferredEnglishName);
+        if (alreadyTagged && preferredAlreadySet) {
             return;
         }
         for (ConceptName candidate : concept.getNames(Locale.ENGLISH)) {
             if (candidate.getName().equals(preferredEnglishName)) {
-                candidate.setLocalePreferred(true);
-                old.setLocalePreferred(false);
-                service.saveConcept(concept);
+                boolean anyChange = false;
+                if (!preferredAlreadySet) {
+                    if (!(candidate.isShort() || candidate.isIndexTerm())) {
+                        candidate.setLocalePreferred(true);
+                        old.setLocalePreferred(false);
+                        anyChange = true;
+                    }
+                }
+                if (!alreadyTagged) {
+                    if (taggedName != null) {
+                        taggedName.removeTag(ebolaPreferredName);
+                    }
+                    candidate.addTag(ebolaPreferredName);
+                    anyChange = true;
+                }
+                if (anyChange) {
+                    service.saveConcept(concept);
+                }
                 return;
             }
         }

@@ -1,10 +1,14 @@
 package org.openmrs.module.ebolaexample.domain;
 
 import org.openmrs.Concept;
+import org.openmrs.ConceptNameTag;
 import org.openmrs.DosingInstructions;
 import org.openmrs.DrugOrder;
 import org.openmrs.SimpleDosingInstructions;
 import org.openmrs.api.APIException;
+import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
+import org.openmrs.module.ebolaexample.uiframework.ConceptFormatter;
+import org.openmrs.module.metadatadeploy.MetadataUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 
@@ -32,19 +36,20 @@ public class RoundBasedDosingInstructions implements DosingInstructions {
 
     @Override
     public String getDosingInstructionsAsString(Locale locale) {
+        ConceptNameTag preferredTag = MetadataUtils.existing(ConceptNameTag.class, EbolaMetadata._ConceptNameTag.PREFERRED);
         StringBuilder dosingInstructions = new StringBuilder();
         dosingInstructions.append(prettyDouble(this.dose));
         dosingInstructions.append(" ");
-        dosingInstructions.append(this.doseUnits.getName(locale).getName());
+        dosingInstructions.append(ConceptFormatter.bestName(preferredTag, locale, this.doseUnits));
         dosingInstructions.append(" ");
-        dosingInstructions.append(this.route.getName(locale).getName());
+        dosingInstructions.append(ConceptFormatter.bestName(preferredTag, locale, this.route));
         dosingInstructions.append(" each ");
         dosingInstructions.append(this.roundInstructions);
         if (duration != null) {
             dosingInstructions.append(" for ");
             dosingInstructions.append(this.duration);
             dosingInstructions.append(" ");
-            dosingInstructions.append(this.durationUnits.getName(locale).getName());
+            dosingInstructions.append(ConceptFormatter.bestName(preferredTag, locale, this.durationUnits));
         }
         if (this.asNeeded) {
             dosingInstructions.append(" <span class=\"lozenge prn\">");

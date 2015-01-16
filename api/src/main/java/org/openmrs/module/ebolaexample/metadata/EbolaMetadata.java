@@ -15,9 +15,9 @@ import org.openmrs.module.metadatadeploy.bundle.AbstractMetadataBundle;
 import org.openmrs.util.OpenmrsConstants;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
+import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.conceptNameTag;
 import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.encounterRole;
 import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.encounterType;
 import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.form;
@@ -32,6 +32,10 @@ public class EbolaMetadata extends AbstractMetadataBundle {
     public static class _Concept { // all of these are from CIEL and we don't create them here
         public static final String EBOLA_PROGRAM = "162637AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
         public static final String WEIGHT_IN_KG = "5089AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+    }
+
+    public static class _ConceptNameTag {
+        public static final String PREFERRED = "cae27b08-9cf6-11e4-b773-e0fe58bba1f4";
     }
 
     public static class _Program {
@@ -135,6 +139,8 @@ public class EbolaMetadata extends AbstractMetadataBundle {
 		install(visitAttributeType("Assigned bed", "", LocationDatatype.class, null, 0, 1, _VisitAttributeType.ASSIGNED_BED));
 
         install(role(_Role.WARD_ROUNDING_TEAM, "Role for all users who are actually ward rounding teams", new HashSet<String>(), new HashSet<String>()));
+
+        install(conceptNameTag("Ebola Preferred", "Preferred name for use in the Ebola ETC EMR", _ConceptNameTag.PREFERRED));
 
         AdministrationService administrationService = Context.getAdministrationService();
         maybeSetGP(administrationService, OpenmrsConstants.GP_DRUG_ROUTES_CONCEPT_UUID, "162394AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
