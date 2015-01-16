@@ -32,6 +32,10 @@ angular.module("constants", [])
             ],
             doseUnits: [
                 {
+                    display: "tablet",
+                    uuid: "1513AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                },
+                {
                     display: "mg",
                     uuid: "161553AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                 },
