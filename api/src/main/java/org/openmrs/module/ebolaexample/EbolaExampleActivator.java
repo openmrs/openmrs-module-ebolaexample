@@ -45,7 +45,6 @@ import org.openmrs.module.metadatadeploy.api.MetadataDeployService;
 import org.openmrs.module.metadatadeploy.bundle.MetadataBundle;
 import org.openmrs.ui.framework.resource.ResourceFactory;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
@@ -58,6 +57,10 @@ import java.util.Locale;
 public class EbolaExampleActivator extends BaseModuleActivator {
 
     protected Log log = LogFactory.getLog(getClass());
+
+    private DrugImporter drugImporter;
+
+    private ConceptService conceptService;
 
     @Override
     public void started() {
@@ -108,7 +111,7 @@ public class EbolaExampleActivator extends BaseModuleActivator {
 
             administrationService.saveGlobalProperty(sciAddressTemplate);
 
-            // importDrugs();
+            importDrugs();
 
             log.info("Started Ebola Example module");
         } catch (Exception ex) {
@@ -187,24 +190,36 @@ public class EbolaExampleActivator extends BaseModuleActivator {
 
     }
 
-    private void importDrugs() throws IOException {
+    private void importDrugs() {
 
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("Kerry_Town_Drugs.csv");
-        InputStreamReader reader = new InputStreamReader(inputStream);
-        ImportNotes notes = new DrugImporter().importSpreadsheet(reader);
+        try {
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("Kerry_Town_Drugs.csv");
+            InputStreamReader reader = new InputStreamReader(inputStream);
 
-        if (notes.hasErrors()) {
-            System.out.println(notes);
-            throw new RuntimeException("Unable to install drug list");
+            if (drugImporter == null) {
+                drugImporter = Context.getRegisteredComponents(DrugImporter.class).get(0);
+            }
+            if (conceptService == null) {
+                conceptService = Context.getConceptService();
+            }
+
+            ImportNotes notes = drugImporter.importSpreadsheet(reader);
+
+            if (notes.hasErrors()) {
+                System.out.println(notes);
+                throw new RuntimeException("Unable to install drug list");
+            }
+        } catch (Exception e) {
+            log.error("XXXXXXXXXXXXXXXX ------------ Import Error ------------- XXXXXXXXXXXXXXXXX");
+            log.error("Import Error", e);
+            log.error("XXXXXXXXXXXXXXXX ------------ Import Error ------------- XXXXXXXXXXXXXXXXX");
         }
     }
 
     private void setupHtmlForms(FormService formService, HtmlFormEntryService htmlFormEntryService) throws Exception {
         try {
             ResourceFactory resourceFactory = ResourceFactory.getInstance();
-            List<String> htmlforms = Arrays.asList(
-                    "ebolaexample:htmlforms/triage.xml"
-            );
+            List<String> htmlforms = Arrays.asList("ebolaexample:htmlforms/triage.xml");
 
             for (String htmlform : htmlforms) {
                 HtmlFormUtil.getHtmlFormFromUiResource(resourceFactory, formService, htmlFormEntryService, htmlform);

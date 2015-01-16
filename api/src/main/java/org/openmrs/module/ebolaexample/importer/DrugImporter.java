@@ -1,11 +1,15 @@
 package org.openmrs.module.ebolaexample.importer;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
 import org.openmrs.ConceptName;
 import org.openmrs.Drug;
 import org.openmrs.api.ConceptService;
 import org.openmrs.module.emrapi.concept.EmrConceptService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,6 +20,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
+@Component
 public class DrugImporter {
 
     @Autowired
@@ -23,6 +28,8 @@ public class DrugImporter {
 
     @Autowired
     private ConceptService conceptService;
+
+    protected Log log = LogFactory.getLog(getClass());
 
     public DrugImporter() {
 
@@ -48,11 +55,11 @@ public class DrugImporter {
             productNames.add(row.getName());
 
             if (row.getGenericName() != null) {
-                Concept productName = this.emrConceptService.getConcept(row.getGenericName());
-                if (productName == null) {
+                Concept conceptName = this.conceptService.getConceptByName(row.getGenericName());
+                if (conceptName == null) {
                     notes.addError("Specified concept not found: " + row.getGenericName());
                 } else {
-                    notes.addNote(row.getGenericName() + " -> " + productName.getId());
+                    notes.addNote(row.getGenericName() + " -> " + conceptName.getId());
                 }
             } else {
                 String productName1 = row.getName();
@@ -85,6 +92,8 @@ public class DrugImporter {
             while (i$.hasNext()) {
                 DrugImporterRow row = (DrugImporterRow) i$.next();
                 Drug drug = getDrug(row);
+
+                log.warn("xxxxxxxxxx - Saving - " + drug.getName());
                 this.conceptService.saveDrug(drug);
             }
 
@@ -96,7 +105,7 @@ public class DrugImporter {
 
         Drug drug = null;
 
-        if (row.getUuid() != null) {
+        if (StringUtils.isNotBlank(row.getUuid())) {
             drug = this.conceptService.getDrugByUuid(row.getUuid());
         }
 
@@ -106,9 +115,11 @@ public class DrugImporter {
 
         if (drug == null) {
             drug = new Drug();
+        } else {
+            log.error("Hehe, we found a drug by name or uuid " + drug.getName());
         }
 
-        if (row.getUuid() != null) {
+        if (StringUtils.isNotBlank(row.getUuid())) {
             drug.setUuid(row.getUuid());
         }
 
@@ -135,11 +146,8 @@ public class DrugImporter {
     }
 
     private Concept getConceptByName(String conceptName) {
-        Concept concept = this.emrConceptService.getConcept(conceptName);
-        if (concept == null) {
-            throw new RuntimeException("Specified concept not found: " + conceptName);
-        }
-        return concept;
+        return this.conceptService.getConceptByName(conceptName);
+        //return this.emrConceptService.getConcept(conceptName);
     }
 
     private List<DrugImporterRow> readSpreadsheet(Reader csvFileReader) throws IOException {
@@ -152,25 +160,35 @@ public class DrugImporter {
             bufferedReader = new BufferedReader(csvFileReader);
 
             while ((line = bufferedReader.readLine()) != null) {
-                String[] drugArray = line.split(",");
+                ArrayList<String> strings = splitLine(line);
 
-                DrugImporterRow drugImporterRow = new DrugImporterRow(drugArray[0], drugArray[1],
-                        drugArray[2].equalsIgnoreCase("yes") ? true : false, drugArray[3], drugArray[4],
-                        drugArray[5], drugArray[6], drugArray[7]);
+                // genericName, name, combination, strength, form, route, defaultDosageUnits, uuid
+                String genericName = cleanString(strings.get(0));
+                String name = cleanString(strings.get(1));
+                String combination = cleanString(strings.get(2));
+                String strength = cleanString(strings.get(3));
+                String form = cleanString(strings.get(4));
+                String route = cleanString(strings.get(5));
+                String defaultDosageUnits = cleanString(strings.get(6));
+                String uuid = cleanString(strings.get(8));
+                DrugImporterRow drugImporterRow = new DrugImporterRow(genericName, name,
+                        combination.equalsIgnoreCase("yes") ? true : false, strength, form, route, defaultDosageUnits, uuid);
 
-                System.out.println("Drug [name= " + drugArray[0]
-                        + " , description=" + drugArray[1]
-                        + " , isCombination=" + drugArray[2]
-                        + " , Strength=" + drugArray[3]
-                        + " , Form=" + drugArray[4]
-                        + " , Route=" + drugArray[5]
-                        + " , Default Dosage Units=" + drugArray[6]
-                        + " , UUID=" + drugArray[7] + "]");
+                System.out.println("Drug [name= " + strings.get(0)
+                        + " , description=" + strings.get(1)
+                        + " , isCombination=" + strings.get(2)
+                        + " , Strength=" + strings.get(3)
+                        + " , Form=" + strings.get(4)
+                        + " , Route=" + strings.get(5)
+                        + " , Default Dosage Units=" + strings.get(6)
+                        + " , UUID=" + strings.get(8) + "]");
 
                 drugList.add(drugImporterRow);
             }
 
         } catch (Exception e) {
+            log.error("Error", e);
+        } finally {
             if (bufferedReader != null) {
                 try {
                     bufferedReader.close();
@@ -180,5 +198,50 @@ public class DrugImporter {
             }
         }
         return drugList;
+    }
+
+    public ArrayList<String> splitLine(String line) {
+        String[] drugArrayWithQuotes = line.split("\"");
+        ArrayList<String> strings = new ArrayList<String>();
+        for (int i = 0; i < drugArrayWithQuotes.length; i++) {
+
+            String str = drugArrayWithQuotes[i];
+
+            if (str.startsWith(",") && i > 0) {
+                str = str.substring(1);
+            }
+            if (str.endsWith(",") && i < drugArrayWithQuotes.length - 1) {
+                str = str.substring(0, str.length() - 1);
+            }
+
+            if (line.contains("\"" + str + "\"")) {
+                strings.add(str);
+            } else {
+
+                if (str.equals("")) {
+                    strings.add("");
+                    continue;
+                }
+
+                String[] splitString = str.split(",", -1);
+                for (String s : splitString) {
+                    strings.add(s);
+                }
+
+
+            }
+        }
+        return strings;
+    }
+
+    public String cleanString(String str) {
+        str = str.trim();
+        if (str.startsWith("\"")) {
+            str = str.substring(1);
+        }
+        if (str.endsWith("\"")) {
+            str = str.substring(0, str.length() - 1);
+        }
+        return str;
     }
 }

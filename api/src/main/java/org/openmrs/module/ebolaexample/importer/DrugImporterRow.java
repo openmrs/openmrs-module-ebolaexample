@@ -11,7 +11,7 @@ public class DrugImporterRow {
     private String route;
     private String defaultDosageUnits;
 
-    public DrugImporterRow(){
+    public DrugImporterRow() {
 
     }
 
@@ -89,5 +89,10 @@ public class DrugImporterRow {
 
     public void setDefaultDosageUnits(String defaultDosageUnits) {
         this.defaultDosageUnits = defaultDosageUnits;
+    }
+
+    @Override
+    public String toString() {
+        return genericName + name + "  |  " + "  |  " + combination + "  strength:" + strength + "  form: " + form + " route: " + route + "  dosage:";
     }
 }
