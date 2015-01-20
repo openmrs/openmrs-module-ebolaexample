@@ -21,6 +21,8 @@ import org.openmrs.module.webservices.rest.web.resource.impl.NeedsPaging;
 import org.openmrs.module.webservices.rest.web.response.ResponseException;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -94,6 +96,19 @@ public class WardResource extends ReadableDelegatingResource<WardBedAssignments>
             assignment.put("patient", ConversionUtil.convertToRepresentation(entry.getValue(), Representation.REF));
             assignments.add(assignment);
         }
+        Collections.sort(assignments, new Comparator<SimpleObject>() {
+            @Override
+            public int compare(SimpleObject left, SimpleObject right) {
+                return index(left).compareTo(index(right));
+            }
+
+            private Integer index(SimpleObject input) {
+                SimpleObject bed = (SimpleObject) input.get("bed");
+                String name = (String) bed.get("display");
+                String number = name.substring(name.indexOf("#") + 1);
+                return Integer.valueOf(number);
+            }
+        });
         return assignments;
     }
 
