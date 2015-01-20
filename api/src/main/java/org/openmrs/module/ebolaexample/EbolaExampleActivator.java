@@ -144,6 +144,8 @@ public class EbolaExampleActivator extends BaseModuleActivator {
         setPreferredConceptName(service, "161554AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "g");
         setPreferredConceptName(service, "162263AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "mL");
         setPreferredConceptName(service, "162761AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "mg/kg");
+
+        setPreferredConceptName(service, "70116AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Paracetamol");
     }
 
     // not private so we can test it
