@@ -7,13 +7,10 @@ import org.openmrs.Concept;
 import org.openmrs.ConceptName;
 import org.openmrs.Drug;
 import org.openmrs.api.ConceptService;
-import org.openmrs.module.emrapi.concept.EmrConceptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -21,9 +18,6 @@ import java.util.List;
 
 @Component
 public class DrugImporter {
-
-    @Autowired
-    private EmrConceptService emrConceptService;
 
     @Autowired
     private ConceptService conceptService;
@@ -114,8 +108,6 @@ public class DrugImporter {
 
         if (drug == null) {
             drug = new Drug();
-        } else {
-            log.debug("Found a drug by name or uuid " + drug.getName());
         }
 
         if (StringUtils.isNotBlank(row.getUuid())) {
@@ -147,7 +139,6 @@ public class DrugImporter {
 
     private Concept getConceptByName(String conceptName) {
         return this.conceptService.getConceptByName(conceptName);
-        //return this.emrConceptService.getConcept(conceptName);
     }
 
     // visible for testing
@@ -171,18 +162,12 @@ public class DrugImporter {
                 String form = cleanString(strings.get(4));
                 String route = cleanString(strings.get(5));
                 String defaultDosageUnits = cleanString(strings.get(6));
+                String tier = cleanString(strings.get(7));
                 String uuid = cleanString(strings.get(8));
-                DrugImporterRow drugImporterRow = new DrugImporterRow(genericName, name,
-                        combination.equalsIgnoreCase("yes") ? true : false, strength, form, route, defaultDosageUnits, uuid);
 
-//                System.out.println("Drug [name= " + strings.get(0)
-//                        + " , description=" + strings.get(1)
-//                        + " , isCombination=" + strings.get(2)
-//                        + " , Strength=" + strings.get(3)
-//                        + " , Form=" + strings.get(4)
-//                        + " , Route=" + strings.get(5)
-//                        + " , Default Dosage Units=" + strings.get(6)
-//                        + " , UUID=" + strings.get(8) + "]");
+                DrugImporterRow drugImporterRow = new DrugImporterRow(genericName, name,
+                        combination.equalsIgnoreCase("yes") ? true : false, strength, form, route, defaultDosageUnits,
+                        uuid, tier);
 
                 drugList.add(drugImporterRow);
             }
@@ -244,5 +229,31 @@ public class DrugImporter {
             str = str.substring(0, str.length() - 1);
         }
         return str;
+    }
+
+    public List<TierDrug> getTierDrugs() {
+
+        List<TierDrug> tierDrugs = new ArrayList<TierDrug>();
+
+        try {
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("Kerry_Town_Drugs.csv");
+            InputStreamReader reader = new InputStreamReader(inputStream);
+
+            List<DrugImporterRow> drugList = readSpreadsheet(reader);
+
+            for (DrugImporterRow row : drugList) {
+                if (isNotBlankOrEmpty(row.getTier()) && isNotBlankOrEmpty(row.getUuid())) {
+                    tierDrugs.add(new TierDrug(row.getTier(), row.getUuid()));
+                }
+            }
+        } catch (Exception e) {
+            log.error("Import Error", e);
+        }
+
+        return tierDrugs;
+    }
+
+    private boolean isNotBlankOrEmpty(String str) {
+        return StringUtils.isNotBlank(str) && StringUtils.isNotEmpty(str);
     }
 }

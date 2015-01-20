@@ -1,7 +1,6 @@
 <form class="full-content" xmlns="http://www.w3.org/1999/html" ng-show="addOrder.drug" name="addOrder.form">
     <header>
-        <patient-header patient-id="getPatientId()"
-                        patient="patient"></patient-header>
+        <patient-header patient-id="getPatientId()" patient="patient"></patient-header>
     </header>
     <span class="error-message" ng-show="serverError">There was an error saving this prescription</span>
 
@@ -9,8 +8,7 @@
         <h1>{{ addOrder.drug.concept.display }}<em>{{ addOrder.drug.display }}</em></h1>
 
         <div>
-            <input class="checkbox" type="checkbox" id="free-text-instructions-checkbox"
-                   ng-model="addOrder.freeTextInstructions"/>
+            <input class="checkbox" type="checkbox" id="free-text-instructions-checkbox" ng-model="addOrder.freeTextInstructions"/>
             <label for="free-text-instructions-checkbox">I will fill this later</label>
         </div>
         <div ng-show="addOrder.freeTextInstructions">
@@ -36,17 +34,16 @@
                 <span class="question-title">DOSE<em ng-class="{error: addOrder.form.dose.$invalid && hasErrors}">(Required)</em></span>
                 <div ng-class="{error: addOrder.form.dose.$invalid && hasErrors}" class="input-container no-unit">
                     <input ng-focus="focusInput($event)" ng-blur="blurInput($event)" ng-model="addOrder.drug.dose"
-                           type="number" ng-required="!addOrder.freeTextInstructions"
-                           name="dose">
+                           type="number" ng-required="!addOrder.freeTextInstructions" name="dose">
                 </div>
                 <span class="select-arrow" ng-class="{error: addOrder.form.doseUnits.$invalid && hasErrors}">
                     <select ng-model="addOrder.drug.doseUnits"
                             ng-required="!addOrder.freeTextInstructions"
                             name="doseUnits"
+                            ng-init="addOrder.drug.doseUnits = doseUnits[1].uuid"
                             ng-options="doseUnit.uuid as doseUnit.display for doseUnit in doseUnits | orderBy:'display'"
                             ng-focus="focusInput($event)"
                             ng-blur="blurInput($event)">
-                        <option></option>
                     </select>
                 </span>
             </span>

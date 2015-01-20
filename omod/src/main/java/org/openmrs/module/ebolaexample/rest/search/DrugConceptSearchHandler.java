@@ -14,10 +14,11 @@
 package org.openmrs.module.webservices.rest.web.v1_0.search.openmrs1_10;
 
 import org.openmrs.Concept;
-import org.openmrs.api.context.Context;
 import org.openmrs.Drug;
 import org.openmrs.api.ConceptService;
-import org.openmrs.module.webservices.rest.SimpleObject;
+import org.openmrs.api.context.Context;
+import org.openmrs.module.ebolaexample.importer.DrugImporter;
+import org.openmrs.module.ebolaexample.importer.TierDrug;
 import org.openmrs.module.webservices.rest.web.RequestContext;
 import org.openmrs.module.webservices.rest.web.RestConstants;
 import org.openmrs.module.webservices.rest.web.resource.api.PageableResult;
@@ -27,7 +28,6 @@ import org.openmrs.module.webservices.rest.web.resource.api.SearchQuery;
 import org.openmrs.module.webservices.rest.web.resource.impl.EmptySearchResult;
 import org.openmrs.module.webservices.rest.web.resource.impl.NeedsPaging;
 import org.openmrs.module.webservices.rest.web.response.ResponseException;
-import org.openmrs.module.webservices.rest.web.v1_0.resource.openmrs1_10.DrugResource1_10;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -47,6 +47,9 @@ public class DrugConceptSearchHandler implements SearchHandler {
     @Qualifier("conceptService")
     ConceptService conceptService;
 
+    @Autowired
+    private DrugImporter drugImporter;
+
     SearchQuery searchQuery = new SearchQuery.Builder(
             "Allows you to find active drug concept names")
             .withRequiredParameters(REQUEST_PARAM_FORMULARY)
@@ -58,7 +61,7 @@ public class DrugConceptSearchHandler implements SearchHandler {
     private Comparator<? super Concept> compareByDisplay = new Comparator<Concept>() {
         @Override
         public int compare(Concept o1, Concept o2) {
-            return o1.getDisplayString().compareToIgnoreCase(o2.getDisplayString());
+            return o2.getDisplayString().compareToIgnoreCase(o1.getDisplayString());
         }
     };
 
@@ -77,21 +80,54 @@ public class DrugConceptSearchHandler implements SearchHandler {
     public PageableResult search(RequestContext context) throws ResponseException {
         String query = context.getParameter(REQUEST_PARAM_QUERY);
         List<Drug> allDrugs = new ArrayList<Drug>();
-        if(query == null || query.isEmpty()) {
+        if (query == null || query.isEmpty()) {
             allDrugs = Context.getConceptService().getAllDrugs(context.getIncludeAll());
         } else {
             allDrugs = Context.getConceptService().getDrugs(query, Context.getLocale(), false, false);
         }
-        Set<Concept> drugNames = new HashSet<Concept>();
-        for (Drug drug: allDrugs) {
-            drugNames.add(drug.getConcept());
+
+        List<TierDrug> tierDrugs = drugImporter.getTierDrugs();
+        for (Drug drug : allDrugs) {
+            for (TierDrug tierDrug : tierDrugs) {
+                if (tierDrug.getUuid().equalsIgnoreCase(drug.getUuid())) {
+                    tierDrug.setDrug(drug);
+                    break;
+                }
+            }
+        }
+
+        List<TierDrug> tierDrugList = new ArrayList<TierDrug>();
+
+        for (TierDrug tierDrug : tierDrugs) {
+            if (tierDrug.getDrug() != null) {
+                tierDrugList.add(tierDrug);
+            }
+        }
+
+        Collections.sort(tierDrugList, compareByTierAndDrugDisplay);
+
+        Set<Concept> drugNames = new LinkedHashSet<Concept>();
+        for (TierDrug tierDrug : tierDrugList) {
+            drugNames.add(tierDrug.getDrug().getConcept());
         }
 
         if (drugNames.size() == 0) {
             return new EmptySearchResult();
         }
         ArrayList<Concept> concepts = new ArrayList<Concept>(drugNames);
-        Collections.sort(concepts, compareByDisplay);
+
         return new NeedsPaging<Concept>(concepts, context);
     }
+
+    public static Comparator<? super TierDrug> compareByTierAndDrugDisplay = new Comparator<TierDrug>() {
+        @Override
+        public int compare(TierDrug o1, TierDrug o2) {
+            if (o1.getTier().equalsIgnoreCase(o2.getTier())) {
+                return o1.getDrug().getConcept().getDisplayString()
+                        .compareToIgnoreCase(o2.getDrug().getConcept().getDisplayString());
+            } else
+                return o1.getTier().compareToIgnoreCase(o2.getTier());
+        }
+    };
+
 }

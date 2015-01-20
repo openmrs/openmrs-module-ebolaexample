@@ -10,13 +10,14 @@ public class DrugImporterRow {
     private String form;
     private String route;
     private String defaultDosageUnits;
+    private String tier;
 
     public DrugImporterRow() {
 
     }
 
     public DrugImporterRow(String genericName, String name, boolean combination, String strength,
-                           String form, String route, String defaultDosageUnits, String uuid) {
+                           String form, String route, String defaultDosageUnits, String uuid, String tier) {
         this.genericName = genericName;
         this.name = name;
         this.combination = combination;
@@ -25,6 +26,7 @@ public class DrugImporterRow {
         this.route = route;
         this.defaultDosageUnits = defaultDosageUnits;
         this.uuid = uuid;
+        this.tier = tier;
     }
 
     public String getUuid() {
@@ -94,5 +96,13 @@ public class DrugImporterRow {
     @Override
     public String toString() {
         return genericName + name + "  |  " + "  |  " + combination + "  strength:" + strength + "  form: " + form + " route: " + route + "  dosage:";
+    }
+
+    public String getTier() {
+        return tier;
+    }
+
+    public void setTier(String tier) {
+        this.tier = tier;
     }
 }
