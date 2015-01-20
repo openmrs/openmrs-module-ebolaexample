@@ -25,11 +25,16 @@
                         <span class="tag" ng-show="order.asNeeded">In case of {{ order.asNeededCondition }}</span>
                     </em>
                 </div>
+                <div>
+                    <em>
+                        {{ lastGiven(order) | lastGiven }}
+                    </em>
+                </div>
             </span>
             <span class="right">
-                <button ng-click="showAdminister(order)">Administer</button>
-                <button ng-click="editOrder(order)">Edit</button>
                 <button id="stop_{{order.uuid}}" ng-click="openStopOrderDialog(order)">Stop</button>
+                <button ng-click="editOrder(order)">Edit</button>
+                <button ng-click="showAdminister(order)">Administer</button>
             </span>
         </li>
     </ul>

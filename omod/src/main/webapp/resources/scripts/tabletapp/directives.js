@@ -11,14 +11,15 @@ angular.module("directives", [])
             }
         };
     }])
-    .directive('backButton', ['$state', 'BackService', function ($state, BackService) {
+    .directive('backButton', ['$state', 'BackService', 'backButtonFilter',
+        function ($state, BackService, backButtonFilter) {
         return {
             link: function (scope, element, attrs) {
                 var description = $state.current.data.back.description || attrs.name;
                 element.html('<div class="tablet-navigation">' +
                     '<button class="left small">' +
                     '<i class="fa fa-chevron-left"></i>' +
-                    description +
+                    backButtonFilter(description) +
                     '</button>' +
                     '</div>');
                 element.bind('click', BackService.buildHandler($state));

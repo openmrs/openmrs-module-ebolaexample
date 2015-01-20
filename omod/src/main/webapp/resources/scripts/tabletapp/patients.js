@@ -44,10 +44,10 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
         }])
 
     .controller("PatientController", [ "$state", "$scope", "PatientResource", "OrderResource", "ngDialog",
-        "$rootScope", "Constants", "ScheduledDoseResource", "CurrentSession", "StopOrderService", "ActiveOrders",
-        "PastOrders",
+        "$rootScope", "Constants", "ScheduledDoseResource", "CurrentSession", "StopOrderService",
+        "ActiveOrders", "PastOrders", "DoseHistory",
         function ($state, $scope, PatientResource, OrderResource, ngDialog, $rootScope, Constants,
-                  ScheduledDoseResource, CurrentSession, StopOrderService, ActiveOrders, PastOrders) {
+                  ScheduledDoseResource, CurrentSession, StopOrderService, ActiveOrders, PastOrders, DoseHistory) {
             var patientUuid = $state.params.patientUUID;
             $scope.hasErrors = false;
             $scope.patient = PatientResource.get({ uuid: patientUuid });
@@ -60,6 +60,26 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                 $scope.administeredDrug = false;
                 $scope.comeFromPrescriptionForm = $state.params.prescriptionSuccess == 'true' && fromState && fromState.name == 'patient.addPrescriptionDetails';
             });
+
+            function mostRecentDose(doses) {
+                // TODO verify that these are always given to us sorted
+                // in the future, exclude future not-yet-given doses
+                return doses[doses.length - 1];
+            }
+
+            $scope.doseHistory = DoseHistory.reload($scope, patientUuid);
+            $scope.$watch(DoseHistory.get, function(newDoseHistory) {
+                $scope.doseHistory = newDoseHistory;
+            }, true);
+            $scope.lastGiven = function(order) {
+                if (!$scope.doseHistory) {
+                    return null;
+                }
+                var item = _.find($scope.doseHistory.dosesByOrder, function(it) { return it.order.uuid == order.uuid });
+                if (item) {
+                    return mostRecentDose(item.doses);
+                }
+            }
 
             $scope.focusInput = function ($event) {
                 angular.element($event.target).parent().addClass('highlight');
@@ -90,6 +110,7 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                 $scope.administerOrder = order;
                 ngDialog.open({
                     template: "administerDialog",
+                    controller: "PatientController",
                     className: "ngdialog-theme-plain",
                     closeByDocument: false,
                     scope: $scope
@@ -125,6 +146,10 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                     $scope.hasErrors = true;
                 }
             };
+            $scope.onSaveAdministeredDose = function () {
+                $scope.closeThisDialog();
+                DoseHistory.reload($scope, patientUuid);
+            }
 
             $scope.stopOrder = StopOrderService.stopOrder;
 
@@ -183,6 +208,23 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             },
             get: function() {
                 return cachedOrders;
+            }
+        }
+    }])
+
+    .factory("DoseHistory", ['DoseHistoryResource', function (DoseHistoryResource) {
+        var cachedDoses;
+        return {
+            reload: function(scope, patientUuid) {
+                scope.loadingDoseHistory = true;
+                return DoseHistoryResource.query({uuid: patientUuid}, function (response) {
+                    scope.loadedDoseHistory = true;
+                    scope.loadingDoseHistory = false;
+                    cachedDoses = response;
+                });
+            },
+            get: function() {
+                return cachedDoses;
             }
         }
     }])

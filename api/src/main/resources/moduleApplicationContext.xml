@@ -36,6 +36,9 @@
                 <property name="scheduledDoseDAO">
                     <bean class="org.openmrs.module.ebolaexample.db.HibernateScheduledDoseDAO"/>
                 </property>
+				<property name="orderService">
+					<ref bean="orderService"/>
+				</property>
             </bean>
         </property>
         <property name="preInterceptors">

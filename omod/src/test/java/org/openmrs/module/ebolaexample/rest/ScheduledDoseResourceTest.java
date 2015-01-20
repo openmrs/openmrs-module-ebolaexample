@@ -12,6 +12,8 @@ import org.springframework.mock.web.MockHttpServletResponse;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -30,7 +32,7 @@ public class ScheduledDoseResourceTest extends BaseEbolaResourceTest {
         SimpleObject response = toSimpleObject(handle(request));
 
         assertEquals(scheduledDose.getUuid(), response.get("uuid"));
-        assertEquals(scheduledDose.getStatus(), response.get("status"));
+        assertEquals(scheduledDose.getStatus().name(), response.get("status"));
         assertEquals(scheduledDose.getReasonNotAdministeredNonCoded(), response.get("reasonNotAdministeredNonCoded"));
         assertEquals("PARTIAL - " + scheduledDose.getDateCreated().toString(), response.get("display"));
     }
@@ -71,6 +73,20 @@ public class ScheduledDoseResourceTest extends BaseEbolaResourceTest {
         assertNotNull(scheduledDose.getCreator());
     }
 
+    @Test
+    public void testGetForPatient() throws Exception {
+        ScheduledDose scheduledDose = createScheduledDose();
+        MockHttpServletRequest request = new MockHttpServletRequest("GET", "/rest/" + RestConstants.VERSION_1 + "/"
+                + requestURI);
+        request.addParameter("patient", scheduledDose.getOrder().getPatient().getUuid());
+        request.addHeader("content-type", "application/json");
+
+        SimpleObject response = toSimpleObject(handle(request));
+        List<Map> results = (List<Map>) response.get("results");
+        assertEquals(1, results.size());
+        assertEquals(scheduledDose.getUuid(), results.get(0).get("uuid"));
+    }
+
     private ScheduledDose createScheduledDose() {
         PharmacyService pharmacyService = Context.getService(PharmacyService.class);
         return pharmacyService.saveScheduledDose(buildScheduledDose());
@@ -81,7 +97,7 @@ public class ScheduledDoseResourceTest extends BaseEbolaResourceTest {
         ScheduledDose dose = new ScheduledDose();
         dose.setOrder(order);
         dose.setDateCreated(new Date());
-        dose.setStatus("PARTIAL");
+        dose.setStatus(ScheduledDose.DoseStatus.PARTIAL);
         dose.setReasonNotAdministeredNonCoded("Illnesses");
         dose.setScheduledDatetime(new Date());
         return dose;

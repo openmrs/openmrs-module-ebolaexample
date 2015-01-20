@@ -1,21 +1,25 @@
 package org.openmrs.module.ebolaexample.rest;
 
+import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.ebolaexample.api.PharmacyService;
 import org.openmrs.module.ebolaexample.domain.ScheduledDose;
+import org.openmrs.module.ebolaexample.pharmacy.DoseHistory;
+import org.openmrs.module.webservices.rest.web.ConversionUtil;
 import org.openmrs.module.webservices.rest.web.RequestContext;
 import org.openmrs.module.webservices.rest.web.RestConstants;
 import org.openmrs.module.webservices.rest.web.annotation.PropertyGetter;
 import org.openmrs.module.webservices.rest.web.annotation.Resource;
 import org.openmrs.module.webservices.rest.web.representation.Representation;
+import org.openmrs.module.webservices.rest.web.resource.api.PageableResult;
 import org.openmrs.module.webservices.rest.web.resource.api.Retrievable;
 import org.openmrs.module.webservices.rest.web.resource.impl.DelegatingCrudResource;
 import org.openmrs.module.webservices.rest.web.resource.impl.DelegatingResourceDescription;
+import org.openmrs.module.webservices.rest.web.resource.impl.NeedsPaging;
 import org.openmrs.module.webservices.rest.web.response.ResourceDoesNotSupportOperationException;
 import org.openmrs.module.webservices.rest.web.response.ResponseException;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -82,6 +86,7 @@ public class ScheduledDoseResource extends DelegatingCrudResource<ScheduledDose>
         DelegatingResourceDescription properties = new DelegatingResourceDescription();
         properties.addProperty("status");
         properties.addProperty("reasonNotAdministeredNonCoded");
+        properties.addProperty("scheduledDatetime");
         properties.addProperty("order");
         return properties;
     }
@@ -91,4 +96,10 @@ public class ScheduledDoseResource extends DelegatingCrudResource<ScheduledDose>
         return Arrays.asList("order");
     }
 
+    @Override
+    protected PageableResult doSearch(RequestContext context) {
+        Patient patient = (Patient) ConversionUtil.convert(context.getParameter("patient"), Patient.class);
+        DoseHistory doseHistory = Context.getService(PharmacyService.class).getScheduledDosesByPatientAndDateRange(patient, null, null);
+        return new NeedsPaging<ScheduledDose>(doseHistory.getDoses(), context);
+    }
 }

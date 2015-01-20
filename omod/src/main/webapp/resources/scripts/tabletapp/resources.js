@@ -62,4 +62,12 @@ angular.module("resources", ["ngResource"])
         }, {
             query: { method: "GET" }
         });
+    }])
+
+    .factory("DoseHistoryResource", [ "$resource", function ($resource) {
+        return $resource("/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/dosehistory/:uuid", {
+            uuid: "@uuid"
+        }, {
+            query: { method: "GET" }
+        })
     }]);

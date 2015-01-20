@@ -1,12 +1,13 @@
 package org.openmrs.module.ebolaexample.domain;
 
-import org.openmrs.BaseOpenmrsData;
 import org.openmrs.DrugOrder;
 import org.openmrs.User;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -61,6 +62,8 @@ public class ScheduledDose {
     @Column(name = "uuid", length = 38, unique = true)
     private String uuid  = UUID.randomUUID().toString();
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
     private DoseStatus status;
 
     public User getCreator() {
@@ -147,15 +150,7 @@ public class ScheduledDose {
         return this.uuid;
     }
 
-    @Column(name = "status")
-    public String getStatus() {
-        if(this.status != null) {
-            return this.status.name();
-        }
-        return "";
-    }
-
-    public void setStatus(String status) {
-        this.status = DoseStatus.valueOf(status);
+    public DoseStatus getStatus() {
+        return status;
     }
 }
