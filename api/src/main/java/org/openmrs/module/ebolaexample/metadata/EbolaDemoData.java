@@ -19,7 +19,6 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -143,6 +142,8 @@ public class EbolaDemoData extends AbstractMetadataBundle {
         installUser(buildTeam("1"), "Team1234");
         installUser(buildTeam("2"), "Team1234");
         installUser(buildTeam("3"), "Team1234");
+        installUser(buildTeam("4"), "Team1234");
+        installUser(buildTeam("5"), "Team1234");
     }
 
     private void installUser(User user, String password) {
