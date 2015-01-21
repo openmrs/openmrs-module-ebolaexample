@@ -44,8 +44,21 @@ angular.module('prescription-service', ['tabletapp'])
                 }
             }
             var orderFailureHandler = function($scope) {
-                return function() {
-                    $scope.serverError = true;
+                var prettyErrors = {
+                    "Cannot have more than one active order for the same orderable and care setting at same time":
+                        "This drug is already prescribed. (Cannot prescribe the same formulation more than once.)"
+                };
+                return function(err) {
+                    if (err.data && err.data.error && err.data.error.message) {
+                        err = err.data.error.message;
+                        if (err in prettyErrors) {
+                            $scope.serverError = prettyErrors[err];
+                        } else {
+                            $scope.serverError = err;
+                        }
+                    } else {
+                        $scope.serverError = "There was an error saving this prescription";
+                    }
                 }
             }
             var savePrescription = function(order, newState, $scope, $state) {

@@ -2,7 +2,10 @@
     <header>
         <patient-header patient-id="getPatientId()" patient="patient"></patient-header>
     </header>
-    <span class="error-message" ng-show="serverError">There was an error saving this prescription</span>
+    <span class="error-message" ng-show="serverError">
+        {{ serverError }}
+        <button ng-click="clearServerError()">Hide</button>
+    </span>
 
     <div class="page-wrap-smaller">
         <h1>{{ addOrder.drug.concept.display }}<em>{{ addOrder.drug.display }}</em></h1>
@@ -16,6 +19,9 @@
             <textarea ng-model="addOrder.dosingInstructions" rows="5" cols="60"></textarea>
         </div>
         <div ng-show="!addOrder.freeTextInstructions">
+            <div ng-show="routeProvided">
+                <span class="question-title">ROUTE: {{ routeProvided.display }}</span>
+            </div>
             <div ng-hide="routeProvided">
                 <span class="question-title">ROUTE<em ng-class="{error: addOrder.form.route.$invalid && hasErrors}">(Required)</em></span>
                 <span class="select-arrow no-padding" ng-class="{error: addOrder.form.route.$invalid && hasErrors}">

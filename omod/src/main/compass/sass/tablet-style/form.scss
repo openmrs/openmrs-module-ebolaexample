@@ -54,6 +54,11 @@ form {
 	color: white;
 	padding: 15px 20px;
 	background: $error;
+
+  	button {
+	  font-size: 1.0em;
+	  float: right;
+	}
 }
 
 .success-message {

@@ -4,6 +4,7 @@ angular.module("prescriptions", ["tabletapp", "constants", "patients"])
         function ($state, $scope, PrescriptionService, PrescriptionSetup) {
             var drug = PrescriptionSetup.buildDrug($state, $scope);
             PrescriptionSetup.setupScopeConstants($scope);
+            PrescriptionSetup.setupStandardFunctions($scope);
             PrescriptionSetup.setupDrugOrder($scope, drug, $scope.patient);
             $scope.save = PrescriptionService.buildSaveHandler($scope, $state);
         }])
@@ -14,6 +15,7 @@ angular.module("prescriptions", ["tabletapp", "constants", "patients"])
             OrderResource.get({ uuid: $state.params.orderUuid }, function (response) {
                 var preexistingOrder = PrescriptionService.formOrderFromResponse(response);
                 PrescriptionSetup.setupScopeConstants($scope);
+                PrescriptionSetup.setupStandardFunctions($scope);
                 PrescriptionSetup.setupDrugOrder($scope, undefined, $scope.patient, preexistingOrder);
                 $scope.save = PrescriptionService.buildUpdateHandler($scope, $state);
             });
@@ -29,6 +31,11 @@ angular.module("prescriptions", ["tabletapp", "constants", "patients"])
                     $scope.doseUnits = angular.copy(Constants.doseUnits);
                     $scope.routes = angular.copy(Constants.routes);
                     $scope.asNeededConditions = angular.copy(Constants.asNeededConditions);
+                },
+                setupStandardFunctions: function ($scope) {
+                    $scope.clearServerError = function() {
+                        $scope.serverError = null;
+                    }
                 },
                 setupDrugOrder: function ($scope, drug, patient, preexistingOrder) {
                     var rounds = _.reduce(angular.copy(Constants.rounds), function (memo, val) {
