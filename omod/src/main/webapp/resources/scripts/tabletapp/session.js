@@ -1,10 +1,11 @@
 angular.module("session", ["ui.router", "constants", "resources", "patients", "ngCookies"])
 
-    .factory("CurrentSession", ["$http", "Constants", "EncounterResource", "$cookies",
-        function ($http, Constants, EncounterResource, $cookies) {
+    .factory("CurrentSession", ["$http", "Constants", "EncounterResource", "WardResource", "$cookies",
+        function ($http, Constants, EncounterResource, WardResource, $cookies) {
             var cachedInfo,
                 cachedEncounter,
-                cachedEncounterPatientUUID;
+                cachedEncounterPatientUUID,
+                cachedWard;
 
             return {
                 getInfo: function () {
@@ -29,14 +30,25 @@ angular.module("session", ["ui.router", "constants", "resources", "patients", "n
                     return cachedEncounter;
                 },
                 setRecentWard: function (ward) {
-                    $cookies[Constants.wardKey] = JSON.stringify(ward);
+                    // I haven't checked why we're storing this in a cookie (that code was already there) but I am
+                    // changing it to store just the UUID instead of the whole ward, since it was breaking jetty by
+                    // causing us to have a too-big header: $cookies[Constants.wardKey] = JSON.stringify(ward);
+                    $cookies[Constants.wardKey] = ward.uuid;
+                    cachedWard = ward;
                 },
                 getRecentWard: function () {
-                    var ward = $cookies[Constants.wardKey];
-                    if(ward) {
-                        return JSON.parse(ward);
+                    if (cachedWard) {
+                        return cachedWard;
                     }
-                    return ward;
+                    else {
+                        var wardUuid = $cookies[Constants.wardKey];
+                        if (wardUuid) {
+                            cachedWard = WardResource.get({uuid: wardUuid});
+                            return cachedWard;
+                        } else {
+                            return null;
+                        }
+                    }
                 }
             };
         }]);
