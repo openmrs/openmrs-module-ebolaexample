@@ -177,6 +177,10 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                     scope: $scope
                 });
             };
+
+            $scope.stateGo = function (target) {
+                $state.go(target);
+            };
         }])
 
     .factory("ActiveOrders", ['OrderResource', function (OrderResource) {
