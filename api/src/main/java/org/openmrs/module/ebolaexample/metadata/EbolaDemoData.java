@@ -38,10 +38,10 @@ public class EbolaDemoData extends AbstractMetadataBundle {
 
         public static final String INPATIENT_WARDS = "b6739628-5e82-11e4-9305-df58197607bd";
 
-        public static final String DRY_MALE_SUSPECT_WARD = "534fed82-5831-11e4-af12-660e112eb3f5";
-        public static final String DRY_FEMALE_SUSPECT_WARD = "56a6886a-5831-11e4-af12-660e112eb3f5";
-        public static final String WET_MALE_SUSPECT_WARD = "1ef1761e-5831-11e4-af12-660e112eb3f5";
-        public static final String WET_FEMALE_SUSPECT_WARD = "04c1857f-5831-11e4-af12-660e112eb3f5";
+        public static final String SUSPECT_WARD_1 = "534fed82-5831-11e4-af12-660e112eb3f5";
+        public static final String SUSPECT_WARD_2 = "56a6886a-5831-11e4-af12-660e112eb3f5";
+        public static final String SUSPECT_WARD_3 = "1ef1761e-5831-11e4-af12-660e112eb3f5";
+        public static final String WET_FEMALE_SUSPECT_WARD = "04c1857f-5831-11e4-af12-660e112eb3f5"; // not used anymore
 
         public static final String CONFIRMED_WARD_1 = "ed5c93e0-5830-11e4-af12-660e112eb3f5";
         public static final String CONFIRMED_WARD_2 = "05b6cc12-5831-11e4-af12-660e112eb3f5";
@@ -99,14 +99,13 @@ public class EbolaDemoData extends AbstractMetadataBundle {
         install(location("Inpatient Wards", "Area within which all Inpatient Wards are contained", _Location.INPATIENT_WARDS, _Location.EBOLA_TREATMENT_UNIT,
                 tagsForInpatientRoot));
 
-        install(location("Dry Male Suspect Ward", null, _Location.DRY_MALE_SUSPECT_WARD, _Location.INPATIENT_WARDS,
+        install(location("Suspect Ward 1", null, _Location.SUSPECT_WARD_1, _Location.INPATIENT_WARDS,
                 tagsForSuspectWard));
-        install(location("Dry Female Suspect Ward", null, _Location.DRY_FEMALE_SUSPECT_WARD, _Location.INPATIENT_WARDS,
+        install(location("Suspect Ward 2", null, _Location.SUSPECT_WARD_2, _Location.INPATIENT_WARDS,
                 tagsForSuspectWard));
-        install(location("Wet Male Suspect Ward", null, _Location.WET_MALE_SUSPECT_WARD, _Location.INPATIENT_WARDS,
+        install(location("Suspect Ward 3", null, _Location.SUSPECT_WARD_3, _Location.INPATIENT_WARDS,
                 tagsForSuspectWard));
-        install(location("Wet Female Suspect Ward", null, _Location.WET_FEMALE_SUSPECT_WARD, _Location.INPATIENT_WARDS,
-                tagsForSuspectWard));
+        uninstall(possible(Location.class, _Location.WET_FEMALE_SUSPECT_WARD), "Switched to just 3 suspect wards");
 
         install(location("Confirmed Ward 1", null, _Location.CONFIRMED_WARD_1, _Location.INPATIENT_WARDS,
                 tagsForConfirmedWard));
@@ -126,10 +125,9 @@ public class EbolaDemoData extends AbstractMetadataBundle {
         install(location("Recovery Ward 2", null, _Location.RECOVERY_WARD_2, _Location.INPATIENT_WARDS,
                 tagsForRecoveryWard));
 
-        installBeds(_Location.DRY_MALE_SUSPECT_WARD, 5, tagsForInpatientBed);
-        installBeds(_Location.DRY_FEMALE_SUSPECT_WARD, 5, tagsForInpatientBed);
-        installBeds(_Location.WET_MALE_SUSPECT_WARD, 5, tagsForInpatientBed);
-        installBeds(_Location.WET_FEMALE_SUSPECT_WARD, 5, tagsForInpatientBed);
+        installBeds(_Location.SUSPECT_WARD_1, 5, tagsForInpatientBed);
+        installBeds(_Location.SUSPECT_WARD_2, 5, tagsForInpatientBed);
+        installBeds(_Location.SUSPECT_WARD_3, 5, tagsForInpatientBed);
         installBeds(_Location.CONFIRMED_WARD_1, 10, tagsForInpatientBed);
         installBeds(_Location.CONFIRMED_WARD_2, 10, tagsForInpatientBed);
         installBeds(_Location.CONFIRMED_WARD_3, 10, tagsForInpatientBed);

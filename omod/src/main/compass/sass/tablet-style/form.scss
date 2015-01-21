@@ -22,6 +22,12 @@ form {
 			text-decoration: none;
 		}
 	}
+
+	&.tablet-list-two-column {
+	  	column-count: 2;
+	  	-webkit-column-count: 2;
+	  	-moz-column-count: 2;
+	}
 }
 
 .question-title {
