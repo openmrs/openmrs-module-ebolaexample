@@ -216,7 +216,6 @@ public class EbolaExampleActivator extends BaseModuleActivator {
         } catch (Exception e) {
             log.error("XXXXXXXXXXXXXXXX ------------ Import Error ------------- XXXXXXXXXXXXXXXXX");
             log.error("Import Error", e);
-            log.error("XXXXXXXXXXXXXXXX ------------ Import Error ------------- XXXXXXXXXXXXXXXXX");
         }
     }
 

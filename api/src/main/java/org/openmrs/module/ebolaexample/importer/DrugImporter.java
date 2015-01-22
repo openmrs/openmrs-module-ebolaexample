@@ -9,6 +9,12 @@ import org.openmrs.Drug;
 import org.openmrs.api.ConceptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.supercsv.cellprocessor.Optional;
+import org.supercsv.cellprocessor.ParseBool;
+import org.supercsv.cellprocessor.Trim;
+import org.supercsv.cellprocessor.ift.CellProcessor;
+import org.supercsv.io.CsvBeanReader;
+import org.supercsv.prefs.CsvPreference;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -38,11 +44,13 @@ public class DrugImporter {
 
             if (productNames.contains(row.getName())) {
                 notes.addError("Duplicate drug formulation Name: " + row.getName());
+                row.setHasError(true);
             }
 
             Drug existingDrug = this.conceptService.getDrug(row.getName());
             if (existingDrug != null && row.getUuid() != null && !existingDrug.getUuid().equals(row.getUuid())) {
                 notes.addError("Product already exists in database with different Uuid: " + row.getName() + " (" + existingDrug.getUuid() + ")");
+                row.setHasError(true);
             }
 
             productNames.add(row.getName());
@@ -50,7 +58,8 @@ public class DrugImporter {
             if (row.getGenericName() != null) {
                 Concept conceptName = this.conceptService.getConceptByName(row.getGenericName());
                 if (conceptName == null) {
-                    notes.addError("Specified concept not found: " + row.getGenericName());
+                    notes.addError(row.getGenericName() + " -> missing concept");
+                    row.setHasError(true);
                 } else {
                     notes.addNote(row.getGenericName() + " -> " + conceptName.getId());
                 }
@@ -73,25 +82,27 @@ public class DrugImporter {
 
     public ImportNotes importSpreadsheet(Reader reader) throws IOException {
 
-        List drugList = this.readSpreadsheet(reader);
+        List drugList = this.readSpreadsheet2(reader);
 
         ImportNotes notes = this.verifySpreadsheetHelper(drugList);
 
         if (notes.hasErrors()) {
-            return notes;
-        } else {
-            Iterator i$ = drugList.iterator();
-
-            while (i$.hasNext()) {
-                DrugImporterRow row = (DrugImporterRow) i$.next();
-                Drug drug = getDrug(row);
-
-                log.debug("xxxxxxxxxx - Saving - " + drug.getName());
-                this.conceptService.saveDrug(drug);
-            }
-
-            return notes;
+            log.error(notes);
         }
+
+        Iterator i$ = drugList.iterator();
+        while (i$.hasNext()) {
+            DrugImporterRow row = (DrugImporterRow) i$.next();
+            if (row.hasError()) {
+                continue;
+            }
+            Drug drug = getDrug(row);
+
+            log.debug("xxxxxxxxxx - Saving - " + drug.getName());
+            this.conceptService.saveDrug(drug);
+        }
+
+        return notes;
     }
 
     private Drug getDrug(DrugImporterRow row) {
@@ -184,6 +195,39 @@ public class DrugImporter {
             }
         }
         return drugList;
+    }
+
+    private CellProcessor[] getCellProcessors() {
+        return new CellProcessor[]{new Optional(new Trim()),
+                new Optional(new Trim()), new Optional(new ParseBool()),
+                new Optional(new Trim()), new Optional(new Trim()),
+                new Optional(new Trim()), new Optional(new Trim()),
+                new Optional(new Trim()), new Optional(new Trim())};
+    }
+
+    List<DrugImporterRow> readSpreadsheet2(Reader csvFileReader) throws IOException {
+
+        ArrayList drugList = new ArrayList();
+        CsvBeanReader csv = null;
+
+        try {
+            csv = new CsvBeanReader(csvFileReader, CsvPreference.EXCEL_PREFERENCE);
+            csv.getHeader(true);
+            CellProcessor[] cellProcessors = this.getCellProcessors();
+
+            while (true) {
+                DrugImporterRow row = (DrugImporterRow) csv.read(DrugImporterRow.class, DrugImporterRow.FIELD_COLUMNS, cellProcessors);
+                if (row == null) {
+                    return drugList;
+                }
+
+                drugList.add(row);
+            }
+        } finally {
+            if (csv != null) {
+                csv.close();
+            }
+        }
     }
 
     public ArrayList<String> splitLine(String line) {

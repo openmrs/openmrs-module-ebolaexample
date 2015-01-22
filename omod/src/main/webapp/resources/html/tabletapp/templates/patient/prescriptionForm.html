@@ -46,7 +46,6 @@
                     <select ng-model="addOrder.drug.doseUnits"
                             ng-required="!addOrder.freeTextInstructions"
                             name="doseUnits"
-                            ng-init="addOrder.drug.doseUnits = doseUnits[1].uuid"
                             ng-options="doseUnit.uuid as doseUnit.display for doseUnit in doseUnits | orderBy:'display'"
                             ng-focus="focusInput($event)"
                             ng-blur="blurInput($event)">

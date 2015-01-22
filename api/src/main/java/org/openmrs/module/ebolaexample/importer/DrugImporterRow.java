@@ -2,7 +2,6 @@ package org.openmrs.module.ebolaexample.importer;
 
 public class DrugImporterRow {
 
-    private String uuid;
     private String genericName;
     private String name;
     private boolean combination;
@@ -11,6 +10,11 @@ public class DrugImporterRow {
     private String route;
     private String defaultDosageUnits;
     private String tier;
+    private String uuid;
+    private boolean hasError = false;
+
+    public static final String[] FIELD_COLUMNS = new String[]{"genericName", "name", "combination",
+            "strength", "form", "route", "defaultDosageUnits", "tier", "uuid"};
 
     public DrugImporterRow() {
 
@@ -104,5 +108,13 @@ public class DrugImporterRow {
 
     public void setTier(String tier) {
         this.tier = tier;
+    }
+
+    public boolean hasError() {
+        return hasError;
+    }
+
+    public void setHasError(boolean hasError) {
+        this.hasError = hasError;
     }
 }

@@ -147,6 +147,11 @@ angular.module("constants", [])
             ],
             roles: {
                 wardRoundingTeam: "Ward Rounding Team"
+            },
+            drugConfig: {
+                "fc6d9876-542f-4708-ae13-875886c97541": {
+                    allowedDoseUnits: [ "tablet(s)" ]
+                }
             }
         }
     });
