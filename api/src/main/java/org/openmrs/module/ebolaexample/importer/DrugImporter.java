@@ -16,7 +16,10 @@ import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.CsvBeanReader;
 import org.supercsv.prefs.CsvPreference;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -82,7 +85,7 @@ public class DrugImporter {
 
     public ImportNotes importSpreadsheet(Reader reader) throws IOException {
 
-        List drugList = this.readSpreadsheet2(reader);
+        List drugList = this.readSpreadsheet(reader);
 
         ImportNotes notes = this.verifySpreadsheetHelper(drugList);
 
@@ -152,51 +155,6 @@ public class DrugImporter {
         return this.conceptService.getConceptByName(conceptName);
     }
 
-    // visible for testing
-    List<DrugImporterRow> readSpreadsheet(Reader csvFileReader) throws IOException {
-        ArrayList drugList = new ArrayList();
-
-        BufferedReader bufferedReader = null;
-        String line = "";
-
-        try {
-            bufferedReader = new BufferedReader(csvFileReader);
-
-            while ((line = bufferedReader.readLine()) != null) {
-                ArrayList<String> strings = splitLine(line);
-
-                // genericName, name, combination, strength, form, route, defaultDosageUnits, uuid
-                String genericName = cleanString(strings.get(0));
-                String name = cleanString(strings.get(1));
-                String combination = cleanString(strings.get(2));
-                String strength = cleanString(strings.get(3));
-                String form = cleanString(strings.get(4));
-                String route = cleanString(strings.get(5));
-                String defaultDosageUnits = cleanString(strings.get(6));
-                String tier = cleanString(strings.get(7));
-                String uuid = cleanString(strings.get(8));
-
-                DrugImporterRow drugImporterRow = new DrugImporterRow(genericName, name,
-                        combination.equalsIgnoreCase("yes") ? true : false, strength, form, route, defaultDosageUnits,
-                        uuid, tier);
-
-                drugList.add(drugImporterRow);
-            }
-
-        } catch (Exception e) {
-            log.error("Error", e);
-        } finally {
-            if (bufferedReader != null) {
-                try {
-                    bufferedReader.close();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        }
-        return drugList;
-    }
-
     private CellProcessor[] getCellProcessors() {
         return new CellProcessor[]{new Optional(new Trim()),
                 new Optional(new Trim()), new Optional(new ParseBool()),
@@ -205,7 +163,7 @@ public class DrugImporter {
                 new Optional(new Trim()), new Optional(new Trim())};
     }
 
-    List<DrugImporterRow> readSpreadsheet2(Reader csvFileReader) throws IOException {
+    List<DrugImporterRow> readSpreadsheet(Reader csvFileReader) throws IOException {
 
         ArrayList drugList = new ArrayList();
         CsvBeanReader csv = null;
@@ -228,51 +186,6 @@ public class DrugImporter {
                 csv.close();
             }
         }
-    }
-
-    public ArrayList<String> splitLine(String line) {
-        String[] drugArrayWithQuotes = line.split("\"");
-        ArrayList<String> strings = new ArrayList<String>();
-        for (int i = 0; i < drugArrayWithQuotes.length; i++) {
-
-            String str = drugArrayWithQuotes[i];
-
-            if (str.startsWith(",") && i > 0) {
-                str = str.substring(1);
-            }
-            if (str.endsWith(",") && i < drugArrayWithQuotes.length - 1) {
-                str = str.substring(0, str.length() - 1);
-            }
-
-            if (line.contains("\"" + str + "\"")) {
-                strings.add(str);
-            } else {
-
-                if (str.equals("")) {
-                    strings.add("");
-                    continue;
-                }
-
-                String[] splitString = str.split(",", -1);
-                for (String s : splitString) {
-                    strings.add(s);
-                }
-
-
-            }
-        }
-        return strings;
-    }
-
-    public String cleanString(String str) {
-        str = str.trim();
-        if (str.startsWith("\"")) {
-            str = str.substring(1);
-        }
-        if (str.endsWith("\"")) {
-            str = str.substring(0, str.length() - 1);
-        }
-        return str;
     }
 
     public List<TierDrug> getTierDrugs() {
@@ -299,5 +212,30 @@ public class DrugImporter {
 
     private boolean isNotBlankOrEmpty(String str) {
         return StringUtils.isNotBlank(str) && StringUtils.isNotEmpty(str);
+    }
+
+    public void printJson() {
+
+        try {
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("Kerry_Town_Drugs.csv");
+            InputStreamReader reader = new InputStreamReader(inputStream);
+
+            List<DrugImporterRow> drugList = readSpreadsheet(reader);
+            Iterator i$ = drugList.iterator();
+            while (i$.hasNext()) {
+                DrugImporterRow row = (DrugImporterRow) i$.next();
+                if (row.hasError()) {
+                    continue;
+                }
+//                "fc6d9876-542f-4708-ae13-875886c97541": {
+//                    allowedDoseUnits: [tablets, mg]
+//                }
+                System.out.println("\"" + row.getUuid() + "\": {");
+                System.out.println("allowedDoseUnits: [" + row.getDefaultDosageUnits() + "]");
+                System.out.println("},");
+            }
+        } catch (Exception e) {
+            log.error("Error", e);
+        }
     }
 }

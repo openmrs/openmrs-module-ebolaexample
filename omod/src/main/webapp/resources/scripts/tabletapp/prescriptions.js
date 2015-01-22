@@ -28,25 +28,9 @@ angular.module("prescriptions", ["tabletapp", "constants", "patients"])
                     $scope.orderedRoundNames = _.map(angular.copy(Constants.rounds), function (el) {
                         return el.name;
                     });
-
-                    drugConfig = angular.copy(Constants.drugConfig);
-                    drugDoseUnits = drugConfig[drugUuid];
-                    allDoseUnits = angular.copy(Constants.doseUnits);
-                    $scope.doseUnits = []
-
-                    if (drugDoseUnits && drugDoseUnits.allowedDoseUnits.length > 0) {
-                        for (i = 0; i < drugDoseUnits.allowedDoseUnits.length; i++) {
-                            for (x = 0; x < allDoseUnits.length; x++) {
-                                if (allDoseUnits[x].display == drugDoseUnits.allowedDoseUnits[i]) {
-                                    $scope.doseUnits[$scope.doseUnits.length] = allDoseUnits[x];
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    if ($scope.doseUnits.length == 0) {
-                        $scope.doseUnits = allDoseUnits;
-                    }
+                    drugDoseUnits = angular.copy(Constants.drugConfig)[drugUuid];
+                    $scope.doseUnits = drugDoseUnits && drugDoseUnits.allowedDoseUnits && drugDoseUnits.allowedDoseUnits.length > 0 ?
+                        drugDoseUnits.allowedDoseUnits : angular.copy(Constants.doseUnits);
 
                     $scope.routes = angular.copy(Constants.routes);
                     $scope.asNeededConditions = angular.copy(Constants.asNeededConditions);
@@ -58,11 +42,6 @@ angular.module("prescriptions", ["tabletapp", "constants", "patients"])
                 }
                 ,
                 setupDrugOrder: function ($scope, drug, patient, preexistingOrder) {
-
-                    $scope.$watch('addOrder.drug', function () {
-                        console.log($scope.addOrder.drug);
-                    });
-
                     var rounds = _.reduce(angular.copy(Constants.rounds), function (memo, val) {
                         memo[val.name] = false;
                         return memo
@@ -76,7 +55,21 @@ angular.module("prescriptions", ["tabletapp", "constants", "patients"])
                         order = $.extend(true, {}, order, preexistingOrder);
                     }
                     else {
-                        order.drug.doseUnits = $scope.doseUnits[0].uuid;
+                        if (order.drug.$promise) {
+                            order.drug.$promise.then(function () {
+                                drugDoseUnits = angular.copy(Constants.drugConfig)[order.drug.uuid];
+                                if (drugDoseUnits && drugDoseUnits.allowedDoseUnits
+                                    && drugDoseUnits.allowedDoseUnits.length > 0) {
+                                    order.drug.doseUnits = $scope.doseUnits[0].uuid;
+                                }
+                            })
+                        } else {
+                            drugDoseUnits = angular.copy(Constants.drugConfig)[order.drug.uuid];
+                            if (drugDoseUnits && drugDoseUnits.allowedDoseUnits
+                                && drugDoseUnits.allowedDoseUnits.length > 0) {
+                                order.drug.doseUnits = $scope.doseUnits[0].uuid;
+                            }
+                        }
                     }
 
                     if ($scope.addOrder && $scope.addOrder.form) {
