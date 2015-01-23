@@ -40,7 +40,7 @@
                         <% } %>
                         <ul>
                             <% group.value.each { %>
-                                <li class="clear">
+                                <li class="clear <% if (!it.active) { %>inactive<% } %>">
                                     <span class="right">
                                         ${ dateFormat.format(it.dateActivated) }
                                         <% if (it.dateStopped) { %>
@@ -52,13 +52,9 @@
                                         <% } %>
                                     </span>
                                     <% if (!it.active) { %>
-                                        <% if (!groupInactive) { %>
-                                            <span class="lozenge stopped">
-                                        <% } %>
-                                        ${ it.dateStopped ? "STOPPED" : "EXPIRED" }
-                                        <% if (!groupInactive) { %>
-                                            </span>
-                                        <% } %>
+                                        <span class="lozenge stopped">
+                                            ${ it.dateStopped ? "STOPPED" : "EXPIRED" }
+                                        </span>
                                     <% } %>
                                     ${ it.dosingInstructionsInstance.getDosingInstructionsAsString(context.locale) }
                                 </li>
