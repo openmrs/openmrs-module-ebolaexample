@@ -1,4 +1,8 @@
+.common-drugs-container {
+  display: flex  !important;
+  flex-direction: column  !important;
+  flex-wrap: wrap !important;
+  height: 800px !important;
 
-.common-drugs-container{
-  display: flex  !important; flex-direction: column  !important; flex-wrap: wrap !important; height: 800px !important;
+  text-transform: uppercase;
 }
