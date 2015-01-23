@@ -7,6 +7,7 @@ import org.openmrs.Concept;
 import org.openmrs.ConceptName;
 import org.openmrs.Drug;
 import org.openmrs.api.ConceptService;
+import org.openmrs.api.context.Context;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.supercsv.cellprocessor.Optional;
@@ -103,6 +104,7 @@ public class DrugImporter {
 
             log.debug("xxxxxxxxxx - Saving - " + drug.getName());
             this.conceptService.saveDrug(drug);
+            Context.flushSession();
         }
 
         return notes;
