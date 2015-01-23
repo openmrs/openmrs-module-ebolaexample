@@ -5,7 +5,7 @@ angular.module('findPatientByWard', [ 'resources' ])
         $scope.wards = [];
         $scope.selectedWard = null;
 
-        WardResource.query({}, function (response) {
+        WardResource.query({v: 'default'}, function (response) {
             var results = response.results;
             $scope.wards = results;
         });

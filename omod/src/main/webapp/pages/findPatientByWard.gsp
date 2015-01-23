@@ -21,7 +21,9 @@
     Select a ward:
     <ul class="wards">
         <li class="ward" ng-class="{ selected: ward.uuid == selectedWard.uuid }" ng-repeat="ward in wards" ng-click="selectWard(ward)">
-            {{ ward.display }}
+            <strong>{{ ward.display }}</strong>
+            <br/>
+            {{ ward.bedAssignments.length }} patient(s)
         </li>
     </ul>
 
