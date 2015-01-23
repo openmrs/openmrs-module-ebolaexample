@@ -1,5 +1,6 @@
 angular.module("constants", [])
     .factory("Constants", function () {
+
         var tablets = {
             display: "tablet(s)",
             uuid: "1513AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
@@ -8,7 +9,7 @@ angular.module("constants", [])
             display: "mg",
             uuid: "161553AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
         };
-        var mgPerKg = {
+        var mgkg = {
             display: "mg/kg",
             uuid: "162761AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
         };
@@ -16,11 +17,11 @@ angular.module("constants", [])
             display: "mL",
             uuid: "162263AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
         };
-        var mlPerKg = {
+        var mLkg = {
             display: "mL/kg",
             uuid: "162762AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
         };
-        var iu = {
+        var IU = {
             display: "IU",
             uuid: "162264AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
         };
@@ -28,7 +29,7 @@ angular.module("constants", [])
             display: "mcg",
             uuid: "162366AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
         };
-        var mcgPerKg = {
+        var mcgkg = {
             display: "mcg/kg",
             uuid: "162766AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
         };
@@ -36,6 +37,27 @@ angular.module("constants", [])
             display: "grams",
             uuid: "161554AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
         };
+        var ampule = {
+            display: "Ampule(s)",
+            uuid: "125519BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+        };
+        var application = {
+            display: "Application(s)",
+            uuid: "125625BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+        };
+        var units = {
+            display: "Unit(s)",
+            uuid: "125637BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+        };
+        var puffs = {
+            display: "Puff(s)",
+            uuid: "125611BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+        };
+        var drops = {
+            display: "Drop(s)",
+            uuid: "125564BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+        };
+
 
         return {
             wardKey: 'wardKey',
@@ -68,7 +90,7 @@ angular.module("constants", [])
                 {name: "Night"}
             ],
             doseUnits: [
-                tablets, mg, mgPerKg, mL, mlPerKg, iu, mcg, mcgPerKg, grams
+                tablets, mg, mgkg, mL, mLkg, IU, mcg, mcgkg, grams, ampule, application, units, puffs, drops
             ],
             routes: [
                 {
@@ -151,12 +173,14 @@ angular.module("constants", [])
                 wardRoundingTeam: "Ward Rounding Team"
             },
             drugConfig: {
-
+                "20b32b96-9daa-11e4-b773-e0fe58bba1f4": {
+                    allowedDoseUnits: [tablets, mg]
+                },
                 "cfb2ee06-a728-4d60-9d71-f70dfe3cee3a": {
                     allowedDoseUnits: [tablets, mg]
                 },
                 "d56095f8-b241-44d4-a9a0-b18df6b011e1": {
-                    allowedDoseUnits: [grams, mg, mgPerKg]
+                    allowedDoseUnits: [grams, mg, mgkg]
                 },
                 "777be8c9-0726-469c-8177-03f497f00013": {
                     allowedDoseUnits: [tablets]
@@ -165,7 +189,7 @@ angular.module("constants", [])
                     allowedDoseUnits: [tablets, mg]
                 },
                 "d4a1c9e5-8bdd-45cc-8b42-1a2b0f808748": {
-                    allowedDoseUnits: [mg, mgPerKg, mL, mlPerKg]
+                    allowedDoseUnits: [mg, mgkg, mL, mLkg]
                 },
                 "fc6d9876-542f-4708-ae13-875886c97541": {
                     allowedDoseUnits: [tablets]
@@ -174,22 +198,22 @@ angular.module("constants", [])
                     allowedDoseUnits: [tablets, mg]
                 },
                 "bcb44a2f-a248-47af-8e66-eba3f3c633ba": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "0bc02b2c-b547-46c5-b47d-c1f72630bee7": {
                     allowedDoseUnits: [tablets, mg]
                 },
                 "3ce45bb1-249a-4584-94e1-0abafba3e79e": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "59f04f46-ba91-46bb-94ac-dca4cc487f22": {
-                    allowedDoseUnits: [mg, mgPerKg, mL, mlPerKg]
+                    allowedDoseUnits: [mg, mgkg, mL, mLkg]
                 },
                 "927fca5b-aa1a-4bbd-8b97-2035ded8634b": {
                     allowedDoseUnits: [tablets, mg]
                 },
                 "9467173e-c734-41c0-977a-68438f50181b": {
-                    allowedDoseUnits: [, mL]
+                    allowedDoseUnits: [mL]
                 },
                 "f45dd5d2-a2c3-4e9f-844d-39a48d48262e": {
                     allowedDoseUnits: [tablets]
@@ -204,40 +228,40 @@ angular.module("constants", [])
                     allowedDoseUnits: [tablets]
                 },
                 "fa93993a-1283-4005-be18-c6019a362743": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "a6a2dca3-89f4-4f0f-99c8-2f7251b66030": {
                     allowedDoseUnits: [tablets, mg]
                 },
                 "2566fe0b-54a5-4705-b0fa-7247952e659d": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "c7254173-449d-4606-a63f-3b5ad76c9001": {
                     allowedDoseUnits: [tablets, mg]
                 },
                 "2e8ed1bd-3f33-463a-a7c5-18c773fe755e": {
-                    allowedDoseUnits: [mg, mgPerKg, mL, mlPerKg]
+                    allowedDoseUnits: [mg, mgkg, mL, mLkg]
                 },
                 "16784ed5-75d5-4f39-9b38-9c7074897040": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "168a8192-cda4-4ce5-9224-77ae9b3b5ed8": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "af770c96-0b02-4efd-8622-0a9f1ae126b6": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "a38aa6c3-6676-44a2-a6f2-2bb25a7db16c": {
                     allowedDoseUnits: [tablets, mg]
                 },
                 "2d9e86ab-0ff3-48ed-b2ac-d6bf319b1551": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "0e9101f3-0e78-4325-a87b-f8911990ee80": {
                     allowedDoseUnits: [tablets, mg]
                 },
                 "0122347e-09ea-45b9-abe4-199fccf64125": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "e185bc0a-f46c-4a0e-a8eb-a7bd5991324c": {
                     allowedDoseUnits: [tablets, mg]
@@ -255,70 +279,70 @@ angular.module("constants", [])
                     allowedDoseUnits: [tablets, mg]
                 },
                 "ba04e9a7-8dd1-491e-b069-b87047841e89": {
-                    allowedDoseUnits: [grams, mg, mgPerKg]
+                    allowedDoseUnits: [grams, mg, mgkg]
                 },
                 "74744b0a-2282-413a-8b0b-0d1cbd0e6479": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "56b6720f-c5ee-4388-a16c-3a2ca44c55a9": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "5d31dcd9-e227-43f5-bf82-1e4ec573c43e": {
                     allowedDoseUnits: [tablets, mg]
                 },
                 "7a0dece3-da44-4fea-9d48-ac2aaf211335": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "e66c73bc-b56a-4723-80af-e643183e8111": {
-                    allowedDoseUnits: [grams, mg, mgPerKg]
+                    allowedDoseUnits: [grams, mg, mgkg]
                 },
                 "f75afb5e-9a64-4aef-bf60-fd5cfbc28d9c": {
-                    allowedDoseUnits: []
+                    allowedDoseUnits: [units]
                 },
                 "efc1b731-c801-4f8c-9af4-1356b0d49668": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "f02f8f79-c476-4ac8-9f64-43a72d1ef505": {
                     allowedDoseUnits: [tablets, mg]
                 },
                 "4d544b2e-bc78-41e9-9fc9-6075845d0ee5": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "69653f10-a98a-44fa-b34b-d60137b34dba": {
-                    allowedDoseUnits: [mg, mgPerKg, mL, mlPerKg]
+                    allowedDoseUnits: [mg, mgkg, mL, mLkg]
                 },
                 "f8a816c7-1aa8-4375-9ec7-67a4b542201e": {
-                    allowedDoseUnits: []
+                    allowedDoseUnits: [application]
                 },
                 "79dacc67-82a1-4666-bf0b-f7f80bf83b4b": {
-                    allowedDoseUnits: [grams, mg, mgPerKg]
+                    allowedDoseUnits: [grams, mg, mgkg]
                 },
                 "af310374-c28c-4768-bb4c-35854aa22dbc": {
-                    allowedDoseUnits: [grams, mg, mgPerKg]
+                    allowedDoseUnits: [grams, mg, mgkg]
                 },
                 "aebda825-c36d-4e23-9b49-31a178672a80": {
-                    allowedDoseUnits: [mg, mgPerKg, mL, mlPerKg]
+                    allowedDoseUnits: [mg, mgkg, mL, mLkg]
                 },
                 "52fdc84b-50af-44d7-9910-28285fd1e0b7": {
-                    allowedDoseUnits: []
+                    allowedDoseUnits: [drops]
                 },
                 "69732ff8-9faa-4923-8d5e-3dbeeb0d0993": {
-                    allowedDoseUnits: [grams, mg, mgPerKg]
+                    allowedDoseUnits: [grams, mg, mgkg]
                 },
                 "5a1d40db-7cb5-44c5-b777-171d8df0f2cb": {
-                    allowedDoseUnits: [mL]
+                    allowedDoseUnits: [application, mL]
                 },
                 "f88bc864-af9e-4dcf-a083-e5e433b21fca": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "ed96939b-a210-43de-b41a-d302d7480293": {
                     allowedDoseUnits: [tablets, mg]
                 },
                 "8b1d5805-0631-46b9-a646-1b579efb603f": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "63949b88-fee2-4c47-8d86-b4672300b0de": {
-                    allowedDoseUnits: []
+                    allowedDoseUnits: [application]
                 },
                 "00783558-07cc-45ef-98b2-403580632392": {
                     allowedDoseUnits: [tablets, mg]
@@ -330,46 +354,46 @@ angular.module("constants", [])
                     allowedDoseUnits: [tablets, mg]
                 },
                 "4e6d8abe-2ced-4f2e-96f1-436e343b13d2": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "bed3a9b7-e62b-4cbf-9231-85de748e0b5b": {
                     allowedDoseUnits: [tablets, mg]
                 },
                 "4929beef-b569-4826-8658-6ced8f4344b1": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "65c70378-c9b8-4cfd-b7a2-a2912e7b6db5": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "00fbdb9d-0778-4526-9e6b-89bb1372779c": {
                     allowedDoseUnits: [tablets, mg]
                 },
                 "73f69f3d-a0c5-42f8-9084-665575e6b309": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "71d93f7f-be94-434e-a9cc-fff7abc3114c": {
                     allowedDoseUnits: [tablets, mg]
                 },
                 "064405b9-3d5f-4d4a-8b6b-6a410677990b": {
-                    allowedDoseUnits: [mcg, mcgPerKg]
+                    allowedDoseUnits: [mcg, mcgkg]
                 },
                 "b87e94f5-6e6b-4f7b-a5b3-eac4e7b8458e": {
-                    allowedDoseUnits: []
+                    allowedDoseUnits: [application]
                 },
                 "5087fea0-2dd7-435c-aed9-3e06fb43d84f": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "86c91534-dead-45b7-9910-60b375a0e3eb": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "ed624d34-e38e-46ee-b19e-7b0611f92318": {
                     allowedDoseUnits: [grams]
                 },
                 "5fd01459-8ed2-4976-9ecc-f7af4f23ac8a": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "1b06cd0f-d682-41e8-93b5-5364811d8b42": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "3bb845d5-e493-4149-aa0a-47dcc32b11f9": {
                     allowedDoseUnits: [tablets, mg]
@@ -387,40 +411,40 @@ angular.module("constants", [])
                     allowedDoseUnits: [tablets, mg]
                 },
                 "490b265e-c56a-4345-bec6-534557c5a786": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "bce30e31-14a2-4379-9f80-0c48c146ad59": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "ed696be8-58b9-401a-bc50-c4e10bc2655f": {
                     allowedDoseUnits: [tablets, mcg]
                 },
                 "ea63703f-aa20-4ac6-bf89-372c6e6738d5": {
-                    allowedDoseUnits: [mcg, mcgPerKg]
+                    allowedDoseUnits: [mcg, mcgkg]
                 },
                 "efdfbb8f-a806-4447-9c90-4a6195928dd2": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "0ac6f272-391f-48d0-9547-aa2d85808f39": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "cf7ce5ff-7ec9-4c3e-a24e-d243c7043339": {
-                    allowedDoseUnits: []
+                    allowedDoseUnits: [ampule]
                 },
                 "4fc4aa05-17bb-4f25-9466-2835fb7105fc": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "7ab1ef69-d3c1-4b46-b540-15d3c3ccc727": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "0cbde2ce-ac79-49dd-a56e-d471ff207015": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "6f6a32f1-ec19-444c-9ff1-f89bea447ed4": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "3fb4b076-26dc-49d1-937f-f0fac3aa21d9": {
-                    allowedDoseUnits: []
+                    allowedDoseUnits: [application]
                 },
                 "b4aeb78f-fcad-495b-ab2d-d45b125ece86": {
                     allowedDoseUnits: [tablets, mg]
@@ -429,7 +453,7 @@ angular.module("constants", [])
                     allowedDoseUnits: [tablets, mg]
                 },
                 "342a8572-332c-40dc-8bcc-868877d720e4": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "1af0414c-54e9-4e55-a46f-75d5f1d9db2a": {
                     allowedDoseUnits: [tablets, mg]
@@ -438,7 +462,7 @@ angular.module("constants", [])
                     allowedDoseUnits: [tablets, mg]
                 },
                 "f9fdb287-440e-44ef-944f-182c5a2b297b": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "d8d23c3a-83d1-4c4f-9a9d-07e63d6560b5": {
                     allowedDoseUnits: [tablets, mg]
@@ -453,13 +477,13 @@ angular.module("constants", [])
                     allowedDoseUnits: [tablets, mg]
                 },
                 "99e1eca8-e58d-48cb-ba1c-6e98cdb38f50": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "371644da-08b3-49fd-8689-c6c9e88fa774": {
                     allowedDoseUnits: [tablets, mg]
                 },
                 "b4198f42-81ee-43e6-8544-de8d6fd2efac": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "04e6539d-03e5-4eb1-b5bb-2f71b00b9fc0": {
                     allowedDoseUnits: [tablets, mg]
@@ -468,19 +492,19 @@ angular.module("constants", [])
                     allowedDoseUnits: [tablets, mg]
                 },
                 "8a0ab286-821a-4d77-bb7f-c5b54584dfdf": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "3bf57114-d8d3-4535-ab5a-c63a9ca076d7": {
-                    allowedDoseUnits: [mcg, mcgPerKg]
+                    allowedDoseUnits: [mcg, mcgkg]
                 },
                 "51e83055-cda6-4219-8211-11cc6433905e": {
                     allowedDoseUnits: [tablets, mg]
                 },
                 "46c4d4ce-ef1f-4e0f-b34c-8719e7fd1ebf": {
-                    allowedDoseUnits: [grams, mg, mgPerKg]
+                    allowedDoseUnits: [grams, mg, mgkg]
                 },
                 "aa6ffbb2-9219-47eb-9d77-fb6f77899c1c": {
-                    allowedDoseUnits: []
+                    allowedDoseUnits: [drops]
                 },
                 "04a459b3-e4d9-44a2-a3c2-703d26cfe8cc": {
                     allowedDoseUnits: [grams]
@@ -489,7 +513,7 @@ angular.module("constants", [])
                     allowedDoseUnits: [mL]
                 },
                 "1d8a1cd0-f09f-4b39-bea0-404865183320": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "21062ba0-74b3-4230-ad1e-30552fa4f540": {
                     allowedDoseUnits: [grams]
@@ -504,10 +528,10 @@ angular.module("constants", [])
                     allowedDoseUnits: [tablets, mg]
                 },
                 "93a93840-1af9-48e9-8380-7a5913da74a0": {
-                    allowedDoseUnits: []
+                    allowedDoseUnits: [units]
                 },
                 "aafd4167-b5b0-43dd-90ee-a281a1948a1f": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "4ae1a572-dd5d-41fb-bfa3-1b73e4e43900": {
                     allowedDoseUnits: [tablets, mg]
@@ -531,22 +555,22 @@ angular.module("constants", [])
                     allowedDoseUnits: [mL]
                 },
                 "0380f68b-6638-4d2e-ac4b-44661ad26e09": {
-                    allowedDoseUnits: [mg, mgPerKg]
+                    allowedDoseUnits: [mg, mgkg]
                 },
                 "4e15a74c-c05c-4a1d-ade6-7e598ee36ee1": {
-                    allowedDoseUnits: []
+                    allowedDoseUnits: [puffs]
                 },
                 "2245650a-39df-4187-9f09-24759de1b69e": {
                     allowedDoseUnits: [tablets, mg]
                 },
                 "2ac777c0-5467-49f3-bf8f-853deeb60189": {
-                    allowedDoseUnits: []
+                    allowedDoseUnits: [application]
                 },
                 "d4165513-2929-4ab0-ad60-457aa26b76fa": {
                     allowedDoseUnits: [mL]
                 },
                 "a0f0a008-747a-42f5-8052-decd5013cafa": {
-                    allowedDoseUnits: []
+                    allowedDoseUnits: [application]
                 },
                 "4147feff-1962-4fbb-b523-0e58551b9eef": {
                     allowedDoseUnits: [tablets, mg]

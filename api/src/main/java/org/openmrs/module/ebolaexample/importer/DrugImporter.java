@@ -229,11 +229,11 @@ public class DrugImporter {
                 if (row.hasError()) {
                     continue;
                 }
-//                "fc6d9876-542f-4708-ae13-875886c97541": {
-//                    allowedDoseUnits: [tablets, mg]
-//                }
                 System.out.println("\"" + row.getUuid() + "\": {");
-                System.out.println("allowedDoseUnits: [" + row.getDefaultDosageUnits() + "]");
+                String allowedUnits = row.getDefaultDosageUnits().replace("(","");
+                 allowedUnits = allowedUnits.replace(")", "");
+                 allowedUnits = allowedUnits.replace("/","");
+                System.out.println("allowedDoseUnits: [" + allowedUnits + "]");
                 System.out.println("},");
             }
         } catch (Exception e) {

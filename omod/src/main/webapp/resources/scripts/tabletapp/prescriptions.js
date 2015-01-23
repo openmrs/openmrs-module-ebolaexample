@@ -28,7 +28,12 @@ angular.module("prescriptions", ["tabletapp", "constants", "patients"])
                     $scope.orderedRoundNames = _.map(angular.copy(Constants.rounds), function (el) {
                         return el.name;
                     });
-                    drugDoseUnits = angular.copy(Constants.drugConfig)[drugUuid];
+
+                    drugDoseUnits = null;
+                    if (angular.copy(Constants.drugConfig)) {
+                        drugDoseUnits = angular.copy(Constants.drugConfig)[drugUuid];
+                    }
+
                     $scope.doseUnits = drugDoseUnits && drugDoseUnits.allowedDoseUnits && drugDoseUnits.allowedDoseUnits.length > 0 ?
                         drugDoseUnits.allowedDoseUnits : angular.copy(Constants.doseUnits);
 
@@ -39,8 +44,7 @@ angular.module("prescriptions", ["tabletapp", "constants", "patients"])
                     $scope.clearServerError = function () {
                         $scope.serverError = null;
                     }
-                }
-                ,
+                },
                 setupDrugOrder: function ($scope, drug, patient, preexistingOrder) {
                     var rounds = _.reduce(angular.copy(Constants.rounds), function (memo, val) {
                         memo[val.name] = false;
@@ -57,14 +61,20 @@ angular.module("prescriptions", ["tabletapp", "constants", "patients"])
                     else {
                         if (order.drug.$promise) {
                             order.drug.$promise.then(function () {
-                                drugDoseUnits = angular.copy(Constants.drugConfig)[order.drug.uuid];
+                                drugDoseUnits = null;
+                                if (angular.copy(Constants.drugConfig)) {
+                                    drugDoseUnits = angular.copy(Constants.drugConfig)[order.drug.uuid];
+                                }
                                 if (drugDoseUnits && drugDoseUnits.allowedDoseUnits
                                     && drugDoseUnits.allowedDoseUnits.length > 0) {
                                     order.drug.doseUnits = $scope.doseUnits[0].uuid;
                                 }
                             })
                         } else {
-                            drugDoseUnits = angular.copy(Constants.drugConfig)[order.drug.uuid];
+                            drugDoseUnits = null;
+                            if (angular.copy(Constants.drugConfig)) {
+                                drugDoseUnits = angular.copy(Constants.drugConfig)[order.drug.uuid];
+                            }
                             if (drugDoseUnits && drugDoseUnits.allowedDoseUnits
                                 && drugDoseUnits.allowedDoseUnits.length > 0) {
                                 order.drug.doseUnits = $scope.doseUnits[0].uuid;

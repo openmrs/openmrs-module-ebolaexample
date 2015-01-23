@@ -1,6 +1,6 @@
 Artemether-Lumefantrine,Artemether 20mg/Lumefantrine 120mg tablet,TRUE,20 mg (artemether component),Tablet,Oral,"tablets, mg",Tier 1,20b32b96-9daa-11e4-b773-e0fe58bba1f4
 Cefixime,Cefixime 200mg Tablet,,200 mg,Tablet,Oral,"tablets, mg",Tier 1,cfb2ee06-a728-4d60-9d71-f70dfe3cee3a
-Ceftriaxone,Ceftriaxone 1g Vial,,1 g,Injection,IV,"g, mg, mg/kg",Tier 1,d56095f8-b241-44d4-a9a0-b18df6b011e1
+Ceftriaxone,Ceftriaxone 1g Vial,,1 g,Injection,IV,"grams, mg, mg/kg",Tier 1,d56095f8-b241-44d4-a9a0-b18df6b011e1
 Gaviscon,Gaviscon Tablet,TRUE,(none given),Tablet,Oral,tablets,Tier 1,777be8c9-0726-469c-8177-03f497f00013
 Ivermectin,Ivermectin 3mg Tablet,,3 mg,Tablet,Oral,"tablets, mg",Tier 1,52ae8190-2354-4a8a-8099-61d47e85d66b
 Morphine sulfate,Morphine sulfate 10mg/5mL Oral Solution 100,,10 mg / 5 mL,Oral solution,Oral,"mg, mg/kg, mL, mL/kg",Tier 1,d4a1c9e5-8bdd-45cc-8b42-1a2b0f808748
@@ -33,24 +33,24 @@ Azithromycin,Azithromycin 250mg Tablet,,250 mg,Tablet,Oral,"tablets, mg",Tier 2,
 Bisacodyl,Bisacodyl 5mg Tablet,,5 mg,Tablet,Oral,"tablets, mg",Tier 2,f5799e34-3a24-4ae9-b2d0-5385b554ddd8
 Chlorphenamine,Chlorphenamine 4mg Tablet,,4 mg,Tablet,Oral,"tablets, mg",Tier 2,9b53bcac-1f26-4d5c-af03-404c13e8e0fb
 Clindamycin,Clindamycin 150mg Capsule,,150 mg,Capsule,Oral,"tablets, mg",Tier 2,95e0777f-86fb-4341-ab2d-494338d131f0
-Magnesium Sulfate,Magnesium Sulfate 5g 10mL Ampoule,,5 g,Injection,IV,"g, mg, mg/kg",Tier 2,ba04e9a7-8dd1-491e-b069-b87047841e89
+Magnesium Sulfate,Magnesium Sulfate 5g 10mL Ampoule,,5 g,Injection,IV,"grams, mg, mg/kg",Tier 2,ba04e9a7-8dd1-491e-b069-b87047841e89
 Midazolam,Midazolam 1mg/mL 5mL Ampoule,,1 mg / mL,Injection,IV,"mg, mg/kg",Tier 2,74744b0a-2282-413a-8b0b-0d1cbd0e6479
 Morphine sulfate,Morphine sulfate 10mg/mL 1mL Ampoule,,10 mg / mL,Injection,IV,"mg, mg/kg",Tier 2,56b6720f-c5ee-4388-a16c-3a2ca44c55a9
 Paracetamol,Paracetamol 100mg Tablet,,100 mg,Tablet,Oral,"tablets, mg",Tier 2,5d31dcd9-e227-43f5-bf82-1e4ec573c43e
 Ranitidine,Ranitidine 25mg/mL 2mL Ampoule,,25 mg / mL,Injection,IV,"mg, mg/kg",Tier 2,7a0dece3-da44-4fea-9d48-ac2aaf211335
-Tranexamic Acid,Tranexamic Acid Injection 1g,,1 g,Injection,IV,"g, mg, mg/kg",Tier 2,e66c73bc-b56a-4723-80af-e643183e8111
-Actrapid Insulin,Actrapid Insulin 10units/mL 10mL Vial,,10 units / mL,Injection,"IV, Subcutaneous","units, (units/hr)",Tier 3,f75afb5e-9a64-4aef-bf60-fd5cfbc28d9c
+Tranexamic Acid,Tranexamic Acid Injection 1g,,1 g,Injection,IV,"grams, mg, mg/kg",Tier 2,e66c73bc-b56a-4723-80af-e643183e8111
+"Insulin, regular, human",Actrapid Insulin 10units/mL 10mL Vial,,10 units / mL,Injection,"IV, Subcutaneous",unit,Tier 3,f75afb5e-9a64-4aef-bf60-fd5cfbc28d9c
 Adrenaline,Adrenaline 1mg/mL 1mL Ampoule,,1 mg / mL,Injection,IV,"mg, mg/kg",Tier 3,efc1b731-c801-4f8c-9af4-1356b0d49668
 Albendazole,Albendazole 400mg Tablet,,400 mg,Tablet,Oral,"tablets, mg",Tier 3,f02f8f79-c476-4ac8-9f64-43a72d1ef505
 Amiodarone,Amiodarone 150mg/mL 3mL Ampoule,,150 mg / mL,Injection,IV,"mg, mg/kg",Tier 3,4d544b2e-bc78-41e9-9fc9-6075845d0ee5
 Amoxicillin,Amoxicillin 250mg/5mL Powder for Suspension 100 mL,,250 mg / 5 mL,Oral suspension,Oral,"mg, mg/kg, mL, mL/kg",Tier 3,69653f10-a98a-44fa-b34b-d60137b34dba
 Benzoic Acid / Salicylic Acid,Benzoic Acid 6%/Salicylic Acid 3% Ointment 500g (Whitfield Ointment),TRUE,6% (benzoic acid component),Ointment,Topical,application,Tier 3,f8a816c7-1aa8-4375-9ec7-67a4b542201e
-Calcium chloride,Calcium Chloride 10% 10mL Ampoule,,1 g,Injection,IV,"g, mg, mg/kg",Tier 3,79dacc67-82a1-4666-bf0b-f7f80bf83b4b
-Calcium gluconate,Calcium Gluconate 10% 10mL Ampoule,,1 g,Injection,IV,"g, mg, mg/kg",Tier 3,af310374-c28c-4768-bb4c-35854aa22dbc
+Calcium chloride,Calcium Chloride 10% 10mL Ampoule,,1 g,Injection,IV,"grams, mg, mg/kg",Tier 3,79dacc67-82a1-4666-bf0b-f7f80bf83b4b
+Calcium gluconate,Calcium Gluconate 10% 10mL Ampoule,,1 g,Injection,IV,"grams, mg, mg/kg",Tier 3,af310374-c28c-4768-bb4c-35854aa22dbc
 Cefixime,Cefixime Oral Suspension 100mg/5mL,,100 mg / 5 mL,Oral suspension,Oral,"mg, mg/kg, mL, mL/kg",Tier 3,aebda825-c36d-4e23-9b49-31a178672a80
-Chloramphenicol,Chloramphenicol 0.5% 10mL Opthalmic Solution,,0.5%,eyedrops,"Left eye, right eye, both eyes",drops,Tier 3,52fdc84b-50af-44d7-9910-28285fd1e0b7
-Chloramphenicol,Chloramphenicol 1g Vial,,1 g,Injection,IV,"g, mg, mg/kg",Tier 3,69732ff8-9faa-4923-8d5e-3dbeeb0d0993
-Chlorohexidine,Chlorhexidine 5% Wash 500mL,,5%,Solution,Topical,"application, mL",Tier 3,5a1d40db-7cb5-44c5-b777-171d8df0f2cb
+Chloramphenicol,Chloramphenicol 0.5% 10mL Opthalmic Solution,,0.5%,eye drops,"Left eye, right eye, both eyes",drops,Tier 3,52fdc84b-50af-44d7-9910-28285fd1e0b7
+Chloramphenicol,Chloramphenicol 1g Vial,,1 g,Injection,IV,"grams, mg, mg/kg",Tier 3,69732ff8-9faa-4923-8d5e-3dbeeb0d0993
+Chlorhexidine,Chlorhexidine 5% Wash 500mL,,5%,Solution,Topical,"application, mL",Tier 3,5a1d40db-7cb5-44c5-b777-171d8df0f2cb
 Chlorphenamine,Chlorphenamine 10mg/mL 1mL Ampoule,,10 mg / mL,Injection,IV,"mg, mg/kg",Tier 3,f88bc864-af9e-4dcf-a083-e5e433b21fca
 Chlorpromazine,Chlorpromazine 25mg Tablet,,25 mg,Tablet,Oral,"tablets, mg",Tier 3,ed96939b-a210-43de-b41a-d302d7480293
 Chlorpromazine,Chlorpromazine 25mg/mL 2mL Ampoule,,25 mg / mL,Injection,IV,"mg, mg/kg",Tier 3,8b1d5805-0631-46b9-a646-1b579efb603f
@@ -69,7 +69,7 @@ Flumazenil,Flumazenil 100mcg/mL 5mL Ampoule,,100 mcg / mL,Injection,IV,"mcg, mcg
 Fusidic Acid,Fucidic Acid Cream 2% (FUCIDIN) 15g,,2%,Cream,Topical,application,Tier 3,b87e94f5-6e6b-4f7b-a5b3-eac4e7b8458e
 Furosemide,Furosemide 10mg/mL 5mL Ampoule,,10 mg / mL,Injection,IV,"mg, mg/kg",Tier 3,5087fea0-2dd7-435c-aed9-3e06fb43d84f
 Gentamicin,Gentamicin 40mg/mL 2mL Ampoule,,40 mg / mL,Injection,IV,"mg, mg/kg",Tier 3,86c91534-dead-45b7-9910-60b375a0e3eb
-Glucose/Dextrose,Glucose/Dextrose 50% 50mL Ampoule,,25 g,Injection,IV,g,Tier 3,ed624d34-e38e-46ee-b19e-7b0611f92318
+Dextrose Solution,Glucose/Dextrose 50% 50mL Ampoule,,25 g,Injection,IV,grams,Tier 3,ed624d34-e38e-46ee-b19e-7b0611f92318
 Hydrocortisone,Hydrocortisone 100 mg/1mL 1mL Ampoule,,100 mg / mL,Injection,IV,"mg, mg/kg",Tier 3,5fd01459-8ed2-4976-9ecc-f7af4f23ac8a
 Hyoscine butylbromide,Hyoscine butylbromide 20mg/mL 1mL Ampoule,,20 mg / mL,Injection,IV,"mg, mg/kg",Tier 3,1b06cd0f-d682-41e8-93b5-5364811d8b42
 Isosorbide Dinitrate,Isosorbide Dinitrate 5mg Sublingual Tablet,,5 mg,Tablet,Sublingual,"tablets, mg",Tier 3,3bb845d5-e493-4149-aa0a-47dcc32b11f9
@@ -95,10 +95,10 @@ Tramadol,Tramadol 50mg/mL 2mL Ampoule,,50 mg / mL,Injection,IV,"mg, mg/kg",Tier 
 Tenofovir/Emtricitabine,Truvada (Tenofovir 245mg/Emtricitabine 200mg Tablet),TRUE,245 mg (tenofovir component),Tablet,Oral,"tablets, mg",Tier 3,1af0414c-54e9-4e55-a46f-75d5f1d9db2a
 Amiodarone,Amiodarone 200mg Tablet,,200 mg,Tablet,Oral,"tablets, mg",Tier 4,19e1034f-d2ef-4b62-ad38-9d53bcd0b4ea
 Artemether,Artemether 20mg/mL 1mL Ampoule,,20 mg / mL,Injection,IV,"mg, mg/kg",Tier 4,f9fdb287-440e-44ef-944f-182c5a2b297b
-Artesunate / Amodiaquine,Artesunate 100mg/Amodiaquine 270mg Tablets,TRUE,100 mg (artesunate component),Tablet,Oral,"tablets, mg",Tier 4,d8d23c3a-83d1-4c4f-9a9d-07e63d6560b5
+Amodiaquine / Artesunate,Artesunate 100mg/Amodiaquine 270mg Tablets,TRUE,100 mg (artesunate component),Tablet,Oral,"tablets, mg",Tier 4,d8d23c3a-83d1-4c4f-9a9d-07e63d6560b5
 Artesunate,Artesunate 200mg Suppository,,200 mg,Suppository,Rectal,mg,Tier 4,fa716ca9-9bbf-4a24-8b5d-f2f733078c5f
-Artesunate / Amodiaquine,Artesunate 25mg/Amodiaquine 67.5mg Tablets,TRUE,25 mg (artesunate component),Tablet,Oral,"tablets, mg",Tier 4,9c84da48-fc97-49de-af83-4da42de89ee4
-Artesunate / Amodiaquine,Artesunate 50mg/Amodiaquine 153mg Tablets,TRUE,50 mg (artesunate component),Tablet,Oral,"tablets, mg",Tier 4,eaf42edf-3d1b-451b-bdc6-58ca9cb6c995
+Amodiaquine / Artesunate,Artesunate 25mg/Amodiaquine 67.5mg Tablets,TRUE,25 mg (artesunate component),Tablet,Oral,"tablets, mg",Tier 4,9c84da48-fc97-49de-af83-4da42de89ee4
+Amodiaquine / Artesunate,Artesunate 50mg/Amodiaquine 153mg Tablets,TRUE,50 mg (artesunate component),Tablet,Oral,"tablets, mg",Tier 4,eaf42edf-3d1b-451b-bdc6-58ca9cb6c995
 Artesunate,Artesunate 60mg/mL 1mL Ampoule,,60 mg / mL,Injection,IV,"mg, mg/kg",Tier 4,99e1eca8-e58d-48cb-ba1c-6e98cdb38f50
 Aspirin,Aspirin 75mg Tablet,,75 mg,Tablet,Oral,"tablets, mg",Tier 4,371644da-08b3-49fd-8689-c6c9e88fa774
 Ceftriaxone,Ceftriaxone 250mg Vial,,250 mg,Injection,IV,"mg, mg/kg",Tier 4,b4198f42-81ee-43e6-8544-de8d6fd2efac
@@ -107,12 +107,12 @@ Lamivudine / Zidovudine,Combivir (Lamivudine 150mg/Zidovudine 300 mg),TRUE,150 m
 Diclofenac Sodium,Diclofenac Sodium 25mg/mL 3mL Ampoule,,25 mg / mL,Injection,IV,"mg, mg/kg",Tier 4,8a0ab286-821a-4d77-bb7f-c5b54584dfdf
 Ergometrine,Ergometrine 500mcg/mL Ampoule,,500 mcg / mL,Injection,IV,"mcg, mcg/kg",Tier 4,3bf57114-d8d3-4535-ab5a-c63a9ca076d7
 Dihydroartemisinin/Piperaquine,Euratesim (Dihydroartemisinin 320mg & Piperaquine 40mg),TRUE,320 mg (dihydroartemisinin component),Tablet,Oral,"tablets, mg",Tier 4,51e83055-cda6-4219-8211-11cc6433905e
-Flucloxacillin,Flucloxacillin 1g Vial,,1 g,Injection,IV,"g, mg, mg/kg",Tier 4,46c4d4ce-ef1f-4e0f-b34c-8719e7fd1ebf
-Gentamicin,Gentamicin 0.3% Eye Drops 5mL,,0.3%,eyedrops,"Left eye, right eye, both eyes",drops,Tier 4,aa6ffbb2-9219-47eb-9d77-fb6f77899c1c
-Glucose/Dextrose,Glucose/Dextrose 50% 20mL Ampoule,TRUE,10 g,Injection,IV,g,Tier 4,04a459b3-e4d9-44a2-a3c2-703d26cfe8cc
+Flucloxacillin,Flucloxacillin 1g Vial,,1 g,Injection,IV,"grams, mg, mg/kg",Tier 4,46c4d4ce-ef1f-4e0f-b34c-8719e7fd1ebf
+Gentamicin,Gentamicin 0.3% Eye Drops 5mL,,0.3%,eye drops,"Left eye, right eye, both eyes",drops,Tier 4,aa6ffbb2-9219-47eb-9d77-fb6f77899c1c
+Dextrose Solution,Glucose/Dextrose 50% 20mL Ampoule,TRUE,10 g,Injection,IV,grams,Tier 4,04a459b3-e4d9-44a2-a3c2-703d26cfe8cc
 Hepatitis B Vaccines,Hepatitis B Vaccine,,(none),Injection,IM,mL,Tier 4,47345476-6109-4247-abfa-bf24b89d1bf8
 Ketamine,Ketamine 100mg/mL 10mL Vial,,100 mg / mL,Injection,IV,"mg, mg/kg",Tier 4,1d8a1cd0-f09f-4b39-bea0-404865183320
-Mannitol,Mannitol 20% 500mL,,20%,Injection,IV,g,Tier 4,21062ba0-74b3-4230-ad1e-30552fa4f540
+Mannitol,Mannitol 20% 500mL,,20%,Injection,IV,grams,Tier 4,21062ba0-74b3-4230-ad1e-30552fa4f540
 Metformin,Metformin 500mg Tablet,,500 mg,Tablet,Oral,"tablets, mg",Tier 4,6667c944-6fd3-41bf-80e9-63ef614dfdfe
 Mifepristone,Mifepristone 200mg Tablet,,200 mg,Tablet,Oral,"tablets, mg",Tier 4,72de7da9-4101-476b-bcd2-3678a8d72f61
 Morphine Sulfate,Morphine Sulfate 10mg Sustained Release Tablets (MST),,10 mg,Tablet,Oral,"tablets, mg",Tier 4,ac53fa7f-56c0-4fc1-accc-c089ca347b22
@@ -125,10 +125,10 @@ Prednisolone,Prednisolone 5mg Tablet,,5 mg,Tablet,Oral,"tablets, mg",Tier 4,8533
 Promethazine,Promethazine 25mg Tablet,,25 mg,Tablet,Oral,"tablets, mg",Tier 4,7c3c7c17-1e09-41fa-81eb-50e050628e81
 Quinine Sulfate,Quinine Sulfate 300mg Tablet,,300 mg,Tablet,Oral,"tablets, mg",Tier 4,734af8cb-55a3-4fcd-86e9-934285ff2da8
 Rabies Vaccines,Rabies Vaccine,,(none),Injection,IM,mL,Tier 4,ff55378d-46a4-466b-ade1-040c04717960
-Ribavarin,Ribavarin 100mg/mL IV (x 2),,100 mg / mL,Injection,IV,"mg, mg/kg",Tier 4,0380f68b-6638-4d2e-ac4b-44661ad26e09
+Ribavirin,Ribavirin 100mg/mL IV (x 2),,100 mg / mL,Injection,IV,"mg, mg/kg",Tier 4,0380f68b-6638-4d2e-ac4b-44661ad26e09
 Salbutamol,Salbutamol 200 puffs MDI,,(none),Inhaler,Inhaled,puffs,Tier 4,4e15a74c-c05c-4a1d-ade6-7e598ee36ee1
 Salbutamol,Salbutamol 4mg Tablet,,4 mg,Tablet,Oral,"tablets, mg",Tier 4,2245650a-39df-4187-9f09-24759de1b69e
 Silver Sulfadiazine,Silver Sulfadiazine 1% Ointment 50g,,1%,Ointment,Topical,application,Tier 4,2ac777c0-5467-49f3-bf8f-853deeb60189
-Tetanus Immunoglobulin,Tetanus Immunoglobulin,,(none),Injection,IM,mL,Tier 4,d4165513-2929-4ab0-ad60-457aa26b76fa
+"Tetanus immunoglobulin, human",Tetanus Immunoglobulin,,(none),Injection,IM,mL,Tier 4,d4165513-2929-4ab0-ad60-457aa26b76fa
 Tetracycline,Tetracycline 1% Eye Ointment 5g,,1%,Ointment,"Left eye, right eye, both eyes",application,Tier 4,a0f0a008-747a-42f5-8052-decd5013cafa
 Tinidazole,Tinidazole 500mg Tablet,,500 mg,Tablet,Oral,"tablets, mg",Tier 4,4147feff-1962-4fbb-b523-0e58551b9eef
