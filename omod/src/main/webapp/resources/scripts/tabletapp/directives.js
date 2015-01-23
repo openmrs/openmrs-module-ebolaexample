@@ -129,4 +129,26 @@ angular.module("directives", [])
                 scope.ward = WardService.getWardDescription();
             }
         }
+    }])
+    .directive('positive', [ function() {
+        // This does validation that a number is positive
+        return {
+            require: 'ngModel',
+            link: function(scope, elm, attrs, ctrl) {
+                ctrl.$validators.positive = function(modelValue, viewValue) {
+                    if (ctrl.$isEmpty(modelValue)) {
+                        // consider empty models to be valid
+                        return true;
+                    }
+
+                    if (parseFloat(viewValue) > 0) {
+                        // it is valid
+                        return true;
+                    }
+
+                    // it is invalid
+                    return false;
+                };
+            }
+        }
     }]);

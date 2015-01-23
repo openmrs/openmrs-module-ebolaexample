@@ -37,10 +37,10 @@
                 </span>
             </div>
             <span class="inline">
-                <span class="question-title">DOSE<em ng-class="{error: addOrder.form.dose.$invalid && hasErrors}">(Required)</em></span>
+                <span class="question-title">DOSE<em ng-class="{error: addOrder.form.dose.$invalid && hasErrors}">(Required, >0)</em></span>
                 <div ng-class="{error: addOrder.form.dose.$invalid && hasErrors}" class="input-container no-unit">
                     <input ng-focus="focusInput($event)" ng-blur="blurInput($event)" ng-model="addOrder.drug.dose"
-                           type="number" ng-required="!addOrder.freeTextInstructions" name="dose">
+                           type="number" ng-required="!addOrder.freeTextInstructions" name="dose" positive>
                 </div>
                 <span class="select-arrow" ng-class="{error: addOrder.form.doseUnits.$invalid && hasErrors}">
                     <select ng-model="addOrder.drug.doseUnits"
@@ -65,10 +65,10 @@
             </div>
 
             <div>
-                <span class="question-title">DURATION<em>(Optional)</em></span>
+                <span class="question-title">DURATION<em ng-class="{error: addOrder.form.duration.$invalid && hasErrors}">(Optional, >0)</em></span>
 
-                <div class="input-container">
-                    <input ng-model="addOrder.drug.duration" type="number"
+                <div class="input-container" ng-class="{error: addOrder.form.duration.$invalid && hasErrors}">
+                    <input ng-model="addOrder.drug.duration" type="number" positive
                            name="duration"
                            ng-focus="focusInput($event)"
                            ng-blur="blurInput($event)">
