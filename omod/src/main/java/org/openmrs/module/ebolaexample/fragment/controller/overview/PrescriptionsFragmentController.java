@@ -80,7 +80,7 @@ public class PrescriptionsFragmentController {
     }
 
     private List<Order> getOrders(OrderService orderService, Patient patient, OrderType orderType, final boolean onlyRecent) {
-        final Date cutoff = new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000); // 24 hours ago
+        final Date cutoff = new Date(); //new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000); // 24 hours ago
         List<Order> orders = orderService.getAllOrdersByPatient(patient);
         CollectionUtils.filter(orders, new Predicate() {
             @Override
