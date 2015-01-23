@@ -30,10 +30,8 @@ angular.module("session", ["ui.router", "constants", "resources", "patients", "n
                     return cachedEncounter;
                 },
                 setRecentWard: function (ward) {
-                    // I haven't checked why we're storing this in a cookie (that code was already there) but I am
-                    // changing it to store just the UUID instead of the whole ward, since it was breaking jetty by
-                    // causing us to have a too-big header: $cookies[Constants.wardKey] = JSON.stringify(ward);
-                    $cookies[Constants.wardKey] = ward.uuid;
+                    // we can't store the entire ward object here since it makes the cookie too big and breaks jetty
+                    $cookies[Constants.wardKey] = { uuid: ward.uuid, display: ward.display };
                     cachedWard = ward;
                 },
                 getRecentWard: function () {
@@ -41,11 +39,12 @@ angular.module("session", ["ui.router", "constants", "resources", "patients", "n
                         return cachedWard;
                     }
                     else {
-                        var wardUuid = $cookies[Constants.wardKey];
-                        if (wardUuid) {
-                            cachedWard = WardResource.get({uuid: wardUuid});
-                            return cachedWard;
+                        var ward = $cookies[Constants.wardKey];
+                        if (ward) {
+                            cachedWard = WardResource.get({uuid: ward.uuid});
+                            return ward;
                         } else {
+                            console.log("No cached ward or cookie");
                             return null;
                         }
                     }

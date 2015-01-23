@@ -67,7 +67,6 @@ angular.module("directives", [])
         return {
             link: function(scope, element, attrs) {
                 scope.$watch('targetState', function(oldState, state) {
-
                     element.find('span').text(
                         backButtonFilter(state.current.data.back.description || scope.getWard().display)
                     );
@@ -75,10 +74,6 @@ angular.module("directives", [])
                     element.off('click');
 
                     element.on('click', BackService.buildHandler(state));
-                });
-
-                $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-                    scope.targetState = toState;
                 });
 
                 scope.targetState = $state;

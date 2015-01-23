@@ -1,4 +1,5 @@
 @import "variables";
+@import "mixins";
 
 .patient-header {
 	background: $grey1;
@@ -7,6 +8,8 @@
 	font-family: "OpenSansBold";
 	font-size: 2.2em;
 	overflow: hidden;
+
+  	@include yellow-button;
 }
 
 .navigation {

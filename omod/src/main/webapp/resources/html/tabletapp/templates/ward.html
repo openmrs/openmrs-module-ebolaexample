@@ -1,9 +1,13 @@
 <header ng-controller="WardController">
     <div class="patient-header">
-        <back-button></back-button>
+        <button class="back-button left" back-button>
+            <i class="fa fa-chevron-left"></i>
+            <span class="label">Back</span>
+        </button>
         <h1>Please select a patient<em>{{ ward.display }}</em></h1>
     </div>
 </header>
+
 <div class="page-wrap spaced" ng-controller="WardController">
     <div ng-show="loading" class="loading-spinner"></div>
     <ul class="tablet-list tablet-list-two-column">

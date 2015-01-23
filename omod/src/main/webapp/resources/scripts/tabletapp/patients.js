@@ -178,9 +178,14 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                 });
             };
 
-            $scope.stateGo = function (target) {
-                $state.go(target);
-            };
+            $scope.openAddNewPrescriptionForm = function() {
+                $state.go('patient.addPrescription');
+            }
+
+            $scope.hasActiveForm = function() {
+                return $state.current.data && $state.current.data.activeForm;
+            }
+
         }])
 
     .factory("ActiveOrders", ['OrderResource', function (OrderResource) {

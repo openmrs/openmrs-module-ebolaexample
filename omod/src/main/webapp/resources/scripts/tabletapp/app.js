@@ -45,6 +45,7 @@ angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "selec
                 templateUrl: "templates/patient/overview.html",
                 data: {
                     requiresLogin: true,
+                    activeForm: false,
                     back: {
                         target: "ward"
                     }
@@ -55,6 +56,7 @@ angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "selec
                 templateUrl: "templates/patient/newPrescription.html",
                 data: {
                     requiresLogin: true,
+                    activeForm: true,
                     back: {
                         description: "Overview",
                         target: "patient.overview"
@@ -67,6 +69,7 @@ angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "selec
                 params: { concept: null },
                 data: {
                     requiresLogin: true,
+                    activeForm: true,
                     back: {
                         description: "Overview",
                         target: "patient.overview"
@@ -80,6 +83,7 @@ angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "selec
                 params: { prescriptionInfo: null },
                 data: {
                     requiresLogin: true,
+                    activeForm: true,
                     back: {
                         description: "Overview",
                         target: "patient.overview"
@@ -92,6 +96,7 @@ angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "selec
                 templateUrl: "templates/patient/prescriptionForm.html",
                 data: {
                     requiresLogin: true,
+                    activeForm: true,
                     back: {
                         description: "Overview",
                         target: "patient.overview"
