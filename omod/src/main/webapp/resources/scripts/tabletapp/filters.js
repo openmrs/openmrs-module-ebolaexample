@@ -1,4 +1,19 @@
-angular.module('filters', [])
+angular.module('filters', ['constants'])
+
+    // displays a concept
+    .filter('concept', [ 'Constants', function(Constants) {
+        var decode = { };
+        _.each(Constants.routes, function(item) {
+            decode[item.uuid] = item.display;
+        });
+        return function(concept) {
+            if (!(concept && concept.uuid)) {
+                return "";
+            }
+            var decoded = decode[concept.uuid];
+            return decoded ? decoded : concept.display;
+        };
+    }])
 
     // shortens ward name
     .filter('ward', function() {
