@@ -9,6 +9,7 @@ import org.openmrs.ui.framework.annotation.FragmentParam;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.fragment.FragmentModel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,8 +25,7 @@ public class ScheduledDoseHistoryFragmentController {
             toDate = new Date();
         }
         toDate = DateUtil.getEndOfDay(toDate);
-        fromDate = DateUtil.getStartOfDay(DateUtil.adjustDate(toDate, -5, DurationUnit.DAYS));
-
+        fromDate = DateUtil.getStartOfDay(DateUtil.adjustDate(toDate, -6, DurationUnit.DAYS));
         model.addAttribute("fromDate", fromDate);
         model.addAttribute("toDate", toDate);
         List<Date> dates = new ArrayList<Date>();
@@ -34,10 +34,16 @@ public class ScheduledDoseHistoryFragmentController {
         }
         model.addAttribute("dates", dates);
 
+        SimpleDateFormat ymd = new SimpleDateFormat("yyyy-MM-dd");
         Date prevDate = DateUtil.getStartOfDay(DateUtil.adjustDate(toDate, -7, DurationUnit.DAYS));
         Date nextDate = DateUtil.getStartOfDay(DateUtil.adjustDate(toDate, 7, DurationUnit.DAYS));
-        model.addAttribute("prevDate", prevDate);
-        model.addAttribute("nextDate", nextDate.before(new Date()) ? nextDate : null);
+        if (nextDate.after(new Date())) {
+            // no navigating into the future
+            nextDate = null;
+        }
+
+        model.addAttribute("prevDate", ymd.format(prevDate));
+        model.addAttribute("nextDate", nextDate == null ? null : ymd.format(nextDate));
 
         DoseHistory doseHistory = pharmacyService.getScheduledDosesByPatientAndDateRange(patient.getPatient(), fromDate, toDate);
         model.addAttribute("doseHistory", doseHistory);

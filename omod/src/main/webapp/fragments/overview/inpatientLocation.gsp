@@ -63,7 +63,6 @@
 
         <a class="button" ng-click="changeLocationPatient()">Change</a>
 
-        </div>
         <% } %>
     </div>
 </div>

@@ -1,6 +1,7 @@
 package org.openmrs.module.ebolaexample.pharmacy;
 
 import org.openmrs.Concept;
+import org.openmrs.Drug;
 import org.openmrs.DrugOrder;
 import org.openmrs.module.ebolaexample.domain.ScheduledDose;
 import org.openmrs.module.reporting.common.DateUtil;
@@ -58,7 +59,43 @@ public class DoseHistory {
         return map;
     }
 
-    public List<Map.Entry<Concept, List<DrugOrder>>> getGroupedOrders() {
+    public List<Map.Entry<Drug, List<DrugOrder>>> getOrdersGroupedByDrug() {
+        Map<Drug, List<DrugOrder>> grouped = new HashMap<Drug, List<DrugOrder>>();
+        for (DrugOrder order : orders) {
+            List<DrugOrder> list = grouped.get(order.getDrug());
+            if (list == null) {
+                list = new ArrayList<DrugOrder>();
+                grouped.put(order.getDrug(), list);
+            }
+            list.add(order);
+        }
+
+        List<Map.Entry<Drug, List<DrugOrder>>> groups = new ArrayList<Map.Entry<Drug, List<DrugOrder>>>(grouped.entrySet());
+
+        for (Map.Entry<Drug, List<DrugOrder>> group : groups) {
+            Collections.sort(group.getValue(), new Comparator<DrugOrder>() {
+                @Override
+                public int compare(DrugOrder left, DrugOrder right) {
+                    return OpenmrsUtil.compare(right.getEffectiveStartDate(), left.getEffectiveStartDate());
+                }
+            });
+        }
+
+        Collections.sort(groups, new Comparator<Map.Entry<Drug, List<DrugOrder>>>() {
+            @Override
+            public int compare(Map.Entry<Drug, List<DrugOrder>> left, Map.Entry<Drug, List<DrugOrder>> right) {
+                return OpenmrsUtil.compare(earliestStartDate(right.getValue()), earliestStartDate(left.getValue()));
+            }
+        });
+
+        return groups;
+    }
+
+    /**
+     * @deprecated we decided to group by Drug instead of Concept, but I am leaving this code here just in case we need it later
+     */
+    @Deprecated
+    public List<Map.Entry<Concept, List<DrugOrder>>> getOrdersGroupedByConcept() {
         Map<Concept, List<DrugOrder>> grouped = new HashMap<Concept, List<DrugOrder>>();
         for (DrugOrder order : orders) {
             List<DrugOrder> list = grouped.get(order.getConcept());

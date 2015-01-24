@@ -61,17 +61,22 @@ ${ ui.includeFragment("ebolaexample", "overview/patientHeader", [ patient: patie
 
 <div class="container">
     <div class="dashboard clear">
+
+        <div class="info-container column">
+            ${ ui.includeFragment("ebolaexample", "overview/ebolaProgram", [ patient: patient ]) }
+        </div>
+
+        <div class="info-container column">
+            ${ ui.includeFragment("ebolaexample", "overview/inpatientLocation", [ patient: patient, activeVisit: activeVisit ]) }
+        </div>
+
+        <div class="clear"></div>
+
         <div class="long-info-container column">
 
             ${ ui.includeFragment("ebolaexample", "overview/prescriptions", [ patient: patient ]) }
 
-        </div>
-
-        <div class="info-container column">
-
-            ${ ui.includeFragment("ebolaexample", "overview/ebolaProgram", [ patient: patient ]) }
-
-            ${ ui.includeFragment("ebolaexample", "overview/inpatientLocation", [ patient: patient, activeVisit: activeVisit ]) }
+            <br/>
 
             ${ ui.includeFragment("ebolaexample", "overview/scheduledDoseHistory", [ patient: patient ]) }
 

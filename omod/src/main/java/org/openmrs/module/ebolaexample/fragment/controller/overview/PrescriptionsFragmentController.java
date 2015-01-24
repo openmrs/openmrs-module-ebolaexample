@@ -10,6 +10,7 @@ import org.openmrs.Order;
 import org.openmrs.OrderType;
 import org.openmrs.Patient;
 import org.openmrs.api.OrderService;
+import org.openmrs.module.ebolaexample.DateUtil;
 import org.openmrs.module.emrapi.patient.PatientDomainWrapper;
 import org.openmrs.ui.framework.annotation.FragmentParam;
 import org.openmrs.ui.framework.annotation.SpringBean;
@@ -62,7 +63,7 @@ public class PrescriptionsFragmentController {
             @Override
             public boolean evaluate(Object o) {
                 List<DrugOrder> orders = (List<DrugOrder>) o;
-                Date changed = mostRecentChange(orders.get(0));
+                Date changed = DateUtil.mostRecentChange(orders.get(0));
                 return changed.after(cutoff);
             }
         });
@@ -171,7 +172,7 @@ public class PrescriptionsFragmentController {
             Collections.sort(list, new Comparator<Map.Entry<ConceptAndDrug, List<DrugOrder>>>() {
                 @Override
                 public int compare(Map.Entry<ConceptAndDrug, List<DrugOrder>> left, Map.Entry<ConceptAndDrug, List<DrugOrder>> right) {
-                    return -OpenmrsUtil.compareWithNullAsEarliest(mostRecentChange(left.getValue()), mostRecentChange(right.getValue()));
+                    return -OpenmrsUtil.compareWithNullAsEarliest(DateUtil.mostRecentChange(left.getValue()), DateUtil.mostRecentChange(right.getValue()));
                 }
             });
             for (Map.Entry<ConceptAndDrug, List<DrugOrder>> entry : list) {
@@ -185,41 +186,6 @@ public class PrescriptionsFragmentController {
 
             return list;
         }
-    }
-
-    private Date mostRecentChange(List<DrugOrder> list) {
-        Date mostRecent = null;
-        for (DrugOrder drugOrder : list) {
-            mostRecent = max(mostRecent, drugOrder.getDateActivated(), actualStopDate(drugOrder), drugOrder.getDateChanged());
-        }
-        return mostRecent;
-    }
-
-    private Date mostRecentChange(DrugOrder order) {
-        return max(order.getDateActivated(), actualStopDate(order), order.getDateChanged());
-    }
-
-    private Date actualStopDate(DrugOrder order) {
-        if (order.getDateStopped() != null) {
-            return order.getDateStopped();
-        }
-        if (order.getAutoExpireDate() != null && OpenmrsUtil.compare(order.getAutoExpireDate(), new Date()) < 0) {
-            return order.getAutoExpireDate();
-        }
-        return null;
-    }
-
-    private Date max(Date... dates) {
-        Date max = null;
-        for (Date date : dates) {
-            if (date == null) {
-                continue;
-            }
-            if (max == null || date.compareTo(max) > 0) {
-                max = date;
-            }
-        }
-        return max;
     }
 
 }
