@@ -50,6 +50,28 @@ angular.module('filters', ['constants'])
         }
     })
 
+    .filter('doseStatus', function(dateFilter) {
+        return function (scheduledDose) {
+            if (!scheduledDose) {
+                return "";
+            }
+            var output = "";
+            if (scheduledDose.status == 'FULL') {
+                output += "Fully Given";
+            } else if (scheduledDose.status == 'PARTIAL') {
+                output += "Partially Given";
+            } else if (scheduledDose.status == 'NOT_GIVEN') {
+                output += "Not Given";
+            } else {
+                output += scheduledDose.status;
+            }
+            if (scheduledDose.reasonNotAdministeredNonCoded) {
+                output += " (" + scheduledDose.reasonNotAdministeredNonCoded + ")";
+            }
+            return output;
+        }
+    })
+
     .filter('lastGiven', function(dateFilter) {
         return function(scheduledDose) {
             if (!scheduledDose) {

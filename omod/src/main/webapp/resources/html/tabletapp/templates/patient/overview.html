@@ -5,7 +5,9 @@
     </patient-header>
 </header>
 <span class="success-message" ng-show="comeFromPrescriptionForm">Prescription added succesfully!</span>
-<span class="success-message" ng-show="administeredDrug">Drug administered succesfully!</span>
+<span class="success-message" ng-show="administeredDrug">
+    {{ administeredDrug.order.concept | concept }} &rarr; {{ administeredDrug.dose | doseStatus }}
+</span>
 <div class="page-wrap-smaller">
     <div ng-show="loading" class="loading-spinner"></div>
     <span ng-show="!loading" class="question-title">Active Prescriptions</span>
