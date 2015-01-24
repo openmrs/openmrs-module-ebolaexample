@@ -87,7 +87,7 @@ angular.module('filters', ['constants'])
             } else {
                 output += scheduledDose.status;
             }
-            output += " " + dateFilter(new Date(scheduledDose.dateCreated), "d-MMM H:mm");
+            output += " " + dateFilter(new Date(scheduledDose.dateCreated), "d MMM H:mm");
             if (scheduledDose.reasonNotAdministeredNonCoded) {
                 output += " (" + scheduledDose.reasonNotAdministeredNonCoded + ")";
             }

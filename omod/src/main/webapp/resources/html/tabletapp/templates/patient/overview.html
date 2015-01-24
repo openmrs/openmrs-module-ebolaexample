@@ -16,7 +16,7 @@
         <li ng-repeat="order in activeOrders | orderBy:'dateActivated':true">
             <span class="left">
                 <span class="drug-name">{{ order.concept.display }}</span><em>{{ order.drug.display }}</em>
-                <span class="date">({{ order.dateActivated | date: 'dd MMM' }})</span>
+                <span class="date">({{ order.dateActivated | date: 'dd MMM H:mm' }})</span>
                 <div>
                     <em>
                         {{order.dose}}
@@ -47,7 +47,7 @@
         <li ng-repeat="order in pastOrders.results | orderBy:'dateActivated':true">
             <span class="left">
                 <span class="drug-name">{{ order.concept.display }}</span><em>{{ order.drug.display }}</em>
-                <span class="date">({{ order.dateActivated | date: 'dd MMM' }})</span>
+                <span class="date">({{ order.dateActivated | date: 'dd MMM H:mm' }} - {{ (order.dateStopped ? order.dateStopped : order.autoExpireDate ) | date: 'dd MMM H:mm' }})</span>
                 <div>
                     <em>
                         {{order.dose}}
