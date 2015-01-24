@@ -19,6 +19,14 @@
 %>
 <div class="info-section">
 
+    <style type="text/css">
+        #bed-group {
+            display: flex;
+            flex-flow: column wrap;
+            height: 225px;
+        }
+    </style>
+
     <div class="info-header">
         <h3>Assign patient to a bed</h3>
     </div>
@@ -90,7 +98,7 @@
 
                 <h2>Select the bed</h2>
 
-                <div class="button-group">
+                <div class="button-group" id="bed-group">
                     <label ng-repeat="bed in bedsInWard"
                            class="button {{changeToBed.uuid == bed.uuid ?'assigned':''}} {{strContains(bed.display, occupied)?'occupied-bed':''}}"
                            ng-model="\$parent.changeToBed" btn-radio="bed" uncheckable
