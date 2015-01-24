@@ -27,9 +27,13 @@
         }
     </style>
 
-    <div class="info-header">
-        <h3>Assign patient to a bed</h3>
-    </div>
+    <a href="${ ui.pageLink("ebolaexample", "ebolaOverview", [ patient: patient.uuid ]) }">
+        &larr; Back to Summary (discard changes)
+    </a>
+
+    <h2>
+        ${ ui.format(patient) }
+    </h2>
 
     <div class="info-body" ng-app="inpatientLocation" ng-controller="InpatientLocationCtrl"
          ng-init="init({patientUuid:'${patient.uuid}',
@@ -67,11 +71,17 @@
 
         <% } else { %>
 
-        <p class="current-ward">${ui.format(currentWard)},
-            <span class="current-bed">${currentBed ? ui.format(currentBed) : "(No Bed)"}</span>
+        <p class="current-ward">
+            Current Assignment:
+            <strong>
+                ${ui.format(currentWard)},
+                <span class="current-bed">${currentBed ? ui.format(currentBed) : "(No Bed)"}</span>
+            </strong>
         </p>
 
         <div id="making-changes" ng-show="makingChange">
+
+            <h3>Change Bed Assignment</h3>
 
             <div class="locationFormDiv">
                 <h2>Select type of ward</h2>
