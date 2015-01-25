@@ -445,6 +445,7 @@ describe('prescriptions', function () {
                     display : 'Oral administration'
                 },
                 uuid : '1361AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF',
+                display: 'Allopurinol 100 MG Oral Tablet',
                 dose : 33,
                 doseUnits : '162366AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
                 duration : 4,

@@ -68,6 +68,7 @@ describe('prescription-service', function () {
                     uuid : '70879AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
                     display : 'ALLOPURINOL SODIUM' },
                 uuid : '1361AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF',
+                display: 'Allopurinol 100 MG Oral Tablet',
                 dose : 33,
                 doseUnits : '162366AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
                 duration : 4,
@@ -82,7 +83,7 @@ describe('prescription-service', function () {
             var order = service.formOrderFromResponse(orderJson);
             this.expect(order.freeTextInstructions).toBeTruthy();
             this.expect(order.dosingInstructions).toEqual("Some Free Text");
-            this.expect(order.drug).toEqual({ route: {}, concept : { uuid : '70879AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', display : 'ALLOPURINOL SODIUM' }, uuid : '1361AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF'});
+            this.expect(order.drug).toEqual({ route: {}, concept : { uuid : '70879AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', display : 'ALLOPURINOL SODIUM' }, uuid : '1361AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF', display: 'Allopurinol 100 MG Oral Tablet'});
         });
     });
 });
