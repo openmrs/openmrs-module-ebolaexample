@@ -1,6 +1,6 @@
 angular.module('prescription-service', ['tabletapp'])
-    .service('PrescriptionService', ['ActiveOrders', 'Constants', 'CurrentSession', 'OrderResource',
-        function (ActiveOrders, Constants, CurrentSession, OrderResource) {
+    .service('PrescriptionService', ['Orders', 'Constants', 'CurrentSession', 'OrderResource',
+        function (Orders, Constants, CurrentSession, OrderResource) {
             var myFunc = function() {console.log('a')};
 
             var orderJson = function(order, encounter) {
@@ -39,7 +39,7 @@ angular.module('prescription-service', ['tabletapp'])
                 return function(order) {
                     $state.params['uuid'] = CurrentSession.getRecentWard().uuid;
                     $state.params['prescriptionSuccess'] = true;
-                    ActiveOrders.reload($scope, $state.params['patientUUID']);
+                    Orders.reload($scope, $state.params['patientUUID']);
                     $state.go(newState, $state.params);
                 }
             }

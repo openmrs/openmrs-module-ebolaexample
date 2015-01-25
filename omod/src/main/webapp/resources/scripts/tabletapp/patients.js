@@ -45,16 +45,16 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
 
     .controller("PatientController", [ "$state", "$scope", "PatientResource", "OrderResource", "ngDialog",
         "$rootScope", "Constants", "ScheduledDoseResource", "CurrentSession", "StopOrderService",
-        "ActiveOrders", "PastOrders", "DoseHistory",
+        "Orders", "DoseHistory",
         function ($state, $scope, PatientResource, OrderResource, ngDialog, $rootScope, Constants,
-                  ScheduledDoseResource, CurrentSession, StopOrderService, ActiveOrders, PastOrders, DoseHistory) {
+                  ScheduledDoseResource, CurrentSession, StopOrderService, Orders, DoseHistory) {
             var patientUuid = $state.params.patientUUID;
             $scope.hasErrors = false;
             $scope.patient = PatientResource.get({ uuid: patientUuid });
 
-            $scope.activeOrders = ActiveOrders.reload($scope, patientUuid);
-            $scope.$watch(ActiveOrders.get, function(newOrders) {
-                $scope.activeOrders = newOrders;
+            Orders.reload($scope, patientUuid);
+            $scope.$watch(Orders.get, function(newOrders) {
+                $scope.orders = newOrders;
             }, true);
             $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
                 $rootScope.administeredDrug = false;
@@ -72,7 +72,7 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                 $scope.doseHistory = newDoseHistory;
             }, true);
             $scope.lastGiven = function(order) {
-                if (!$scope.doseHistory) {
+                if (!$scope.doseHistory || !order) {
                     return null;
                 }
                 var item = _.find($scope.doseHistory.dosesByOrder, function(it) { return it.order.uuid == order.uuid });
@@ -97,11 +97,16 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                 return CurrentSession.getRecentWard();
             };
 
-            $scope.loadPastOrders = function(patientUuid) {
-                PastOrders.reload($scope, patientUuid);
-                $scope.$watch(PastOrders.get, function(orders) {
-                    $scope.pastOrders = orders;
-                }, true);
+            $scope.isActivePrescriptionsOnly = function () {
+                return Orders.getActiveOnly();
+            }
+
+            $scope.showActivePrescriptions = function () {
+                Orders.setActiveOnly(true);
+            };
+
+            $scope.showAllPrescriptions = function () {
+                Orders.setActiveOnly(false);
             };
 
             $scope.showAdminister = function (order) {
@@ -166,8 +171,7 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
 
             $scope.onStopOrderSuccess = function() {
                 $scope.closeThisDialog();
-                ActiveOrders.reload($scope, patientUuid);
-                PastOrders.reload($scope, patientUuid);
+                Orders.reload($scope, patientUuid);
             }
 
             $scope.openStopOrderDialog = function (order) {
@@ -191,35 +195,72 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
 
         }])
 
-    .factory("ActiveOrders", ['OrderResource', function (OrderResource) {
-        var cachedOrders;
+    .factory("Orders", ['OrderResource', function (OrderResource) {
+        var activeOnly = true;
+        var cachedActive;
+        var cachedPast;
+        function sortable(date) {
+            // Handle case where client and server aren't using the same timezone.
+            // (I'm sure there's a better way to do this, but I have no internet now and can't search)
+            var ret = "";
+            ret += date.getUTCFullYear();
+            ret += date.getUTCMonth() < 10 ? ("0" + date.getUTCMonth()) : date.getUTCMonth();
+            ret += date.getUTCDate() < 10 ? ("0" + date.getUTCDate()) : date.getUTCDate();
+            ret += date.getUTCHours() < 10 ? ("0" + date.getUTCHours()) : date.getUTCHours();
+            ret += date.getUTCMinutes() < 10 ? ("0" + date.getUTCMinutes()) : date.getUTCMinutes();
+            ret += date.getUTCSeconds() < 10 ? ("0" + date.getUTCSeconds()) : date.getUTCSeconds();
+            return ret;
+        }
+        function decorateOrders(orders) {
+            var now = sortable(new Date());
+            return _.map(orders, function(order) {
+                order.actualStopDate = order.dateStopped ? order.dateStopped : (
+                    order.autoExpireDate && sortable(order.autoExpireDate) <= now ?
+                        order.autoExpireDate :
+                        null
+                );
+                return order;
+            });
+        }
         return {
             reload: function (scope, patientUuid) {
                 scope.loading = true;
-                return OrderResource.query({ t: "drugorder", v: 'full', patient: patientUuid }, function (response) {
+                OrderResource.query({ t: "drugorder", v: 'full', patient: patientUuid }, function (response) {
                     scope.loading = false;
-                    cachedOrders = response.results;
-                })
-            },
-            get: function() {
-                return cachedOrders;
-            }
-        }
-    }])
+                    cachedActive = decorateOrders(response.results);
 
-    .factory("PastOrders", ['OrderResource', function (OrderResource) {
-        var cachedOrders;
-        return {
-            reload: function(scope, patientUuid) {
+                });
                 scope.loadingPastOrders = true;
-                return OrderResource.query({ t: "drugorder", v: 'full', patient: patientUuid, expired: true}, function (response) {
-                    scope.loadedPastOrders = true;
+                OrderResource.query({ t: "drugorder", v: 'full', patient: patientUuid, expired: true}, function (response) {
                     scope.loadingPastOrders = false;
-                    cachedOrders = response;
+                    cachedPast = decorateOrders(response.results);
                 });
             },
+            setActiveOnly: function (newVal) {
+                activeOnly = newVal;
+            },
+            getActiveOnly: function () {
+                return activeOnly;
+            },
             get: function() {
-                return cachedOrders;
+                var orders;
+                if (activeOnly) {
+                    orders = cachedActive;
+                } else {
+                    orders = _.union(cachedActive, cachedPast);
+                }
+                var grouped;
+                if (orders) {
+                    orders = _.sortBy(orders, 'dateActivated').reverse();
+                    grouped = _.groupBy(orders, function(order) {
+                        return order.drug ? order.drug.display : order.concept.display;
+                    });
+                }
+                return {
+                    activeOnly: activeOnly,
+                    none: orders && (orders.length == 0),
+                    groupedOrders: grouped
+                };
             }
         }
     }])
