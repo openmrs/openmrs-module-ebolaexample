@@ -53,6 +53,7 @@ describe('patients', function () {
                 initController = function (stateParams) {
                     httpMock.when('GET', 'templates/wards.html').respond({});
                     httpMock.when('GET', apiUrl + 'order?t=drugorder&v=full').respond({});
+                    httpMock.when('GET', apiUrl + 'order?expired=true&t=drugorder&v=full').respond({});
                     httpMock.when('GET', apiUrl + 'patient').respond({});
                     httpMock.when('GET', apiUrl + 'ebola/dosehistory').respond({});
                     $controller('PatientController', {$scope: scope});
