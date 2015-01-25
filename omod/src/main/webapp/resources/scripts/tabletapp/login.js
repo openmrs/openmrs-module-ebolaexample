@@ -8,6 +8,12 @@ angular.module("login", [])
                 });
             };
             $scope.teams = UserResource.query({role: Constants.roles.wardRoundingTeam});
+
+            $scope.$watch("loginForm.username", function(newSelection) {
+                if (newSelection) {
+                    angular.element(".login-form input[type=text]").focus();
+                }
+            });
         }])
 
     .service("LoginService", ["$http", "CurrentSession",
