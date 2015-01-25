@@ -172,6 +172,7 @@ describe('prescriptions', function () {
                 httpMock.when('POST', apiUrl + 'order').respond(orderResponseStub);
                 httpMock.when('GET', apiUrl + 'drug/999').respond({concept: {uuid: '0987654'}});
                 httpMock.when('GET', apiUrl + 'order?t=drugorder&v=full').respond({});
+                httpMock.when('GET', apiUrl + 'order?expired=true&t=drugorder&v=full').respond({});
                 initController = function (stateParams, session) {
                     if (!session) {
                         session = $injector.get('CurrentSession');
