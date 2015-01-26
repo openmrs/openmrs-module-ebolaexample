@@ -57,9 +57,14 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                 $scope.orders = newOrders;
             }, true);
             $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-                $rootScope.administeredDrug = false;
+                $rootScope.clearMessages();
                 $rootScope.comeFromPrescriptionForm = $state.params.prescriptionSuccess == 'true' && fromState && fromState.name == 'patient.addPrescriptionDetails';
             });
+
+            $rootScope.clearMessages = function() {
+                $rootScope.comeFromPrescriptionForm = null;
+                $rootScope.administeredDrug = null;
+            }
 
             function mostRecentDose(doses) {
                 // TODO verify that these are always given to us sorted
@@ -142,6 +147,7 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                         doseJSON['reasonNotAdministeredNonCoded'] = dose.reasonNotAdministeredNonCoded;
                     }
                     new ScheduledDoseResource(doseJSON).$save().then(function () {
+                        $rootScope.clearMessages();
                         $rootScope.administeredDrug = {
                             order: order,
                             dose: dose
