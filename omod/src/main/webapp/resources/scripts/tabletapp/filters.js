@@ -75,7 +75,7 @@ angular.module('filters', ['constants'])
     .filter('lastGiven', function(dateFilter) {
         return function(scheduledDose) {
             if (!scheduledDose) {
-                return "No dose recorded";
+                return "Never administered";
             }
             var output = "";
             if (scheduledDose.status == 'FULL') {
