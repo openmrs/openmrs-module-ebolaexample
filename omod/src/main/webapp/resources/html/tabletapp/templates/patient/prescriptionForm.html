@@ -19,14 +19,11 @@
             <textarea ng-model="addOrder.dosingInstructions" rows="5" cols="60"></textarea>
         </div>
         <div ng-show="!addOrder.freeTextInstructions">
-            <div ng-show="routeProvided">
-                <span class="question-title">ROUTE: {{ routeProvided.display }}</span>
-            </div>
-            <div ng-hide="routeProvided">
+            <div>
                 <span class="question-title">ROUTE<em ng-class="{error: addOrder.form.route.$invalid && hasErrors}">(Required)</em></span>
                 <span class="select-arrow no-padding" ng-class="{error: addOrder.form.route.$invalid && hasErrors}">
                     <select ng-model="addOrder.drug.route.uuid"
-                            ng-required="!addOrder.freeTextInstructions && !routeProvided"
+                            ng-required="!addOrder.freeTextInstructions"
                             name="route"
                             ng-options="route.uuid as route.display for route in routes"
                             ng-class="{error: addOrder.form.route.$invalid && hasErrors}"

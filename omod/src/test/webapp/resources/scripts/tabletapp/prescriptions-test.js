@@ -385,45 +385,6 @@ describe('prescriptions', function () {
             httpMock.verifyNoOutstandingRequest();
         });
 
-        it('should set routeProvided if the route is provided by params', function () {
-            initController({
-                prescriptionInfo: {
-                    uuid: null,
-                    route: {
-                        uuid: "",
-                        display: ""}
-                }});
-            httpMock.verifyNoOutstandingExpectation();
-            httpMock.verifyNoOutstandingRequest();
-            this.expect(scope.routeProvided).toBeTruthy();
-        });
-
-        it('should set routeProvided to falsey if the route is not provided by params', function () {
-            initController({
-                prescriptionInfo: {
-                    uuid: null,
-                    route: null
-                }});
-            httpMock.verifyNoOutstandingExpectation();
-            httpMock.verifyNoOutstandingRequest();
-            this.expect(scope.routeProvided).toBeFalsy();
-        });
-
-        it('should set routeProvided to truthy if the route is provided by web service', function () {
-            httpMock.expectGET(apiUrl + 'drug/1234').respond({route: {uuid: '12345678'}});
-            initController({prescriptionInfo: {uuid: "1234"}});
-            httpMock.flush();
-            scope.$digest();
-            this.expect(scope.routeProvided).toBeTruthy();
-        });
-
-        it('should set routeProvided to falsy if the route is not provided by web service', function () {
-            httpMock.expectGET(apiUrl + 'drug/1234').respond({route: null});
-            initController({prescriptionInfo: {uuid: "1234"}});
-            httpMock.flush();
-            scope.$digest();
-            this.expect(scope.routeProvided).toBeFalsy();
-        });
     });
 
     describe('EditPrescriptionDetailsController', function () {

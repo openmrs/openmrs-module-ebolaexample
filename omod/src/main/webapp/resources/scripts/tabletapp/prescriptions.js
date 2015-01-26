@@ -101,12 +101,10 @@ angular.module("prescriptions", ["tabletapp", "constants", "patients", "filters"
                     var drug = {};
                     if ($state.params.prescriptionInfo && $state.params.prescriptionInfo.uuid) {
                         drug = DrugResource.get({uuid: $state.params.prescriptionInfo.uuid}, function (response) {
-                            $scope.routeProvided = drug.route;
                             drug.route = drug.route || {};
                         });
                     } else {
                         drug = $state.params.prescriptionInfo;
-                        $scope.routeProvided = drug.route;
                         drug.route = drug.route || {};
                     }
                     return drug;
