@@ -126,7 +126,8 @@ public class EbolaExampleActivator extends BaseModuleActivator {
         setPreferredConceptName(service, "160242AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "IV");
         setPreferredConceptName(service, "160243AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "IM");
         setPreferredConceptName(service, "160245AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Subcutaneous");
-        setPreferredConceptName(service, "160241AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Inhaled");
+        // the latest CIEL release has two concepts that share this fully-specified name. Commenting out until this is fixed:
+        // setPreferredConceptName(service, "160241AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Inhaled");
         setPreferredConceptName(service, "161253AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Intranasal");
         setPreferredConceptName(service, "162385AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "In left ear");
         setPreferredConceptName(service, "162386AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "In right ear");
