@@ -2,13 +2,16 @@
     <patient-header patient-id="getPatientId()"
                     patient="patient"></patient-header></header>
 <div class="page-wrap-smaller" ng-controller="NewPrescriptionRouteController" class="page-wrap" xmlns="http://www.w3.org/1999/html">
-    <span class="question-title">Choose Route/Form</span>
+    <span class="question-title">{{ concept | concept }} <em>Choose Formulation</em></span>
     <div>
         <div ng-show="drugs">
-            <a class="radio-button small full" ng-repeat="drug in drugs"
-               ui-sref="patient.addPrescriptionDetails({ prescriptionInfo: drug })" type="button">
-                {{ drug.display}}
-            </a>
+            <div ng-repeat="groupAndDrugs in drugs">
+                <h3 class="question-title">{{ groupAndDrugs.group }}</h3>
+                <a class="radio-button small full" ng-repeat="drug in groupAndDrugs.drugs"
+                   ui-sref="patient.addPrescriptionDetails({ prescriptionInfo: drug })" type="button">
+                    {{ drug.display }}
+                </a>
+            </div>
         </div>
     </div>
 </div>

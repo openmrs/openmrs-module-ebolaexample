@@ -1,4 +1,4 @@
-angular.module("prescriptions", ["tabletapp", "constants", "patients"])
+angular.module("prescriptions", ["tabletapp", "constants", "patients", "filters", "constants"])
 
     .controller("NewPrescriptionDetailsController", ["$state", "$scope", "PrescriptionService", "PrescriptionSetup",
         function ($state, $scope, PrescriptionService, PrescriptionSetup) {
@@ -127,57 +127,60 @@ angular.module("prescriptions", ["tabletapp", "constants", "patients"])
         }
     ])
 
-    .controller("NewPrescriptionRouteController", ['$state', '$scope', 'DrugResource', 'ConceptResource',
-        function ($state, $scope, DrugResource, ConceptResource) {
-            function removeDrugIdsFromDuplicates(mappedDrugs) {
-                $.each(mappedDrugs, function (index, drug) {
-                    var lastIndex = _.findLastIndex(mappedDrugs, function (d) {
-                            return d.display == drug.display;
-                        }),
-                        firstIndex = _.findIndex(mappedDrugs, function (d) {
-                            return d.display == drug.display;
-                        });
-                    if (lastIndex != firstIndex) {
-                        drug.uuid = null;
-                    }
-                });
-                return mappedDrugs;
-            }
+    .controller("NewPrescriptionRouteController", ['$state', '$scope', 'DrugResource', 'ConceptResource', 'conceptFilter', 'Constants',
+        function ($state, $scope, DrugResource, ConceptResource, conceptFilter, Constants) {
 
-            function mapDrugsToSimpleRepresentation(drugs, concept) {
-                return _.map(drugs, function (drug) {
-                    var rep = {
-                        display: drug.display,
-                        route: null,
-                        uuid: drug.uuid,
-                        concept: concept
-                    };
-                    if (drug.route) {
-                        var display = drug.route.display;
-                        if (drug.dosageForm) {
-                            display = display + " - " + drug.dosageForm.display
-                        }
-                        rep['display'] = display;
-                        rep['route'] = drug.route;
+            function indexIn(value, referenceList) {
+                if (!value) {
+                    return "9999";
+                }
+                var found = _.findWhere(referenceList, {uuid: value.uuid});
+                if (found) {
+                    var index = "" + _.indexOf(referenceList, found);
+                    while (index.length < 3) {
+                        index = "0" + index;
                     }
-                    return rep;
-                });
+                    return index;
+                } else {
+                    return "9999";
+                }
             }
 
             function loadDrugs(concept) {
                 DrugResource.query({concept: concept.uuid, v: 'full'}, function (response) {
-                    var mappedDrugs = mapDrugsToSimpleRepresentation(response.results, concept);
-                    mappedDrugs = removeDrugIdsFromDuplicates(mappedDrugs);
-                    $scope.drugs = _.uniq(mappedDrugs, function (elem) {
-                        return JSON.stringify(elem);
+                    if (response.results.length == 1) {
+                        $state.go('patient.addPrescriptionDetails', {prescriptionInfo: response.results[0]});
+                        return;
+                    }
+                    var results = _.map(response.results, function(drug) {
+                        var groupSort = [indexIn(drug.route, Constants.routes), indexIn(drug.dosageForm, Constants.dosageForms)];
+                        var groupDisplay = [conceptFilter(drug.route), conceptFilter(drug.dosageForm)];
+                        var drugSort = [conceptFilter(drug.dosageForm), drug.uuid]; //drug.uuid for repeatable sorting
+                        groupDisplay = _.filter(groupDisplay, function(it) { return it !== '' });
+                        if (groupDisplay.length > 0) {
+                            drug.groupDisplay = groupDisplay.join(" - ");
+                        }
+                        else {
+                            drug.groupDisplay = "Need to specify route manually";
+                        }
+                        drug.groupSort = groupSort.join(" - ");
+                        drug.drugSort = drugSort.join(" - ");
+                        return drug;
                     });
 
-                    if ($scope.drugs.length === 1) {
-                        $state.go('patient.addPrescriptionDetails', {prescriptionInfo: $scope.drugs[0]});
-                    }
+                    var groups = _.groupBy(results, "groupSort");
+                    $scope.drugs = _.map(groups, function(listOfDrugs) {
+                        return {
+                            group: listOfDrugs[0].groupDisplay,
+                            sort: listOfDrugs[0].groupSort,
+                            drugs: _.sortBy(listOfDrugs, "drugSort")
+                        }
+                    });
+                    $scope.drugs = _.sortBy($scope.drugs, "sort");
                 });
             }
 
-            loadDrugs($state.params.concept);
+            $scope.concept = $state.params.concept;
+            loadDrugs($scope.concept);
         }
     ]);

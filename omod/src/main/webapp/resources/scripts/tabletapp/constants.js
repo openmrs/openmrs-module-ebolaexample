@@ -146,6 +146,22 @@ angular.module("constants", [])
                     uuid: '162624AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
                 }
             ],
+            dosageForms: [
+                {
+                    display: 'Tablet',
+                    uuid: '1513AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+                },
+                {
+                    display: 'Oral suspension',
+                    uuid: '1940AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+                }
+                ,
+                {
+                    display: 'Capsule',
+                    uuid: '1608AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+                }
+                // for now we only use this to sort: add anything else we need to sort on the route/form selection page
+            ],
             asNeededConditions: [
                 "Pain",
                 "Insomnia",

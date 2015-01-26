@@ -14,8 +14,26 @@ describe('prescriptions', function () {
 
     describe('NewPrescriptionRouteController', function () {
 
+        var oral = {
+            uuid: '160240AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+            display: 'Oral administration'
+        };
+        var iv = {
+            "uuid": "160299AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "display": "IV"
+        };
+        var tablet = {
+            uuid : '1513AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+            display : 'Tablet'
+        };
+        var suspension = {
+            "uuid": "1517AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+            "display": "Suspension"
+        };
+
         var httpMock,
             scope,
+            state,
             initController,
             drugsResponse = {
                 "results": [
@@ -23,40 +41,22 @@ describe('prescriptions', function () {
                         "display": "Acetaminophen 160 MG Oral Tablet",
                         "uuid": "1326AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
                         "name": "Acetaminophen 160 MG Oral Tablet",
-                        "dosageForm": {
-                            "uuid": "1513AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                            "display": "Tablet"
-                        },
-                        "route": {
-                            "uuid": "160240AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                            "display": "Oral administration"
-                        }
+                        "dosageForm": tablet,
+                        "route": oral
                     },
                     {
                         "display": "Acetaminophen 360 MG Oral Tablet",
                         "uuid": "1328AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
                         "name": "Acetaminophen 360 MG Oral Tablet",
-                        "dosageForm": {
-                            "uuid": "1513AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                            "display": "Tablet"
-                        },
-                        "route": {
-                            "uuid": "160240AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                            "display": "Oral administration"
-                        }
+                        "dosageForm": tablet,
+                        "route": oral
                     },
                     {
                         "display": "Acetaminophen 10 MG/KG IV",
                         "uuid": "1329AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
                         "name": "Acetaminophen 10 MG/KG IV",
-                        "dosageForm": {
-                            "uuid": "1517AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                            "display": "Suspension"
-                        },
-                        "route": {
-                            "uuid": "160299AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                            "display": "IV"
-                        }
+                        "dosageForm": suspension,
+                        "route": iv
                     },
                     {
                         "display": "Acetaminophen 25 MG/ML Oral Solution",
@@ -66,17 +66,31 @@ describe('prescriptions', function () {
                         "route": null
                     }
                 ]
+            },
+            justOneDrugResponse = {
+                "results": [
+                    {
+                        "display": "Acetaminophen 160 MG Oral Tablet",
+                        "uuid": "1326AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+                        "name": "Acetaminophen 160 MG Oral Tablet",
+                        "dosageForm": tablet,
+                        "route": oral
+                    }
+                ]
             };
 
         beforeEach(function () {
-            inject(function ($controller, $rootScope, $httpBackend) {
+            inject(function ($controller, $rootScope, $state, $httpBackend) {
                 httpMock = $httpBackend;
                 scope = $rootScope.$new();
+                state = $state;
+                spyOn(state, 'go');
                 httpMock.when('GET', apiUrl + 'concept/654321').respond({uuid: '654321'});
                 httpMock.when('GET', apiUrl + 'drug?concept=654321&v=full').respond(drugsResponse);
+                httpMock.when('GET', apiUrl + 'drug?concept=1&v=full').respond(justOneDrugResponse);
                 httpMock.when('GET', 'templates/wards.html').respond({});
                 initController = function (stateParams) {
-                    var state = stateParams || { params: {concept: {uuid: '654321'} } };
+                    angular.extend(state, stateParams || { params: {concept: {uuid: '654321'} } });
                     $controller('NewPrescriptionRouteController', {$scope: scope, $state: state});
                 }
             });
@@ -87,34 +101,68 @@ describe('prescriptions', function () {
             httpMock.flush();
             scope.$digest();
             expect(scope.drugs).toEqual([
-                { display: "Oral administration - Tablet",
-                    route: {
-                        "uuid": "160240AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                        "display": "Oral administration"
-                    },
-                    uuid: null,
-                    concept: { uuid: '654321' } },
-                { display: "IV - Suspension",
-                    route: {
-                        "uuid": "160299AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                        "display": "IV"
-                    },
-                    uuid: "1329AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
-                    concept: { uuid: '654321' } },
-                { display: "Acetaminophen 25 MG/ML Oral Solution",
-                    route: null,
-                    uuid: "1327AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
-                    concept: { uuid: '654321' } }
+                {
+                    group: 'Oral - Tablet',
+                    sort: '000 - 000',
+                    drugs: [
+                        {
+                            display: 'Acetaminophen 160 MG Oral Tablet',
+                            uuid: '1326AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF',
+                            name: 'Acetaminophen 160 MG Oral Tablet',
+                            dosageForm: tablet,
+                            route: oral,
+                            groupDisplay: 'Oral - Tablet',
+                            groupSort: '000 - 000',
+                            drugSort : 'Tablet - 1326AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF'
+                        }, {
+                            display: 'Acetaminophen 360 MG Oral Tablet',
+                            uuid: '1328AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF',
+                            name: 'Acetaminophen 360 MG Oral Tablet',
+                            dosageForm : tablet,
+                            route : oral,
+                            groupDisplay : 'Oral - Tablet',
+                            groupSort : '000 - 000',
+                            drugSort : 'Tablet - 1328AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF'
+                        }
+                    ]
+                }, {
+                    group : 'IV - Suspension',
+                    sort : '9999 - 9999',
+                    drugs : [
+                        {
+                            display : 'Acetaminophen 25 MG/ML Oral Solution',
+                            uuid : '1327AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF',
+                            name : 'Acetaminophen 25 MG/ML Oral Solution',
+                            dosageForm : null,
+                            route : null,
+                            groupDisplay : 'Need to specify route manually',
+                            groupSort : '9999 - 9999',
+                            drugSort : ' - 1327AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF'
+                        }, {
+                            display : 'Acetaminophen 10 MG/KG IV',
+                            uuid : '1329AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF',
+                            name : 'Acetaminophen 10 MG/KG IV',
+                            dosageForm : suspension,
+                            route : iv,
+                            groupDisplay : 'IV - Suspension',
+                            groupSort : '9999 - 9999',
+                            drugSort : 'Suspension - 1329AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF'
+                        }
+                    ]
+                }
             ]);
         });
 
-        it('should set concept on order from state params', function () {
-            var concept = {uuid: '654321', display: 'Concept from Service'};
+        it('should go to next state with automatic selection if there is just one drug option', function() {
+            var concept = {uuid: '1', display: 'Concept from Service'};
             initController({ params: { concept: concept } });
             httpMock.flush();
             scope.$digest();
-            expect(scope.drugs[0].concept).toEqual(concept);
+
+            expect(state.go).toHaveBeenCalledWith('patient.addPrescriptionDetails',
+                { prescriptionInfo: justOneDrugResponse.results[0] });
         });
+
     });
 
     describe('NewPrescriptionDetailsController', function () {
