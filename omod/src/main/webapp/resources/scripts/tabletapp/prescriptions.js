@@ -96,8 +96,7 @@ angular.module("prescriptions", ["tabletapp", "constants", "patients", "filters"
                             return $scope.addOrder.rounds[key];
                         });
                     }, true);
-                }
-                ,
+                },
                 buildDrug: function ($state, $scope) {
                     var drug = {};
                     if ($state.params.prescriptionInfo && $state.params.prescriptionInfo.uuid) {
@@ -115,8 +114,7 @@ angular.module("prescriptions", ["tabletapp", "constants", "patients", "filters"
             }
         }])
 
-    .
-    controller("NewPrescriptionController", ['$state', '$scope', 'ConceptResource',
+    .controller("NewPrescriptionController", ['$state', '$scope', 'ConceptResource',
         function ($state, $scope, ConceptResource) {
             $scope.commonDrugConcepts = ConceptResource.query({formulary: true});
             $scope.$watch('concept', function (concept) {
