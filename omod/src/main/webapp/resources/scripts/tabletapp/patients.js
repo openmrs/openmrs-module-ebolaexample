@@ -258,9 +258,18 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                 var grouped;
                 if (orders) {
                     orders = _.sortBy(orders, 'dateActivated').reverse();
-                    grouped = _.groupBy(orders, function(order) {
-                        return order.drug ? order.drug.display : order.concept.display;
+                    var drugs = _.map(_.uniq(_.pluck(_.pluck(orders, 'drug'), 'uuid')), function(uuid) {
+                        return {
+                            uuid: uuid,
+                            orders: []
+                        }
                     });
+                    _.each(orders, function(order) {
+                        _.findWhere(drugs, {uuid: order.drug.uuid}).orders.push(order);
+                    });
+                    grouped = _.sortBy(drugs, function(group) {
+                        return group.orders[0].dateActivated;
+                    }).reverse();
                 }
                 return {
                     activeOnly: activeOnly,

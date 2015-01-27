@@ -17,8 +17,8 @@
     </span>
     <ul ng-show="!loading" class="list-items">
         <li ng-show="orders.none">None</li>
-        <li ng-repeat="(group, ordersInGroup) in orders.groupedOrders">
-            <span ng-repeat="order in ordersInGroup">
+        <li ng-repeat="group in orders.groupedOrders">
+            <span ng-repeat="order in group.orders">
                 <span class="left">
                     <span ng-show="$first">
                         <span class="drug-name">{{ order.concept.display }}</span><em>{{ order.drug.display }}</em>
