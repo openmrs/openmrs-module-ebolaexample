@@ -15,11 +15,11 @@
         <a class="smaller indented" href="" ng-show="orders.activeOnly" ng-click="showAllPrescriptions()">Show All</a>
         <a class="smaller indented" href="" ng-hide="orders.activeOnly" ng-click="showActivePrescriptions()">Show Active Only</a>
     </span>
-    <ul ng-show="!loading" class="list-items">
+    <ul ng-show="!loading" class="list-items" id="patient-prescriptions">
         <li ng-show="orders.none">None</li>
         <li ng-repeat="group in orders.groupedOrders">
             <span ng-repeat="order in group.orders">
-                <span class="left">
+                <span ng-class="{ left: orders.activeOnly, inactive: order.actualStopDate }">
                     <span ng-show="$first">
                         <span class="drug-name">{{ order.concept.display }}</span><em>{{ order.drug.display }}</em>
                     </span>
