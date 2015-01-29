@@ -52,6 +52,8 @@ public class EbolaDemoData extends AbstractMetadataBundle {
 
         public static final String RECOVERY_WARD_1 = "0fd9102e-5831-11e4-af12-660e112eb3f5";
         public static final String RECOVERY_WARD_2 = "3f7af19b-5831-11e4-af12-660e112eb3f5";
+
+        public static final String TEST_WARD_1 = "06ae4750-a7d5-11e4-9c22-43ab93dc9659";
     }
 
     @Override
@@ -125,6 +127,9 @@ public class EbolaDemoData extends AbstractMetadataBundle {
         install(location("Recovery Ward 2", null, _Location.RECOVERY_WARD_2, _Location.INPATIENT_WARDS,
                 tagsForRecoveryWard));
 
+        install(location("Test Ward 1", null, _Location.TEST_WARD_1, _Location.INPATIENT_WARDS,
+                tagsForRecoveryWard));
+
         installBeds(_Location.SUSPECT_WARD_1, 5, tagsForInpatientBed);
         installBeds(_Location.SUSPECT_WARD_2, 5, tagsForInpatientBed);
         installBeds(_Location.SUSPECT_WARD_3, 5, tagsForInpatientBed);
@@ -136,6 +141,8 @@ public class EbolaDemoData extends AbstractMetadataBundle {
         installBeds(_Location.CONFIRMED_WARD_6, 10, tagsForInpatientBed);
         installBeds(_Location.RECOVERY_WARD_1, 6, tagsForInpatientBed);
         installBeds(_Location.RECOVERY_WARD_2, 6, tagsForInpatientBed);
+
+        installBeds(_Location.TEST_WARD_1, 10, tagsForInpatientBed);
 
         installUser(buildTeam("1"), "Team1234");
         installUser(buildTeam("2"), "Team1234");
