@@ -1,19 +1,29 @@
 package org.openmrs.module.ebolaexample.page.controller;
 
 import org.apache.commons.lang.StringUtils;
-import org.openmrs.*;
+import org.openmrs.DrugOrder;
+import org.openmrs.Location;
+import org.openmrs.Order;
+import org.openmrs.OrderType;
+import org.openmrs.Patient;
+import org.openmrs.Visit;
+import org.openmrs.VisitAttribute;
+import org.openmrs.VisitAttributeType;
 import org.openmrs.api.PatientService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.ebolaexample.DateUtil;
 import org.openmrs.module.ebolaexample.EbolaPatient;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.page.PageModel;
+import org.openmrs.util.MetadataComparator;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import static org.openmrs.module.ebolaexample.metadata.EbolaMetadata._VisitAttributeType.ASSIGNED_BED;
 import static org.openmrs.module.ebolaexample.metadata.EbolaMetadata._VisitAttributeType.ASSIGNED_WARD;
@@ -33,7 +43,7 @@ public class EbolaPharmacyPageController {
 
         OrderType orderType = Context.getOrderService().getOrderTypeByUuid(OrderType.DRUG_ORDER_TYPE_UUID);
 
-        List<Location> locations = new ArrayList<Location>();
+        Set<Location> locations = new TreeSet<Location>(new MetadataComparator(Context.getLocale()));
 
         for (Patient patient : patients) {
 
