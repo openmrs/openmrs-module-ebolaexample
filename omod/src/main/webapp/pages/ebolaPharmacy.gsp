@@ -33,8 +33,6 @@
     </thead>
     <tbody>
     <% ebolaPatients.each { ebolaPatient ->
-        def names = ebolaPatient.patient.names
-        def identifiers = ebolaPatient.patient.identifiers
         def ward = ebolaPatient.ward
         def bed = ebolaPatient.bed
         def drugOrders = ebolaPatient.drugOrders
@@ -42,25 +40,22 @@
     %>
     <tr>
         <td>
-            <% identifiers.each { identifier ->
-                def pIdentifier = identifier
-                location = identifier.location
-            %> <a href="${ui.pageLink("ebolaexample", "ebolaOverview",
-                [patient: ebolaPatient.patient.uuid])}">${pIdentifier.identifier}</a> <% } %>
+            <a href="${ui.pageLink("ebolaexample", "ebolaOverview",
+                    [patient: ebolaPatient.patient.uuid])}">${ ebolaPatient.patient.patientIdentifier }</a>
         </td>
 
         <td>
-            <% names.each { name -> def pName = name %> ${pName.fullName} <% } %>
+            ${ ui.format(ebolaPatient.patient) }
         </td>
 
         <td>
-            <% if (ward != null) { %> ${ward.name} <% } %>
-            <% if (bed != null) { %> ( ${bed.name} ) <% } %>
+            <% if (ward != null) { %> ${ ui.format(ward) } <% } %>
+            <% if (bed != null) { %> ( ${ ui.format(bed) } ) <% } %>
         </td>
         <td>
             <% drugOrders.each { drugOrder ->
                 def pDrugOrder = drugOrder
-            %> ${pDrugOrder.drug.name}<br> <% } %>
+            %> ${ ui.format(pDrugOrder.drug) }<br> <% } %>
         </td>
     </tr>
     <% } %>
