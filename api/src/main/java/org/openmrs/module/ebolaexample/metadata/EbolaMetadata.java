@@ -51,6 +51,7 @@ public class EbolaMetadata extends AbstractMetadataBundle {
         public static final String EBOLA_TRIAGE = "4a8da825-2896-4f3f-be07-2c3d9214c040";
         public static final String EBOLA_ASSESSMENT = "c49903a6-af3f-44ec-8ed3-abcfbfcea6e7";
         public static final String EBOLA_DISCHARGE = "181820aa-88c9-479b-9077-af92f5364329";
+        public static final String EBOLA_VITALS_SIGNS = "181820aa-ffff-479b-ffff-af92f5364127"; //TODO: generate UUID
     }
 
     public static class _EncounterRole {
@@ -135,6 +136,7 @@ public class EbolaMetadata extends AbstractMetadataBundle {
         install(encounterType("ETU Triage", "Triage of patients arriving at Ebola Treatment Unit (ETU)",  _EncounterType.EBOLA_TRIAGE));
         install(encounterType("ETU Assessment", "Assessment of patients at Ebola Treatment Unit (ETU)",  _EncounterType.EBOLA_ASSESSMENT));
         install(encounterType("ETU Discharge", "Discharge patients at Ebola Treatment Unit (ETU)",  _EncounterType.EBOLA_DISCHARGE));
+        install(encounterType("Vital Signs", "Follow up of vital signs from ebola patient",  _EncounterType.EBOLA_VITALS_SIGNS));
 
         install(form("Ebola Inpatient Observations and Treatment", "", _EncounterType.EBOLA_INPATIENT_FOLLOWUP, "0.1", _Form.INPATIENT_OBSERVATIONS_AND_TREATMENT));
         install(form("Ebola Clinical Signs and Symptoms", "", _EncounterType.EBOLA_CASE_INVESTIGATION, "0.1", _Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS));

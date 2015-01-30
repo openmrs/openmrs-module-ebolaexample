@@ -102,6 +102,18 @@ angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "selec
                         target: "patient.overview"
                     }
                 }
+            })
+            .state("patient.addVitalSigns", {
+                url: "/addVitalSigns",
+                templateUrl: "templates/patient/addVitalSigns.html",
+                data: {
+                    requiresLogin: true,
+                    activeForm: true,
+                    back: {
+                        description: "Overview",
+                        target: "patient.overview"
+                    }
+                }
             });
     })
 
