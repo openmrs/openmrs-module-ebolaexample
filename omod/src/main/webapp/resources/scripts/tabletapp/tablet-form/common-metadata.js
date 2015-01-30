@@ -2,7 +2,7 @@ angular.module('tabletapp')
 
     .factory('encounterTypes', [ function() {
         return {
-                vitalsSigns: "181820aa-ffff-ffff-ffff-af92f5364127"
+                vitalsSigns: "181820aa-ffff-ffff-ffff-af92f5364127" //substitute this by real uuid 
         }
     }])
 

@@ -22,13 +22,12 @@ angular.module('tabletapp')
             });
 
             visitUuid = CurrentSession.getEncounter().visit;
-            encounterType = encounterTypes.vitalsSigns;
             
             data.patient = $scope.__proto__.patientInfo.uuid;
             data.visit = (typeof(visitUuid) != 'undefined' ? visitUuid : 'aaaaa'); //FIX THIS - uuid is empty in object
             data.location = CurrentSession.getRecentWard().uuid;
             data.provider = CurrentSession.getInfo().provider.uuid;
-            data.encounterType = (typeof(encounterType) != 'undefined' ? visitUuid : 'aaaaa'); //FIX THIS - object does not exist in getInfo()
+            data.encounterType = encounterTypes.vitalsSigns;
             console.log("data ",data);
             
             $http.post(CONTEXT_PATH + "/ws/rest/v1/encounter", data).success(function (result) {

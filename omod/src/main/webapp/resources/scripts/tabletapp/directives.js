@@ -107,7 +107,7 @@ angular.module("directives", [])
     .directive('cancelButton', ['$state', 'BackService', function ($state, BackService) {
         return {
             link: function (scope, element, attrs) {
-                element.html('<button class="left">' +
+                element.html('<button class="left small">' +
                     'Cancel' +
                     '</button>');
                 element.bind('click', BackService.buildHandler($state));
