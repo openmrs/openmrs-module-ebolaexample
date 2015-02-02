@@ -230,9 +230,9 @@ public class DrugImporter {
                     continue;
                 }
                 System.out.println("\"" + row.getUuid() + "\": {");
-                String allowedUnits = row.getDefaultDosageUnits().replace("(","");
-                 allowedUnits = allowedUnits.replace(")", "");
-                 allowedUnits = allowedUnits.replace("/","");
+                String allowedUnits = row.getDefaultDosageUnits().replace("(", "");
+                allowedUnits = allowedUnits.replace(")", "");
+                allowedUnits = allowedUnits.replace("/", "");
                 System.out.println("allowedDoseUnits: [" + allowedUnits + "]");
                 System.out.println("},");
             }

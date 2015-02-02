@@ -57,8 +57,15 @@ angular.module("constants", [])
             display: "Drop(s)",
             uuid: "125564BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
         };
+        var mEq = {
+            display:"mEq(s)",
+            uuid : "162364AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+        }
 
-
+        var mcgkgmin = {
+            display:"mcg/kg/min",
+            uuid:"162838AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+        }
         return {
             wardKey: 'wardKey',
             encounterType: {
@@ -229,7 +236,7 @@ angular.module("constants", [])
                     allowedDoseUnits: [tablets, mg]
                 },
                 "9467173e-c734-41c0-977a-68438f50181b": {
-                    allowedDoseUnits: [mL]
+                    allowedDoseUnits: [mEq, mL]
                 },
                 "f45dd5d2-a2c3-4e9f-844d-39a48d48262e": {
                     allowedDoseUnits: [tablets]
@@ -376,10 +383,10 @@ angular.module("constants", [])
                     allowedDoseUnits: [tablets, mg]
                 },
                 "4929beef-b569-4826-8658-6ced8f4344b1": {
-                    allowedDoseUnits: [mg, mgkg]
+                    allowedDoseUnits: [mg, mgkg, mcgkgmin]
                 },
                 "65c70378-c9b8-4cfd-b7a2-a2912e7b6db5": {
-                    allowedDoseUnits: [mg, mgkg]
+                    allowedDoseUnits: [mg, mgkg, mcgkgmin]
                 },
                 "00fbdb9d-0778-4526-9e6b-89bb1372779c": {
                     allowedDoseUnits: [tablets, mg]
@@ -553,7 +560,7 @@ angular.module("constants", [])
                     allowedDoseUnits: [tablets, mg]
                 },
                 "4ff38ddf-442d-42df-91cd-1071734a2299": {
-                    allowedDoseUnits: []
+                    allowedDoseUnits: [mEq]
                 },
                 "041f6836-6fb1-4e7d-bf12-237276ca1f42": {
                     allowedDoseUnits: [tablets, mg]

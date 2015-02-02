@@ -50,10 +50,8 @@ public class DrugConceptSearchHandler implements SearchHandler {
     @Autowired
     private DrugImporter drugImporter;
 
-    SearchQuery searchQuery = new SearchQuery.Builder(
-            "Allows you to find active drug concept names")
-            .withRequiredParameters(REQUEST_PARAM_FORMULARY)
-            .withOptionalParameters(REQUEST_PARAM_QUERY).build();
+    SearchQuery searchQuery = new SearchQuery.Builder("Allows you to find active drug concept names")
+            .withRequiredParameters(REQUEST_PARAM_FORMULARY).withOptionalParameters(REQUEST_PARAM_QUERY).build();
 
     private final SearchConfig searchConfig = new SearchConfig("getDrugConcepts", RestConstants.VERSION_1 + "/concept",
             Arrays.asList("1.10.*", "1.11.*"), searchQuery);
@@ -105,9 +103,15 @@ public class DrugConceptSearchHandler implements SearchHandler {
         }
 
         Collections.sort(tierDrugList, compareByTierAndDrugDisplay);
+        int startIndex = 0;
+        int endIndex = getIndexTierDrugWith20thConcept(tierDrugList);
+        List<TierDrug> tier1Drugs = tierDrugList.subList(startIndex, endIndex);
+        Collections.sort(tier1Drugs, compareByDrugDisplay);
+
+        tier1Drugs.addAll(tierDrugList.subList(endIndex, tierDrugList.size()));
 
         Set<Concept> drugNames = new LinkedHashSet<Concept>();
-        for (TierDrug tierDrug : tierDrugList) {
+        for (TierDrug tierDrug : tier1Drugs) {
             drugNames.add(tierDrug.getDrug().getConcept());
         }
 
@@ -119,14 +123,32 @@ public class DrugConceptSearchHandler implements SearchHandler {
         return new NeedsPaging<Concept>(concepts, context);
     }
 
+    private int getIndexTierDrugWith20thConcept(List<TierDrug> tierDrugs) {
+        List<Concept> drugNames = new ArrayList<Concept>();
+        int i = 0;
+        for (; i < tierDrugs.size() && drugNames.size() < 20; i++) {
+            if (!drugNames.contains(tierDrugs.get(i).getDrug().getConcept())) {
+                drugNames.add(tierDrugs.get(i).getDrug().getConcept());
+            }
+        }
+        return drugNames.size() == 20 ? i : tierDrugs.size();
+    }
+
     public static Comparator<? super TierDrug> compareByTierAndDrugDisplay = new Comparator<TierDrug>() {
         @Override
         public int compare(TierDrug o1, TierDrug o2) {
             if (o1.getTier().equalsIgnoreCase(o2.getTier())) {
-                return o1.getDrug().getConcept().getDisplayString()
-                        .compareToIgnoreCase(o2.getDrug().getConcept().getDisplayString());
-            } else
+                return o1.getDrug().getConcept().getDisplayString().compareToIgnoreCase(o2.getDrug().getConcept().getDisplayString());
+            } else {
                 return o1.getTier().compareToIgnoreCase(o2.getTier());
+            }
+        }
+    };
+
+    public static Comparator<? super TierDrug> compareByDrugDisplay = new Comparator<TierDrug>() {
+        @Override
+        public int compare(TierDrug o1, TierDrug o2) {
+            return o1.getDrug().getConcept().getDisplayString().compareToIgnoreCase(o2.getDrug().getConcept().getDisplayString());
         }
     };
 
