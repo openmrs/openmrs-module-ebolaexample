@@ -8,6 +8,7 @@ import org.openmrs.ConceptName;
 import org.openmrs.Drug;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.ebolaexample.EbolaExampleActivator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.supercsv.cellprocessor.Optional;
@@ -33,6 +34,10 @@ public class DrugImporter {
     private ConceptService conceptService;
 
     protected Log log = LogFactory.getLog(getClass());
+
+    public static final String KERRY_TOWN_EBOLA_INSTALLED_DRUG_LIST_VERSION = "kerryTown.ebola.installedDrugListVersion";
+
+    public static final Integer DRUG_LIST_VERSION = 1;
 
     public DrugImporter() {
 
@@ -195,7 +200,7 @@ public class DrugImporter {
         List<TierDrug> tierDrugs = new ArrayList<TierDrug>();
 
         try {
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("Kerry_Town_Drugs.csv");
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("Kerry_Town_Drugs_v" + DRUG_LIST_VERSION + ".csv");
             InputStreamReader reader = new InputStreamReader(inputStream);
 
             List<DrugImporterRow> drugList = readSpreadsheet(reader);
@@ -219,7 +224,7 @@ public class DrugImporter {
     public void printJson() {
 
         try {
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("Kerry_Town_Drugs.csv");
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("Kerry_Town_Drugs_v" + DRUG_LIST_VERSION + ".csv");
             InputStreamReader reader = new InputStreamReader(inputStream);
 
             List<DrugImporterRow> drugList = readSpreadsheet(reader);

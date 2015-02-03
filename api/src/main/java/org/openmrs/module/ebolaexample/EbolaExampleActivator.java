@@ -14,14 +14,10 @@
 package org.openmrs.module.ebolaexample;
 
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.Concept;
-import org.openmrs.ConceptName;
-import org.openmrs.ConceptNameTag;
-import org.openmrs.GlobalProperty;
-import org.openmrs.Location;
-import org.openmrs.LocationTag;
+import org.openmrs.*;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.FormService;
@@ -51,6 +47,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+import static org.openmrs.module.ebolaexample.importer.DrugImporter.DRUG_LIST_VERSION;
+import static org.openmrs.module.ebolaexample.importer.DrugImporter.KERRY_TOWN_EBOLA_INSTALLED_DRUG_LIST_VERSION;
+
 /**
  * This class contains the logic that is run every time this module is either started or stopped.
  */
@@ -62,16 +61,20 @@ public class EbolaExampleActivator extends BaseModuleActivator {
 
     private ConceptService conceptService;
 
+    private AdministrationService administrationService;
+
     @Override
     public void started() {
         try {
             MetadataDeployService metadataDeployService = Context.getService(MetadataDeployService.class);
-            AdministrationService administrationService = Context.getAdministrationService();
+            administrationService = Context.getAdministrationService();
             FormService formService = Context.getFormService();
             HtmlFormEntryService htmlFormEntryService = Context.getService(HtmlFormEntryService.class);
             LocationService locationService = Context.getLocationService();
-            ConceptService conceptService = Context.getConceptService();
             EmrApiProperties emrApiProperties = Context.getRegisteredComponents(EmrApiProperties.class).get(0);
+
+            drugImporter = Context.getRegisteredComponents(DrugImporter.class).get(0);
+            conceptService = Context.getConceptService();
 
             deployMetadataPackages(metadataDeployService);
 
@@ -198,22 +201,22 @@ public class EbolaExampleActivator extends BaseModuleActivator {
     private void importDrugs() {
 
         try {
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("Kerry_Town_Drugs.csv");
-            InputStreamReader reader = new InputStreamReader(inputStream);
+            int installedDrugListVersion = getIntegerByGlobalProperty(administrationService, KERRY_TOWN_EBOLA_INSTALLED_DRUG_LIST_VERSION, -1);
 
-            if (drugImporter == null) {
-                drugImporter = Context.getRegisteredComponents(DrugImporter.class).get(0);
-            }
-            if (conceptService == null) {
-                conceptService = Context.getConceptService();
-            }
+            if (installedDrugListVersion < DRUG_LIST_VERSION) {
 
-            ImportNotes notes = drugImporter.importSpreadsheet(reader);
+                InputStream inputStream = getClass().getClassLoader().getResourceAsStream("Kerry_Town_Drugs_v" + DRUG_LIST_VERSION + ".csv");
+                InputStreamReader reader = new InputStreamReader(inputStream);
 
-            if (notes.hasErrors()) {
-                log.error("Unable to import drug list. Import notes:");
-                log.error(notes.toString());
-                throw new RuntimeException("Unable to install drug list");
+                ImportNotes notes = drugImporter.importSpreadsheet(reader);
+
+                if (notes.hasErrors()) {
+                    log.error("Unable to import drug list. Import notes:");
+                    log.error(notes.toString());
+                    throw new RuntimeException("Unable to install drug list");
+                } else {
+                    setGlobalProperty(administrationService, KERRY_TOWN_EBOLA_INSTALLED_DRUG_LIST_VERSION, DRUG_LIST_VERSION.toString());
+                }
             }
         } catch (Exception e) {
             log.error("XXXXXXXXXXXXXXXX ------------ Import Error ------------- XXXXXXXXXXXXXXXXX");
@@ -277,6 +280,19 @@ public class EbolaExampleActivator extends BaseModuleActivator {
         }
         gp.setPropertyValue(propertyValue);
         administrationService.saveGlobalProperty(gp);
+    }
+
+    protected Integer getIntegerByGlobalProperty(AdministrationService administrationService, String globalPropertyName, Integer defaultValue) {
+        String value = administrationService.getGlobalProperty(globalPropertyName);
+        if (StringUtils.isNotEmpty(value)) {
+            try {
+                return Integer.valueOf(value);
+            } catch (Exception e) {
+                throw new IllegalStateException("Global property " + globalPropertyName + " value of " + value + " is not parsable as an Integer");
+            }
+        } else {
+            return defaultValue;
+        }
     }
 
 }

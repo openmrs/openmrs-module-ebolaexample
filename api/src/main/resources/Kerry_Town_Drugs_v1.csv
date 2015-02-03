@@ -85,7 +85,7 @@ Misoprostol,Misoprostol 200mcg Tablet,,200 mcg,Tablet,Oral,"tablets, mcg",Tier 3
 Naloxone,Naloxone 400mcg/mL 1mL Ampoule,,5 mcg / mL,Injection,"IV, IM","mcg, mcg/kg",Tier 3,ea63703f-aa20-4ac6-bf89-372c6e6738d5
 Noradrenaline,Noradrenaline 1mg/mL 4mL Ampoule,,1 mg / mL,Injection,IV,"mg, mg/kg",Tier 3,efdfbb8f-a806-4447-9c90-4a6195928dd2
 Omeprazole,Omeprazole 40mg Vial,,40 mg,Injection,IV,"mg, mg/kg",Tier 3,0ac6f272-391f-48d0-9547-aa2d85808f39
-"Pabrinex (Vitamin B complex with C, 86342)",Pabrinex 2 x Ampoule,TRUE,(none),Injection,"IV, IM",ampule(s),Tier 3,cf7ce5ff-7ec9-4c3e-a24e-d243c7043339
+Pabrinex,Pabrinex 2 x Ampoule,TRUE,(none),Injection,"IV, IM",ampule(s),Tier 3,cf7ce5ff-7ec9-4c3e-a24e-d243c7043339
 Paracetamol,Paracetamol 10mg/mL 100mL Vial (1g),,10 mg / mL,Injection,IV,"mg, mg/kg",Tier 3,4fc4aa05-17bb-4f25-9466-2835fb7105fc
 Phenobarbital,Phenobarbital 200mg/mL 1mL Ampoule,,200 mg / mL,Injection,IV,"mg, mg/kg",Tier 3,7ab1ef69-d3c1-4b46-b540-15d3c3ccc727
 Phenytoin,Phenytoin 50mg/mL 5mL Ampoule,,50 mg / mL,Injection,IV,"mg, mg/kg",Tier 3,0cbde2ce-ac79-49dd-a56e-d471ff207015
@@ -94,7 +94,7 @@ Silver Sulfadiazine,Silver Sulfadiazine 1% Cream 50g,,1%,Cream,Topical,applicati
 Thiamine Hydrochloride,Thiamine Hydrochloride 50mg Tablet,,50 mg,Tablet,Oral,"tablets, mg",Tier 3,b4aeb78f-fcad-495b-ab2d-d45b125ece86
 Tramadol,Tramadol 50mg Capsule,,50 mg,Capsule,Oral,"tablets, mg",Tier 3,92277aec-fd64-4f6a-840d-d62b8b751ff5
 Tramadol,Tramadol 50mg/mL 2mL Ampoule,,50 mg / mL,Injection,IV,"mg, mg/kg",Tier 3,342a8572-332c-40dc-8bcc-868877d720e4
-Tenofovir/Emtricitabine,Truvada (Tenofovir 245mg/Emtricitabine 200mg Tablet),TRUE,245 mg (tenofovir component),Tablet,Oral,"tablets, mg",Tier 3,1af0414c-54e9-4e55-a46f-75d5f1d9db2a
+Emtricitabine / Tenofovir,Truvada (Tenofovir 245mg/Emtricitabine 200mg Tablet),TRUE,245 mg (tenofovir component),Tablet,Oral,"tablets, mg",Tier 3,1af0414c-54e9-4e55-a46f-75d5f1d9db2a
 Amiodarone,Amiodarone 200mg Tablet,,200 mg,Tablet,Oral,"tablets, mg",Tier 4,19e1034f-d2ef-4b62-ad38-9d53bcd0b4ea
 Artemether,Artemether 20mg/mL 1mL Ampoule,,20 mg / mL,Injection,IV,"mg, mg/kg",Tier 4,f9fdb287-440e-44ef-944f-182c5a2b297b
 Amodiaquine / Artesunate,Artesunate 100mg/Amodiaquine 270mg Tablets,TRUE,100 mg (artesunate component),Tablet,Oral,"tablets, mg",Tier 4,d8d23c3a-83d1-4c4f-9a9d-07e63d6560b5
@@ -108,7 +108,7 @@ Charcoal,Charcoal 200mg Tablet,,200 mg,Tablet,Oral,"tablets, mg",Tier 4,04e6539d
 Lamivudine / Zidovudine,Combivir (Lamivudine 150mg/Zidovudine 300 mg),TRUE,150 mg (lamivudine component),Tablet,Oral,"tablets, mg",Tier 4,9a95d145-19f4-4f2b-9df8-a595642c5716
 Diclofenac Sodium,Diclofenac Sodium 25mg/mL 3mL Ampoule,,25 mg / mL,Injection,IV,"mg, mg/kg",Tier 4,8a0ab286-821a-4d77-bb7f-c5b54584dfdf
 Ergometrine,Ergometrine 500mcg/mL Ampoule,,500 mcg / mL,Injection,IV,"mcg, mcg/kg",Tier 4,3bf57114-d8d3-4535-ab5a-c63a9ca076d7
-Dihydroartemisinin/Piperaquine,Euratesim (Dihydroartemisinin 320mg & Piperaquine 40mg),TRUE,320 mg (dihydroartemisinin component),Tablet,Oral,"tablets, mg",Tier 4,51e83055-cda6-4219-8211-11cc6433905e
+Dihydroartemisinin / piperaquine,Euratesim (Dihydroartemisinin 320mg & Piperaquine 40mg),TRUE,320 mg (dihydroartemisinin component),Tablet,Oral,"tablets, mg",Tier 4,51e83055-cda6-4219-8211-11cc6433905e
 Flucloxacillin,Flucloxacillin 1g Vial,,1 g,Injection,IV,"grams, mg, mg/kg",Tier 4,46c4d4ce-ef1f-4e0f-b34c-8719e7fd1ebf
 Gentamicin,Gentamicin 0.3% Eye Drops 5mL,,0.3%,eye drops,"Left eye, right eye, both eyes",drops,Tier 4,aa6ffbb2-9219-47eb-9d77-fb6f77899c1c
 Dextrose Solution,Glucose/Dextrose 50% 20mL Ampoule,TRUE,10 g,Injection,IV,grams,Tier 4,04a459b3-e4d9-44a2-a3c2-703d26cfe8cc
