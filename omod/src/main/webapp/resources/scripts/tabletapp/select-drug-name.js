@@ -33,7 +33,7 @@ angular.module('select-drug-name', [ 'resources', 'ui.bootstrap' ])
                 }
             },
             template: '<input type="text" id="{{ inputId }}" ng-model="ngModel" ng-blur="verify()" ' +
-                'typeahead="drug as drug.display for drug in search($viewValue) | filter:$viewValue" ' +
+                'typeahead="drug as drug.display.toUpperCase() for drug in search($viewValue) | filter:$viewValue" ' +
                 'typeahead-on-select="onSelect($item, $model, $label)" ' +
                 'typeahead-editable="false" autocomplete="off" placeholder="{{ placeholder }}" autocomplete="off" ' +
                 'ng-required="{{ required }}" size="{{ size }}" ' +

@@ -11,7 +11,7 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.webservices.rest.web.v1_0.search.openmrs1_10;
+package org.openmrs.module.ebolaexample.rest.search;
 
 import org.openmrs.Concept;
 import org.openmrs.Drug;
@@ -32,7 +32,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Allows finding a drug by mapping
@@ -81,7 +87,11 @@ public class DrugConceptSearchHandler implements SearchHandler {
         if (query == null || query.isEmpty()) {
             allDrugs = Context.getConceptService().getAllDrugs(context.getIncludeAll());
         } else {
-            allDrugs = Context.getConceptService().getDrugs(query, Context.getLocale(), false, false);
+            // the booleans are:
+            // 1. search anywhere (not just at start): true
+            // 2. search in drug.concept.names (not just drug.name): false
+            // 3. include retired: false
+            allDrugs = Context.getConceptService().getDrugs(query, null, true, false, false, null, null);
         }
 
         List<TierDrug> tierDrugs = drugImporter.getTierDrugs();
