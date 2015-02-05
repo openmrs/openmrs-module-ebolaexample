@@ -56,7 +56,7 @@
                                             ${ it.dateStopped ? "STOPPED" : "EXPIRED" }
                                         </span>
                                     <% } %>
-                                    ${ it.dosingInstructionsInstance.getDosingInstructionsAsString(context.locale) }
+                                    ${ prescriptionFormatter.format(it, context.locale) }
                                 </li>
                             <% } %>
                         </ul>
