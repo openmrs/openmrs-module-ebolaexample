@@ -30,9 +30,11 @@ public class UnvalidatedFreeTextDosingInstructions extends FreeTextDosingInstruc
     public String getDosingInstructionsAsString(Locale locale) {
         String instructions = this.getInstructions();
         if (StringUtils.isEmpty(instructions)) {
-            instructions = "<em>Instructions were left blank</em>";
+            return "<em>Instructions were left blank</em>";
         }
-        return instructions;
+        else {
+            return "\"" + instructions + "\"";
+        }
     }
 
 }
