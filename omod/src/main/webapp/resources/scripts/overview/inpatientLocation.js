@@ -3,6 +3,7 @@ angular.module('inpatientLocation', ['resources', 'locationService', 'ui.bootstr
         function ($scope, $http, $timeout, LocationService, WardResource) {
 
             var allLocations = [];
+            var allBeds = [];
             var config = {};
             var bedTagUuid = 'c8bb459c-5e7d-11e4-9305-df58197607bd';
             $scope.bedAssignments = [];
@@ -35,6 +36,7 @@ angular.module('inpatientLocation', ['resources', 'locationService', 'ui.bootstr
                     allLocations = result;
                 }
             }).then(function(){
+                allBeds = getAllBeds();
                 $scope.$watch('changeToWard', function (changeToWard) {
                     if (typeof changeToWard === 'undefined') {
                         $scope.changeToBed = null;
@@ -76,22 +78,25 @@ angular.module('inpatientLocation', ['resources', 'locationService', 'ui.bootstr
                 }
             });
 
-
-
-            $scope.$watch('bedAssignments', function (bedAssignments) {
+            function getAllBeds() {
                 var beds = _.filter(allLocations, function (item) {
-                    return item.parentLocation && item.parentLocation.uuid == currentWard.uuid
+                    return item.parentLocation
                         && _.some(item.tags, function (tag) {
                             return tag.uuid === bedTagUuid;
                         });
                 });
-
                 beds.sort(function (a, b) {
                     var nameA = parseInt(a.display.substr(a.display.indexOf('#') + 1));
                     var nameB = parseInt(b.display.substr(b.display.indexOf('#') + 1));
                     return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
                 });
+                return beds;
+            }
 
+            $scope.$watch('bedAssignments', function (bedAssignments) {
+                var beds = _.filter(allBeds, function (bed) {
+                    return bed.parentLocation.uuid == currentWard.uuid
+                });
                 for (y = 0; y < beds.length; y++) {
                     if (isOccupied(beds[y], bedAssignments)) {
                         if (!$scope.strContains(beds[y].display, " Occupied")) {
