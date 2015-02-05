@@ -208,6 +208,9 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
         function sortable(date) {
             // Handle case where client and server aren't using the same timezone.
             // (I'm sure there's a better way to do this, but I have no internet now and can't search)
+            if (typeof date === "string") {
+                date = new Date(date);
+            }
             var ret = "";
             ret += date.getUTCFullYear();
             ret += date.getUTCMonth() < 10 ? ("0" + date.getUTCMonth()) : date.getUTCMonth();

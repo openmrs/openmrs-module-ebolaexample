@@ -21,7 +21,7 @@
             <span ng-repeat="order in ordersInGroup">
                 <span class="left">
                     <span ng-show="$first">
-                        <span class="drug-name">{{ order.concept.display }}</span><em>{{ order.drug.display }}</em>
+                        <span class="drug-name">{{ order.concept.display.toUpperCase() }}</span><em>{{ order.drug.display }}</em>
                     </span>
                     <div>
                         <span class="date">(<span ng-show="order.actualStopDate">{{order.dateStopped ? "STOPPED" : "EXPIRED"}}, </span>{{ order.dateActivated | date: 'dd MMM H:mm' }}<span ng-show="order.actualStopDate"> - {{ order.actualStopDate | date: 'dd MMM H:mm' }}</span>)</span>
@@ -29,8 +29,16 @@
                             {{order.dose}}
                             {{order.doseUnits.names[0].display}}
                             <span ng-show="order.route.display">{{ order.route | concept }}</span>
-                            <span ng-show="order.dose">each</span> {{ order.dosingInstructions }}
-                            <span ng-show="order.duration">for {{ order.duration }} days</span>
+                            <span ng-show="order.dosingType == 'org.openmrs.SimpleDosingInstructions'">
+                                {{ order.frequency.display }}
+                            </span>
+                            <span ng-show="order.dosingType == 'org.openmrs.module.ebolaexample.domain.RoundBasedDosingInstructions'">
+                                each {{ order.dosingInstructions }}
+                            </span>
+                            <span ng-hide="order.dosingType == 'org.openmrs.module.ebolaexample.domain.RoundBasedDosingInstructions'">
+                                {{ order.dosingInstructions ? '"' + order.dosingInstructions + '"' : "" }}
+                            </span>
+                            <span ng-show="order.duration">for {{ order.duration }} {{ order.durationUnits | concept }}</span>
                             <span class="tag" ng-show="order.asNeeded">In case of {{ order.asNeededCondition }}</span>
 
                             - {{ lastGiven(order) | lastGiven }}

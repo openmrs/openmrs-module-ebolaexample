@@ -39,6 +39,7 @@ angular.module("prescriptions", ["tabletapp", "constants", "patients", "filters"
 
                     $scope.routes = angular.copy(Constants.routes);
                     $scope.asNeededConditions = angular.copy(Constants.asNeededConditions);
+                    $scope.dosingTypes = angular.copy(Constants.dosingType);
                 },
                 setupStandardFunctions: function ($scope) {
                     $scope.clearServerError = function () {
@@ -53,7 +54,8 @@ angular.module("prescriptions", ["tabletapp", "constants", "patients", "filters"
                     var order = {
                         drug: drug,
                         patient: patient,
-                        rounds: rounds
+                        rounds: rounds,
+                        dosingType: 'rounds'
                     }
                     if (preexistingOrder) {
                         order = $.extend(true, {}, order, preexistingOrder);
@@ -96,6 +98,9 @@ angular.module("prescriptions", ["tabletapp", "constants", "patients", "filters"
                             return $scope.addOrder.rounds[key];
                         });
                     }, true);
+                    $scope.$watch('addOrder.dosingType', function() {
+                        $scope.complexDosing = $scope.addOrder.dosingType === 'text';
+                    })
                 },
                 buildDrug: function ($state, $scope) {
                     var drug = {};

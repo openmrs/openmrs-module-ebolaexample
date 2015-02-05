@@ -14,10 +14,22 @@ angular.module('prescription-service', ['tabletapp'])
                     "orderer": sessionInfo["provider"]["uuid"],
                     "concept": order.drug.concept.uuid
                 }
-                if (order.freeTextInstructions) {
+                if (order.dosingType == 'text') {
                     orderJson["dosingType"] = Constants.dosingType.unvalidatedFreeText;
                     orderJson["dosingInstructions"] = order.dosingInstructions;
-                } else {
+                    orderJson["route"] = order.drug.route && order.drug.route.uuid;
+                } else if (order.dosingType == 'once') {
+                    orderJson["dosingType"] = Constants.dosingType.simple;
+                    orderJson["dose"] = order.drug.dose;
+                    orderJson["doseUnits"] = order.drug.doseUnits;
+                    orderJson["route"] = order.drug.route && order.drug.route.uuid;
+                    orderJson["frequency"] = Constants.orderFrequency.oneTime;
+                    orderJson["dosingInstructions"] = order.dosingInstructions;
+                    orderJson["asNeeded"] = order.drug.asNeeded;
+                    orderJson["asNeededCondition"] = order.drug.asNeededCondition;
+                    orderJson["duration"] = 4;
+                    orderJson["durationUnits"] = Constants.durationUnits.hours.uuid;
+                } else if (order.dosingType == 'rounds') {
                     var rounds = _.filter(Object.keys(order.rounds),function (key) {
                         return order.rounds[key];
                     }).join(", ");
@@ -28,9 +40,11 @@ angular.module('prescription-service', ['tabletapp'])
                     orderJson["frequency"] = "";
                     orderJson["dosingInstructions"] = rounds;
                     orderJson["duration"] = order.drug.duration;
-                    orderJson["durationUnits"] = Constants.durationUnits.days;
+                    orderJson["durationUnits"] = Constants.durationUnits.days.uuid;
                     orderJson["asNeeded"] = order.drug.asNeeded;
                     orderJson["asNeededCondition"] = order.drug.asNeededCondition;
+                } else {
+                    throw "Unknown dosing type: " + order.dosingType;
                 }
                 return orderJson;
             }
@@ -62,7 +76,7 @@ angular.module('prescription-service', ['tabletapp'])
                 }
             }
             var savePrescription = function(order, newState, $scope, $state) {
-                if (order.form.$valid && (order.freeTextInstructions || $scope.roundSelected)) {
+                if (order.form.$valid && (order.dosingInstructions || order.dosingType == 'once' || $scope.roundSelected)) {
                     CurrentSession.getEncounter(order.patient.uuid).then(function (encounter) {
                         new OrderResource(orderJson(order, encounter))
                             .$save()
@@ -73,7 +87,7 @@ angular.module('prescription-service', ['tabletapp'])
                 }
             }
             var updatePrescription = function(order, newState, $scope, $state) {
-                if (order.form.$valid && (order.freeTextInstructions || $scope.roundSelected)) {
+                if (order.form.$valid && (order.dosingInstructions || order.dosingType == 'once' || $scope.roundSelected)) {
                     var orderJsonF = orderJson;
                     CurrentSession.getEncounter(order.patient.uuid).then(function (encounter) {
                         var orderJson = orderJsonF(order, encounter);
@@ -104,15 +118,12 @@ angular.module('prescription-service', ['tabletapp'])
                         drug: { route: {} }
                     };
                     order.uuid = orderJson["uuid"];
-                    order.freeTextInstructions = orderJson["dosingType"] == Constants.dosingType.unvalidatedFreeText;
-                    order.drug.concept = orderJson["concept"];
-                    if(orderJson["drug"]) {
-                        order.drug.uuid = orderJson["drug"]["uuid"];
-                        order.drug.display = orderJson["drug"]["display"];
-                    }
-                    if (order.freeTextInstructions) {
+                    if (orderJson["dosingType"] === 'org.openmrs.module.ebolaexample.domain.UnvalidatedFreeTextDosingInstructions') {
+                        order.dosingType = "text";
                         order.dosingInstructions = orderJson["dosingInstructions"];
-                    } else {
+
+                    } else if (orderJson["dosingType"] === 'org.openmrs.module.ebolaexample.domain.RoundBasedDosingInstructions') {
+                        order.dosingType = "rounds";
                         var rounds = {}
                         if (orderJson["dosingInstructions"]) {
                             _.each(orderJson["dosingInstructions"].split(", "), function (v, i) {
@@ -120,13 +131,26 @@ angular.module('prescription-service', ['tabletapp'])
                             });
                         }
                         order.rounds = rounds;
-                        order.drug.route = orderJson["route"];
                         order.drug.dose = orderJson["dose"];
                         order.drug.doseUnits = orderJson["doseUnits"]["uuid"];
                         order.drug.duration = orderJson["duration"];
-                        order.drug.asNeeded = orderJson["asNeeded"];
-                        order.drug.asNeededCondition = orderJson["asNeededCondition"];
+
+                    } else {
+                        order.dosingType = "once";
+                        order.dosingInstructions = orderJson["dosingInstructions"];
+                        order.drug.dose = orderJson["dose"];
+                        order.drug.doseUnits = orderJson["doseUnits"]["uuid"];
+                        order.drug.duration = orderJson["duration"];
+
                     }
+                    order.drug.concept = orderJson["concept"];
+                    if(orderJson["drug"]) {
+                        order.drug.uuid = orderJson["drug"]["uuid"];
+                        order.drug.display = orderJson["drug"]["display"];
+                    }
+                    order.drug.route = orderJson["route"];
+                    order.drug.asNeeded = orderJson["asNeeded"];
+                    order.drug.asNeededCondition = orderJson["asNeededCondition"];
                     return order;
                 }
             };

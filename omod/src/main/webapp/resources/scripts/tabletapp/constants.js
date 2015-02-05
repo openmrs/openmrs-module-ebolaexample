@@ -73,8 +73,18 @@ angular.module("constants", [])
                 simple: "org.openmrs.SimpleDosingInstructions",
                 roundBased: "org.openmrs.module.ebolaexample.domain.RoundBasedDosingInstructions"
             },
+            orderFrequency: {
+                oneTime: "SNOMED CT:307486002"
+            },
             durationUnits: {
-                days: '1072AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+                days: {
+                    uuid: "1072AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    display: "Days"
+                },
+                hours: {
+                    uuid: "1822AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    display: "Hours"
+                }
             },
             orderType: {
                 drugorder: "drugorder"
