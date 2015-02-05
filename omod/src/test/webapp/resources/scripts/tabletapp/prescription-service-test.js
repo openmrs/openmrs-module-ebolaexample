@@ -81,9 +81,16 @@ describe('prescription-service', function () {
             orderJson['dosingType'] = constants.dosingType.unvalidatedFreeText;
             orderJson['dosingInstructions'] = "Some Free Text";
             var order = service.formOrderFromResponse(orderJson);
-            this.expect(order.freeTextInstructions).toBeTruthy();
+            this.expect(order.dosingType).toBe("text");
             this.expect(order.dosingInstructions).toEqual("Some Free Text");
-            this.expect(order.drug).toEqual({ route: {}, concept : { uuid : '70879AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', display : 'ALLOPURINOL SODIUM' }, uuid : '1361AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF', display: 'Allopurinol 100 MG Oral Tablet'});
+            this.expect(order.drug).toEqual({
+                route: { uuid : '160240AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', display : 'Oral administration' },
+                concept : { uuid : '70879AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', display : 'ALLOPURINOL SODIUM' },
+                uuid : '1361AFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF',
+                display: 'Allopurinol 100 MG Oral Tablet',
+                asNeeded: true,
+                asNeededCondition: 'Anxiety'
+            });
         });
     });
 });

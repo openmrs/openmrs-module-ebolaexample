@@ -203,7 +203,7 @@ describe('prescriptions', function () {
                 },
                 rounds: {Morning: true},
                 dosingInstructions: 'Drug instructions',
-                freeTextInstructions: false,
+                dosingType: 'rounds',
                 form: {$valid: true}
             };
 
@@ -235,7 +235,7 @@ describe('prescriptions', function () {
 
         it('should save newly created order with free text instructions', function () {
             initController();
-            order['freeTextInstructions'] = true;
+            order['dosingType'] = 'text';
             var expectedPost = $.extend({}, expectedOrderPost, {
                 "dosingType": "org.openmrs.module.ebolaexample.domain.UnvalidatedFreeTextDosingInstructions",
                 "dosingInstructions": "Drug instructions"
@@ -264,7 +264,9 @@ describe('prescriptions', function () {
                 Evening: false,
                 Night: false
             }
-            order['rounds'] = scope.addOrder['rounds']
+            order['dosingType'] = 'rounds';
+            order['rounds'] = scope.addOrder['rounds'];
+            order['dosingInstructions'] = null;
             scope.save(order, 'anywhere');
             httpMock.verifyNoOutstandingExpectation();
             httpMock.verifyNoOutstandingRequest();
@@ -274,7 +276,7 @@ describe('prescriptions', function () {
 
         it('should set serverError if there is a problem saving', function () {
             initController({prescriptionInfo: 'some wild params'});
-            order['freeTextInstructions'] = true;
+            order['dosingType'] = 'text';
             scope.addOrder['rounds'] = {
                 Morning: true
             }
@@ -293,7 +295,7 @@ describe('prescriptions', function () {
             var currentSession = injector.get('CurrentSession');
             spyOn(currentSession, 'getRecentWard').andReturn({uuid: 'ward uuid'});
             initController({prescriptionInfo: 'some wild params'}, currentSession);
-            order['freeTextInstructions'] = true;
+            order['dosingType'] = 'text';
             scope.addOrder['rounds'] = {
                 Morning: false,
                 Afternoon: false,

@@ -6,6 +6,9 @@ angular.module('filters', ['constants'])
         _.each(Constants.routes, function(item) {
             decode[item.uuid] = item.display;
         });
+        _.each(Constants.durationUnits, function(item) {
+            decode[item.uuid] = item.display;
+        });
         return function(concept) {
             if (!(concept && concept.uuid)) {
                 return "";
