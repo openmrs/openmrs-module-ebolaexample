@@ -21,18 +21,27 @@ angular.module('inpatientLocation', ['resources', 'locationService', 'ui.bootstr
                     display: 'Recovery',
                     uuid: '16250bf4-5e71-11e4-9305-df58197607bd'
                 }
-            ]
+            ];
             $scope.bedsInWard = null;
             $scope.occupied = 'Occupied';
 
-            //not going to wait
             LocationService.getLocations({v: "default", limit: 100}).then(function (result) {
-                allLocations = result;
                 if (result.length == 100) {
-                    LocationService.getLocations({v: "default", limit: 100, startIndex: 100}).then(function (more) {
-                        allLocations = _.union(allLocations, more);
+                    return LocationService.getLocations({v: "default", limit: 100, startIndex: 100}).then(function (more) {
+                        allLocations = _.union(result, more);
                     });
                 }
+                else{
+                    allLocations = result;
+                }
+            }).then(function(){
+                $scope.$watch('changeToWard', function (changeToWard) {
+                    if (typeof changeToWard === 'undefined') {
+                        $scope.changeToBed = null;
+                    } else {
+                        bedsForWard($scope.changeToWard);
+                    }
+                });
             });
 
             $scope.init = function (setConfig) {
@@ -52,11 +61,11 @@ angular.module('inpatientLocation', ['resources', 'locationService', 'ui.bootstr
                 }
 
                 $scope.changeToBed = typeof config.currentBed !== 'undefined' ? config.currentBed : null;
-            }
+            };
 
             $scope.strContains = function (string, subString) {
                 return string.indexOf(subString) != -1;
-            }
+            };
 
             $scope.makingChange = true;
 
@@ -67,13 +76,7 @@ angular.module('inpatientLocation', ['resources', 'locationService', 'ui.bootstr
                 }
             });
 
-            $scope.$watch('changeToWard', function (changeToWard) {
-                if (typeof changeToWard === 'undefined') {
-                    $scope.changeToBed = null;
-                } else {
-                    bedsForWard($scope.changeToWard);
-                }
-            });
+
 
             $scope.$watch('bedAssignments', function (bedAssignments) {
                 var beds = _.filter(allLocations, function (item) {
@@ -81,7 +84,7 @@ angular.module('inpatientLocation', ['resources', 'locationService', 'ui.bootstr
                         && _.some(item.tags, function (tag) {
                             return tag.uuid === bedTagUuid;
                         });
-                })
+                });
 
                 beds.sort(function (a, b) {
                     var nameA = parseInt(a.display.substr(a.display.indexOf('#') + 1));
@@ -123,7 +126,7 @@ angular.module('inpatientLocation', ['resources', 'locationService', 'ui.bootstr
                 $http.post(url).success(function (data) {
                     location.href = emr.pageLink('ebolaexample', 'ebolaOverview', { patient: config.patientUuid });
                 });
-            }
+            };
 
             $scope.wardsOfType = function (wardType) {
                 if (!wardType) {
@@ -134,7 +137,7 @@ angular.module('inpatientLocation', ['resources', 'locationService', 'ui.bootstr
                         return tag.uuid === wardType.uuid;
                     });
                 });
-            }
+            };
 
             function bedsForWard(ward) {
                 if (!ward) {
@@ -149,7 +152,7 @@ angular.module('inpatientLocation', ['resources', 'locationService', 'ui.bootstr
 
             $scope.changeLocationPatient = function () {
                 location.href = emr.pageLink('ebolaexample', 'changeInPatientLocation', { patientUuid: config.patientUuid });
-            }
+            };
 
             $scope.cancel = function() {
                 location.href = emr.pageLink('ebolaexample', 'ebolaOverview', { patient: config.patientUuid });
