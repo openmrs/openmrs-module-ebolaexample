@@ -9,9 +9,12 @@ import org.openmrs.DrugOrder;
 import org.openmrs.Order;
 import org.openmrs.OrderType;
 import org.openmrs.Patient;
+import org.openmrs.SimpleDosingInstructions;
 import org.openmrs.api.OrderService;
 import org.openmrs.module.ebolaexample.DateUtil;
 import org.openmrs.module.emrapi.patient.PatientDomainWrapper;
+import org.openmrs.ui.framework.Formatter;
+import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.annotation.FragmentParam;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.fragment.FragmentModel;
@@ -24,6 +27,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -32,6 +36,7 @@ public class PrescriptionsFragmentController {
     public void controller(@FragmentParam("patient") PatientDomainWrapper patient,
                            @FragmentParam(value = "showAll", defaultValue = "false") Boolean showAll,
                            @SpringBean("orderService") OrderService orderService,
+                           final UiUtils ui,
                            FragmentModel model) {
         OrderType orderType = orderService.getOrderTypeByUuid(OrderType.DRUG_ORDER_TYPE_UUID);
 
@@ -70,6 +75,49 @@ public class PrescriptionsFragmentController {
 
         model.put("groupedOrders", groupList);
         model.put("showAll", showAll);
+        model.put("prescriptionFormatter", new Formatter() {
+            @Override
+            public String format(Object o, Locale locale) {
+                DrugOrder order = (DrugOrder) o;
+
+                // we need custom formatting for SimpleDosingInstructions since that core class doesn't know to use the
+                // Ebola-preferred concept names (e.g. it shows "Milliliter" instead of "mL")
+                if (order.getDosingType().equals(SimpleDosingInstructions.class)) {
+                    SimpleDosingInstructions instructions = (SimpleDosingInstructions) order.getDosingInstructionsInstance();
+                    // copied from SimpleDosingInstructions in core, and just changes the formatting of concepts
+                    StringBuilder dosingInstructions = new StringBuilder();
+                    dosingInstructions.append(instructions.getDose());
+                    dosingInstructions.append(" ");
+                    dosingInstructions.append(ui.format(instructions.getDoseUnits()));
+                    dosingInstructions.append(" ");
+                    dosingInstructions.append(ui.format(instructions.getRoute()));
+                    dosingInstructions.append(" ");
+                    dosingInstructions.append(ui.format(instructions.getFrequency().getConcept()));
+                    if (order.getDuration() != null) {
+                        dosingInstructions.append(" ");
+                        dosingInstructions.append(instructions.getDuration());
+                        dosingInstructions.append(" ");
+                        dosingInstructions.append(ui.format(instructions.getDurationUnits()));
+                    }
+                    if (order.getAsNeeded()) {
+                        dosingInstructions.append(" ");
+                        dosingInstructions.append("PRN");
+                        if (order.getAsNeededCondition()  != null) {
+                            dosingInstructions.append(" ");
+                            dosingInstructions.append(instructions.getAsNeededCondition());
+                        }
+                    }
+                    if (instructions.getAdministrationInstructions() != null) {
+                        dosingInstructions.append(" ");
+                        dosingInstructions.append(instructions.getAdministrationInstructions());
+                    }
+                    return dosingInstructions.toString();
+                }
+                else {
+                    return order.getDosingInstructionsInstance().getDosingInstructionsAsString(locale);
+                }
+            }
+        });
     }
 
     private void applyFlag(List<Map.Entry<ConceptAndDrug, List<DrugOrder>>> groupList, String flag, Predicate predicate) {
