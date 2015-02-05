@@ -86,11 +86,11 @@ angular.module("constants", [])
             durationUnits: {
                 days: {
                     uuid: "1072AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                    display: "Days"
+                    display: "days"
                 },
                 hours: {
                     uuid: "1822AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                    display: "Hours"
+                    display: "hours"
                 }
             },
             orderType: {
