@@ -139,7 +139,6 @@ public class EbolaDemoData extends AbstractMetadataBundle {
         installBeds(_Location.CONFIRMED_WARD_5, 10, tagsForInpatientBed);
         installBeds(_Location.CONFIRMED_WARD_6, 10, tagsForInpatientBed);
         installBeds(_Location.RECOVERY_WARD_1, 6, tagsForInpatientBed);
-        installBeds(_Location.RECOVERY_WARD_2, 6, tagsForInpatientBed);
 
         installBeds(_Location.TEST_WARD_1, 10, tagsForInpatientBed);
 
