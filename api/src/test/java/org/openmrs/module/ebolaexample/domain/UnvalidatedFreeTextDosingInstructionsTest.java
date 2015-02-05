@@ -36,7 +36,7 @@ public class UnvalidatedFreeTextDosingInstructionsTest extends BaseModuleContext
         drugOrder.setDosingInstructions(instructions);
         UnvalidatedFreeTextDosingInstructions dosingInstructions =
                 (UnvalidatedFreeTextDosingInstructions) new UnvalidatedFreeTextDosingInstructions().getDosingInstructions(drugOrder);
-        assertEquals(dosingInstructions.getInstructions(), instructions);
+        assertEquals(instructions, dosingInstructions.getInstructions());
     }
 
     @Test
