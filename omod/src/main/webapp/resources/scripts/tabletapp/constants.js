@@ -160,7 +160,7 @@ angular.module("constants", [])
                     display: 'Capsule',
                     uuid: '1608AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
                 }
-                // for now we only use this to sort: add anything else we need to sort on the route/form selection page
+                // for now we only use this to sort, so add any more dosageForms that need to be sorted on the route selection page
             ],
             asNeededConditions: [
                 "Pain",
