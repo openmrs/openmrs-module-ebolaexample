@@ -124,8 +124,7 @@ public class EbolaDemoData extends AbstractMetadataBundle {
 
         install(location("Recovery Ward 1", null, _Location.RECOVERY_WARD_1, _Location.INPATIENT_WARDS,
                 tagsForRecoveryWard));
-        install(location("Recovery Ward 2", null, _Location.RECOVERY_WARD_2, _Location.INPATIENT_WARDS,
-                tagsForRecoveryWard));
+        uninstall(possible(Location.class, _Location.RECOVERY_WARD_2), "Switched to just 1 recovery ward");
 
         install(location("Test Ward 1", null, _Location.TEST_WARD_1, _Location.INPATIENT_WARDS,
                 tagsForRecoveryWard));
