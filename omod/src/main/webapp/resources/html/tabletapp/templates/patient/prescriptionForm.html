@@ -25,17 +25,17 @@
                     </select>
                 </span>
             </div>
-            <div class="inline" style="margin-left: 2em;">
+            <div class="inline" class="indented-more">
                 <span class="checkboxes">
                     <input type="checkbox" name="unused"
                            id="dosing-type-simple"
                            ng-checked="addOrder.dosingType != 'text'"
                            ng-click="addOrder.dosingType = 'rounds'"/>
-                    <label for="dosing-type-simple" class="radio-button small">Simple Instructions</label>
+                    <label for="dosing-type-simple" class="radio-button small">Normal Dosing</label>
                 </span>
                 <span class="checkboxes">
                     <input ng-model="addOrder.dosingType" type="radio" value="text" id="dosing-type-text"/>
-                    <label for="dosing-type-text" class="radio-button small">Complex Instructions</label>
+                    <label for="dosing-type-text" class="radio-button small">Free Text Dosing</label>
                 </span>
             </div>
             <div ng-show="addOrder.dosingType != 'text'">
@@ -62,12 +62,15 @@
             <div ng-show="addOrder.dosingType != 'text'">
                 <span class="question-title">DOSING</span>
                 <span>
-                    <input ng-model="addOrder.dosingType" type="radio" value="rounds" id="dosing-type-rounds"/>
-                    <label for="dosing-type-rounds" class="radio-button small">Rounds</label>
+                    <input ng-model="addOrder.dosingType" type="radio" value="once" id="dosing-type-once"/>
+                    <label for="dosing-type-once" class="radio-button small">x1 NOW</label>
+                </span>
+                <span id="dosing-type-separator">
+                    OR
                 </span>
                 <span>
-                    <input ng-model="addOrder.dosingType" type="radio" value="once" id="dosing-type-once"/>
-                    <label for="dosing-type-once" class="radio-button small">x1</label>
+                    <input ng-model="addOrder.dosingType" type="radio" value="rounds" id="dosing-type-rounds"/>
+                    <label for="dosing-type-rounds" class="radio-button small">Every Day At</label>
                 </span>
             </div>
 
