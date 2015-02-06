@@ -3,6 +3,7 @@ package org.openmrs.module.ebolaexample;
 import org.openmrs.DrugOrder;
 import org.openmrs.util.OpenmrsUtil;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -58,5 +59,14 @@ public class DateUtil {
             return order.getAutoExpireDate();
         }
         return null;
+    }
+
+    public static Date getDateToday() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
     }
 }

@@ -18,52 +18,62 @@
     <div class="info-header">
         <i class="icon-hospital"></i>
 
-        <h3>Location</h3>
+        <h3>Location & Discharge</h3>
     </div>
 
-    <div class="info-body" ng-app="inpatientLocation" ng-controller="InpatientLocationCtrl"
-         ng-init="init({patientUuid:'${patient.patient.uuid}',
+    <div class="info-body" style="overflow: auto;">
+
+        <div style="float: left; width: 60%;" ng-app="inpatientLocation" ng-controller="InpatientLocationCtrl"
+             ng-init="init({patientUuid:'${patient.patient.uuid}',
             currentWard: <% if (currentWard) { %>{display:'${currentWard}', uuid:'${currentWard.uuid}'}<% } else { %>null<% } %>,
             currentBed: <% if (currentBed) { %>{display:'${currentBed}', uuid:'${currentBed.uuid}'}<% } else { %>null<% } %>
             })">
 
-        <% if (!config.activeVisit) { %>
+            <% if (!config.activeVisit) { %>
 
-        No active visit. <br/>
+            No active visit. <br/>
 
-        <a class="button" href="${ui.actionLink("ebolaexample", "overview/inpatientLocation", "startOutpatientVisit",
-                [patient: patient.patient.uuid])}">
-            <i class="icon-exchange"></i>
-            Outpatient visit
-        </a>
+            <a class="button" href="${ui.actionLink("ebolaexample", "overview/inpatientLocation", "startOutpatientVisit",
+                    [patient: patient.patient.uuid])}">
+                <i class="icon-exchange"></i>
+                Outpatient visit
+            </a>
 
-        <% } else if (!currentWard) { %>
+            <% } else if (!currentWard) { %>
 
-        <p class="current-ward">Not yet admitted</p>
+            <p class="current-ward">Not yet admitted</p>
 
-        <em>(To Do: Triage form should automatically admit.)</em>
+            <em>(To Do: Triage form should automatically admit.)</em>
 
-        <form method="POST"
-              action="${ui.actionLink("ebolaexample", "overview/inpatientLocation", "admit", [patient: patient.patient.uuid])}">
-            ${ui.includeFragment("uicommons", "field/location", [
-                    label        : "Admit to",
-                    formFieldName: "location",
-                    withTag      : EmrApiConstants.LOCATION_TAG_SUPPORTS_ADMISSION
-            ])}
-            <button type="submit">
-                Admit
-            </button>
-        </form>
+            <form method="POST"
+                  action="${ui.actionLink("ebolaexample", "overview/inpatientLocation", "admit", [patient: patient.patient.uuid])}">
+                ${ui.includeFragment("uicommons", "field/location", [
+                        label        : "Admit to",
+                        formFieldName: "location",
+                        withTag      : EmrApiConstants.LOCATION_TAG_SUPPORTS_ADMISSION
+                ])}
+                <button type="submit">
+                    Admit
+                </button>
+            </form>
 
-        <% } else { %>
+            <% } else { %>
 
-        <p class="current-ward">${ui.format(currentWard)},
-            <span class="current-bed">${currentBed ? ui.format(currentBed) : "(No Bed)"}</span>
-        </p>
+            <p class="current-ward">${ui.format(currentWard)},
+                <span class="current-bed">${currentBed ? ui.format(currentBed) : "(No Bed)"}</span>
+            </p>
 
-        <a class="button" ng-click="changeLocationPatient()">Change</a>
+            <a class="button" ng-click="changeLocationPatient()">Change</a>
 
-        <% } %>
+            <% } %>
+        </div>
+
+        <div style="border-left: 2px none #000; float:right; width: 40%; height: 90%; vertical-align: bottom !important; display: inline-block;">
+            <span style="background-color: #00FF00;">Status: <% if (currentOutcome) { %> ${currentOutcome.name}, ${patientProgram.dateCompleted.format('dd MMM yyyy')}  <% } else { %> None <% } %></span>
+            <a class="button" href="${ui.pageLink("ebolaexample", "changePatientDischarge",
+                    [patientUuid: patient.patient.uuid])}">Discharge</a>
+        </div>
+        <div style="clear: both;"></div>
     </div>
 </div>
 

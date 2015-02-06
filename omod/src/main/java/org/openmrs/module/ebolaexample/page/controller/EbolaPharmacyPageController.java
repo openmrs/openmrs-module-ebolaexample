@@ -100,15 +100,6 @@ public class EbolaPharmacyPageController {
 
         model.addAttribute("ebolaPatients", ebolaPatients);
         model.addAttribute("wards", locations);
-        model.addAttribute("today", getDateToday());
-    }
-
-    private Date getDateToday() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        return calendar.getTime();
+        model.addAttribute("today", DateUtil.getDateToday());
     }
 }
