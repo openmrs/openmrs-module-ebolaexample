@@ -341,6 +341,25 @@
                     <workingDirectory>src/main/webapp/resources</workingDirectory>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>org.openmrs.module.ebolaexample.TabletResourcesVersioning</mainClass>
+                            <arguments>
+                                <argument>${project.build.directory}/classes/web/module/resources/html/tabletapp/index.html</argument>
+                                <argument>${project.parent.version}</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
