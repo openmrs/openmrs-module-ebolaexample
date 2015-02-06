@@ -182,7 +182,7 @@ public class EbolaDemoData extends AbstractMetadataBundle {
 
     private Person buildPersonForTeam(String teamNumber) {
         Person person = new Person();
-        person.setGender("Female");
+        person.setGender("F");
         person.addName(new PersonName("Team " + teamNumber, "", ""));
         return person;
     }
