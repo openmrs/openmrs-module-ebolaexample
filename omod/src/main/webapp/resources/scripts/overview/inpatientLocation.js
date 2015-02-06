@@ -7,7 +7,7 @@ angular.module('inpatientLocation', ['resources', 'locationService', 'ui.bootstr
             var config = {};
             var bedTagUuid = 'c8bb459c-5e7d-11e4-9305-df58197607bd';
             $scope.bedAssignments = [];
-            var currentWard = {};
+            var firstLoad = true;
 
             $scope.wardTypes = [
                 {
@@ -40,9 +40,8 @@ angular.module('inpatientLocation', ['resources', 'locationService', 'ui.bootstr
                 $scope.$watch('changeToWard', function (changeToWard) {
                     if (typeof changeToWard === 'undefined') {
                         $scope.changeToBed = null;
-                    } else {
-                        bedsForWard($scope.changeToWard);
                     }
+                    bedsForWard($scope.changeToWard);
                 });
             });
 
@@ -72,9 +71,15 @@ angular.module('inpatientLocation', ['resources', 'locationService', 'ui.bootstr
             $scope.makingChange = true;
 
             $scope.$watch('changeToWardType', function (changeToWardType) {
-                if (typeof changeToWardType === 'undefined') {
+                if (typeof changeToWardType === 'undefined' ) {
                     $scope.changeToWard = null;
                     $scope.changeToBed = null;
+                }
+                if(firstLoad){
+                    firstLoad = false;
+                }
+                else{
+                    $scope.changeToWard = null;
                 }
             });
 
@@ -93,9 +98,9 @@ angular.module('inpatientLocation', ['resources', 'locationService', 'ui.bootstr
                 return beds;
             }
 
-            $scope.$watch('bedAssignments', function (bedAssignments) {
+            function updateBedsInCurrentWard(bedAssignments) {
                 var beds = _.filter(allBeds, function (bed) {
-                    return bed.parentLocation.uuid == currentWard.uuid
+                    return bed.parentLocation.uuid == $scope.changeToWard.uuid
                 });
                 for (y = 0; y < beds.length; y++) {
                     if (isOccupied(beds[y], bedAssignments)) {
@@ -104,12 +109,11 @@ angular.module('inpatientLocation', ['resources', 'locationService', 'ui.bootstr
                         }
                     }
                 }
-
                 $scope.bedsInWard = beds;
-            });
+            }
 
             function isOccupied(bed, bedAssignments) {
-                for (z = 0; z < bedAssignments.length; z++) {
+                for (var z = 0; z < bedAssignments.length; z++) {
                     if (bedAssignments[z].bed.uuid == bed.uuid) {
                         return true;
                     }
@@ -146,12 +150,13 @@ angular.module('inpatientLocation', ['resources', 'locationService', 'ui.bootstr
 
             function bedsForWard(ward) {
                 if (!ward) {
+                    $scope.bedsInWard = null;
                     return [];
                 }
-                currentWard = ward;
-
                 WardResource.get({uuid: ward.uuid}).$promise.then(function (bedAssignments) {
+                    updateBedsInCurrentWard(bedAssignments.bedAssignments);
                     $scope.bedAssignments = bedAssignments.bedAssignments;
+
                 });
             }
 
