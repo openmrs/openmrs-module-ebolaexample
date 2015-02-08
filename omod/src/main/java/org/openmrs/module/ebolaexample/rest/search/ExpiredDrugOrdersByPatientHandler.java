@@ -68,7 +68,7 @@ public class ExpiredDrugOrdersByPatientHandler implements SearchHandler {
         List<DrugOrder> expiredDrugOrders = new ArrayList<DrugOrder>();
         OrderType drugOrderType = Context.getOrderService().getOrderTypeByUuid(OrderType.DRUG_ORDER_TYPE_UUID);
         for (Order order : orders) {
-            if(order.isType(drugOrderType) && order.isDiscontinuedRightNow()) {
+            if(order.isType(drugOrderType) && !order.isActive()) {
                 expiredDrugOrders.add((DrugOrder) order);
             }
         }

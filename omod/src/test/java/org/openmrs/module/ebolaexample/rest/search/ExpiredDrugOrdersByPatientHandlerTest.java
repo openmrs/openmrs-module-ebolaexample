@@ -4,8 +4,6 @@ package org.openmrs.module.ebolaexample.rest.search;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
-import org.openmrs.Drug;
-import org.openmrs.DrugOrder;
 import org.openmrs.Order;
 import org.openmrs.OrderType;
 import org.openmrs.Patient;
@@ -22,13 +20,11 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Set;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 /**
  * Integration tests for the DrugConceptSearchHandler
@@ -75,7 +71,7 @@ public class ExpiredDrugOrdersByPatientHandlerTest extends BaseModuleWebContextS
         assertEquals(getExpiredDrugCount(patient), results.size());
         for (LinkedHashMap<String, String> result : results) {
             Order drugOrder = Context.getOrderService().getOrderByUuid(result.get("uuid"));
-            assertTrue(drugOrder.isDiscontinuedRightNow());
+            assertFalse(drugOrder.isActive());
         }
     }
 
@@ -84,7 +80,7 @@ public class ExpiredDrugOrdersByPatientHandlerTest extends BaseModuleWebContextS
         List<Order> allOrdersByPatient = Context.getOrderService().getAllOrdersByPatient(patient);
         OrderType drugOrderType = Context.getOrderService().getOrderTypeByUuid(OrderType.DRUG_ORDER_TYPE_UUID);
         for (Order order : allOrdersByPatient) {
-            if(order.isType(drugOrderType) && order.isDiscontinuedRightNow()) {
+            if(order.isType(drugOrderType) && !order.isActive()) {
                 expiredCount += 1;
             }
         }
