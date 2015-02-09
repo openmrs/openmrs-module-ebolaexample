@@ -1,33 +1,45 @@
 package org.openmrs.module.ebolaexample;
 
-import org.joda.time.DateTime;
-
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.*;
+import java.text.DateFormat;
+import java.util.Date;
 
 public class TabletResourcesVersioning {
     public static void main(String args[]) throws IOException {
         String htmlFile = args[0];
-        String version = args[1];
+        String version = getTimestamp();
 
         System.out.println("=======================================================");
         System.out.println(String.format("Adding version %s to %s", version, htmlFile));
 
-        Path path = Paths.get(htmlFile);
-        Charset charset = StandardCharsets.UTF_8;
+        String content = getFileContent(htmlFile);
+        content = replaceContent(version, content);
 
-        byte[] bytes = Files.readAllBytes(path);
-        String content = new String(bytes, charset);
-        String timestamp = DateTime.now().toString(".yyMMdd.hhmmssSSS");
-        content = replaceContent(version + timestamp, content);
-        Files.write(path, content.getBytes(charset));
+        FileWriter fileWriter = new FileWriter(htmlFile);
+        fileWriter.write(content);
+        fileWriter.close();
 
         System.out.println("Added version successfully!");
         System.out.println("=============================================================");
+    }
+
+    private static String getTimestamp() {
+        DateFormat dateFormat = new java.text.SimpleDateFormat("yyMMdd.hhmmssSSS");
+        return dateFormat.format(new Date());
+    }
+
+    private static String getFileContent(String htmlFile) throws IOException {
+        BufferedReader reader = new BufferedReader (new InputStreamReader(new FileInputStream(htmlFile))) ;
+        String line = reader.readLine();
+        StringBuffer stringBuffer = new StringBuffer("");
+        String ls = System.getProperty("line.separator");
+
+        while ( line != null ) {
+            stringBuffer.append(line).append(ls);
+            line = reader.readLine();
+        }
+        reader.close();
+        return stringBuffer.toString();
     }
 
     protected static String replaceContent(String version, String content) {

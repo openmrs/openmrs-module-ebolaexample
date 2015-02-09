@@ -354,7 +354,6 @@
                             <mainClass>org.openmrs.module.ebolaexample.TabletResourcesVersioning</mainClass>
                             <arguments>
                                 <argument>${project.build.directory}/classes/web/module/resources/html/tabletapp/index.html</argument>
-                                <argument>${project.parent.version}</argument>
                             </arguments>
                         </configuration>
                     </execution>
