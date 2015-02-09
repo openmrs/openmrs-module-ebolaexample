@@ -18,6 +18,9 @@ angular.module("session", ["ui.router", "constants", "resources", "patients", "n
                 setInfo: function(info) {
                     $cookies['session'] = JSON.stringify(info);
                 },
+                clear: function() {
+                    delete $cookies["session"]
+                },
                 getEncounter: function (patientUUID) {
                     if (cachedEncounter && cachedEncounterPatientUUID == patientUUID) {
                         return cachedEncounter;

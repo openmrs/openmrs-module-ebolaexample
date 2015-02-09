@@ -1,7 +1,8 @@
 var OPENMRS_CONTEXT_PATH = location.pathname.substring(1, location.pathname.indexOf("/", 1));
 
 angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "select-drug-name", "constants",
-        "prescriptions", "resources", "patients", "session", "directives", "login", "ward-service", "prescription-service"])
+        "prescriptions", "resources", "patients", "session", "directives", "login", "logout", "ward-service",
+        "prescription-service"])
 
     .config(function ($stateProvider, $urlRouterProvider) {
 

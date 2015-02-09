@@ -1,4 +1,11 @@
-<header><div class="patient-header"><h1>Please select a ward</h1></div></header>
+<header>
+    <div class="patient-header">
+        <h1>Please select a ward</h1>
+    </div>
+    <div class="actions small fixed-bottom">
+        <button class="right small" ng-controller="LogoutController" ng-click="logout()">Logout</button>
+    </div>
+</header>
 <div class="page-wrap spaced" ng-controller="ListWardsController">
     <div ng-show="loading" class="loading-spinner"></div>
     <span ng-show="!loading" class="question-title">Suspect Wards</span>
