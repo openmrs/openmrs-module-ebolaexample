@@ -1,5 +1,7 @@
 package org.openmrs.module.ebolaexample;
 
+import org.joda.time.DateTime;
+
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -20,7 +22,8 @@ public class TabletResourcesVersioning {
 
         byte[] bytes = Files.readAllBytes(path);
         String content = new String(bytes, charset);
-        content = replaceContent(version, content);
+        String timestamp = DateTime.now().toString(".yyMMdd.hhmmssSSS");
+        content = replaceContent(version + timestamp, content);
         Files.write(path, content.getBytes(charset));
 
         System.out.println("Added version successfully!");
