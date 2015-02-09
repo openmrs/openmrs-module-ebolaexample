@@ -1,15 +1,15 @@
 package org.openmrs.module.ebolaexample.page.controller;
 
-import org.openmrs.EncounterType;
-import org.openmrs.Location;
-import org.openmrs.Patient;
-import org.openmrs.Program;
+import org.openmrs.*;
+import org.openmrs.api.ProgramWorkflowService;
+import org.openmrs.api.VisitService;
 import org.openmrs.module.appframework.context.AppContextModel;
 import org.openmrs.module.appframework.domain.Extension;
 import org.openmrs.module.appframework.service.AppFrameworkService;
 import org.openmrs.module.appui.UiSessionContext;
 import org.openmrs.module.coreapps.contextmodel.PatientContextModel;
 import org.openmrs.module.coreapps.contextmodel.VisitContextModel;
+import org.openmrs.module.ebolaexample.Outcome;
 import org.openmrs.module.ebolaexample.api.BedAssignmentService;
 import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
 import org.openmrs.module.emrapi.adt.AdtService;
@@ -24,11 +24,7 @@ import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.page.PageModel;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class EbolaOverviewPageController {
 
@@ -37,7 +33,7 @@ public class EbolaOverviewPageController {
                     @SpringBean AdtService adtService,
                     @SpringBean AppFrameworkService appFrameworkService,
                     @SpringBean("applicationEventService") ApplicationEventService applicationEventService,
-                    @SpringBean HtmlFormEntryService htmlFormEntryService,
+                    @SpringBean("programWorkflowService") ProgramWorkflowService programWorkflowService,
                     @SpringBean BedAssignmentService bedAssignmentService,
                     UiSessionContext sessionContext,
                     UiUtils ui,
@@ -94,6 +90,11 @@ public class EbolaOverviewPageController {
         Collections.sort(includeFragments);
         model.addAttribute("includeFragments", includeFragments);
 
+        PatientProgram patientProgram = ChangePatientDischargePageController.getPatientProgram(patient, programWorkflowService);
+        Outcome currentOutcome = patientProgram.getOutcome() == null ? null : Outcome.getOutcomeByConceptId(patientProgram.getOutcome().getConceptId());
+        model.put("patientProgram", patientProgram);
+        model.put("currentOutcome", currentOutcome);
+
         applicationEventService.patientViewed(patient, sessionContext.getCurrentUser());
     }
 
@@ -101,8 +102,7 @@ public class EbolaOverviewPageController {
         Location visitLocation = null;
         try {
             visitLocation = adtService.getLocationThatSupportsVisits(sessionContext.getSessionLocation());
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             // location does not support visits
         }
         return visitLocation == null ? null : adtService.getActiveVisit(patient, visitLocation);

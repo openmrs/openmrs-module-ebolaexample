@@ -1,13 +1,11 @@
 package org.openmrs.module.ebolaexample.page.controller;
 
 import org.apache.commons.lang.StringUtils;
-import org.openmrs.Concept;
-import org.openmrs.Patient;
-import org.openmrs.PatientProgram;
-import org.openmrs.Program;
+import org.openmrs.*;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.PatientService;
 import org.openmrs.api.ProgramWorkflowService;
+import org.openmrs.api.VisitService;
 import org.openmrs.module.ebolaexample.DateUtil;
 import org.openmrs.module.ebolaexample.Outcome;
 import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
@@ -59,6 +57,7 @@ public class ChangePatientDischargePageController {
     public void post(@SpringBean("patientService") PatientService patientService,
                      @SpringBean("programWorkflowService") ProgramWorkflowService programWorkflowService,
                      @SpringBean("conceptService") ConceptService conceptService,
+                     @SpringBean("visitService") VisitService visitService,
                      @RequestParam(value = "patientUuid", required = false) String patientUuid,
                      @RequestParam(value = "outCome", required = false) String outcomeUuid,
                      @RequestParam(value = "dateCompleted", required = true) Date dateCompleted, PageModel model) {
@@ -78,6 +77,13 @@ public class ChangePatientDischargePageController {
             patientProgram.setDateCompleted(outcome == null ? null : dateCompleted);
 
             programWorkflowService.savePatientProgram(patientProgram);
+
+            Visit patientVisit = getPatientVisit(patient, visitService);
+            if (patientVisit != null) {
+                patientVisit.setStopDatetime(outcome == null ? null : dateCompleted);
+                visitService.saveVisit(patientVisit);
+            }
+
             model.put("success", "Discharge information modified successfully");
 
         } catch (Exception e) {
@@ -91,6 +97,11 @@ public class ChangePatientDischargePageController {
         Program program = MetadataUtils.existing(Program.class, EbolaMetadata._Program.EBOLA_PROGRAM);
         List<PatientProgram> enrollments = programWorkflowService.getPatientPrograms(patient, program, null, null, null, null, false);
         return enrollments.size() > 0 ? enrollments.get(0) : null;
+    }
+
+    public static Visit getPatientVisit(Patient patient, VisitService visitService) {
+        List<Visit> visits = visitService.getVisitsByPatient(patient, true, false);
+        return visits.size() > 0 ? visits.get(0) : null;
     }
 
 

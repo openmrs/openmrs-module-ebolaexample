@@ -29,7 +29,11 @@
             currentBed: <% if (currentBed) { %>{display:'${currentBed}', uuid:'${currentBed.uuid}'}<% } else { %>null<% } %>
             })">
 
-            <% if (!config.activeVisit) { %>
+            <% if (currentOutcome) { %>
+
+            Patient out of ETC!!
+
+            <% } else if (!config.activeVisit) { %>
 
             No active visit. <br/>
 
@@ -69,10 +73,12 @@
         </div>
 
         <div style="border-left: 2px none #000; float:right; width: 40%; height: 90%; vertical-align: bottom !important; display: inline-block;">
-            <span style="background-color: #00FF00;">Status: <% if (currentOutcome) { %> ${currentOutcome.name}, ${patientProgram.dateCompleted.format('dd MMM yyyy')}  <% } else { %> None <% } %></span>
+            <span>Status: <% if (currentOutcome) { %> ${currentOutcome.name}, ${patientProgram.dateCompleted.format('dd MMM yyyy')}  <%
+                } else { %> None <% } %></span>
             <a class="button" href="${ui.pageLink("ebolaexample", "changePatientDischarge",
                     [patientUuid: patient.patient.uuid])}">Discharge</a>
         </div>
+
         <div style="clear: both;"></div>
     </div>
 </div>

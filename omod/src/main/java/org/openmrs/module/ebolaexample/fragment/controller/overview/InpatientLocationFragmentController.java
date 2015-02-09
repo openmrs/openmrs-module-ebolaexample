@@ -24,8 +24,7 @@ import java.util.*;
 
 public class InpatientLocationFragmentController {
 
-    public void controller(@SpringBean("programWorkflowService") ProgramWorkflowService programWorkflowService,
-                           @FragmentParam(value = "activeVisit", required = false) VisitDomainWrapper activeVisit,
+    public void controller(@FragmentParam(value = "activeVisit", required = false) VisitDomainWrapper activeVisit,
                            FragmentModel model) {
 
         Location currentLocation = null;
@@ -46,13 +45,6 @@ public class InpatientLocationFragmentController {
 
         model.addAttribute("currentWard", currentWard);
         model.addAttribute("currentBed", currentBed);
-
-        PatientProgram patientProgram = ChangePatientDischargePageController.getPatientProgram(
-                activeVisit.getVisit().getPatient(), programWorkflowService);
-        Outcome currentOutcome = patientProgram.getOutcome() == null ? null
-                : Outcome.getOutcomeByConceptId(patientProgram.getOutcome().getConceptId());
-        model.put("patientProgram", patientProgram);
-        model.put("currentOutcome", currentOutcome);
     }
 
     private Location closestLocationWithTag(Location location, LocationTag... tags) {
