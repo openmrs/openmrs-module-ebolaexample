@@ -137,7 +137,35 @@
                                     "cssClasses": [ "numeric-range" ]
                                 }
                             ]
-                        }
+                        },
+                      {
+                        "legend": "Ebola stage",
+                        "fields": [
+                          {
+                            "type": "obs",
+                            "formFieldName": "obs.162834AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                            "label": "Save the Children Ebola staging classification",
+                            "widget": {
+                              "providerName": "ebolaexample",
+                              "fragmentId": "field/childrenEbolaStaging"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "legend": "Disease status",
+                        "fields": [
+                          {
+                            "type": "obs",
+                            "formFieldName": "obs.162828AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                            "label": "Ebola disease status on admission",
+                            "widget": {
+                              "providerName": "ebolaexample",
+                              "fragmentId": "field/ebolaDiseaseStatus"
+                            }
+                          }
+                        ]
+                      }
                     ]
                 }
             ]
