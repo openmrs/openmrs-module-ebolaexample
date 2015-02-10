@@ -265,7 +265,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <version>1.9.2</version>
+                    <version>1.9.8</version>
                 </configuration>
             </plugin>
             <plugin>
