@@ -1,8 +1,11 @@
 package org.openmrs.module.ebolaexample.page.controller;
 
-import org.openmrs.*;
+import org.openmrs.EncounterType;
+import org.openmrs.Location;
+import org.openmrs.Patient;
+import org.openmrs.PatientProgram;
+import org.openmrs.Program;
 import org.openmrs.api.ProgramWorkflowService;
-import org.openmrs.api.VisitService;
 import org.openmrs.module.appframework.context.AppContextModel;
 import org.openmrs.module.appframework.domain.Extension;
 import org.openmrs.module.appframework.service.AppFrameworkService;
@@ -16,7 +19,6 @@ import org.openmrs.module.emrapi.adt.AdtService;
 import org.openmrs.module.emrapi.event.ApplicationEventService;
 import org.openmrs.module.emrapi.patient.PatientDomainWrapper;
 import org.openmrs.module.emrapi.visit.VisitDomainWrapper;
-import org.openmrs.module.htmlformentry.HtmlFormEntryService;
 import org.openmrs.module.metadatadeploy.MetadataUtils;
 import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.annotation.InjectBeans;
@@ -24,7 +26,11 @@ import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.page.PageModel;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class EbolaOverviewPageController {
 
@@ -91,7 +97,7 @@ public class EbolaOverviewPageController {
         model.addAttribute("includeFragments", includeFragments);
 
         PatientProgram patientProgram = ChangePatientDischargePageController.getPatientProgram(patient, programWorkflowService);
-        Outcome currentOutcome = patientProgram.getOutcome() == null ? null : Outcome.getOutcomeByConceptId(patientProgram.getOutcome().getConceptId());
+        Outcome currentOutcome = (patientProgram == null || patientProgram.getOutcome() == null) ? null : Outcome.getOutcomeByConceptId(patientProgram.getOutcome().getConceptId());
         model.put("patientProgram", patientProgram);
         model.put("currentOutcome", currentOutcome);
 
