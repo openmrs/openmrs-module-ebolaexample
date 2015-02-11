@@ -30,6 +30,7 @@
             },
             "allowUnknownPatients": false,
             "allowManualIdentifier": false,
+            "allowRetrospectiveEntry":true,
             "sections": [
                 {
                     "id": "identifiers",
