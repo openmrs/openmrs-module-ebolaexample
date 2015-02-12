@@ -140,12 +140,12 @@
                             ]
                         },
                       {
-                        "legend": "Ebola stage",
+                        "legend": "Ebola Stage at Admission",
                         "fields": [
                           {
                             "type": "obs",
                             "formFieldName": "obs.162834AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                            "label": "Save the Children Ebola staging classification",
+                            "label": "What's the patient's ebola stage at admission?",
                             "widget": {
                               "providerName": "ebolaexample",
                               "fragmentId": "field/childrenEbolaStaging"
@@ -154,12 +154,12 @@
                         ]
                       },
                       {
-                        "legend": "Disease status",
+                        "legend": "Type of Patient at Admission",
                         "fields": [
                           {
                             "type": "obs",
                             "formFieldName": "obs.162828AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                            "label": "Ebola disease status on admission",
+                            "label": "What's the type of patient at admission?",
                             "widget": {
                               "providerName": "ebolaexample",
                               "fragmentId": "field/ebolaDiseaseStatus"
