@@ -9,6 +9,12 @@
     ]
 </script>
 
+<script type="text/css">
+    i, .home-icon, .small{
+    font-size: 2.3em !important;
+    }
+</script>
+
 <h2>Pharmacy Overview:  ${today.format('dd MMM yyyy')}</h2>
 
 <form action="ebolaPharmacy.page" style="margin-bottom: 20px;">

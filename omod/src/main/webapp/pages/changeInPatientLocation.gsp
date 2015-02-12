@@ -1,21 +1,9 @@
 <%
+
     ui.includeJavascript("uicommons", "handlebars/handlebars.min.js")
     ui.includeCss("ebolaexample", "overview/ebolaOverview.css")
     ui.decorateWith("appui", "standardEmrPage")
 
-    def EmrApiConstants = context.loadClass("org.openmrs.module.emrapi.EmrApiConstants")
-
-    ui.includeJavascript("uicommons", "angular.min.js")
-    ui.includeJavascript("uicommons", "angular-app.js")
-    ui.includeJavascript("uicommons", "angular-resource.min.js")
-    ui.includeJavascript("uicommons", "angular-common.js")
-    ui.includeJavascript("uicommons", "angular-ui/ui-bootstrap-tpls-0.11.2.js")
-    ui.includeJavascript("uicommons", "services/locationService.js")
-
-    ui.includeJavascript("ebolaexample", "tabletapp/resources.js")
-    ui.includeJavascript("ebolaexample", "overview/inpatientLocation.js")
-
-    ui.includeCss("ebolaexample", "overview/inpatientLocation.css")
 %>
 <div class="info-section">
 

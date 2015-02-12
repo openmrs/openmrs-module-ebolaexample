@@ -4,27 +4,7 @@
     ui.decorateWith("appui", "standardEmrPage")
 %>
 
-<script type="text/javascript">
-    jQuery(document).ready(function () {
-        jQuery('.outcome_checkboxes').click(function () {
-            if (jQuery(this).prop('checked')) {
-                jQuery('.outcome_checkboxes').removeAttr('checked');
-                jQuery(this).attr('checked', 'checked');
-
-                jQuery('#dateCompleted').show();
-
-            } else {
-                jQuery('#dateCompleted').hide();
-            }
-        });
-
-
-    });
-</script>
-
-<a href="${ui.pageLink("ebolaexample", "ebolaOverview", [patient: patient.uuid])}">
-&larr; Back to Summary (discard changes)
-</a>
+<a href="${ui.pageLink("ebolaexample", "ebolaOverview", [patient: patient.uuid])}">&larr; Back to Summary (discard changes)</a>
 
 <style type="text/css">
 .info-header h3 {
@@ -49,7 +29,10 @@
 <h2>
     ${ui.format(patient)}
 </h2>
-<span style="background-color: #00FF00;">Current Status: <% if (currentOutcome) { %> ${currentOutcome.name}, ${patientProgram.dateCompleted.format('dd MMM yyyy')}  <% } else { %> None <% } %></span>
+<span style="background-color: #00FF00;">Current Status:
+    <% if (patientProgram.outcome) { %>
+    ${ui.format(patientProgram.outcome)}, ${patientProgram.dateCompleted.format('dd MMM yyyy')}
+    <% } else { %> None <% } %></span>
 
 <div class="info-section" style="padding-top: 5px;">
 
@@ -69,10 +52,10 @@
                 <% outComes.each { %>
 
                 <label>
-                    <input type="checkbox" class="outcome_checkboxes" name="outCome"
+                    <input type="radio" class="outcome_checkboxes" name="outCome" uncheckable="true"
                         <% if (patientProgram.outcome && it.uuid.equals(patientProgram.outcome.uuid)) { %> checked="checked" <% } %>
                            value="${it.uuid}"/>
-                    ${it.name}
+                    ${ui.format(it)}
                 </label>
 
                 <% } %>

@@ -1,15 +1,19 @@
 package org.openmrs.module.ebolaexample.page.controller;
 
 import org.apache.commons.lang.StringUtils;
-import org.openmrs.*;
+import org.openmrs.Concept;
+import org.openmrs.Patient;
+import org.openmrs.PatientProgram;
+import org.openmrs.Program;
+import org.openmrs.Visit;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.PatientService;
 import org.openmrs.api.ProgramWorkflowService;
 import org.openmrs.api.VisitService;
 import org.openmrs.module.ebolaexample.DateUtil;
-import org.openmrs.module.ebolaexample.Outcome;
 import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
 import org.openmrs.module.metadatadeploy.MetadataUtils;
+import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.page.PageModel;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,29 +23,26 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import static org.openmrs.module.ebolaexample.Outcome.getOutcomeByConceptId;
-
 public class ChangePatientDischargePageController {
 
     public void get(@SpringBean("patientService") PatientService patientService,
                     @SpringBean("programWorkflowService") ProgramWorkflowService programWorkflowService,
                     @SpringBean("conceptService") ConceptService conceptService,
+                    UiUtils ui,
                     @RequestParam(value = "patientUuid", required = false) String patientUuid, PageModel model) {
-        preparePageModel(patientService, programWorkflowService, conceptService, patientUuid, model);
+        preparePageModel(patientService, programWorkflowService, conceptService, ui, patientUuid, model);
     }
 
     private void preparePageModel(PatientService patientService, ProgramWorkflowService programWorkflowService,
-                                  ConceptService conceptService, String patientUuid, PageModel model) {
+                                  ConceptService conceptService, UiUtils ui, String patientUuid, PageModel model) {
         Patient patient = patientService.getPatientByUuid(patientUuid);
         model.put("patient", patient);
         PatientProgram patientProgram = getPatientProgram(patient, programWorkflowService);
         model.put("patientProgram", patientProgram);
         model.put("outComes", getOutComeOptions(conceptService));
 
-        Outcome currentOutcome = patientProgram.getOutcome() == null ? null
-                : getOutcomeByConceptId(patientProgram.getOutcome().getConceptId());
-        model.put("currentOutcome", currentOutcome);
-
+        model.put("currentOutcome", patientProgram != null ? patientProgram.getOutcome() : null);
+        System.out.println("Here we are " + ui.format(patientProgram.getOutcome()));
         model.put("today", DateUtil.getDateToday());
         model.put("defaultDate", patientProgram.getDateCompleted() != null ? patientProgram.getDateCompleted() : DateUtil.getDateToday());
 
@@ -58,6 +59,7 @@ public class ChangePatientDischargePageController {
                      @SpringBean("programWorkflowService") ProgramWorkflowService programWorkflowService,
                      @SpringBean("conceptService") ConceptService conceptService,
                      @SpringBean("visitService") VisitService visitService,
+                     UiUtils ui,
                      @RequestParam(value = "patientUuid", required = false) String patientUuid,
                      @RequestParam(value = "outCome", required = false) String outcomeUuid,
                      @RequestParam(value = "dateCompleted", required = true) Date dateCompleted, PageModel model) {
@@ -90,7 +92,9 @@ public class ChangePatientDischargePageController {
             System.out.println("Error: " + e.getMessage());
             model.put("error", e.getMessage());
         }
-        preparePageModel(patientService, programWorkflowService, conceptService, patientUuid, model);
+        preparePageModel(patientService, programWorkflowService, conceptService, ui, patientUuid, model);
+
+
     }
 
     public static PatientProgram getPatientProgram(Patient patient, ProgramWorkflowService programWorkflowService) {
@@ -104,8 +108,7 @@ public class ChangePatientDischargePageController {
         return visits.size() > 0 ? visits.get(0) : null;
     }
 
-
-    private List<Outcome> getOutComeOptions(ConceptService conceptService) {
+    private List<Concept> getOutComeOptions(ConceptService conceptService) {
         List<Integer> outComeIds = Arrays.asList(162684, 159791, 1694, 142177, 159392, 160034, 142934);
         List<Concept> concepts = new ArrayList<Concept>();
         for (Integer id : outComeIds) {
@@ -114,15 +117,7 @@ public class ChangePatientDischargePageController {
                 concepts.add(concept);
             }
         }
-
-        List<Outcome> outcomes = new ArrayList<Outcome>();
-        for (Concept concept : concepts) {
-            Outcome outcome = getOutcomeByConceptId(concept.getConceptId());
-            if (outcome != null) {
-                outcomes.add(outcome);
-            }
-        }
-        return outcomes;
+        return concepts;
     }
 
 }

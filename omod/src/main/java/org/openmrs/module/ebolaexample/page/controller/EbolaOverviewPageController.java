@@ -12,7 +12,6 @@ import org.openmrs.module.appframework.service.AppFrameworkService;
 import org.openmrs.module.appui.UiSessionContext;
 import org.openmrs.module.coreapps.contextmodel.PatientContextModel;
 import org.openmrs.module.coreapps.contextmodel.VisitContextModel;
-import org.openmrs.module.ebolaexample.Outcome;
 import org.openmrs.module.ebolaexample.api.BedAssignmentService;
 import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
 import org.openmrs.module.emrapi.adt.AdtService;
@@ -97,9 +96,8 @@ public class EbolaOverviewPageController {
         model.addAttribute("includeFragments", includeFragments);
 
         PatientProgram patientProgram = ChangePatientDischargePageController.getPatientProgram(patient, programWorkflowService);
-        Outcome currentOutcome = (patientProgram == null || patientProgram.getOutcome() == null) ? null : Outcome.getOutcomeByConceptId(patientProgram.getOutcome().getConceptId());
         model.put("patientProgram", patientProgram);
-        model.put("currentOutcome", currentOutcome);
+        model.put("currentOutcome", patientProgram != null ? patientProgram.getOutcome() : null);
 
         applicationEventService.patientViewed(patient, sessionContext.getCurrentUser());
     }
