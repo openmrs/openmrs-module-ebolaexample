@@ -23,17 +23,20 @@
 
     <div class="info-body" style="overflow: auto;">
 
+        <% if (currentOutcome) { %>
+        <div style="float: left; width: 60%;">
+        Patient out of ETC!!
+        </div>
+
+        <% } else { %>
+
         <div style="float: left; width: 60%;" ng-app="inpatientLocation" ng-controller="InpatientLocationCtrl"
              ng-init="init({patientUuid:'${patient.patient.uuid}',
             currentWard: <% if (currentWard) { %>{display:'${currentWard}', uuid:'${currentWard.uuid}'}<% } else { %>null<% } %>,
             currentBed: <% if (currentBed) { %>{display:'${currentBed}', uuid:'${currentBed.uuid}'}<% } else { %>null<% } %>
             })">
 
-            <% if (currentOutcome) { %>
-
-            Patient out of ETC!!
-
-            <% } else if (!config.activeVisit) { %>
+            <% if (!config.activeVisit) { %>
 
             No active visit. <br/>
 
@@ -71,6 +74,8 @@
 
             <% } %>
         </div>
+
+        <% } %>
 
         <div style="border-left: 2px none #000; float:right; width: 40%; height: 90%; vertical-align: bottom !important; display: inline-block;">
             <span>Ebola Treatment Outcome: <% if (currentOutcome) { %> ${ ui.format(currentOutcome) }, ${patientProgram.dateCompleted.format('dd MMM yyyy, HH:mm')}  <%
