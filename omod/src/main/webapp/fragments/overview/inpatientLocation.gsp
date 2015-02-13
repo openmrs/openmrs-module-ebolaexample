@@ -73,7 +73,7 @@
         </div>
 
         <div style="border-left: 2px none #000; float:right; width: 40%; height: 90%; vertical-align: bottom !important; display: inline-block;">
-            <span>Ebola Treatment Outcome: <% if (currentOutcome) { %> ${ ui.format(currentOutcome) }, ${patientProgram.dateCompleted.format('dd MMM yyyy')}  <%
+            <span>Ebola Treatment Outcome: <% if (currentOutcome) { %> ${ ui.format(currentOutcome) }, ${patientProgram.dateCompleted.format('dd MMM yyyy, HH:mm')}  <%
                 } else { %> None <% } %></span>
             <a class="button" href="${ui.pageLink("ebolaexample", "changePatientDischarge",
                     [patientUuid: patient.patient.uuid])}">Discharge</a>
