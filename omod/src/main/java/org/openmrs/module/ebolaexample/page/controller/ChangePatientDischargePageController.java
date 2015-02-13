@@ -18,6 +18,7 @@ import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.page.PageModel;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -73,6 +74,11 @@ public class ChangePatientDischargePageController {
             PatientProgram patientProgram = getPatientProgram(patient, programWorkflowService);
             if (patientProgram == null) {
                 model.put("error", "Patient program not found");
+            }
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
+            if(simpleDateFormat.format(dateCompleted).equalsIgnoreCase(simpleDateFormat.format(new Date()))) {
+                dateCompleted = new Date();
             }
 
             patientProgram.setOutcome(outcome);
