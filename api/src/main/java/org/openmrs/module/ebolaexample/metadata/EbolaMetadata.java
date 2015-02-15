@@ -33,6 +33,8 @@ public class EbolaMetadata extends AbstractMetadataBundle {
     public static class _Concept { // all of these are from CIEL and we don't create them here
         public static final String EBOLA_PROGRAM = "162637AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
         public static final String WEIGHT_IN_KG = "5089AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+        public static final String EBOLA_STAGE = "162834AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+        public static final String TYPE_OF_PATIENT = "162828AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
     }
 
     public static class _ConceptNameTag {

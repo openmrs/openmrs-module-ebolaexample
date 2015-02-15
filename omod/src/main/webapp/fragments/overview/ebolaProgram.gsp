@@ -25,11 +25,29 @@
             Weight: not recorded
         <% } %>
 
+        <p>Ebola Stage At Admission:
+            <% if(ebolaStage) { %>
+                ${ ui.format(ebolaStage)}
+            <% } else { %>
+                --
+            <% } %>
+        </p>
+
+        <p>Type of Patient At Admission:
+            <% if(typeOfPatient) { %>
+                ${ ui.format(typeOfPatient)}
+            <% } else { %>
+                --
+            <% } %>
+        </p>
+
+
         <% if (currentEnrollment == null) { %>
             <p>Not currently enrolled</p>
         <% } else { %>
             <p>Enrolled since ${ ui.format(currentEnrollment.dateEnrolled) }</p>
         <% } %>
+
 
         <% if (triageEncounter) { %>
             <a href="${ triageViewLink }">

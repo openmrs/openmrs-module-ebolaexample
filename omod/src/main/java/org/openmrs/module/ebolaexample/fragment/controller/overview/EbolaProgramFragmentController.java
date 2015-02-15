@@ -1,13 +1,6 @@
 package org.openmrs.module.ebolaexample.fragment.controller.overview;
 
-import org.openmrs.Concept;
-import org.openmrs.Encounter;
-import org.openmrs.EncounterType;
-import org.openmrs.Obs;
-import org.openmrs.Patient;
-import org.openmrs.PatientProgram;
-import org.openmrs.Person;
-import org.openmrs.Program;
+import org.openmrs.*;
 import org.openmrs.api.EncounterService;
 import org.openmrs.api.ObsService;
 import org.openmrs.api.ProgramWorkflowService;
@@ -42,15 +35,43 @@ public class EbolaProgramFragmentController {
             }
         }
 
-        Concept weightConcept = MetadataUtils.existing(Concept.class, EbolaMetadata._Concept.WEIGHT_IN_KG);
-        // I can't believe this is the only service method to get the latest obs given a patient and concept...
-        List<Obs> weights = obsService.getObservations(Collections.singletonList((Person) patient.getPatient()), null, Collections.singletonList(weightConcept), null, null, null, null, 1, null, null, null, false);
-        Obs mostRecentWeight = weights.size() > 0 ? weights.get(0) : null;
-        model.addAttribute("mostRecentWeight", mostRecentWeight);
+        getObs(patient, obsService, model);
 
         model.addAttribute("currentEnrollment", currentEnrollment);
         // TODO this should consider the date bounds of currentEnrollment
         model.addAttribute("triageEncounter", lastEncounter(encounterService, patient.getPatient(), triageEncType));
+    }
+
+    private void getObs(PatientDomainWrapper patient, ObsService obsService, FragmentModel model) {
+        List<Person> whom = Collections.singletonList((Person) patient.getPatient());
+        List<Obs> obs = obsService.getObservationsByPerson(whom.get(0));
+        model.addAttribute("mostRecentWeight", null);
+        model.addAttribute("ebolaStage", null);
+        model.addAttribute("typeOfPatient", null);
+
+        for(Obs ob : obs){
+            String conceptUUID = ob.getConcept().getUuid();
+            if(conceptUUID.equals(EbolaMetadata._Concept.WEIGHT_IN_KG)){
+                model.addAttribute("mostRecentWeight", ob);
+            }else if(conceptUUID.equals(EbolaMetadata._Concept.EBOLA_STAGE)){
+                String ebolaStage = "";
+                Concept valueCoded = ob.getValueCoded();
+                if(valueCoded != null){
+                    String uuid = valueCoded.getUuid();
+                    if(uuid.equals("162829AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")){
+                        ebolaStage = "Stage 1(Early/Dry)";
+                    }else if(uuid.equals("162830AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")){
+                        ebolaStage = "Stage 2(GI/Wet)";
+                    }else if(uuid.equals("162831AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")){
+                        ebolaStage = "Stage 2(GI/Wet)";
+                    }
+                    model.addAttribute("ebolaStage", ebolaStage);
+                }
+
+            }else if(conceptUUID.equals(EbolaMetadata._Concept.TYPE_OF_PATIENT)){
+                model.addAttribute("typeOfPatient", ob);
+            }
+        }
     }
 
     private Encounter lastEncounter(EncounterService service, Patient patient, EncounterType type) {
