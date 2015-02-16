@@ -125,17 +125,17 @@
                                 {
                                     "type": "obs",
                                     "formFieldName": "obs.5089AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                                    "label": "Weight (kg)",
+                                    "label": "Weight",
                                     "widget": {
                                         "providerName": "uicommons",
                                         "fragmentId": "field/text",
                                         "config": {
                                             "min": "0.5",
                                             "max": "199",
-                                            "appendToValue": "kg"
+                                            "appendToValueDisplayed": "kg"
                                         }
                                     },
-                                    "cssClasses": [ "numeric-range" ]
+                                    "cssClasses": [ "number", "numeric-range" ]
                                 }
                             ]
                         },
