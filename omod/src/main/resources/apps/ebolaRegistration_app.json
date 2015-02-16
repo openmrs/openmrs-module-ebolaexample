@@ -140,7 +140,7 @@
                             ]
                         },
                       {
-                        "legend": "Ebola Stage at Admission",
+                        "legend": "Stage",
                         "fields": [
                           {
                             "type": "obs",
@@ -154,7 +154,7 @@
                         ]
                       },
                       {
-                        "legend": "Type of Patient at Admission",
+                        "legend": "Type of Patient",
                         "fields": [
                           {
                             "type": "obs",
