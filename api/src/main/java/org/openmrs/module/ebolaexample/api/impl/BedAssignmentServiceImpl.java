@@ -178,9 +178,11 @@ public class BedAssignmentServiceImpl extends BaseOpenmrsService implements BedA
             for (VisitDomainWrapper visit : adtService.getActiveVisits(facility)) {
                 Location ward = getAttribute(assignedWard, visit);
                 Location bed = getAttribute(assignedBed, visit);
-                if (bed != null) {
+                Map<Location, Patient> locationPatientMap = bedAssignments.get(ward);
+
+                if (bed != null && locationPatientMap != null) {
                     Patient patient = visit.getVisit().getPatient();
-                    bedAssignments.get(ward).put(bed, patient);
+                    locationPatientMap.put(bed, patient);
                 }
             }
         }
