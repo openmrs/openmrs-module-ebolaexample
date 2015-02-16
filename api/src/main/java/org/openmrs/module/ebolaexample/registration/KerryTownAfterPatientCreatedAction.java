@@ -54,7 +54,7 @@ public class KerryTownAfterPatientCreatedAction implements AfterPatientCreatedAc
     public void afterPatientCreated(Patient patient, Map<String, String[]> params) {
         // assign a Kerry Town ID, if specified
         if (params.get("kerryTownId") != null && params.get(KERRY_TOWN_ID).length > 0) {
-            String kerryTownId = params.get("kerryTownId")[0];
+            String kerryTownId = params.get("kerryTownId")[0].trim();
             if (StringUtils.isNotEmpty(kerryTownId)) {
                 if (patient.getPatientIdentifier() != null) {
                     patient.getPatientIdentifier().setPreferred(false);

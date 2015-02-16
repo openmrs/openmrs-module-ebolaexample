@@ -29,6 +29,6 @@
     <label>
         Kerry Town ID
     </label>
-    <input id="kerry-town-id" type="text" autocomplete="off" name="kerryTownId" class="regex kerry-town-id" regex="KT-\\d-\\d{5}" placeholder="KT-#-#####"/>
+    <input id="kerry-town-id" type="text" autocomplete="off" name="kerryTownId" class="regex kerry-town-id" regex='^KT-\\d-\\d{5}\$' placeholder="KT-#-#####"/>
     <span class="field-error"></span>
 </p>
