@@ -17,7 +17,12 @@ package org.openmrs.module.ebolaexample;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.*;
+import org.openmrs.Concept;
+import org.openmrs.ConceptName;
+import org.openmrs.ConceptNameTag;
+import org.openmrs.GlobalProperty;
+import org.openmrs.Location;
+import org.openmrs.LocationTag;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.FormService;
@@ -270,6 +275,7 @@ public class EbolaExampleActivator extends BaseModuleActivator {
         service.disableApp("coreapps.configuremetadata");
         service.disableApp("coreapps.findPatient");
         service.disableApp("coreapps.activeVisits");
+        service.disableApp("coreapps.mergePatients");
         service.disableApp("referenceapplication.registrationapp.registerPatient");
         service.disableApp("referenceapplication.vitals");
     }
