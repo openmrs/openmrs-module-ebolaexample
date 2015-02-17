@@ -147,6 +147,7 @@ public class EbolaDemoData extends AbstractMetadataBundle {
         installUser(buildTeam("3"), "Team1234");
         installUser(buildTeam("4"), "Team1234");
         installUser(buildTeam("5"), "Team1234");
+        installUser(buildTeam("6"), "Team1234");
     }
 
     private void installUser(User user, String password) {
