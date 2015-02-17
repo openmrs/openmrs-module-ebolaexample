@@ -82,8 +82,8 @@
 
             <div style="clear: both; padding-top: 20px;"/>
 
-            <a class="button cancel" href="${ui.pageLink("ebolaexample", "ebolaOverview", [patient: patient.uuid])}">Cancel</a>
             <button type="submit" class="confirm right">Save</button>
+            <a class="button cancel" href="${ui.pageLink("ebolaexample", "ebolaOverview", [patient: patient.uuid])}">Cancel</a>
         </form>
     </div>
 </div>
