@@ -90,7 +90,7 @@ describe('prescriptions', function () {
                 httpMock.when('GET', apiUrl + 'drug?concept=1&v=full').respond(justOneDrugResponse);
                 httpMock.when('GET', 'templates/wards.html').respond({});
                 initController = function (stateParams) {
-                    angular.extend(state, stateParams || { params: {concept: {uuid: '654321'} } });
+                    angular.extend(state, stateParams || { params: {conceptUUID: '654321' } });
                     $controller('NewPrescriptionRouteController', {$scope: scope, $state: state});
                 }
             });
