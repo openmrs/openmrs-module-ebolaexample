@@ -65,7 +65,7 @@ angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "selec
                 }
             })
             .state("patient.addPrescriptionRoute", {
-                url: "/addPrescription",
+                url: "/addPrescriptionRoute/:conceptUUID",
                 templateUrl: "templates/patient/newPrescriptionRoute.html",
                 params: { concept: null },
                 data: {
@@ -73,7 +73,7 @@ angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "selec
                     activeForm: true,
                     back: {
                         description: "Overview",
-                        target: "patient.overview"
+                        target: "patient.addPrescription"
                     }
                 }
             })

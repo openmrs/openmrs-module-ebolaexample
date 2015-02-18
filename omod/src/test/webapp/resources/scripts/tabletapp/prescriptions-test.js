@@ -155,7 +155,7 @@ describe('prescriptions', function () {
 
         it('should go to next state with automatic selection if there is just one drug option', function() {
             var concept = {uuid: '1', display: 'Concept from Service'};
-            initController({ params: { concept: concept } });
+            initController({ params: { conceptUUID: concept.uuid } });
             httpMock.flush();
             scope.$digest();
 

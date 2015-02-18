@@ -114,6 +114,14 @@ angular.module("directives", [])
             }
         }
     }])
+    .directive('prevButton', ['$window', function ($window) {
+        return {
+            link: function (scope, element, attrs) {
+                element.html('<button class="left small secondary">' + 'Back' + '</button>');
+                element.bind('click', function() { $window.history.back()} );
+            }
+        }
+    }])
     .directive('patientHeader', ['WardService', function(WardService) {
         return {
             templateUrl: 'templates/patient/patientHeader.html',

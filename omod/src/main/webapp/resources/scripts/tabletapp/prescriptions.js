@@ -147,8 +147,8 @@ angular.module("prescriptions", ["tabletapp", "constants", "patients", "filters"
                 }
             }
 
-            function loadDrugs(concept) {
-                DrugResource.query({concept: concept.uuid, v: 'full'}, function (response) {
+            function loadDrugs(conceptUUID) {
+                DrugResource.query({concept: conceptUUID, v: 'full'}, function (response) {
                     if (response.results.length == 1) {
                         $state.go('patient.addPrescriptionDetails', {prescriptionInfo: response.results[0]});
                         return;
@@ -181,7 +181,7 @@ angular.module("prescriptions", ["tabletapp", "constants", "patients", "filters"
                 });
             }
 
-            $scope.concept = $state.params.concept;
-            loadDrugs($scope.concept);
+            $scope.conceptUUID = $state.params.conceptUUID;
+            loadDrugs($scope.conceptUUID);
         }
     ]);

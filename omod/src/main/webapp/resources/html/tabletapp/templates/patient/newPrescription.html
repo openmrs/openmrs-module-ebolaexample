@@ -10,7 +10,7 @@
 
         <div ng-show="commonDrugConcepts.results" class="common-drugs-container">
             <a class="radio-button small full" ng-repeat="concept in commonDrugConcepts.results.slice(0, 20)"
-               ui-sref="patient.addPrescriptionRoute({ concept: concept})" type="button">
+               ui-sref="patient.addPrescriptionRoute({ conceptUUID: concept.uuid})" type="button">
                 {{ concept.display }}
             </a>
         </div>
