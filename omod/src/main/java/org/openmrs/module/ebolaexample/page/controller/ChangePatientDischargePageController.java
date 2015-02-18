@@ -79,8 +79,11 @@ public class ChangePatientDischargePageController {
                 model.put("error", "Patient program not found");
             }
 
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
-            if (simpleDateFormat.format(dateCompleted).equalsIgnoreCase(simpleDateFormat.format(new Date()))) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            String dateCompletedStr = simpleDateFormat.format(dateCompleted);
+            String dateEnrolledStr = simpleDateFormat.format(patientProgram.getDateEnrolled());
+            if (dateCompletedStr.equalsIgnoreCase(dateEnrolledStr)) {
                 dateCompleted = new Date();
             }
 
