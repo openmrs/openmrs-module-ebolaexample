@@ -48,7 +48,6 @@ public class EbolaLoginControllerTest extends BaseModuleWebContextSensitiveTest 
         ebolaTestBaseMetadata.install();
         ebolaMetadata.install();
         ebolaTestData.install();
-        initializeInMemoryDatabase();
         response = new MockHttpServletResponse();
         requestURI = "ebola/login";
     }
