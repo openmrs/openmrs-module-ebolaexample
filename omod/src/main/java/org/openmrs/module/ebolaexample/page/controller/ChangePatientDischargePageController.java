@@ -16,14 +16,18 @@ import org.openmrs.module.metadatadeploy.MetadataUtils;
 import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.page.PageModel;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+@Controller
 public class ChangePatientDischargePageController {
 
     public void get(@SpringBean("patientService") PatientService patientService,
@@ -43,7 +47,6 @@ public class ChangePatientDischargePageController {
         model.put("outComes", getOutComeOptions(conceptService));
 
         model.put("currentOutcome", patientProgram != null ? patientProgram.getOutcome() : null);
-        System.out.println("Here we are " + ui.format(patientProgram.getOutcome()));
         model.put("today", DateUtil.getDateToday());
         model.put("defaultDate", patientProgram.getDateCompleted() != null ? patientProgram.getDateCompleted() : DateUtil.getDateToday());
 
@@ -56,18 +59,18 @@ public class ChangePatientDischargePageController {
         }
     }
 
-    public void post(@SpringBean("patientService") PatientService patientService,
-                     @SpringBean("programWorkflowService") ProgramWorkflowService programWorkflowService,
-                     @SpringBean("conceptService") ConceptService conceptService,
-                     @SpringBean("visitService") VisitService visitService,
-                     UiUtils ui,
-                     @RequestParam(value = "patientUuid", required = false) String patientUuid,
-                     @RequestParam(value = "outCome", required = false) String outcomeUuid,
-                     @RequestParam(value = "dateCompleted", required = true) Date dateCompleted, PageModel model) {
+    public String post(@SpringBean("patientService") PatientService patientService,
+                       @SpringBean("programWorkflowService") ProgramWorkflowService programWorkflowService,
+                       @SpringBean("conceptService") ConceptService conceptService,
+                       @SpringBean("visitService") VisitService visitService,
+                       UiUtils ui,
+                       @RequestParam(value = "patientUuid", required = false) String patientUuid,
+                       @RequestParam(value = "outCome", required = false) String outcomeUuid,
+                       @RequestParam(value = "dateCompleted", required = true) Date dateCompleted, PageModel model) {
+        Patient patient = patientService.getPatientByUuid(patientUuid);
         try {
             Concept outcome = StringUtils.isEmpty(outcomeUuid) ? null : conceptService.getConceptByUuid(outcomeUuid);
 
-            Patient patient = patientService.getPatientByUuid(patientUuid);
             if (patient == null) {
                 throw new Exception("Patient not retrieved from database");
             }
@@ -77,7 +80,7 @@ public class ChangePatientDischargePageController {
             }
 
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
-            if(simpleDateFormat.format(dateCompleted).equalsIgnoreCase(simpleDateFormat.format(new Date()))) {
+            if (simpleDateFormat.format(dateCompleted).equalsIgnoreCase(simpleDateFormat.format(new Date()))) {
                 dateCompleted = new Date();
             }
 
@@ -97,10 +100,13 @@ public class ChangePatientDischargePageController {
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
             model.put("error", e.getMessage());
+            preparePageModel(patientService, programWorkflowService, conceptService, ui, patientUuid, model);
+            return null;
         }
-        preparePageModel(patientService, programWorkflowService, conceptService, ui, patientUuid, model);
 
-
+        Map<String, Object> args = new HashMap<String, Object>();
+        args.put("patient", patient);
+        return "redirect:" + ui.pageLink("ebolaexample", "ebolaOverview", args);
     }
 
     public static PatientProgram getPatientProgram(Patient patient, ProgramWorkflowService programWorkflowService) {

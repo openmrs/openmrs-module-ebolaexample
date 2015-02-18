@@ -68,7 +68,7 @@ ${ui.includeFragment("ebolaexample", "overview/patientHeader", [patient: patient
             ${ui.includeFragment("ebolaexample", "overview/ebolaProgram", [patient: patient])}
         </div>
 
-        <div class="<% if (currentOutcome) { %> long-info-container <% } else { %> info-container <% } %> column">
+        <div class="long-info-container column">
             ${ui.includeFragment("ebolaexample", "overview/inpatientLocation", [patient: patient, activeVisit: activeVisit])}
         </div>
 
