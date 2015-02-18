@@ -1,0 +1,40 @@
+</div>
+<header>
+    <patient-header patient-id="getPatientId()" patient="patient">
+</patient-header>
+</header>
+<form name="inpatientForm" ng-controller="FormController">
+    <div>
+        <question question="questions.consciousness"/>
+    </div>
+
+    <div class="two-column">
+        <question question="questions.temperature"/>
+    </div>
+
+    <div class="two-column">
+        <question question="questions.o2sat"/>
+    </div>
+
+    <div class="two-column">
+        <question question="questions.respiratoryRate"/>
+    </div>
+
+    <div class="two-column">
+        <question question="questions.heartRate"/>
+    </div>
+
+    <div class="two-column">
+        <question question="questions.systolicBP"/>
+    </div>
+
+    <div class="two-column">
+        <question question="questions.diastolicBP"/>
+    </div>
+
+    <div class="actions small">
+      <cancel-button></cancel-button>
+      <button class="right small" ng-click="saveVitals()" ng-disabled="!inpatientForm.$valid">Save</button>
+  </div>
+</form>
+

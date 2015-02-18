@@ -195,6 +195,10 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                 $state.go('patient.addPrescription');
             }
 
+            $scope.openAddVitalSigns = function() {
+                $state.go('patient.addVitalSigns');
+            }
+
             $scope.hasActiveForm = function() {
                 return $state.current.data && $state.current.data.activeForm;
             }

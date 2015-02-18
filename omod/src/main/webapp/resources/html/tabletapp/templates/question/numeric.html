@@ -1,0 +1,6 @@
+<label class="question-title" for="{{ id }}">{{ question.label }}</label>
+
+<div class="input-container" ng-controller="inputCtrl">
+    <input id="{{ id }}" ng-focus="focusInput($event)" ng-blur="blurInput($event)" type="number" ng-model="question.value" min="{{question.min}}" max="{{question.max}}" />
+    <span class="unit" ng-class="question.unitClass">{{ question.unit }}</span>
+</div>
