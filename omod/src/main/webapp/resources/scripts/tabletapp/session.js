@@ -9,17 +9,26 @@ angular.module("session", ["ui.router", "constants", "resources", "patients", "n
 
             return {
                 getInfo: function () {
-                    var sessionInfo = $cookies['session'];
-                    if(sessionInfo) {
-                        return JSON.parse(sessionInfo);
+                    if (!cachedInfo) {
+                        cachedInfo = { loading: true };
+                        $http.get("/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/login")
+                            .success(function (data) {
+                                cachedInfo.loading = false;
+                                angular.extend(cachedInfo, data);
+                            })
+                            .error(function(data) {
+                                console.log("Error checking session info");
+                                console.log(data);
+                                cachedInfo = null;
+                            });
                     }
-                    return sessionInfo;
+                    return cachedInfo;
                 },
                 setInfo: function(info) {
-                    $cookies['session'] = JSON.stringify(info);
+                    cachedInfo = info;
                 },
                 clear: function() {
-                    delete $cookies["session"]
+                    cachedInfo = null;
                 },
                 getEncounter: function (patientUUID) {
                     if (cachedEncounter && cachedEncounterPatientUUID == patientUUID) {
