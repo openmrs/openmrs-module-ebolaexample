@@ -11,7 +11,6 @@ import org.openmrs.api.context.ContextAuthenticationException;
 import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
 import org.openmrs.module.ebolaexample.metadata.EbolaTestBaseMetadata;
 import org.openmrs.module.ebolaexample.metadata.EbolaTestData;
-import org.openmrs.module.ebolaexample.rest.WardResource;
 import org.openmrs.module.ebolaexample.rest.WebMethods;
 import org.openmrs.module.emrapi.EmrApiConstants;
 import org.openmrs.module.webservices.rest.SimpleObject;
@@ -19,18 +18,13 @@ import org.openmrs.module.webservices.rest.web.RestConstants;
 import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.web.test.BaseModuleWebContextSensitiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.test.annotation.ExpectedException;
 
 import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.TestCase.assertNull;
 
 public class EbolaLoginControllerTest extends BaseModuleWebContextSensitiveTest {
 
@@ -99,6 +93,20 @@ public class EbolaLoginControllerTest extends BaseModuleWebContextSensitiveTest 
     }
 
     @Test
+    public void shouldReturnCurrentUserForGet() throws Exception {
+        User user = Context.getAuthenticatedUser();
+
+        MockHttpServletRequest request = new MockHttpServletRequest("GET", "/rest/" + RestConstants.VERSION_1 + "/"
+                + requestURI);
+        request.addHeader("content-type", "application/json");
+        MockHttpServletResponse response = webMethods.handle(request);
+        SimpleObject responseObject = new ObjectMapper().readValue(response.getContentAsString(), SimpleObject.class);
+
+        assertEquals(((LinkedHashMap) responseObject.get("user")).get("uuid"), user.getUuid());
+        assertEquals(((LinkedHashMap) responseObject.get("person")).get("uuid"), user.getPerson().getUuid());
+    }
+
+    @Test
     public void shouldReturnUserProviderAndPerson() throws Exception {
         User user = Context.getAuthenticatedUser();
         String teamUsername = user.getUsername();
@@ -135,11 +143,13 @@ public class EbolaLoginControllerTest extends BaseModuleWebContextSensitiveTest 
         LinkedHashMap parsedProvider = (LinkedHashMap) responseObject.get("provider");
         Provider unknownProvider = Context.getProviderService().getUnknownProvider();
         assertEquals(parsedProvider.get("uuid"), unknownProvider.getUuid());
-        assertNull(responseObject.get("person"));
+
+        LinkedHashMap parsedPerson = (LinkedHashMap) responseObject.get("person");
+        assertEquals(user.getPerson().getUuid(), parsedPerson.get("uuid"));
     }
 
     @Test(expected=ContextAuthenticationException.class)
-    public void shouldThrowExceptionForIvalidUsername() throws Exception {
+    public void shouldThrowExceptionForInvalidUsername() throws Exception {
         MockHttpServletRequest request = new MockHttpServletRequest("POST", "/rest/" + RestConstants.VERSION_1 + "/"
                 + requestURI);
         request.addHeader("content-type", "application/json");
