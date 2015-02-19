@@ -78,7 +78,7 @@
         <% } %>
 
         <div style="float:right; width: 50%;">
-            <span style="display: block;">Ebola Treatment Outcome:
+            <span style="display: block;"><strong>Ebola Treatment Outcome:</strong>
             <% if (currentOutcome) { %>
             ${ui.format(currentOutcome)}, ${patientProgram.dateCompleted.format('dd MMM yyyy, HH:mm')}
             <% } else { %>None<% } %>

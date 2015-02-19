@@ -48,13 +48,14 @@
             <% } %>
         </p>
 
-
+        <p>
+            <strong>Enrollment Status:</strong>
         <% if (currentEnrollment == null) { %>
-        <p>Not currently enrolled</p>
+        Not currently enrolled
         <% } else { %>
-        <p><strong>Enrolled since</strong> ${ui.format(currentEnrollment.dateEnrolled)}</p>
+        Enrolled since ${ui.format(currentEnrollment.dateEnrolled)}
         <% } %>
-
+        </p>
 
         <% if (triageEncounter) { %>
         <a href="${triageViewLink}">
