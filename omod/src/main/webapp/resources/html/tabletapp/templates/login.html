@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="actions small fixed-bottom">
-            <button class="right small" type="submit" ng-click="login(loginForm)">Login</button>
+            <button class="right small" type="submit" ng-disabled="!loginForm.username" ng-click="login(loginForm)">Login</button>
         </div>
     </form>
 </div>
