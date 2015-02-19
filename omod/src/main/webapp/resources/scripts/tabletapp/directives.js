@@ -85,7 +85,7 @@ angular.module("directives", [])
             templateUrl:'templates/sidebar.html'
         }
     })
-    .directive('actionButton', ['sidebarService', '$rootScope', function(sidebarService, $rootScope) {
+    .directive('actionButton', ['sidebarService', 'CurrentSession', '$rootScope', function(sidebarService, CurrentSession, $rootScope) {
         return {
             link: function(scope, element, attrs) {
 
@@ -94,7 +94,11 @@ angular.module("directives", [])
                 element.on('click', function() {
                     sidebarService.toggle();
                 });
-                
+
+                scope.hasPrivilege = function(privilege) {
+                    return CurrentSession.hasPrivilege(privilege);
+                }
+
                 sidebarService.getActionElements().each(function(){
                     $(this).on('click', function(){
                         sidebarService.hide();

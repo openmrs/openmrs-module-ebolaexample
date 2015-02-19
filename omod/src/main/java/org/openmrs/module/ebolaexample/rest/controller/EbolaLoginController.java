@@ -7,11 +7,11 @@ import org.openmrs.api.context.Context;
 import org.openmrs.api.context.ContextAuthenticationException;
 import org.openmrs.module.emrapi.EmrApiConstants;
 import org.openmrs.module.webservices.rest.SimpleObject;
+import org.openmrs.module.webservices.rest.web.ConversionUtil;
 import org.openmrs.module.webservices.rest.web.RestConstants;
+import org.openmrs.module.webservices.rest.web.representation.Representation;
 import org.openmrs.module.webservices.rest.web.v1_0.resource.openmrs1_8.PersonResource1_8;
-import org.openmrs.module.webservices.rest.web.v1_0.resource.openmrs1_8.UserResource1_8;
 import org.openmrs.module.webservices.rest.web.v1_0.resource.openmrs1_9.ProviderResource1_9;
-import org.openmrs.module.webservices.rest.web.v1_0.wrapper.openmrs1_8.UserAndPassword1_8;
 import org.openmrs.util.PrivilegeConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -80,8 +80,7 @@ public class EbolaLoginController {
 
     private SimpleObject buildResponse(User user, Provider provider) throws Exception {
         SimpleObject response = new SimpleObject();
-        UserAndPassword1_8 authenticatedUserResource = new UserResource1_8().getByUniqueId(user.getUuid());
-        response.add("user", new UserResource1_8().asDefaultRep(authenticatedUserResource));
+        response.add("user", ConversionUtil.convertToRepresentation(user, Representation.DEFAULT));
 
         // if provider wasn't specified, we get the one associated with the user account
         if (provider == null) {

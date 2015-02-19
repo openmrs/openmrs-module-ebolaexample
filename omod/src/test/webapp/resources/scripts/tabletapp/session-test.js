@@ -32,6 +32,53 @@ describe('app', function () {
             });
         });
 
+        describe('hasPrivilege', function() {
+            it('should always return true for System Developer', function() {
+                currentSession.setInfo({
+                    "user": {
+                        "privileges": [],
+                        "roles": [
+                            {
+                                "uuid": "8d94f852-c2cc-11de-8d13-0010c6dffd0f",
+                                "display": "System Developer"
+                            }
+                        ]
+                    }
+                });
+                expect(currentSession.hasPrivilege("Any privilege")).toBeTruthy();
+            });
+
+            it('should return true if they have the specific privilege', function() {
+                currentSession.setInfo({
+                    "user": {
+                        "privileges": [
+                            {
+                                "uuid": "8d94f852-c2cc-11de-8d13-0010c6dffd0f",
+                                "display": "Privilege I have"
+                            }
+                        ],
+                        "roles": []
+                    }
+                });
+                expect(currentSession.hasPrivilege("Privilege I have")).toBeTruthy();
+            });
+
+            it('should return false if they do not have the privilege ', function() {
+                currentSession.setInfo({
+                    "user": {
+                        "privileges": [],
+                        "roles": [
+                            {
+                                "uuid": "8d94f852-c2cc-11de-8d13-0010c6dffd0f",
+                                "display": "Provider"
+                            }
+                        ]
+                    }
+                });
+                expect(currentSession.hasPrivilege("A privilege I don't have")).toBeFalsy();
+            });
+        });
+
         describe('getEncounter', function () {
             it('should create encounter using the rest endpoint', function () {
                 httpMock.expectPOST(apiUrl + 'encounter', function (dataString) {

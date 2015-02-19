@@ -199,6 +199,10 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                 return $state.current.data && $state.current.data.activeForm;
             }
 
+            $scope.goToLaptopPatientSummary = function() {
+                location.href = emr.pageLink("ebolaexample", "ebolaOverview", { patient: patientUuid });
+            }
+
         }])
 
     .factory("Orders", ['OrderResource', function (OrderResource) {

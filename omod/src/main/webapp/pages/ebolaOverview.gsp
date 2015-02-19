@@ -62,6 +62,11 @@ ${ui.includeFragment("ebolaexample", "overview/patientHeader", [patient: patient
 <div class="clear"></div>
 
 <div class="container">
+
+    <a href="/${ ui.contextPath() }/ms/uiframework/resource/ebolaexample/html/tabletapp/index.html#/patients/${ patient.patient.uuid }/overview/${ patient.patient.uuid }/">
+        Add a Prescription
+    </a>
+
     <div class="dashboard clear">
 
         <div class="info-container column">

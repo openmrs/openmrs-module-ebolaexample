@@ -60,6 +60,15 @@ angular.module("session", ["ui.router", "constants", "resources", "patients", "n
                             return null;
                         }
                     }
+                },
+                hasPrivilege: function(privilege) {
+                    if (cachedInfo && cachedInfo.user) {
+                        return _.findWhere(cachedInfo.user.roles, { display: "System Developer" }) ||
+                            _.findWhere(cachedInfo.user.privileges, { display: privilege });
+                    }
+                    else {
+                        return false;
+                    }
                 }
             };
         }]);

@@ -21,12 +21,14 @@
 .actions-list {
     list-style: none;
     padding: 0 20px 0 20px;
+    margin-top: 0px;
 }
 
 .actions-list li button {
     background: none repeat scroll 0% 0% #FFF;
     padding: 0.2em 0.4em;
     border: 1px solid #000;
+    margin-bottom: 1em;
     margin-right: 1em;
     border-radius: 5px;
     font-size: 0.95em;
