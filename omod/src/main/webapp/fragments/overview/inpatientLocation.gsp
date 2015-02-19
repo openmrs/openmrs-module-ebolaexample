@@ -13,7 +13,7 @@
 
     ui.includeCss("ebolaexample", "overview/inpatientLocation.css")
 %>
-<div class="info-section">
+<div class="long-info-section">
 
     <div class="info-header">
         <i class="icon-hospital"></i>

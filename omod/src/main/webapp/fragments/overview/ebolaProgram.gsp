@@ -12,7 +12,7 @@
     ])
 %>
 
-<div class="info-section">
+<div class="long-info-section">
 
     <div class="info-header">
         <i class="icon-medkit"></i>
@@ -22,10 +22,11 @@
 
     <div class="info-body">
         <p>
+            <strong>Weight:</strong>
             <% if (mostRecentWeight) { %>
-            <strong>Weight:</strong>${ui.format(mostRecentWeight)} <small>(as of ${ui.format(mostRecentWeight.obsDatetime)})</small>
+            ${ui.format(mostRecentWeight)} <small>(as of ${ui.format(mostRecentWeight.obsDatetime)})</small>
             <% } else { %>
-            Weight: not recorded
+            not recorded
             <% } %>
         </p>
 
@@ -38,7 +39,8 @@
             <% } %>
         </p>
 
-        <p><strong>Type of Patient At Admission:</strong>
+        <p>
+            <strong>Type of Patient At Admission:</strong>
             <% if (typeOfPatient) { %>
             ${ui.format(typeOfPatient)}
             <% } else { %>
