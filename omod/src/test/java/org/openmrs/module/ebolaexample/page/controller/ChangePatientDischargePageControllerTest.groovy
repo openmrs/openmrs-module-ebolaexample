@@ -12,13 +12,10 @@ import org.openmrs.module.ebolaexample.metadata.EbolaMetadata
 import org.openmrs.module.ebolaexample.metadata.EbolaTestBaseMetadata
 import org.openmrs.module.ebolaexample.metadata.EbolaTestData
 import org.openmrs.module.ebolaexample.rest.WebMethods
-import org.openmrs.ui.framework.BasicUiUtils
-import org.openmrs.ui.framework.page.PageModel
 import org.openmrs.web.test.BaseModuleWebContextSensitiveTest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.mock.web.MockHttpServletRequest
 import org.springframework.mock.web.MockHttpServletResponse
-import org.springframework.web.bind.annotation.RequestParam
 
 import java.text.SimpleDateFormat
 
@@ -72,12 +69,12 @@ class ChangePatientDischargePageControllerTest extends BaseModuleWebContextSensi
 
         Concept concept = conceptService.getConceptByUuid("95312123-e0c2-466d-b6b1-cb6e990d0d65");
 
-        requestURI = "/ebolaexample/changePatientDischarge.page?patientUuid="+patient.getUuid();
+        requestURI = "/ebolaexample/changePatientDischarge.page?patientUuid=" + patient.getUuid();
         MockHttpServletRequest request = new MockHttpServletRequest("POST", requestURI);
 
         request.addParameter("patientUuid", patient.getUuid());
         request.addParameter("outCome", concept.getUuid());
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-mm-yyyy");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         request.addParameter("dateCompleted", simpleDateFormat.format(new Date()));
 
         response = webMethods.handle(request);

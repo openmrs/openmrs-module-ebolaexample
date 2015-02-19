@@ -77,8 +77,8 @@
 
         <% } %>
 
-        <div style="border-left: 2px none #000; float:right; width: 50%; height: 90%; vertical-align: bottom !important; display: inline-block;">
-            <span>Ebola Treatment Outcome:
+        <div style="float:right; width: 50%;">
+            <span style="display: block;">Ebola Treatment Outcome:
             <% if (currentOutcome) { %>
             ${ui.format(currentOutcome)}, ${patientProgram.dateCompleted.format('dd MMM yyyy, HH:mm')}
             <% } else { %>None<% } %>

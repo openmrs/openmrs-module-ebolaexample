@@ -1,10 +1,9 @@
 <header>
-    <patient-header patient-id="getPatientId()"
-                    patient="patient">
+    <patient-header patient-id="getPatientId()" patient="patient">
         <back-button name="{{ getWard().display }}"></back-button>
     </patient-header>
 </header>
-<span class="success-message" ng-show="comeFromPrescriptionForm">Prescription added succesfully!</span>
+<span class="success-message" ng-show="comeFromPrescriptionForm">Prescription added successfully!</span>
 <span class="success-message" ng-show="administeredDrug">
     {{ administeredDrug.order.concept | concept }} &rarr; {{ administeredDrug.dose | doseStatus }}
 </span>

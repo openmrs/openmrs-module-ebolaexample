@@ -63,15 +63,13 @@ ${ui.includeFragment("ebolaexample", "overview/patientHeader", [patient: patient
 
 <div class="container">
 
-    <a href="/${ ui.contextPath() }/ms/uiframework/resource/ebolaexample/html/tabletapp/index.html#/patients/${ patient.patient.uuid }/overview/${ patient.patient.uuid }/">
-        Add a Prescription
-    </a>
-
     <div class="dashboard clear">
 
-        <div class="info-container column">
+        <div class="long-info-container column">
             ${ui.includeFragment("ebolaexample", "overview/ebolaProgram", [patient: patient])}
         </div>
+
+        <div class="clear"></div>
 
         <div class="long-info-container column">
             ${ui.includeFragment("ebolaexample", "overview/inpatientLocation", [patient: patient, activeVisit: activeVisit])}
@@ -83,6 +81,7 @@ ${ui.includeFragment("ebolaexample", "overview/patientHeader", [patient: patient
             ${ui.includeFragment("ebolaexample", "overview/prescriptions", [patient: patient])}
             <br/>
             ${ui.includeFragment("ebolaexample", "overview/scheduledDoseHistory", [patient: patient])}
+
         </div>
 
         <div class="info-container column" style="display: none">

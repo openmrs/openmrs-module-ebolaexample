@@ -1,9 +1,9 @@
 <%
     def triageEntryLink = ui.pageLink("htmlformentryui", "htmlform/enterHtmlFormWithSimpleUi", [
-            patientId: patient.patient.uuid,
-            visitId: activeVisit?.visit?.uuid,
+            patientId           : patient.patient.uuid,
+            visitId             : activeVisit?.visit?.uuid,
             definitionUiResource: "ebolaexample:htmlforms/triage.xml",
-            returnUrl: ui.thisUrl()
+            returnUrl           : ui.thisUrl()
     ])
 
     def triageViewLink = ui.pageLink("htmlformentryui", "htmlform/viewEncounterWithHtmlForm", [
@@ -11,52 +11,57 @@
             returnUrl: ui.thisUrl()
     ])
 %>
+
 <div class="info-section">
 
     <div class="info-header">
         <i class="icon-medkit"></i>
-        <h3>${ ui.message("ebolaexample.ebolaOverview.title") }</h3>
+
+        <h3>${ui.message("ebolaexample.ebolaOverview.title")}</h3>
     </div>
 
     <div class="info-body">
-        <% if (mostRecentWeight) { %>
-            Weight: ${ ui.format(mostRecentWeight) } <small>(as of ${ ui.format(mostRecentWeight.obsDatetime) })</small>
-        <% } else { %>
-            Weight: not recorded
-        <% } %>
-
-        <p>Ebola Stage At Admission:
-            <% if(ebolaStage) { %>
-                ${ ui.format(ebolaStage)}
+        <p>
+            <% if (mostRecentWeight) { %>
+            <strong>Weight:</strong>${ui.format(mostRecentWeight)} <small>(as of ${ui.format(mostRecentWeight.obsDatetime)})</small>
             <% } else { %>
-                --
+            Weight: not recorded
             <% } %>
         </p>
 
-        <p>Type of Patient At Admission:
-            <% if(typeOfPatient) { %>
-                ${ ui.format(typeOfPatient)}
+        <p>
+            <strong>Ebola Stage At Admission:</strong>
+            <% if (ebolaStage) { %>
+            ${ui.format(ebolaStage)}
             <% } else { %>
-                --
+            --
+            <% } %>
+        </p>
+
+        <p><strong>Type of Patient At Admission:</strong>
+            <% if (typeOfPatient) { %>
+            ${ui.format(typeOfPatient)}
+            <% } else { %>
+            --
             <% } %>
         </p>
 
 
         <% if (currentEnrollment == null) { %>
-            <p>Not currently enrolled</p>
+        <p>Not currently enrolled</p>
         <% } else { %>
-            <p>Enrolled since ${ ui.format(currentEnrollment.dateEnrolled) }</p>
+        <p><strong>Enrolled since</strong> ${ui.format(currentEnrollment.dateEnrolled)}</p>
         <% } %>
 
 
         <% if (triageEncounter) { %>
-            <a href="${ triageViewLink }">
-                View Triage
-            </a>
+        <a href="${triageViewLink}">
+            View Triage
+        </a>
         <% } else if (false /* disabled */) { %>
-            <a class="big button" href="${ triageEntryLink }">
-                Triage
-            </a>
+        <a class="big button" href="${triageEntryLink}">
+            Triage
+        </a>
         <% } %>
 
     </div>
