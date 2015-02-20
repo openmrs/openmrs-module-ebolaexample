@@ -1,6 +1,7 @@
 <p class="required">
     <label>
         ${config.label}
+        <span>(${ ui.message("emr.formValidation.messages.requiredField.label") })</span>
     </label>
     <select name="${config.formFieldName}" size="4">
         <option value=""></option>
