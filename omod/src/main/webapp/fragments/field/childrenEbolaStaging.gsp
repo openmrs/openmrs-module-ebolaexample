@@ -1,4 +1,4 @@
-<p>
+<p class="required">
     <label>
         ${config.label}
     </label>
@@ -8,5 +8,5 @@
         <option value ="162830AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">2 - GI / Wet</option>
         <option value ="162831AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">3 - Severe</option>
     </select>
-
+    <span class="field-error"></span>
 </p>
