@@ -139,6 +139,20 @@
                                 }
                             ]
                         },
+                        {
+                          "legend": "Type of Patient",
+                          "fields": [
+                            {
+                              "type": "obs",
+                              "formFieldName": "obs.162828AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                              "label": "What's the type of patient at admission?",
+                              "widget": {
+                                "providerName": "ebolaexample",
+                                "fragmentId": "field/ebolaDiseaseStatus"
+                              }
+                            }
+                          ]
+                        },
                       {
                         "legend": "Stage",
                         "fields": [
@@ -149,20 +163,6 @@
                             "widget": {
                               "providerName": "ebolaexample",
                               "fragmentId": "field/childrenEbolaStaging"
-                            }
-                          }
-                        ]
-                      },
-                      {
-                        "legend": "Type of Patient",
-                        "fields": [
-                          {
-                            "type": "obs",
-                            "formFieldName": "obs.162828AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                            "label": "What's the type of patient at admission?",
-                            "widget": {
-                              "providerName": "ebolaexample",
-                              "fragmentId": "field/ebolaDiseaseStatus"
                             }
                           }
                         ]
