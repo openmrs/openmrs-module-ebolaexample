@@ -1,4 +1,4 @@
-<p class="required">
+<p>
     <label>
         ${config.label}
         <span>(${ ui.message("emr.formValidation.messages.requiredField.label") })</span>
