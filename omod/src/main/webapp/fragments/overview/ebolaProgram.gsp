@@ -25,7 +25,7 @@
             <strong>Weight:</strong>
             <em>
                 <% if (mostRecentWeight) { %>
-                ${ui.format(mostRecentWeight)} <small>(as of ${ui.format(mostRecentWeight.obsDatetime)})</small>
+                ${ui.format(mostRecentWeight)}kg <small>(as of ${ui.format(mostRecentWeight.obsDatetime)})</small>
                 <% } else { %>
                 not recorded
                 <% } %>
