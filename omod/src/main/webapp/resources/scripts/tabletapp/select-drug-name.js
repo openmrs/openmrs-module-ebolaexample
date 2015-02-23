@@ -1,6 +1,6 @@
 angular.module('select-drug-name', [ 'resources', 'ui.bootstrap' ])
 
-    .directive('selectDrugName', [ 'ConceptResource', '$timeout', function (ConceptResource, $timeout) {
+    .directive('selectDrugName', [ 'ConceptResource', '$timeout', '$state', 'CurrentSession', function (ConceptResource, $timeout, $state, CurrentSession) {
 
         return {
             restrict: 'E',
@@ -18,18 +18,24 @@ angular.module('select-drug-name', [ 'resources', 'ui.bootstrap' ])
                     return ConceptResource.query({formulary: true, q: term}).$promise.then(function (response) {
                         return response.results;
                     });
-                }
+                };
 
                 $scope.verify = function () {
                     if (!$scope.ngModel) {
                         $('#' + $scope.inputId).val('');
                     }
-                }
+                };
 
                 $scope.onSelect = function ($item, $model, $label) {
                     $timeout(function () {
                         emr.focusNextElement(element.closest('body'), element.find('#' + $scope.inputId));
                     }, 10);
+
+                    var params = $state.params;
+                    params['uuid'] = CurrentSession.getRecentWard().uuid;
+                    params['conceptUUID'] = $item.uuid;
+                    $state.go('patient.addPrescriptionRoute', params, {reload: true});
+                    $scope.ngModel = '';
                 }
             },
             template: '<input type="text" id="{{ inputId }}" ng-model="ngModel" ng-blur="verify()" ' +
