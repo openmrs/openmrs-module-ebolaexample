@@ -32,28 +32,32 @@
 
         <div style="float: left; width: 50%;" ng-app="inpatientLocation" ng-controller="InpatientLocationCtrl"
              ng-init="init({patientUuid:'${patient.patient.uuid}',
-            currentWard: <% if (currentWard) { %>{display:'${currentWard}', uuid:'${currentWard.uuid}'}<% } else { %>null<% } %>,
-            currentBed: <% if (currentBed) { %>{display:'${currentBed}', uuid:'${currentBed.uuid}'}<% } else { %>null<% } %>
+            currentWard: <% if (currentWard) { %>{display:'${currentWard}', uuid:'${currentWard.uuid}'}<%
+                 } else { %>null<% } %>,
+            currentBed: <% if (currentBed) { %>{display:'${currentBed}', uuid:'${currentBed.uuid}'}<% } else { %>null<%
+                     } %>
             })">
 
             <% if (!config.activeVisit) { %>
 
-            No active visit. <br/>
+            <em>No active visit.</em> <br/>
 
-            <a class="button" href="${ui.actionLink("ebolaexample", "overview/inpatientLocation", "startOutpatientVisit",
-                    [patient: patient.patient.uuid])}">
+            <a class="button"
+               href="${ui.actionLink("ebolaexample", "overview/inpatientLocation", "startOutpatientVisit",
+                       [patient: patient.patient.uuid])}">
                 <i class="icon-exchange"></i>
                 Outpatient visit
             </a>
 
             <% } else if (!currentWard) { %>
 
-            <p class="current-ward">Not yet admitted</p>
+            <p class="current-ward"><em>Not yet admitted</em></p>
 
             <em>(To Do: Triage form should automatically admit.)</em>
 
             <form method="POST"
-                  action="${ui.actionLink("ebolaexample", "overview/inpatientLocation", "admit", [patient: patient.patient.uuid])}">
+                  action="${
+                          ui.actionLink("ebolaexample", "overview/inpatientLocation", "admit", [patient: patient.patient.uuid])}">
                 ${ui.includeFragment("uicommons", "field/location", [
                         label        : "Admit to",
                         formFieldName: "location",
@@ -79,9 +83,11 @@
 
         <div style="float:right; width: 50%;">
             <span style="display: block;"><strong>Ebola Treatment Outcome:</strong>
-            <% if (currentOutcome) { %>
-            ${ui.format(currentOutcome)}, ${patientProgram.dateCompleted.format('dd MMM yyyy, HH:mm')}
-            <% } else { %>None<% } %>
+                <em>
+                    <% if (currentOutcome) { %>
+                    ${ui.format(currentOutcome)}, ${patientProgram.dateCompleted.format('dd MMM yyyy, HH:mm')}
+                    <% } else { %>None<% } %>
+                </em>
             </span>
 
             <% if (!currentOutcome) { %>

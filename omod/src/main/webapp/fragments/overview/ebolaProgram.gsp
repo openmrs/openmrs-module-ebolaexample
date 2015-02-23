@@ -23,38 +23,46 @@
     <div class="info-body">
         <p>
             <strong>Weight:</strong>
-            <% if (mostRecentWeight) { %>
-            ${ui.format(mostRecentWeight)} <small>(as of ${ui.format(mostRecentWeight.obsDatetime)})</small>
-            <% } else { %>
-            not recorded
-            <% } %>
+            <em>
+                <% if (mostRecentWeight) { %>
+                ${ui.format(mostRecentWeight)} <small>(as of ${ui.format(mostRecentWeight.obsDatetime)})</small>
+                <% } else { %>
+                not recorded
+                <% } %>
+            </em>
         </p>
 
         <p>
             <strong>Ebola Stage At Admission:</strong>
-            <% if (ebolaStage) { %>
-            ${ui.format(ebolaStage)}
-            <% } else { %>
-            --
-            <% } %>
+            <em>
+                <% if (ebolaStage) { %>
+                ${ui.format(ebolaStage)}
+                <% } else { %>
+                --
+                <% } %>
+            </em>
         </p>
 
         <p>
             <strong>Type of Patient At Admission:</strong>
-            <% if (typeOfPatient) { %>
-            ${ui.format(typeOfPatient)}
-            <% } else { %>
-            --
-            <% } %>
+            <em>
+                <% if (typeOfPatient) { %>
+                ${ui.format(typeOfPatient)}
+                <% } else { %>
+                --
+                <% } %>
+            </em>
         </p>
 
         <p>
             <strong>Enrollment Status:</strong>
-        <% if (currentEnrollment == null) { %>
-        Not currently enrolled
-        <% } else { %>
-        Enrolled since ${ui.format(currentEnrollment.dateEnrolled)}
-        <% } %>
+            <em>
+                <% if (currentEnrollment == null) { %>
+                Not currently enrolled
+                <% } else { %>
+                Enrolled since ${ui.format(currentEnrollment.dateEnrolled)}
+                <% } %>
+            </em>
         </p>
 
         <% if (triageEncounter) { %>
