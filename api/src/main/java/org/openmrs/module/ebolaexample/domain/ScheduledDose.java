@@ -46,8 +46,8 @@ public class ScheduledDose {
     @JoinColumn(name = "creator")
     protected User creator;
 
-    @Column(name = "voided", nullable = false)
-    private Boolean voided;
+    @Column(name = "voided", nullable = false, columnDefinition = "boolean default false")
+    private Boolean voided = false;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_voided" )
