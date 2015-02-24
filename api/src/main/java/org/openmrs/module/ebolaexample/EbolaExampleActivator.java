@@ -275,7 +275,7 @@ public class EbolaExampleActivator extends BaseModuleActivator {
         service.disableApp("coreapps.configuremetadata");
         service.disableApp("coreapps.findPatient");
         service.disableApp("coreapps.activeVisits");
-        service.disableApp("coreapps.mergePatients");
+        service.disableApp("coreapps.dataManagementApp");
         service.disableApp("referenceapplication.registrationapp.registerPatient");
         service.disableApp("referenceapplication.vitals");
     }
