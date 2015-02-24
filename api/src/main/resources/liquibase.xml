@@ -49,5 +49,18 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="ebola-update-scheduled-dose-table-edit-and-delete" author="ThoughtWorks">
+        <addColumn tableName="ebola_scheduled_dose">
+            <column name="voided" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="voided_by" type="int"/>
+            <column name="date_voided" type="datetime"/>
+        </addColumn>
+        <addForeignKeyConstraint constraintName="ebola_scheduled_dose_deleted_by_fk"
+                                 baseTableName="ebola_scheduled_dose" baseColumnNames="voided_by"
+                                 referencedTableName="users" referencedColumnNames="user_id" />
+    </changeSet>
+
 
 </databaseChangeLog>

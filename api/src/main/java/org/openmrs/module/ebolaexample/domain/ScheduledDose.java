@@ -46,6 +46,17 @@ public class ScheduledDose {
     @JoinColumn(name = "creator")
     protected User creator;
 
+    @Column(name = "voided", nullable = false)
+    private Boolean voided;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "date_voided" )
+    private Date dateVoided;
+
+    @ManyToOne
+    @JoinColumn(name = "voided_by")
+    private User voidedBy;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_created" )
     private Date dateCreated;
@@ -81,6 +92,18 @@ public class ScheduledDose {
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
     }
+
+    public User getVoidedBy() { return voidedBy; }
+
+    public void setVoidedBy(User voidedBy) { this.voidedBy = voidedBy; }
+
+    public Boolean getVoided() { return voided; }
+
+    public void setVoided(Boolean voided) { this.voided = voided; }
+
+    public Date getDateVoided() { return dateVoided; }
+
+    public void setDateVoided(Date dateVoided) { this.dateVoided = dateVoided; }
 
     public User getChangedBy() {
         return changedBy;
