@@ -84,15 +84,6 @@ ${ui.includeFragment("ebolaexample", "overview/patientHeader", [patient: patient
 
         </div>
 
-        <div class="info-container column" style="display: none">
-
-            ${ui.includeFragment("ebolaexample", "overview/inpatientFollowups", [patient: patient, activeVisit: activeVisit])}
-
-            ${ui.includeFragment("ebolaexample", "overview/mostRecentEncounter",
-                    [patient: patient, encounterType: followupEncounterType, handlebarsTemplate: "lastEncounterTemplate"])}
-
-        </div>
-
         <div class="action-container column" style="display: none">
             <div class="action-section">
                 <ul>
