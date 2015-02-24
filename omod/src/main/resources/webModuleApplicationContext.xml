@@ -10,4 +10,18 @@
 
     <bean id="ebolaPharmacyPageController"
           class="org.openmrs.module.ebolaexample.page.controller.EbolaPharmacyPageController"/>
+
+    <!-- Things to include in every UI Framework-based page -->
+    <bean class="org.openmrs.ui.framework.page.GlobalResourceIncluder">
+        <property name="resources">
+            <list>
+                <bean class="org.openmrs.ui.framework.resource.Resource">
+                    <property name="category" value="css"/>
+                    <property name="providerName" value="ebolaexample"/>
+                    <property name="resourcePath" value="styles/breadcrumbs.css"/>
+                    <property name="priority" value="-100"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
 </beans>
