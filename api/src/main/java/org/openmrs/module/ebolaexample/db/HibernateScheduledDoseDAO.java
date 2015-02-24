@@ -27,21 +27,27 @@ public class HibernateScheduledDoseDAO extends SingleClassHibernateDAO<Scheduled
     @Override
     public List<ScheduledDose> getScheduledDoseByOrderId(Order order) {
         return (List<ScheduledDose>) sessionFactory.getCurrentSession()
-                .createQuery("from ScheduledDose s where s.order = :order")
+                .createQuery("from ScheduledDose s where s.order = :order and s.voided = false")
                 .setEntity("order", order)
                 .list();
     }
 
     @Override
-    public List<ScheduledDose> getScheduledDosesByPatientAndDateRange(Patient patient, Date onOrAfter, Date onOrBefore) {
+    public List<ScheduledDose> getScheduledDosesByPatientAndDateRange(Date onOrAfter, Date onOrBefore, Patient patient, boolean includeVoided) {
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(ScheduledDose.class);
-        Query query = sessionFactory.getCurrentSession()
+        Query query = (includeVoided) ? sessionFactory.getCurrentSession()
                 .createQuery("from ScheduledDose " +
                         "where order.patient = :patient " +
                         "and scheduledDatetime between :onOrAfter and :onOrBefore")
-                .setEntity("patient", patient)
+                : sessionFactory.getCurrentSession()
+                .createQuery("from ScheduledDose " +
+                        "where order.patient = :patient " +
+                        "and voided = false and scheduledDatetime between :onOrAfter and :onOrBefore");
+
+        query.setEntity("patient", patient)
                 .setTimestamp("onOrAfter", onOrAfter)
                 .setTimestamp("onOrBefore", onOrBefore);
+
         return query.list();
 //        criteria.add(Restrictions.eq("order.patient", patient));
 //        criteria.add(Restrictions.between("scheduledDatetime", onOrAfter, DateUtil.getEndOfDayIfTimeExcluded(onOrBefore)));

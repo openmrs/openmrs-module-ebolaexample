@@ -68,8 +68,8 @@ public class PharmacyServiceImpl extends BaseOpenmrsService implements PharmacyS
         if (onOrAfter == null) {
             onOrAfter = DateUtil.adjustDate(onOrBefore, -30, DurationUnit.DAYS);
         }
-        List<ScheduledDose> doses = scheduledDoseDAO.getScheduledDosesByPatientAndDateRange(patient,
-                onOrAfter, DateUtil.getEndOfDayIfTimeExcluded(onOrBefore));
+        List<ScheduledDose> doses = scheduledDoseDAO.getScheduledDosesByPatientAndDateRange(onOrAfter, DateUtil.getEndOfDayIfTimeExcluded(onOrBefore), patient,
+                true);
 
         return new DoseHistory(orders, doses);
     }
