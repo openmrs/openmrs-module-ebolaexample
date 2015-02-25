@@ -81,7 +81,7 @@ angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "selec
                 url: "/addPrescription",
                 controller: "NewPrescriptionDetailsController",
                 templateUrl: "templates/patient/prescriptionForm.html",
-                params: { prescriptionInfo: null },
+                params: { prescriptionInfo: null, skipPrescriptionRoute: false },
                 data: {
                     requiresLogin: true,
                     activeForm: true,

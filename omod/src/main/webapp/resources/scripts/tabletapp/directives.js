@@ -18,45 +18,45 @@ angular.module("directives", [])
         this.visible = false;
         this.view = false;
 
-        this.createMask = function() {
+        this.createMask = function () {
             return $('<div>').attr('id', 'js-sidebar-service-overlay');
-        }
+        };
 
-        this.getMask = function() {
+        this.getMask = function () {
 
-            if(!self.mask){
+            if (!self.mask) {
                 this.mask = self.createMask();
 
                 $('body').append(this.mask);
             }
 
             return this.mask;
-        }
+        };
 
-        this.setView = function(value) {
+        this.setView = function (value) {
             self.view = value;
-        }
+        };
 
-        this.hide = function() {
+        this.hide = function () {
 
             self.getMask().fadeOut('fast');
 
             self.view.fadeOut('fast');
 
             self.visible = false;
-        }
+        };
 
-        this.show = function() {
+        this.show = function () {
 
             self.getMask().fadeIn('fast');
 
             self.view.fadeIn('fast');
             self.visible = true;
-        }
+        };
 
-        this.toggle = function() {
+        this.toggle = function () {
             self[self.visible ? 'hide' : 'show']();
-        }
+        };
 
         this.getActionElements = function() {
             return self.view.find(".actions-list li button");

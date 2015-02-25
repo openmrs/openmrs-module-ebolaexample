@@ -160,7 +160,7 @@ describe('prescriptions', function () {
             scope.$digest();
 
             expect(state.go).toHaveBeenCalledWith('patient.addPrescriptionDetails',
-                { prescriptionInfo: justOneDrugResponse.results[0] });
+                { prescriptionInfo: justOneDrugResponse.results[0], skipPrescriptionRoute: true });
         });
 
     });
@@ -180,7 +180,8 @@ describe('prescriptions', function () {
             expectedOrderPost,
             initController,
             state,
-            injector;
+            injector,
+            window;
 
         beforeEach(function () {
             expectedOrderPost = {
@@ -207,7 +208,7 @@ describe('prescriptions', function () {
                 form: {$valid: true}
             };
 
-            inject(function ($state, $controller, $rootScope, $httpBackend, $injector) {
+            inject(function ($state, $controller, $rootScope, $httpBackend, $injector, $window) {
                 httpMock = $httpBackend;
                 scope = $rootScope.$new();
                 scope.addOrder = {};
@@ -215,6 +216,8 @@ describe('prescriptions', function () {
                 httpMock.flush();
                 state = $state;
                 spyOn(state, 'go');
+                window = $window;
+                spyOn(window.history, 'back');
                 injector = $injector;
                 httpMock.when('POST', apiUrl + 'encounter').respond(encounterResponseStub);
                 httpMock.when('POST', apiUrl + 'order').respond(orderResponseStub);
@@ -387,6 +390,25 @@ describe('prescriptions', function () {
             httpMock.verifyNoOutstandingRequest();
         });
 
+        it('should return to drug selection state when there is only one route', function() {
+            httpMock.expectGET(apiUrl + 'drug/1234').respond({info: "Some drug info"});
+            initController({prescriptionInfo: {uuid: "1234"}, skipPrescriptionRoute: true});
+            httpMock.flush();
+
+            scope.goToPrev();
+
+            expect(state.go).toHaveBeenCalledWith('patient.addPrescription', {});
+        });
+
+        it('should return to route selection state when there is more than one route', function() {
+            httpMock.expectGET(apiUrl + 'drug/1234').respond({info: "Some drug info"});
+            initController({prescriptionInfo: {uuid: "1234"}, skipPrescriptionRoute: false});
+            httpMock.flush();
+
+            scope.goToPrev();
+
+            expect(window.history.back).toHaveBeenCalled();
+        });
     });
 
     describe('EditPrescriptionDetailsController', function () {

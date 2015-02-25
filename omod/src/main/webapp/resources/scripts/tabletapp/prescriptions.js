@@ -1,12 +1,19 @@
 angular.module("prescriptions", ["tabletapp", "constants", "patients", "filters", "constants"])
 
-    .controller("NewPrescriptionDetailsController", ["$state", "$scope", "PrescriptionService", "PrescriptionSetup",
-        function ($state, $scope, PrescriptionService, PrescriptionSetup) {
+    .controller("NewPrescriptionDetailsController", ["$state", "$scope", "$window", "PrescriptionService", "PrescriptionSetup",
+        function ($state, $scope, $window, PrescriptionService, PrescriptionSetup) {
             var drug = PrescriptionSetup.buildDrug($state, $scope);
             PrescriptionSetup.setupScopeConstants($scope, $state.params.prescriptionInfo.uuid);
             PrescriptionSetup.setupStandardFunctions($scope);
             PrescriptionSetup.setupDrugOrder($scope, drug, $scope.patient);
             $scope.save = PrescriptionService.buildSaveHandler($scope, $state);
+            $scope.goToPrev = function () {
+                if ($state.params.skipPrescriptionRoute) {
+                    $state.go('patient.addPrescription', {});
+                } else {
+                    $window.history.back();
+                }
+            };
         }])
 
     .controller("EditPrescriptionDetailsController", ["$state", "$scope", "PrescriptionService",
@@ -150,7 +157,7 @@ angular.module("prescriptions", ["tabletapp", "constants", "patients", "filters"
             function loadDrugs(conceptUUID) {
                 DrugResource.query({concept: conceptUUID, v: 'full'}, function (response) {
                     if (response.results.length == 1) {
-                        $state.go('patient.addPrescriptionDetails', {prescriptionInfo: response.results[0]});
+                        $state.go('patient.addPrescriptionDetails', {prescriptionInfo: response.results[0], skipPrescriptionRoute: true});
                         return;
                     }
                     var results = _.map(response.results, function(drug) {
