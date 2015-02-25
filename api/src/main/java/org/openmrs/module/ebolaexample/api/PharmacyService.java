@@ -15,6 +15,7 @@ public interface PharmacyService extends OpenmrsService {
     @Transactional
     ScheduledDose saveScheduledDose(ScheduledDose dose);
 
+    /** Also returns voided values */
     @Transactional(readOnly = true)
     List<ScheduledDose> getAllScheduledDoses();
 

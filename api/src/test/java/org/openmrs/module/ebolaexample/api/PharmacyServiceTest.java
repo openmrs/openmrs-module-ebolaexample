@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.hamcrest.core.Is.is;
@@ -51,6 +52,21 @@ public class PharmacyServiceTest extends BaseModuleContextSensitiveTest {
 
         DoseHistory doseHistory = pharmacyService.getScheduledDosesByPatientAndDateRange(patient, date("2015-01-01 00:00"), date("2015-01-07 23:59"));
         assertThat(doseHistory.getDoses(), contains(is(dose1), is(dose2), is(dose3)));
+    }
+
+    @Test
+    public void testGetAllScheduledDoses() throws Exception {
+        DrugOrder order = (DrugOrder) orderService.getOrder(1);
+        DrugOrder orderForOtherPatient = (DrugOrder) orderService.getOrder(2);
+
+        ScheduledDose dose1 = createDose(order, "2015-01-02 09:00");
+        ScheduledDose dose2 = createDose(order, "2015-01-02 17:00");
+        ScheduledDose dose3 = createDose(order, "2015-01-03 09:15");
+        ScheduledDose dose4 = createDose(order, "2015-01-13 09:15");
+        ScheduledDose dose5 = createDose(orderForOtherPatient, "2015-01-02 09:00");
+
+        List<ScheduledDose> allScheduledDoses = pharmacyService.getAllScheduledDoses();
+        assertThat(allScheduledDoses, contains(dose1, dose2, dose3, dose4, dose5));
     }
 
     private ScheduledDose createDose(DrugOrder order, String ymdhm) throws ParseException {
