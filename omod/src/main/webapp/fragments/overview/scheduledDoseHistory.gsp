@@ -55,6 +55,7 @@
         <i class="icon-medkit"></i>
 
         <h3>Med Administration</h3>
+        <a style="float: right" href="">Modify Data</a>
     </div>
 
     <div class="info-body">
