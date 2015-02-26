@@ -52,6 +52,17 @@ angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "selec
                     }
                 }
             })
+            .state("patient.overview2", {
+                url: "/overview2/:patientUUID/:wardUUID",
+                templateUrl: "templates/patient/overview.html",
+                data: {
+                    requiresLogin: true,
+                    activeForm: false,
+                    back: {
+                        target: "ward"
+                    }
+                }
+            })
             .state("patient.addPrescription", {
                 url: "/addPrescription",
                 templateUrl: "templates/patient/newPrescription.html",

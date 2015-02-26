@@ -72,7 +72,16 @@
 
             <p class="current-ward">${ui.format(currentWard)},
                 <span class="current-bed">${currentBed ? ui.format(currentBed) : "(No Bed)"}</span>
-            </p>
+
+            <div style="margin-top:1px; margin-right: 10px; float: right;">
+                <a class="button"
+                   href="/${ui.contextPath()}/ms/uiframework/resource/ebolaexample/html/tabletapp/index.html#/patients/${
+                           patient.patient.uuid}/overview2/${patient.patient.uuid}/${currentWard.uuid}">
+                    <b>Actions</b>
+                </a>
+            </div>
+
+        </p>
 
             <a class="button" ng-click="changeLocationPatient()">Change</a>
 

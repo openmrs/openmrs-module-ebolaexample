@@ -1,26 +1,26 @@
 angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "session", "filters"])
 
-    .controller("ListWardsController", [ "$scope", "WardResource", function ($scope, WardResource) {
+    .controller("ListWardsController", ["$scope", "WardResource", function ($scope, WardResource) {
 
         $scope.suspectWards = [];
         $scope.confirmedWards = [];
         $scope.recoveryWards = [];
         $scope.loading = true;
 
-        WardResource.query({ v: "default" }, function (response) {
+        WardResource.query({v: "default"}, function (response) {
             var results = response.results;
-            $scope.suspectWards = _.where(results, { type: "suspect"});
-            $scope.confirmedWards = _.where(results, { type: "confirmed"});
-            $scope.recoveryWards = _.where(results, { type: "recovery"});
+            $scope.suspectWards = _.where(results, {type: "suspect"});
+            $scope.confirmedWards = _.where(results, {type: "confirmed"});
+            $scope.recoveryWards = _.where(results, {type: "recovery"});
             $scope.loading = false;
         });
     }])
 
-    .controller("WardController", [ "$state", "$scope", "WardResource", "CurrentSession",
+    .controller("WardController", ["$state", "$scope", "WardResource", "CurrentSession",
         function ($state, $scope, WardResource, CurrentSession) {
             $scope.loading = true;
             var wardId = $state.params.uuid;
-            $scope.ward = WardResource.get({ uuid: wardId }, function (response) {
+            $scope.ward = WardResource.get({uuid: wardId}, function (response) {
                 CurrentSession.setRecentWard(response.toJSON());
                 $scope.loading = false;
             });
@@ -43,25 +43,37 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             };
         }])
 
-    .controller("PatientController", [ "$state", "$scope", "PatientResource", "OrderResource", "ngDialog",
+    .controller("PatientController", ["$state", "$scope", "PatientResource", "OrderResource", "ngDialog",
         "$rootScope", "Constants", "ScheduledDoseResource", "CurrentSession", "StopOrderService",
-        "Orders", "DoseHistory",
+        "Orders", "DoseHistory", "WardResource",
         function ($state, $scope, PatientResource, OrderResource, ngDialog, $rootScope, Constants,
-                  ScheduledDoseResource, CurrentSession, StopOrderService, Orders, DoseHistory) {
+                  ScheduledDoseResource, CurrentSession, StopOrderService, Orders, DoseHistory, WardResource) {
+
             var patientUuid = $state.params.patientUUID;
+            var wardUuid = $state.params.wardUUID;
             $scope.hasErrors = false;
-            $scope.patient = PatientResource.get({ uuid: patientUuid });
+            $scope.patient = PatientResource.get({uuid: patientUuid});
+
+            if (wardUuid) {
+                $scope.ward = WardResource.get({uuid: wardUuid}, function (response) {
+                    var recentWard = response.toJSON();
+                    CurrentSession.setRecentWard(recentWard);
+                    $scope.loading = false;
+                });
+            }
+
+            $scope.backButtonText = "Some Text";
 
             Orders.reload($scope, patientUuid);
-            $scope.$watch(Orders.get, function(newOrders) {
+            $scope.$watch(Orders.get, function (newOrders) {
                 $scope.orders = newOrders;
             }, true);
-            $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+            $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
                 $rootScope.clearMessages();
                 $rootScope.comeFromPrescriptionForm = $state.params.prescriptionSuccess == 'true' && fromState && fromState.name == 'patient.addPrescriptionDetails';
             });
 
-            $rootScope.clearMessages = function() {
+            $rootScope.clearMessages = function () {
                 $rootScope.comeFromPrescriptionForm = null;
                 $rootScope.administeredDrug = null;
             }
@@ -73,14 +85,16 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             }
 
             $scope.doseHistory = DoseHistory.reload($scope, patientUuid);
-            $scope.$watch(DoseHistory.get, function(newDoseHistory) {
+            $scope.$watch(DoseHistory.get, function (newDoseHistory) {
                 $scope.doseHistory = newDoseHistory;
             }, true);
-            $scope.lastGiven = function(order) {
+            $scope.lastGiven = function (order) {
                 if (!$scope.doseHistory || !order) {
                     return null;
                 }
-                var item = _.find($scope.doseHistory.dosesByOrder, function(it) { return it.order.uuid == order.uuid });
+                var item = _.find($scope.doseHistory.dosesByOrder, function (it) {
+                    return it.order.uuid == order.uuid
+                });
                 if (item) {
                     return mostRecentDose(item.doses);
                 }
@@ -167,15 +181,15 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
 
             $scope.stopOrder = StopOrderService.stopOrder;
 
-            $scope.editOrder = function(order) {
-                $state.go('patient.editPrescriptionDetails', { orderUuid: order.uuid });
+            $scope.editOrder = function (order) {
+                $state.go('patient.editPrescriptionDetails', {orderUuid: order.uuid});
             }
 
-            $scope.showStoppingError = function() {
+            $scope.showStoppingError = function () {
                 $scope.problemStopping = true;
             }
 
-            $scope.onStopOrderSuccess = function() {
+            $scope.onStopOrderSuccess = function () {
                 $scope.closeThisDialog();
                 Orders.reload($scope, patientUuid);
             }
@@ -191,16 +205,16 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                 });
             };
 
-            $scope.openAddNewPrescriptionForm = function() {
+            $scope.openAddNewPrescriptionForm = function () {
                 $state.go('patient.addPrescription');
             }
 
-            $scope.hasActiveForm = function() {
+            $scope.hasActiveForm = function () {
                 return $state.current.data && $state.current.data.activeForm;
             }
 
-            $scope.goToLaptopPatientSummary = function() {
-                location.href = emr.pageLink("ebolaexample", "ebolaOverview", { patient: patientUuid });
+            $scope.goToLaptopPatientSummary = function () {
+                location.href = emr.pageLink("ebolaexample", "ebolaOverview", {patient: patientUuid});
             }
 
         }])
@@ -209,6 +223,7 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
         var activeOnly = true;
         var cachedActive;
         var cachedPast;
+
         function sortable(date) {
             // Handle case where client and server aren't using the same timezone.
             // (I'm sure there's a better way to do this, but I have no internet now and can't search)
@@ -224,9 +239,10 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             ret += date.getUTCSeconds() < 10 ? ("0" + date.getUTCSeconds()) : date.getUTCSeconds();
             return ret;
         }
+
         function decorateOrders(orders) {
             var now = sortable(new Date());
-            return _.map(orders, function(order) {
+            return _.map(orders, function (order) {
                 order.actualStopDate = order.dateStopped ? order.dateStopped : (
                     order.autoExpireDate && sortable(order.autoExpireDate) <= now ?
                         order.autoExpireDate :
@@ -235,16 +251,17 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                 return order;
             });
         }
+
         return {
             reload: function (scope, patientUuid) {
                 scope.loading = true;
-                OrderResource.query({ t: "drugorder", v: 'full', patient: patientUuid }, function (response) {
+                OrderResource.query({t: "drugorder", v: 'full', patient: patientUuid}, function (response) {
                     scope.loading = false;
                     cachedActive = decorateOrders(response.results);
 
                 });
                 scope.loadingPastOrders = true;
-                OrderResource.query({ t: "drugorder", v: 'full', patient: patientUuid, expired: true}, function (response) {
+                OrderResource.query({t: "drugorder", v: 'full', patient: patientUuid, expired: true}, function (response) {
                     scope.loadingPastOrders = false;
                     cachedPast = decorateOrders(response.results);
                 });
@@ -255,7 +272,7 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             getActiveOnly: function () {
                 return activeOnly;
             },
-            get: function() {
+            get: function () {
                 var orders;
                 if (activeOnly) {
                     orders = cachedActive;
@@ -265,16 +282,16 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                 var grouped;
                 if (orders) {
                     orders = _.sortBy(orders, 'dateActivated').reverse();
-                    var drugs = _.map(_.uniq(_.pluck(_.pluck(orders, 'drug'), 'uuid')), function(uuid) {
+                    var drugs = _.map(_.uniq(_.pluck(_.pluck(orders, 'drug'), 'uuid')), function (uuid) {
                         return {
                             uuid: uuid,
                             orders: []
                         }
                     });
-                    _.each(orders, function(order) {
+                    _.each(orders, function (order) {
                         _.findWhere(drugs, {uuid: order.drug.uuid}).orders.push(order);
                     });
-                    grouped = _.sortBy(drugs, function(group) {
+                    grouped = _.sortBy(drugs, function (group) {
                         return group.orders[0].dateActivated;
                     }).reverse();
                 }
@@ -290,7 +307,7 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
     .factory("DoseHistory", ['DoseHistoryResource', function (DoseHistoryResource) {
         var cachedDoses;
         return {
-            reload: function(scope, patientUuid) {
+            reload: function (scope, patientUuid) {
                 scope.loadingDoseHistory = true;
                 return DoseHistoryResource.query({uuid: patientUuid}, function (response) {
                     scope.loadedDoseHistory = true;
@@ -298,7 +315,7 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                     cachedDoses = response;
                 });
             },
-            get: function() {
+            get: function () {
                 return cachedDoses;
             }
         }
@@ -319,10 +336,10 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                             "encounter": encounter.uuid,
                             "careSetting": Constants.careSetting.inpatient,
                             "orderer": sessionInfo["provider"]["uuid"],
-                             "dosingType": Constants.dosingType.unvalidatedFreeText
+                            "dosingType": Constants.dosingType.unvalidatedFreeText
                         };
 
-                        if(order.drug) {
+                        if (order.drug) {
                             orderJson["drug"] = order.drug.uuid;
                         } else {
                             orderJson["concept"] = order.concept.uuid;
@@ -330,7 +347,7 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
 
                         new OrderResource(orderJson).$save().then(function (order) {
                             success();
-                        }, function(response) {
+                        }, function (response) {
                             error();
                         });
                     });

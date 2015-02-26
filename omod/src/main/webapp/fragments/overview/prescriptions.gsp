@@ -67,13 +67,6 @@
         ${ui.message("coreapps.none")}
         <% } %>
 
-
-        <div style="margin-top:10px; float: right;">
-            <a class="button" href="/${ui.contextPath()}/ms/uiframework/resource/ebolaexample/html/tabletapp/index.html#/patients/${patient.patient.uuid}/overview/${patient.patient.uuid}/">
-                Add a Prescription
-            </a>
-        </div>
-
         <div style="clear:both;"></div>
     </div>
 
