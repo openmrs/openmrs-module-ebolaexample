@@ -37,7 +37,7 @@ public class DrugImporter {
 
     public static final String KERRY_TOWN_EBOLA_INSTALLED_DRUG_LIST_VERSION = "kerryTown.ebola.installedDrugListVersion";
 
-    public static final Integer DRUG_LIST_VERSION = 1;
+    public static final Integer DRUG_LIST_VERSION = 2;
 
     public DrugImporter() {
 

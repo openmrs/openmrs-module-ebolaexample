@@ -607,6 +607,12 @@ angular.module("constants", [])
                 },
                 "4147feff-1962-4fbb-b523-0e58551b9eef": {
                     allowedDoseUnits: [tablets, mg]
+                },
+                "a0f0a008-747a-42f5-8052-decd5013cfff": {
+                    allowedDoseUnits: [tablets, mg]
+                },
+                "4147feff-1962-4fbb-b523-0e58551b9fff": {
+                    allowedDoseUnits: [mg, mgkg, mL, mLkg]
                 }
             }
         }
