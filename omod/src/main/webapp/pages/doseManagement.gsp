@@ -1,6 +1,9 @@
 <%
     def timeFormat = new java.text.SimpleDateFormat("d MMM yyyy HH:mm")
 
+    def DateUtil = context.loadClass("org.openmrs.module.reporting.common.DateUtil")
+    def today = DateUtil.getStartOfDay(new Date())
+
     def formatStatus = {
         def ret = it.name()
         if (ret == 'FULL') {
@@ -102,7 +105,7 @@ ${ui.includeFragment("ebolaexample", "overview/patientHeader", [patient: patient
                                 ${formatStatus(dose.status)}
                             </td>
                             <td>
-                                <a href="">Delete</a>
+                                <a href="${ ui.actionLink("ebolaexample", "overview/doseManagement", "delete", [ scheduledDoseId: dose.scheduledDoseId, dateVoided: today, voidedBy: context.authenticatedUser.id]) }">Delete</a>
                                 <a href="">Edit</a>
                             </td>
                         </tr>
