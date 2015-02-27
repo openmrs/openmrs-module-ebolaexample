@@ -7,10 +7,13 @@ import org.openmrs.module.appui.UiSessionContext;
 import org.openmrs.module.coreapps.contextmodel.PatientContextModel;
 import org.openmrs.module.coreapps.contextmodel.VisitContextModel;
 import org.openmrs.module.ebolaexample.api.BedAssignmentService;
+import org.openmrs.module.ebolaexample.api.PharmacyService;
+import org.openmrs.module.ebolaexample.pharmacy.DoseHistory;
 import org.openmrs.module.emrapi.adt.AdtService;
 import org.openmrs.module.emrapi.patient.PatientDomainWrapper;
 import org.openmrs.module.emrapi.visit.VisitDomainWrapper;
 import org.openmrs.module.reporting.common.DateUtil;
+import org.openmrs.module.reporting.common.DurationUnit;
 import org.openmrs.ui.framework.annotation.InjectBeans;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.page.PageModel;
@@ -25,6 +28,7 @@ public class DoseManagementPageController {
                     @InjectBeans PatientDomainWrapper patientDomainWrapper,
                     @SpringBean AdtService adtService,
                     @SpringBean BedAssignmentService bedAssignmentService,
+                    @SpringBean PharmacyService pharmacyService,
                     UiSessionContext sessionContext,
                     PageModel model) {
 
@@ -45,6 +49,10 @@ public class DoseManagementPageController {
         contextModel.put("patient", new PatientContextModel(patient));
         contextModel.put("visit", activeVisit == null ? null : new VisitContextModel(activeVisit));
         model.addAttribute("appContextModel", contextModel);
+
+        Date fromDate = DateUtil.getStartOfDay(DateUtil.adjustDate(toDate, -6, DurationUnit.DAYS));
+        DoseHistory doseHistory = pharmacyService.getScheduledDosesByPatientAndDateRange(patientDomainWrapper.getPatient(), fromDate, toDate);
+        model.addAttribute("doseHistory", doseHistory);
     }
 
     private VisitDomainWrapper getActiveVisit(Patient patient, AdtService adtService, UiSessionContext sessionContext) {

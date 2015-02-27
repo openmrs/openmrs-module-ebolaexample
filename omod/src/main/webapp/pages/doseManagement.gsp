@@ -40,12 +40,42 @@ ${ui.includeFragment("ebolaexample", "overview/patientHeader", [patient: patient
             <div class="long-info-section">
                 <div class="info-header">
                     <i class="icon-medkit"></i>
+
                     <h3>Med Administration</h3>
-                    <a style="float: right"  href="${ui.pageLink("ebolaexample", "doseManagement", [patient: patient.patient.uuid])}">Modify Data</a>
+                    <a style="float: right"
+                       href="${ui.pageLink("ebolaexample", "doseManagement", [patient: patient.patient.uuid])}">Modify Data</a>
                 </div>
+
                 <div class="info-body">
                     <table>
-
+                        <% if (doseHistory.orders.size() == 0) { %>
+                        <tbody>
+                        <tr>
+                            <td>No prescriptions during this time period</td>
+                        </tr>
+                        </tbody>
+                        <% } %>
+                        <tr>
+                            <th>Prescription</th>
+                            <th>Modify Data</th>
+                        </tr>
+                        <% doseHistory.ordersGroupedByDrug.each { group -> %>
+                        <tbody>
+                        <tr class="group">
+                            <td>
+                                <strong>
+                                    ${ui.format(group.key.concept)}
+                                </strong>
+                                <em>
+                                    ${ui.format(group.key)}
+                                </em>
+                            </td>
+                            <td>
+                                <a href="">Add</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                        <% } %>
                     </table>
                 </div>
             </div>
