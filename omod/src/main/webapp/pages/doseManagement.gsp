@@ -1,4 +1,18 @@
 <%
+    def timeFormat = new java.text.SimpleDateFormat("d MMM yyyy HH:mm")
+
+    def formatStatus = {
+        def ret = it.name()
+        if (ret == 'FULL') {
+            return "Fully Given"
+        } else if (ret == 'PARTIAL') {
+            return "Partially Given"
+        } else if (ret == 'NOT_GIVEN') {
+            return "Not Given"
+        }
+        return ret;
+    }
+
     ui.includeCss("ebolaexample", "overview/ebolaOverview.css")
     ui.decorateWith("appui", "standardEmrPage")
 %>
@@ -74,6 +88,26 @@ ${ui.includeFragment("ebolaexample", "overview/patientHeader", [patient: patient
                                 <a href="">Add</a>
                             </td>
                         </tr>
+                        <% group.key.each { drug -> %>
+                        <% if (doseHistory.getDosesForDrug(drug).size() == 0) { %>
+                        <tr>
+                            <td>No doses</td>
+                            <td></td>
+                        </tr>
+                        <% } %>
+                        <% doseHistory.getDosesForDrug(drug).each { dose -> %>
+                        <tr>
+                            <td>
+                                ${timeFormat.format(dose.scheduledDatetime)}
+                                ${formatStatus(dose.status)}
+                            </td>
+                            <td>
+                                <a href="">Delete</a>
+                                <a href="">Edit</a>
+                            </td>
+                        </tr>
+                        <% } %>
+                        <% } %>
                         </tbody>
                         <% } %>
                     </table>

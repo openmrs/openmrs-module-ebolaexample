@@ -1,5 +1,6 @@
 package org.openmrs.module.ebolaexample.pharmacy;
 
+import org.hamcrest.core.Is;
 import org.junit.Test;
 import org.openmrs.Concept;
 import org.openmrs.Drug;
@@ -33,6 +34,30 @@ public class DoseHistoryTest {
         assertThat(map.get(o1).size(), is(1));
         assertThat(map.get(o2).size(), is(2));
         assertThat(map.get(o3).size(), is(4));
+    }
+
+    @Test
+    public void testDosesByDrug() throws Exception {
+        Drug drug1 = new Drug();
+        drug1.setId(1);
+
+        Drug drug2 = new Drug();
+        drug1.setId(2);
+
+        DrugOrder o1 = new DrugOrder();
+        o1.setDrug(drug1);
+
+        DrugOrder o2 = new DrugOrder();
+        o2.setDrug(drug1);
+
+        DrugOrder o3 = new DrugOrder();
+        o3.setDrug(drug2);
+
+        List<ScheduledDose> doses = doses(o1, o2, o3, o2, o3, o3, o3);
+        DoseHistory doseHistory = new DoseHistory(null, doses);
+
+        List<ScheduledDose> dosesForDrug1 = doseHistory.getDosesForDrug(drug1);
+        assertThat(dosesForDrug1.size(), is(3));
     }
 
     private List<ScheduledDose> doses(DrugOrder... drugOrders) {

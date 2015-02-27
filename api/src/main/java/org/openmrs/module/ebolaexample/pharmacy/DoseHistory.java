@@ -46,6 +46,16 @@ public class DoseHistory {
         return list;
     }
 
+    public List<ScheduledDose> getDosesForDrug(Drug drug) {
+        List<ScheduledDose> list = new ArrayList<ScheduledDose>();
+        for (ScheduledDose candidate : doses) {
+            if (candidate.getOrder().getDrug().equals(drug)) {
+                list.add(candidate);
+            }
+        }
+        return list;
+    }
+
     public Map<DrugOrder, List<ScheduledDose>> getDosesByOrder() {
         Map<DrugOrder, List<ScheduledDose>> map = new HashMap<DrugOrder, List<ScheduledDose>>();
         for (ScheduledDose dose : doses) {
