@@ -52,6 +52,11 @@
         org.openmrs.module.ebolaexample.domain
     </packagesWithMappedClasses>
 
+    <!-- Hibernate mapping files -->
+    <mappingFiles>
+        <mapping resource="hibernate/IvFluidOrder.hbm.xml" />
+    </mappingFiles>
+
 	<!-- Internationalization -->
 	<!-- All message codes should start with ${project.parent.artifactId}. -->
 	<messages>

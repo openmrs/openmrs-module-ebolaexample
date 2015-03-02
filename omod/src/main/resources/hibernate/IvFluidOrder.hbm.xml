@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <joined-subclass name="org.openmrs.module.ebolaexample.domain.IvFluidOrder"
+                     extends="org.openmrs.Order"
+                     table="ebola_iv_fluid_order">
+
+        <key column="order_id"/>
+
+        <many-to-one name="route" class="org.openmrs.Concept" column="route"/>
+        <property name="administrationType" type="strring" column="adm_type" length="255" not-null="true"/>
+        <property name="bolusQuantity" type="double" column="bolus_quantity" length="22"/>
+        <many-to-one name="bolusUnits" class="org.openmrs.Concept" column="bolus_units"/>
+        <property name="infusionRate" type="double" column="infusion_rate" length="22"/>
+        <many-to-one name="infusionRateNumeratorUnit" class="org.openmrs.Concept" column="inf_rate_numerator_unit"/>
+        <many-to-one name="infusionRateDenominatorUnit" class="org.openmrs.Concept" column="inf_rate_denominator_unit"/>
+        <property name="duration" type="int" column="duration"/>
+        <many-to-one name="durationUnits" class="org.openmrs.Concept" column="duration_units"/>
+        <property name="comments" type="string" column="comments" length="255"/>
+    </joined-subclass>
+
+</hibernate-mapping>

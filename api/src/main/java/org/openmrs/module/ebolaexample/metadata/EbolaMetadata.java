@@ -1,15 +1,13 @@
 package org.openmrs.module.ebolaexample.metadata;
 
 import org.apache.commons.lang.StringUtils;
-import org.openmrs.Concept;
-import org.openmrs.ConceptAnswer;
-import org.openmrs.GlobalProperty;
-import org.openmrs.OrderFrequency;
+import org.openmrs.*;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.OrderService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.ebolaexample.customdatatype.datatype.LocationDatatype;
+import org.openmrs.module.ebolaexample.domain.IvFluidOrder;
 import org.openmrs.module.emrapi.EmrApiConstants;
 import org.openmrs.module.metadatadeploy.bundle.AbstractMetadataBundle;
 import org.openmrs.util.OpenmrsConstants;
@@ -92,6 +90,10 @@ public class EbolaMetadata extends AbstractMetadataBundle {
         public static final String NEXT_OF_KIN_PHONE = "b0022b40-9d22-11e4-b773-e0fe58bba1f4";
     }
 
+    public static class _OrderType {
+        public static final String IV_FLUID_ORDER_TYPE_UUID = "95c340f8-fff2-4384-a010-be7ca609d442";
+    }
+
     private void maybeSetGP(AdministrationService service, String prop, String val) {
         GlobalProperty gp = service.getGlobalPropertyObject(prop);
         if (gp == null) {
@@ -116,6 +118,12 @@ public class EbolaMetadata extends AbstractMetadataBundle {
                 }
             }
         }
+    }
+
+    private OrderType orderType(String name, String description, String uuid) {
+        OrderType orderType = new OrderType(name, description, IvFluidOrder.class.getName());
+        orderType.setUuid(uuid);
+        return orderType;
     }
 
     @Override
@@ -161,6 +169,8 @@ public class EbolaMetadata extends AbstractMetadataBundle {
         maybeSetGP(administrationService, OpenmrsConstants.GP_DRUG_DISPENSING_UNITS_CONCEPT_UUID, "162402AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         maybeSetGP(administrationService, OpenmrsConstants.GP_DURATION_UNITS_CONCEPT_UUID, "1732AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         ensureOrderFrequencies(Context.getOrderService(), Context.getConceptService(), "160855AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+
+        install(orderType("IV Fluid Order", "Order type for IV fluid orders", _OrderType.IV_FLUID_ORDER_TYPE_UUID));
     }
 
 }
