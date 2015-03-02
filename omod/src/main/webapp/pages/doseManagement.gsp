@@ -105,7 +105,7 @@ ${ui.includeFragment("ebolaexample", "overview/patientHeader", [patient: patient
                                 ${formatStatus(dose.status)}
                             </td>
                             <td>
-                                <a href="${ ui.actionLink("ebolaexample", "overview/doseManagement", "delete", [ scheduledDoseId: dose.scheduledDoseId, dateVoided: today, voidedBy: context.authenticatedUser.id]) }">Delete</a>
+                                <a href="${ ui.actionLink("ebolaexample", "overview/doseManagement", "delete", [ scheduledDoseUuid: dose.uuid]) }">Delete</a>
                                 <a href="">Edit</a>
                             </td>
                         </tr>
