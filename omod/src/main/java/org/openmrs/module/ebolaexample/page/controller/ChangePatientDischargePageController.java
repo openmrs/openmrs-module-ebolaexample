@@ -1,11 +1,7 @@
 package org.openmrs.module.ebolaexample.page.controller;
 
 import org.apache.commons.lang.StringUtils;
-import org.openmrs.Concept;
-import org.openmrs.Patient;
-import org.openmrs.PatientProgram;
-import org.openmrs.Program;
-import org.openmrs.Visit;
+import org.openmrs.*;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.PatientService;
 import org.openmrs.api.ProgramWorkflowService;
@@ -20,12 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class ChangePatientDischargePageController {
@@ -79,12 +70,10 @@ public class ChangePatientDischargePageController {
                 model.put("error", "Patient program not found");
             }
 
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            dateCompleted = getCompletedDate(dateCompleted, patientProgram);
 
-            String dateCompletedStr = simpleDateFormat.format(dateCompleted);
-            String dateEnrolledStr = simpleDateFormat.format(patientProgram.getDateEnrolled());
-            if (dateCompletedStr.equalsIgnoreCase(dateEnrolledStr)) {
-                dateCompleted = new Date();
+            if(outcome!= null && (OutComeType.DiedOnWard.toString().equals(outcome.toString()) || OutComeType.DeadOnArrival.toString().equals(outcome.toString()))){
+                SetPatientDead(patientService, dateCompleted, patient, outcome);
             }
 
             patientProgram.setOutcome(outcome);
@@ -100,7 +89,7 @@ public class ChangePatientDischargePageController {
 
             model.put("success", "Discharge information modified successfully");
 
-        } catch (Exception e) {
+        } catch (Exception e)   {
             System.out.println("Error: " + e.getMessage());
             model.put("error", e.getMessage());
             preparePageModel(patientService, programWorkflowService, conceptService, ui, patientUuid, model);
@@ -110,6 +99,24 @@ public class ChangePatientDischargePageController {
         Map<String, Object> args = new HashMap<String, Object>();
         args.put("patient", patient);
         return "redirect:" + ui.pageLink("ebolaexample", "ebolaOverview", args);
+    }
+
+    private Date getCompletedDate(Date dateCompleted, PatientProgram patientProgram) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        String dateCompletedStr = simpleDateFormat.format(dateCompleted);
+        String dateEnrolledStr = simpleDateFormat.format(patientProgram.getDateEnrolled());
+        if (dateCompletedStr.equalsIgnoreCase(dateEnrolledStr)) {
+            dateCompleted = new Date();
+        }
+        return dateCompleted;
+    }
+
+    private void SetPatientDead(PatientService patientService, Date deathDate, Patient patient, Concept outcome) {
+        patient.setDead(true);
+        patient.setDeathDate(deathDate);
+        patient.setCauseOfDeath(outcome);
+        patientService.savePatient(patient);
     }
 
     public static PatientProgram getPatientProgram(Patient patient, ProgramWorkflowService programWorkflowService) {
@@ -123,16 +130,35 @@ public class ChangePatientDischargePageController {
         return visits.size() > 0 ? visits.get(0) : null;
     }
 
+    enum OutComeType{
+        SuspectedNegativeAndDischarged(162684),
+        CuredAndDischarged(159791),
+        DischargedAgainstMedicalAdvice(1694),
+        SuspectReferredToOtherFacility(142177),
+        ConfirmedCaseTransferredToOtherFacility(159392),
+        DiedOnWard(160034),
+        DeadOnArrival(142934);
+
+        private int outComeId;
+
+        private OutComeType(int outComeId) {
+            this.outComeId = outComeId;
+        }
+
+        @Override
+        public String toString(){
+            return String.valueOf(outComeId);
+        }
+    }
+
     private List<Concept> getOutComeOptions(ConceptService conceptService) {
-        List<Integer> outComeIds = Arrays.asList(162684, 159791, 1694, 142177, 159392, 160034, 142934);
         List<Concept> concepts = new ArrayList<Concept>();
-        for (Integer id : outComeIds) {
-            Concept concept = conceptService.getConcept(id);
+        for (OutComeType outComeType : OutComeType.values()) {
+            Concept concept = conceptService.getConcept(outComeType.outComeId);
             if (concept != null) {
                 concepts.add(concept);
             }
         }
         return concepts;
     }
-
 }
