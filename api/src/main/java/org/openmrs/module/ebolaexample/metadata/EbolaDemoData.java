@@ -66,8 +66,7 @@ public class EbolaDemoData extends AbstractMetadataBundle {
         );
         List<String> tagsForTriage = Arrays.asList();
         List<String> tagsForAssessment = Arrays.asList(
-                supportsAdmission,
-                AppFrameworkConstants.LOCATION_TAG_SUPPORTS_LOGIN_UUID
+                supportsAdmission
         );
         List<String> tagsForInpatientRoot = Arrays.asList(
                 AppFrameworkConstants.LOCATION_TAG_SUPPORTS_LOGIN_UUID
