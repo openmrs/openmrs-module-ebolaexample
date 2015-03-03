@@ -97,14 +97,29 @@ ${ui.includeFragment("ebolaexample", "overview/patientHeader", [patient: patient
                         <% } %>
                         <% doseHistory.getDosesForDrug(drug).each { dose -> %>
                         <tr>
+                            <% if (dose.voided != true) { %>
                             <td>
                                 ${timeFormat.format(dose.scheduledDatetime)}
                                 ${formatStatus(dose.status)}
                             </td>
                             <td>
-                                <a href="${ ui.actionLink("ebolaexample", "overview/doseManagement", "delete", [ scheduledDoseUuid: dose.uuid]) }">Delete</a>
+                                <a href="${
+                                        ui.actionLink("ebolaexample", "overview/doseManagement", "delete", [scheduledDoseUuid: dose.uuid])}">Delete</a>
                                 <a href="">Edit</a>
                             </td>
+                            <% } else { %>
+                            <td>
+                                <strike>
+                                    ${timeFormat.format(dose.scheduledDatetime)}
+                                    ${formatStatus(dose.status)}
+                                </strike>
+                                &nbsp;(Deleted)
+                            </td>
+                            <td>
+                                <a href="${
+                                        ui.actionLink("ebolaexample", "overview/doseManagement", "restore", [scheduledDoseUuid: dose.uuid])}">Restore</a>
+                            </td>
+                            <% } %>
                         </tr>
                         <% } %>
                         <% } %>
