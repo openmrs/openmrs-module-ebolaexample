@@ -52,7 +52,7 @@ public class PharmacyServiceImpl extends BaseOpenmrsService implements PharmacyS
     }
 
     @Override
-    public DoseHistory getScheduledDosesByPatientAndDateRange(Patient patient, Date onOrAfter, Date onOrBefore) {
+    public DoseHistory getScheduledDosesByPatientAndDateRange(Patient patient, Date onOrAfter, Date onOrBefore, boolean includeVoided) {
         List<DrugOrder> orders = new ArrayList<DrugOrder>();
         for (Order candidate : orderService.getAllOrdersByPatient(patient)) {
             if (candidate instanceof DrugOrder
@@ -69,7 +69,7 @@ public class PharmacyServiceImpl extends BaseOpenmrsService implements PharmacyS
             onOrAfter = DateUtil.adjustDate(onOrBefore, -30, DurationUnit.DAYS);
         }
         List<ScheduledDose> doses = scheduledDoseDAO.getScheduledDosesByPatientAndDateRange(onOrAfter, DateUtil.getEndOfDayIfTimeExcluded(onOrBefore), patient,
-                true);
+                includeVoided);
 
         return new DoseHistory(orders, doses);
     }

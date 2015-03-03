@@ -45,7 +45,7 @@ public class ScheduledDoseHistoryFragmentController {
         model.addAttribute("prevDate", ymd.format(prevDate));
         model.addAttribute("nextDate", nextDate == null ? null : ymd.format(nextDate));
 
-        DoseHistory doseHistory = pharmacyService.getScheduledDosesByPatientAndDateRange(patient.getPatient(), fromDate, toDate);
+        DoseHistory doseHistory = pharmacyService.getScheduledDosesByPatientAndDateRange(patient.getPatient(), fromDate, toDate, false);
         model.addAttribute("doseHistory", doseHistory);
     }
 
