@@ -1,6 +1,5 @@
 package org.openmrs.module.ebolaexample.rest;
 
-import org.openmrs.DrugOrder;
 import org.openmrs.Order;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.ebolaexample.domain.IvFluidOrder;
@@ -14,13 +13,11 @@ import org.openmrs.module.webservices.rest.web.representation.Representation;
 import org.openmrs.module.webservices.rest.web.resource.api.PageableResult;
 import org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingSubclassHandler;
 import org.openmrs.module.webservices.rest.web.resource.impl.DelegatingResourceDescription;
-import org.openmrs.module.webservices.rest.web.resource.impl.DelegatingSubclassHandler;
-import org.openmrs.module.webservices.rest.web.resource.impl.NeedsPaging;
 import org.openmrs.module.webservices.rest.web.response.ResourceDoesNotSupportOperationException;
 import org.openmrs.module.webservices.rest.web.v1_0.resource.openmrs1_10.OrderResource1_10;
 
 @SubClassHandler(supportedClass = IvFluidOrder.class, supportedOpenmrsVersions = {"1.10.*"})
-public class IvFluidOrderSubclassHandler extends BaseDelegatingSubclassHandler<Order, IvFluidOrder> implements DelegatingSubclassHandler<Order, IvFluidOrder> {
+public class IvFluidOrderSubclassHandler extends BaseDelegatingSubclassHandler<Order, IvFluidOrder> {
     @Override
     public String getTypeName() {
         return "ivfluidorder";
