@@ -24,7 +24,7 @@ public class DoseHistoryResource extends ReadableDelegatingResource<DoseHistory>
     @Override
     public DoseHistory getByUniqueId(String uniqueId) {
         Patient patient = (Patient) ConversionUtil.convert(uniqueId, Patient.class);
-        return Context.getService(PharmacyService.class).getScheduledDosesByPatientAndDateRange(patient, null, null);
+        return Context.getService(PharmacyService.class).getScheduledDosesByPatientAndDateRange(patient, null, null, true);
     }
 
     @Override

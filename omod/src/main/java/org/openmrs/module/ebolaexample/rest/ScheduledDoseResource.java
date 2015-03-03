@@ -99,7 +99,7 @@ public class ScheduledDoseResource extends DelegatingCrudResource<ScheduledDose>
     @Override
     protected PageableResult doSearch(RequestContext context) {
         Patient patient = (Patient) ConversionUtil.convert(context.getParameter("patient"), Patient.class);
-        DoseHistory doseHistory = Context.getService(PharmacyService.class).getScheduledDosesByPatientAndDateRange(patient, null, null);
+        DoseHistory doseHistory = Context.getService(PharmacyService.class).getScheduledDosesByPatientAndDateRange(patient, null, null, false);
         return new NeedsPaging<ScheduledDose>(doseHistory.getDoses(), context);
     }
 }

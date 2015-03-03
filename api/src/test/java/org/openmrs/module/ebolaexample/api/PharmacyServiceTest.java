@@ -50,7 +50,7 @@ public class PharmacyServiceTest extends BaseModuleContextSensitiveTest {
         createDose(order, "2015-01-13 09:15");
         createDose(orderForOtherPatient, "2015-01-02 09:00");
 
-        DoseHistory doseHistory = pharmacyService.getScheduledDosesByPatientAndDateRange(patient, date("2015-01-01 00:00"), date("2015-01-07 23:59"));
+        DoseHistory doseHistory = pharmacyService.getScheduledDosesByPatientAndDateRange(patient, date("2015-01-01 00:00"), date("2015-01-07 23:59"), false);
         assertThat(doseHistory.getDoses(), contains(is(dose1), is(dose2), is(dose3)));
     }
 

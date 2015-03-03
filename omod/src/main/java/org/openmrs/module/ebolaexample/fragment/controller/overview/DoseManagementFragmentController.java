@@ -21,4 +21,16 @@ public class DoseManagementFragmentController {
 
         pharmacyService.saveScheduledDose(scheduledDose);
     }
+
+    public void restore(@RequestParam(value = "scheduledDoseUuid", required = true) String scheduledDoseUuid,
+                       @SpringBean PharmacyService pharmacyService) {
+
+        ScheduledDose scheduledDose = pharmacyService.getScheduledDoseByUuid(scheduledDoseUuid);
+
+        scheduledDose.setVoided(false);
+        scheduledDose.setDateVoided(null);
+        scheduledDose.setVoidedBy(null);
+
+        pharmacyService.saveScheduledDose(scheduledDose);
+    }
 }

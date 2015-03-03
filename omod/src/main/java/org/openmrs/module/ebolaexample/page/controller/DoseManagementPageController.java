@@ -12,30 +12,20 @@ import org.openmrs.module.ebolaexample.pharmacy.DoseHistory;
 import org.openmrs.module.emrapi.adt.AdtService;
 import org.openmrs.module.emrapi.patient.PatientDomainWrapper;
 import org.openmrs.module.emrapi.visit.VisitDomainWrapper;
-import org.openmrs.module.reporting.common.DateUtil;
-import org.openmrs.module.reporting.common.DurationUnit;
 import org.openmrs.ui.framework.annotation.InjectBeans;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.page.PageModel;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Date;
-
 public class DoseManagementPageController {
 
     public void get(@RequestParam("patient") Patient patient,
-                    @RequestParam(value = "toDate", required = false) Date toDate,
                     @InjectBeans PatientDomainWrapper patientDomainWrapper,
                     @SpringBean AdtService adtService,
                     @SpringBean BedAssignmentService bedAssignmentService,
                     @SpringBean PharmacyService pharmacyService,
                     UiSessionContext sessionContext,
                     PageModel model) {
-
-        if (toDate == null) {
-            toDate = DateUtil.getStartOfDay(new Date());
-        }
-        model.addAttribute("toDate", toDate);
 
         patientDomainWrapper.setPatient(patient);
 
@@ -50,8 +40,7 @@ public class DoseManagementPageController {
         contextModel.put("visit", activeVisit == null ? null : new VisitContextModel(activeVisit));
         model.addAttribute("appContextModel", contextModel);
 
-        Date fromDate = DateUtil.getStartOfDay(DateUtil.adjustDate(toDate, -6, DurationUnit.DAYS));
-        DoseHistory doseHistory = pharmacyService.getScheduledDosesByPatientAndDateRange(patientDomainWrapper.getPatient(), fromDate, toDate);
+        DoseHistory doseHistory = pharmacyService.getScheduledDosesByPatient(patientDomainWrapper.getPatient());
         model.addAttribute("doseHistory", doseHistory);
     }
 
@@ -59,8 +48,7 @@ public class DoseManagementPageController {
         Location visitLocation = null;
         try {
             visitLocation = adtService.getLocationThatSupportsVisits(sessionContext.getSessionLocation());
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             // location does not support visits
         }
         return visitLocation == null ? null : adtService.getActiveVisit(patient, visitLocation);
