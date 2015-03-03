@@ -1,9 +1,6 @@
 <%
     def timeFormat = new java.text.SimpleDateFormat("d MMM yyyy HH:mm")
 
-    def DateUtil = context.loadClass("org.openmrs.module.reporting.common.DateUtil")
-    def today = DateUtil.getStartOfDay(new Date())
-
     def formatStatus = {
         def ret = it.name()
         if (ret == 'FULL') {

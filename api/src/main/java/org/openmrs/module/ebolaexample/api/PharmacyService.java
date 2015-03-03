@@ -28,4 +28,7 @@ public interface PharmacyService extends OpenmrsService {
     @Transactional(readOnly = true)
     DoseHistory getScheduledDosesByPatientAndDateRange(Patient patient, Date onOrAfter, Date onOrBefore);
 
+    @Transactional(readOnly = true)
+    DoseHistory getScheduledDosesByPatient(Patient patient);
+
 }

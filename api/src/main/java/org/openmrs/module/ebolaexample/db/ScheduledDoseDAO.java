@@ -15,4 +15,6 @@ public interface ScheduledDoseDAO extends SingleClassDAO<ScheduledDose> {
     List<ScheduledDose> getScheduledDoseByOrderId(Order order);
 
     List<ScheduledDose> getScheduledDosesByPatientAndDateRange(Date onOrAfter, Date onOrBefore, Patient patient, boolean includeVoided);
+
+    List<ScheduledDose> getScheduledDosesByPatient(Patient patient, boolean includeVoided);
 }

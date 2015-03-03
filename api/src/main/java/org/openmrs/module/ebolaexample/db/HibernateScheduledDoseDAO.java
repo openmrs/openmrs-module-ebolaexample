@@ -53,4 +53,18 @@ public class HibernateScheduledDoseDAO extends SingleClassHibernateDAO<Scheduled
 //        criteria.add(Restrictions.between("scheduledDatetime", onOrAfter, DateUtil.getEndOfDayIfTimeExcluded(onOrBefore)));
 //        return criteria.list();
     }
+
+    @Override
+    public List<ScheduledDose> getScheduledDosesByPatient(Patient patient, boolean includeVoided) {
+        Query query = (includeVoided) ? sessionFactory.getCurrentSession()
+                .createQuery("from ScheduledDose " +
+                        "where order.patient = :patient")
+                : sessionFactory.getCurrentSession()
+                .createQuery("from ScheduledDose " +
+                        "where order.patient = :patient and voided = false");
+
+        query.setEntity("patient", patient);
+
+        return query.list();
+    }
 }
