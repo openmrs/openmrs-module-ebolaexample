@@ -2,7 +2,9 @@ package org.openmrs.module.ebolaexample.rest;
 
 import org.openmrs.Order;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.ebolaexample.domain.AdministrationType;
 import org.openmrs.module.ebolaexample.domain.IvFluidOrder;
+import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
 import org.openmrs.module.webservices.rest.web.RequestContext;
 import org.openmrs.module.webservices.rest.web.annotation.PropertyGetter;
 import org.openmrs.module.webservices.rest.web.annotation.SubClassHandler;
@@ -26,7 +28,7 @@ public class IvFluidOrderSubclassHandler extends BaseDelegatingSubclassHandler<O
     @Override
     public IvFluidOrder newDelegate() {
         IvFluidOrder o = new IvFluidOrder();
-        o.setOrderType(Context.getOrderService().getOrderType(4));
+        o.setOrderType(Context.getOrderService().getOrderTypeByUuid(EbolaMetadata._OrderType.IV_FLUID_ORDER_TYPE_UUID));
         return o;
     }
 
@@ -81,7 +83,7 @@ public class IvFluidOrderSubclassHandler extends BaseDelegatingSubclassHandler<O
         if (delegate.getConcept() != null) {
             String ret = delegate.getConcept().getName().toString();
 
-            if (delegate.getAdministrationType() == IvFluidOrder.AdministrationType.BOLUS) {
+            if (delegate.getAdministrationType() == AdministrationType.BOLUS) {
                 ret = ret + ": " + delegate.getBolusQuantity() + " " + delegate.getBolusUnits() + " over";
             } else {
                 ret = ret + ": " + delegate.getInfusionRate() + " " +

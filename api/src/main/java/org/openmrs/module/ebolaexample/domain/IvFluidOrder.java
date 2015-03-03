@@ -4,10 +4,6 @@ import org.openmrs.Concept;
 import org.openmrs.Order;
 
 public class IvFluidOrder extends Order {
-    public enum AdministrationType {
-        BOLUS, INFUSION
-    }
-
     private Concept route;
 
     private AdministrationType administrationType;
@@ -22,7 +18,7 @@ public class IvFluidOrder extends Order {
 
     private Concept infusionRateDenominatorUnit;
 
-    private Double duration;
+    private Integer duration;
 
     private Concept durationUnits;
 
@@ -106,11 +102,11 @@ public class IvFluidOrder extends Order {
         this.infusionRateDenominatorUnit = infusionRateDenominatorUnit;
     }
 
-    public Double getDuration() {
+    public Integer getDuration() {
         return duration;
     }
 
-    public void setDuration(Double duration) {
+    public void setDuration(Integer duration) {
         this.duration = duration;
     }
 

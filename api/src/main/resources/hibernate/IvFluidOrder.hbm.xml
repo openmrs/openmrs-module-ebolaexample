@@ -10,7 +10,12 @@
         <key column="order_id"/>
 
         <many-to-one name="route" class="org.openmrs.Concept" column="route"/>
-        <property name="administrationType" type="strring" column="adm_type" length="255" not-null="true"/>
+        <property name="administrationType" column="adm_type" not-null="true">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">org.openmrs.module.ebolaexample.domain.AdministrationType</param>
+                <param name="useNamed">true</param>
+            </type>
+        </property>
         <property name="bolusQuantity" type="double" column="bolus_quantity" length="22"/>
         <many-to-one name="bolusUnits" class="org.openmrs.Concept" column="bolus_units"/>
         <property name="infusionRate" type="double" column="infusion_rate" length="22"/>

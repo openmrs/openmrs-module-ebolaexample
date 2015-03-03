@@ -79,7 +79,7 @@
             <column name="infusion_rate" type="double precision"/>
             <column name="inf_rate_numerator_unit" type="int"/>
             <column name="inf_rate_denominator_unit" type="int"/>
-            <column name="duration" type="double precision"/>
+            <column name="duration" type="int"/>
             <column name="duration_units" type="int"/>
             <column name="comments" type="varchar(255)"/>
         </createTable>
