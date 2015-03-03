@@ -8,6 +8,7 @@ import org.openmrs.Patient;
 import org.openmrs.Provider;
 import org.openmrs.api.APIException;
 import org.openmrs.module.appui.UiSessionContext;
+import org.openmrs.module.ebolaexample.PatientLocationUtil;
 import org.openmrs.module.ebolaexample.api.BedAssignmentService;
 import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
 import org.openmrs.module.emrapi.EmrApiProperties;
@@ -32,38 +33,12 @@ public class InpatientLocationFragmentController {
 
     public void controller(@FragmentParam(value = "activeVisit", required = false) VisitDomainWrapper activeVisit,
                            FragmentModel model) {
-
-        Location currentLocation = null;
-        if (activeVisit != null) {
-            currentLocation = activeVisit.getInpatientLocation(new Date());
-        }
-        Location currentWard = closestLocationWithTag(currentLocation,
-                MetadataUtils.existing(LocationTag.class, EbolaMetadata._LocationTag.EBOLA_SUSPECT_WARD),
-                MetadataUtils.existing(LocationTag.class, EbolaMetadata._LocationTag.EBOLA_CONFIRMED_WARD),
-                MetadataUtils.existing(LocationTag.class, EbolaMetadata._LocationTag.EBOLA_RECOVERY_WARD));
-
-        if (currentWard == null) {
-            currentWard = currentLocation;
-        }
-
-        Location currentBed = closestLocationWithTag(currentLocation,
-                MetadataUtils.existing(LocationTag.class, EbolaMetadata._LocationTag.INPATIENT_BED));
-
+        Location currentWard = PatientLocationUtil.getCurrentWard(activeVisit);
+        Location currentBed = PatientLocationUtil.getCurrentBed(activeVisit);
         model.addAttribute("currentWard", currentWard);
         model.addAttribute("currentBed", currentBed);
     }
 
-    private Location closestLocationWithTag(Location location, LocationTag... tags) {
-        if (location == null) {
-            return null;
-        }
-        for (LocationTag tag : tags) {
-            if (location.hasTag(tag.getName())) {
-                return location;
-            }
-        }
-        return closestLocationWithTag(location.getParentLocation(), tags);
-    }
 
     public Object startOutpatientVisit(@RequestParam("patient") Patient patient,
                                        UiSessionContext uiSessionContext,

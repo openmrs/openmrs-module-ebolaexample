@@ -6,6 +6,7 @@ import org.joda.time.DateTime;
 import org.openmrs.Concept;
 import org.openmrs.Drug;
 import org.openmrs.DrugOrder;
+import org.openmrs.Location;
 import org.openmrs.Order;
 import org.openmrs.OrderType;
 import org.openmrs.Patient;
@@ -13,6 +14,7 @@ import org.openmrs.SimpleDosingInstructions;
 import org.openmrs.api.OrderService;
 import org.openmrs.module.appui.UiSessionContext;
 import org.openmrs.module.ebolaexample.DateUtil;
+import org.openmrs.module.ebolaexample.PatientLocationUtil;
 import org.openmrs.module.ebolaexample.page.controller.ChangeInPatientLocationPageController;
 import org.openmrs.module.emrapi.adt.AdtService;
 import org.openmrs.module.emrapi.patient.PatientDomainWrapper;
@@ -117,8 +119,10 @@ public class PrescriptionsFragmentController {
         });
 
         VisitDomainWrapper activeVisit = ChangeInPatientLocationPageController.getActiveVisit(patient.getPatient(), adtService, sessionContext);
-        InpatientLocationFragmentController inpatientLocationFragmentController = new InpatientLocationFragmentController();
-        inpatientLocationFragmentController.controller(activeVisit, model);
+        Location currentWard = PatientLocationUtil.getCurrentWard(activeVisit);
+        Location currentBed = PatientLocationUtil.getCurrentBed(activeVisit);
+        model.addAttribute("currentWard", currentWard);
+        model.addAttribute("currentBed", currentBed);
     }
 
     private void applyFlag(List<Map.Entry<ConceptAndDrug, List<DrugOrder>>> groupList, String flag, Predicate predicate) {
