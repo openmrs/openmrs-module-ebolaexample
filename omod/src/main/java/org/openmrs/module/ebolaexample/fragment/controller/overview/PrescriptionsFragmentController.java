@@ -11,8 +11,12 @@ import org.openmrs.OrderType;
 import org.openmrs.Patient;
 import org.openmrs.SimpleDosingInstructions;
 import org.openmrs.api.OrderService;
+import org.openmrs.module.appui.UiSessionContext;
 import org.openmrs.module.ebolaexample.DateUtil;
+import org.openmrs.module.ebolaexample.page.controller.ChangeInPatientLocationPageController;
+import org.openmrs.module.emrapi.adt.AdtService;
 import org.openmrs.module.emrapi.patient.PatientDomainWrapper;
+import org.openmrs.module.emrapi.visit.VisitDomainWrapper;
 import org.openmrs.ui.framework.Formatter;
 import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.annotation.FragmentParam;
@@ -20,24 +24,18 @@ import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.fragment.FragmentModel;
 import org.openmrs.util.OpenmrsUtil;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class PrescriptionsFragmentController {
 
     public void controller(@FragmentParam("patient") PatientDomainWrapper patient,
                            @FragmentParam(value = "showAll", defaultValue = "false") Boolean showAll,
                            @SpringBean("orderService") OrderService orderService,
+                           @SpringBean AdtService adtService,
                            final UiUtils ui,
+                           UiSessionContext sessionContext,
                            FragmentModel model) {
+
         OrderType orderType = orderService.getOrderTypeByUuid(OrderType.DRUG_ORDER_TYPE_UUID);
 
         boolean onlyRecent = !showAll;
@@ -102,7 +100,7 @@ public class PrescriptionsFragmentController {
                     if (order.getAsNeeded()) {
                         dosingInstructions.append(" ");
                         dosingInstructions.append("PRN");
-                        if (order.getAsNeededCondition()  != null) {
+                        if (order.getAsNeededCondition() != null) {
                             dosingInstructions.append(" ");
                             dosingInstructions.append(instructions.getAsNeededCondition());
                         }
@@ -112,12 +110,15 @@ public class PrescriptionsFragmentController {
                         dosingInstructions.append(instructions.getAdministrationInstructions());
                     }
                     return dosingInstructions.toString();
-                }
-                else {
+                } else {
                     return order.getDosingInstructionsInstance().getDosingInstructionsAsString(locale);
                 }
             }
         });
+
+        VisitDomainWrapper activeVisit = ChangeInPatientLocationPageController.getActiveVisit(patient.getPatient(), adtService, sessionContext);
+        InpatientLocationFragmentController inpatientLocationFragmentController = new InpatientLocationFragmentController();
+        inpatientLocationFragmentController.controller(activeVisit, model);
     }
 
     private void applyFlag(List<Map.Entry<ConceptAndDrug, List<DrugOrder>>> groupList, String flag, Predicate predicate) {
@@ -146,8 +147,7 @@ public class PrescriptionsFragmentController {
                     // scheduled for the future) we avoid using it.
                     Date endDate = candidate.getEffectiveStopDate();
                     return endDate == null || endDate.after(cutoff);
-                }
-                else {
+                } else {
                     return true;
                 }
             }

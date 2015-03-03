@@ -23,7 +23,6 @@ public class ChangeInPatientLocationPageController {
 
     public void controller(@SpringBean("patientService") PatientService patientService,
                            @RequestParam(value = "patientUuid", required = false) String patientUuid,
-                           //@RequestParam(value = "activeVisit", required = false) VisitDomainWrapper activeVisit,
                            @SpringBean AdtService adtService,
                            @SpringBean BedAssignmentService bedAssignmentService,
                            UiSessionContext sessionContext,
@@ -57,7 +56,7 @@ public class ChangeInPatientLocationPageController {
         model.addAttribute("currentBed", currentBed);
     }
 
-    private VisitDomainWrapper getActiveVisit(Patient patient, AdtService adtService, UiSessionContext sessionContext) {
+    public static VisitDomainWrapper getActiveVisit(Patient patient, AdtService adtService, UiSessionContext sessionContext) {
         Location visitLocation = null;
         try {
             visitLocation = adtService.getLocationThatSupportsVisits(sessionContext.getSessionLocation());

@@ -1,5 +1,15 @@
 <%
     def dateFormat = new java.text.SimpleDateFormat("d.MMM HH:mm")
+
+    ui.includeJavascript("uicommons", "angular.min.js")
+    ui.includeJavascript("uicommons", "angular-app.js")
+    ui.includeJavascript("uicommons", "angular-resource.min.js")
+    ui.includeJavascript("uicommons", "angular-common.js")
+    ui.includeJavascript("uicommons", "angular-ui/ui-bootstrap-tpls-0.11.2.js")
+    ui.includeJavascript("uicommons", "services/locationService.js")
+
+    ui.includeJavascript("ebolaexample", "tabletapp/resources.js")
+    ui.includeJavascript("ebolaexample", "overview/inpatientLocation.js")
 %>
 <div class="long-info-section">
 
@@ -66,6 +76,22 @@
         <% } else { %>
         ${ui.message("coreapps.none")}
         <% } %>
+
+        <div style="margin-top:1px; margin-right: 10px; float: right;" ng-app="inpatientLocation" ng-controller="InpatientLocationCtrl"
+             ng-init="init({patientUuid:'${patient.patient.uuid}',
+            currentWard: <% if (currentWard) { %>{display:'${currentWard}', uuid:'${currentWard.uuid}'}<%
+                 } else { %>null<% } %>,
+            currentBed: <% if (currentBed) { %>{display:'${currentBed}', uuid:'${currentBed.uuid}'}<% } else { %>null<%
+                 } %>
+            })">
+            <% if (currentWard) { %>
+                <a class="button"
+                   href="/${ui.contextPath()}/ms/uiframework/resource/ebolaexample/html/tabletapp/index.html#/patients/${
+                           patient.patient.uuid}/overview2/${patient.patient.uuid}/${currentWard.uuid}">
+                    <b>Actions</b>
+                </a>
+            <% } %>
+        </div>
 
         <div style="clear:both;"></div>
     </div>
