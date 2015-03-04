@@ -39,7 +39,7 @@ public class ChangePatientDischargePageController {
 
         model.put("currentOutcome", patientProgram != null ? patientProgram.getOutcome() : null);
         model.put("today", DateUtil.getDateToday());
-        model.put("defaultDate", patientProgram.getDateCompleted() != null ? patientProgram.getDateCompleted() : DateUtil.getDateToday());
+        model.put("defaultDate", getDefaultDate(patientProgram));
 
         if (!model.containsKey("error")) {
             model.put("error", "");
@@ -48,6 +48,13 @@ public class ChangePatientDischargePageController {
         if (!model.containsKey("success")) {
             model.put("success", "");
         }
+    }
+
+    private Date getDefaultDate(PatientProgram patientProgram) {
+        if(patientProgram==null || patientProgram.getDateCompleted() == null) {
+            return DateUtil.getDateToday();
+        }
+        return patientProgram.getDateCompleted();
     }
 
     public String post(@SpringBean("patientService") PatientService patientService,
