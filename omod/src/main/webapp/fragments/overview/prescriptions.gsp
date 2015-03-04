@@ -47,9 +47,11 @@
                 <em>
                     ${ui.format(group.key.drug)}
                 </em>
+
                 <% } %>
                 <ul>
                     <% group.value.each { %>
+
                     <li class="clear <% if (!it.active) { %>inactive<% } %>">
                         <span class="right">
                             ${dateFormat.format(it.dateActivated)}
@@ -67,6 +69,13 @@
                         </span>
                         <% } %>
                         ${prescriptionFormatter.format(it, context.locale)}
+
+                        <% if(it.orderer) { %>
+                            <em> (prescribed by: ${it.orderer.getName()})</em>
+                        <% } else {%>
+                            <em> (prescribed by: Unknown User)</em>
+                        <% } %>
+
                     </li>
                     <% } %>
                 </ul>

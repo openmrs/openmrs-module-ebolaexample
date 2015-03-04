@@ -40,7 +40,9 @@
                             <span ng-show="order.duration">for {{ order.duration }} {{ order.durationUnits | concept }}</span>
                             <span class="tag" ng-show="order.asNeeded">In case of {{ order.asNeededCondition }}</span>
 
-                            - {{ lastGiven(order) | lastGiven }}
+                            <span ng-show="order.orderer"> - (prescribed by: {{order.orderer.display}})</span>
+                            <span ng-hide="order.orderer"> - (prescribed by: Unknown User)</span>
+                             - {{ lastGiven(order) | lastGiven }}
                         </em>
                     </div>
                 </span>
