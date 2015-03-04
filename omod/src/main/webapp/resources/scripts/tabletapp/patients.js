@@ -76,7 +76,7 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             $rootScope.clearMessages = function () {
                 $rootScope.comeFromPrescriptionForm = null;
                 $rootScope.administeredDrug = null;
-            }
+            };
 
             function mostRecentDose(doses) {
                 // TODO verify that these are always given to us sorted
@@ -98,7 +98,7 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                 if (item) {
                     return mostRecentDose(item.doses);
                 }
-            }
+            };
 
             $scope.focusInput = function ($event) {
                 angular.element($event.target).parent().addClass('highlight');
@@ -118,7 +118,7 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
 
             $scope.isActivePrescriptionsOnly = function () {
                 return Orders.getActiveOnly();
-            }
+            };
 
             $scope.showActivePrescriptions = function () {
                 Orders.setActiveOnly(true);
@@ -177,22 +177,22 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             $scope.onSaveAdministeredDose = function () {
                 $scope.closeThisDialog();
                 DoseHistory.reload($scope, patientUuid);
-            }
+            };
 
             $scope.stopOrder = StopOrderService.stopOrder;
 
             $scope.editOrder = function (order) {
                 $state.go('patient.editPrescriptionDetails', {orderUuid: order.uuid});
-            }
+            };
 
             $scope.showStoppingError = function () {
                 $scope.problemStopping = true;
-            }
+            };
 
             $scope.onStopOrderSuccess = function () {
                 $scope.closeThisDialog();
                 Orders.reload($scope, patientUuid);
-            }
+            };
 
             $scope.openStopOrderDialog = function (order) {
                 $scope.order = order;
@@ -207,11 +207,15 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
 
             $scope.openAddNewPrescriptionForm = function () {
                 $state.go('patient.addPrescription');
-            }
+            };
+
+            $scope.openAddIvFluidOrderForm = function () {
+                $state.go('patient.addIvFluidOrder');
+            };
 
             $scope.hasActiveForm = function () {
                 return $state.current.data && $state.current.data.activeForm;
-            }
+            };
 
             $scope.goToLaptopPatientSummary = function () {
                 location.href = emr.pageLink("ebolaexample", "ebolaOverview", {patient: patientUuid});

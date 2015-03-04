@@ -58,14 +58,21 @@ angular.module("constants", [])
             uuid: "125564BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
         };
         var mEq = {
-            display:"mEq(s)",
-            uuid : "162364AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-        }
-
+            display: "mEq(s)",
+            uuid: "162364AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+        };
         var mcgkgmin = {
-            display:"mcg/kg/min",
-            uuid:"162838AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-        }
+            display: "mcg/kg/min",
+            uuid: "162838AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+        };
+        var minutes = {
+            display: "min",
+            uuid: "1733AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+        };
+        var hours = {
+            display: "hr",
+            uuid: "1822AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+        };
         return {
             wardKey: 'wardKey',
             encounterType: {
@@ -614,6 +621,54 @@ angular.module("constants", [])
                 "4147feff-1962-4fbb-b523-0e58551b9fff": {
                     allowedDoseUnits: [mg, mgkg, mL, mLkg]
                 }
+            },
+            fluids: {
+                list: [
+                    {
+                        display: "Normal Saline",
+                        uuid: "80804AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                    },
+                    {
+                        display: "Ringer's Lactate",
+                        uuid: "78617AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                    },
+                    {
+                        display: "Normal saline + KCL 20 mmol/L",
+                        uuid: "162855AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                    },
+                    {
+                        display: "Normal saline + KCL 40 mmol/L",
+                        uuid: "162856AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                    },
+                    {
+                        display: "Phosphate Polyfusor",
+                        uuid: "162860AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                    },
+                    {
+                        display: "Sodium Bicarbonate 1.26% Polyfusor",
+                        uuid: "162861AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                    }
+                ],
+                routeOptions: [
+                    {
+                        display: 'IV',
+                        uuid: '160242AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+                    },
+                    {
+                        display: 'IO Needle',
+                        uuid: '162624AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+                    }
+                ],
+                bolusAmountOptions: [50, 70, 100, 250, 500, 1000],
+                bolusRateOptions: [15, 30, 60, 120],
+                infusionRateOptions: [50, 75, 100, 125, 150, 200, 500, 1000],
+                infusionDurationOptions: [0, 1, 2, 3, 4, 6, 8, 12, 24],
+                durationContinuous: "1079AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                bolusUnit: mL,
+                bolusRateUnit: minutes,
+                infusionRateNumeratorUnit: mL,
+                infusionRateDenominatorUnit: hours,
+                infusionDurationUnit: hours
             }
         }
     });

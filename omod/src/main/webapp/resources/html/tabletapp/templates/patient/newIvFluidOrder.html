@@ -1,0 +1,19 @@
+<header>
+    <patient-header patient-id="getPatientId()"
+                    patient="patient"></patient-header>
+</header>
+<div class="page-wrap-smaller" ng-controller="NewIvFluidOrderController" class="page-wrap" xmlns="http://www.w3.org/1999/html">
+    <div ng-show="loading" class="loading-spinner"></div>
+    <span ng-show="!loading" class="question-title">New IV Fluid Order</span>
+    <div ng-show="!loading">
+        <div ng-show="ivFluidsConcepts" class="common-drugs-container">
+            <a class="radio-button small full" ng-repeat="concept in ivFluidsConcepts"
+               ui-sref="patient.addPrescriptionRoute({ conceptUUID: concept.uuid})" type="button">
+                {{ concept.display }}
+            </a>
+        </div>
+    </div>
+</div>
+<div class="actions small">
+    <cancel-button></cancel-button>
+</div>
