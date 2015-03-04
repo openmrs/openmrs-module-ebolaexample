@@ -1,0 +1,39 @@
+<form class="full-content" xmlns="http://www.w3.org/1999/html" name="addOrder.form">
+    <header>
+        <patient-header patient-id="getPatientId()" patient="patient"></patient-header>
+    </header>
+    <span class="error-message" ng-show="serverError">
+        {{ serverError }}
+        <button ng-click="clearServerError()">Hide</button>
+    </span>
+
+    <div class="page-wrap-smaller">
+        <h1>{{ concept.display }}</h1>
+
+        <div>
+            <div class="inline" class="indented-more">
+                <span class="select-arrow" ng-class="{error: addOrder.form.route.$invalid && hasErrors}">
+                    <select ng-model="addOrder.route"
+                            ng-required="true"
+                            name="route"
+                            ng-options="route.uuid as route.display for route in routes"
+                            ng-focus="focusInput($event)"
+                            ng-blur="blurInput($event)">
+                    </select>
+                </span>
+                <span ng-repeat="type in ['Bolus', 'Infusion']" class="checkboxes">
+                    <input type="radio"
+                           id="{{type}}"
+                           value="{{type}}"
+                           ng-model="addOrder.admType"/>
+                    <label for="{{type}}"
+                           class="radio-button small">{{type}}</label>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="actions small">
+        <prev-button></prev-button>
+    </div>
+</form>

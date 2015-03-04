@@ -75,6 +75,19 @@ angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "selec
                     }
                 }
             })
+            .state("patient.addIvFluidOrderDetails", {
+                url: "/addIvFluidOrderDetails/:conceptUUID",
+                controller: "NewIvFluidOrderDetailsController",
+                templateUrl: "templates/patient/newIvFluidOrderDetails.html",
+                data: {
+                    requiresLogin: true,
+                    activeForm: true,
+                    back: {
+                        description: "Overview",
+                        target: "patient.addIvFluidOrder"
+                    }
+                }
+            })
             .state("patient.addPrescription", {
                 url: "/addPrescription",
                 templateUrl: "templates/patient/newPrescription.html",

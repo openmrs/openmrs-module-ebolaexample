@@ -661,11 +661,10 @@ angular.module("constants", [])
                 ],
                 bolusAmountOptions: [50, 70, 100, 250, 500, 1000],
                 bolusRateOptions: [15, 30, 60, 120],
-                infusionRateOptions: [50, 75, 100, 125, 150, 200, 500, 1000],
-                infusionDurationOptions: [0, 1, 2, 3, 4, 6, 8, 12, 24],
-                durationContinuous: "1079AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
                 bolusUnit: mL,
                 bolusRateUnit: minutes,
+                infusionRateOptions: [50, 75, 100, 125, 150, 200, 500, 1000],
+                infusionDurationOptions: [0, 1, 2, 3, 4, 6, 8, 12, 24],
                 infusionRateNumeratorUnit: mL,
                 infusionRateDenominatorUnit: hours,
                 infusionDurationUnit: hours
