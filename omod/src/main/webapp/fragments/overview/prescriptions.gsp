@@ -70,11 +70,13 @@
                         <% } %>
                         ${prescriptionFormatter.format(it, context.locale)}
 
-                        <% if(it.orderer) { %>
-                            <em> (prescribed by: ${it.orderer.getName()})</em>
-                        <% } else {%>
-                            <em> (prescribed by: Unknown User)</em>
-                        <% } %>
+                        <span class="prescriber">
+                            <% if(it.orderer) { %>
+                                <em> (prescribed by: ${it.orderer.getName()})</em>
+                            <% } else {%>
+                                <em> (prescribed by: Unknown User)</em>
+                            <% } %>
+                        </span>
 
                     </li>
                     <% } %>
