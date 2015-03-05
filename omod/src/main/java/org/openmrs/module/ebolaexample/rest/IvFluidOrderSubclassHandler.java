@@ -7,7 +7,6 @@ import org.openmrs.module.ebolaexample.domain.IvFluidOrder;
 import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
 import org.openmrs.module.webservices.rest.web.RequestContext;
 import org.openmrs.module.webservices.rest.web.annotation.PropertyGetter;
-import org.openmrs.module.webservices.rest.web.annotation.SubClassHandler;
 import org.openmrs.module.webservices.rest.web.api.RestService;
 import org.openmrs.module.webservices.rest.web.representation.DefaultRepresentation;
 import org.openmrs.module.webservices.rest.web.representation.FullRepresentation;
@@ -18,7 +17,7 @@ import org.openmrs.module.webservices.rest.web.resource.impl.DelegatingResourceD
 import org.openmrs.module.webservices.rest.web.response.ResourceDoesNotSupportOperationException;
 import org.openmrs.module.webservices.rest.web.v1_0.resource.openmrs1_10.OrderResource1_10;
 
-@SubClassHandler(supportedClass = IvFluidOrder.class, supportedOpenmrsVersions = {"1.10.*"})
+//@SubClassHandler(supportedClass = IvFluidOrder.class, supportedOpenmrsVersions = {"1.10.*"})
 public class IvFluidOrderSubclassHandler extends BaseDelegatingSubclassHandler<Order, IvFluidOrder> {
     @Override
     public String getTypeName() {
