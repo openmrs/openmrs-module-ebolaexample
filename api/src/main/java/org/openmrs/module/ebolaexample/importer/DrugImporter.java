@@ -8,7 +8,6 @@ import org.openmrs.ConceptName;
 import org.openmrs.Drug;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.ebolaexample.EbolaExampleActivator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.supercsv.cellprocessor.Optional;
@@ -23,6 +22,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -37,7 +37,7 @@ public class DrugImporter {
 
     public static final String KERRY_TOWN_EBOLA_INSTALLED_DRUG_LIST_VERSION = "kerryTown.ebola.installedDrugListVersion";
 
-    public static final Integer DRUG_LIST_VERSION = 2;
+    public static final Integer DRUG_LIST_VERSION = 3;
 
     public DrugImporter() {
 
@@ -195,18 +195,27 @@ public class DrugImporter {
         }
     }
 
-    public List<TierDrug> getTierDrugs() {
+    public List<TierDrug> getMedicationTierDrugs() {
+        return getTierDrugs(Arrays.asList("Tier 1", "Tier 2", "Tier 3", "Tier 4"));
+    }
+
+    public List<TierDrug> getIvTierDrugs() {
+        return getTierDrugs(Arrays.asList("Tier 5"));
+    }
+
+
+    public List<TierDrug> getTierDrugs(List<String> tiers) {
 
         List<TierDrug> tierDrugs = new ArrayList<TierDrug>();
 
         try {
             InputStream inputStream = getClass().getClassLoader().getResourceAsStream("Kerry_Town_Drugs_v" + DRUG_LIST_VERSION + ".csv");
             InputStreamReader reader = new InputStreamReader(inputStream);
-
             List<DrugImporterRow> drugList = readSpreadsheet(reader);
 
             for (DrugImporterRow row : drugList) {
-                if (isNotBlankOrEmpty(row.getTier()) && isNotBlankOrEmpty(row.getUuid())) {
+                if (isNotBlankOrEmpty(row.getTier()) && isNotBlankOrEmpty(row.getUuid())
+                        && tiers.contains(row.getTier().trim())) {
                     tierDrugs.add(new TierDrug(row.getTier(), row.getUuid()));
                 }
             }

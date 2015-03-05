@@ -134,5 +134,14 @@ Silver Sulfadiazine,Silver Sulfadiazine 1% Ointment 50g,,1%,Ointment,Topical,app
 "Tetanus immunoglobulin, human",Tetanus Immunoglobulin,,(none),Injection,IM,mL,Tier 4,d4165513-2929-4ab0-ad60-457aa26b76fa
 Tetracycline,Tetracycline 1% Eye Ointment 5g,,1%,Ointment,"Left eye, right eye, both eyes",application,Tier 4,a0f0a008-747a-42f5-8052-decd5013cafa
 Tinidazole,Tinidazole 500mg Tablet,,500 mg,Tablet,Oral,"tablets, mg",Tier 4,4147feff-1962-4fbb-b523-0e58551b9eef
-Ferrous Sulfate,Ferrous Sulphate 200 mg Tablets,,200 mg,Tablet,Oral,"tablets, mg",Tier 4,a0f0a008-747a-42f5-8052-decd5013cfff
-Ferrous Sulfate,Ferrous Sulphate 200mg/5ml Liquid,,200 mg / mL,Oral suspension,Oral,"mg, mg/kg, mL, mL/kg",Tier 4,4147feff-1962-4fbb-b523-0e58551b9fff
+FERROUS SULFATE,Ferrous Sulphate 200 mg Tablets,,200 mg,Tablet,Oral,"tablets, mg",Tier 4,a0f0a008-747a-42f5-8052-decd5013cfff
+FERROUS SULFATE,Ferrous Sulphate 200mg/5ml Liquid,,200 mg / 5mL,Oral suspension,Oral,"mg, mg/kg, mL, mL/kg",Tier 4,4147feff-1962-4fbb-b523-0e58551b9fff
+Normal saline,Normal saline,,,,IV,mL,Tier 5,4147feff-1962-4fbb-b523-0e58551b9ff1
+Potassium chloride 20 mmol/L in normal saline,Potassium chloride 20 mmol/L in normal saline,,,,IV,mL,Tier 5,4147feff-1962-4fbb-b523-0e58551b9ff2
+Potassium chloride 40 mmol/L in normal saline,Potassium chloride 40 mmol/L in normal saline,,,,IV,mL,Tier 5,4147feff-1962-4fbb-b523-0e58551b9ff3
+Phosphate Polyfusor,Phosphate Polyfusor,,,,IV,mL,Tier 5,4147feff-1962-4fbb-b523-0e58551b9ff4
+Sodium Bicarbonate 1.26% Polyfusor,Sodium Bicarbonate 1.26% Polyfusor,,,,IV,mL,Tier 5,4147feff-1962-4fbb-b523-0e58551b9ff5
+Ringer Lactate,Ringer Lactate,,,,IV,mL,Tier 5,4147feff-1962-4fbb-b523-0e58551b9ff6
+Dextrose 5%,Dextrose 5%,,,,IV,mL,Tier 5,4147feff-1962-4fbb-b523-0e58551b9ff7
+Dextrose 10%,Dextrose 10%,,,,IV,mL,Tier 5,4147feff-1962-4fbb-b523-0e58551b9ff8
+Dextrose saline,Dextrose saline,,,,IV,mL,Tier 5,4147feff-1962-4fbb-b523-0e58551b9ff9

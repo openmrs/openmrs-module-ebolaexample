@@ -94,7 +94,7 @@ public class DrugConceptSearchHandler implements SearchHandler {
             allDrugs = Context.getConceptService().getDrugs(query, null, true, false, false, null, null);
         }
 
-        List<TierDrug> tierDrugs = drugImporter.getTierDrugs();
+        List<TierDrug> tierDrugs = drugImporter.getMedicationTierDrugs();
         for (Drug drug : allDrugs) {
             for (TierDrug tierDrug : tierDrugs) {
                 if (tierDrug.getUuid().equalsIgnoreCase(drug.getUuid())) {
