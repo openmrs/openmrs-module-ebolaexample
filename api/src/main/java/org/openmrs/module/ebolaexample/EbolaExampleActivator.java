@@ -91,7 +91,8 @@ public class EbolaExampleActivator extends BaseModuleActivator {
 
             removeTagsFromUnknownLocation(locationService, emrApiProperties);
 
-            setPreferredConceptNames(conceptService);
+            // the latest CIEL has errors with multiple FSNs due to a bad upgrade script. Commenting out until this is fixed
+            //setPreferredConceptNames(conceptService);
 
             // hack to set the SCI-requested address format for Sierra Leone
             GlobalProperty sciAddressTemplate = new GlobalProperty("layout.address.format",
