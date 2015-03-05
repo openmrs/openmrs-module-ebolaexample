@@ -1,4 +1,4 @@
-angular.module('tabletForm')
+angular.module('tabletapp')
 
     .factory('encounterTypes', [ function() {
         return {

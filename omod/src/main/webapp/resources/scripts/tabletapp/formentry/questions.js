@@ -1,4 +1,4 @@
-angular.module('tabletForm')
+angular.module('tabletapp')
 
     .factory('questions', [ 'questionBuilder', 'questionHandlers', 'concepts', function(questionBuilder, questionHandlers, concepts) {
         return {

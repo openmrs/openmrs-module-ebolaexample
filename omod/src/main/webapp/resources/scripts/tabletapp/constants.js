@@ -69,7 +69,10 @@ angular.module("constants", [])
         return {
             wardKey: 'wardKey',
             encounterType: {
-                ebolaInpatientFollowup: "83413734-587d-11e4-af12-660e112eb3f5"
+                ebolaInpatientFollowup: {
+                    uuid: "83413734-587d-11e4-af12-660e112eb3f5",
+                    display: "Inpatient Followup"
+                }
             },
             careSetting: {
                 inpatient: "c365e560-c3ec-11e3-9c1a-0800200c9a66"
