@@ -25,7 +25,7 @@ angular.module('filters', ['constants'])
                 return "";
             }
             var output = input.replace(" Ward", "");
-            var output = output.replace("Ward ", "");
+            var output = input.replace("Ward ", "");
             var output = output.replace("#", "");
             var output = output.replace("Confirmed", "Conf");
             var output = output.replace("Suspect", "Susp");

@@ -1,4 +1,4 @@
-angular.module("directives", ["session", "feature-toggles"])
+angular.module("directives", ["session"])
 
     .factory('BackService', ['CurrentSession', function (CurrentSession) {
         return {
@@ -92,8 +92,7 @@ angular.module("directives", ["session", "feature-toggles"])
             templateUrl: 'templates/sidebar.html'
         }
     })
-    .directive('actionButton', ['sidebarService', 'CurrentSession', 'FeatureToggles', '$rootScope',
-        function (sidebarService, CurrentSession, FeatureToggles, $rootScope) {
+    .directive('actionButton', ['sidebarService', 'CurrentSession', '$rootScope', function (sidebarService, CurrentSession, $rootScope) {
         return {
             link: function (scope, element, attrs) {
 
@@ -105,10 +104,6 @@ angular.module("directives", ["session", "feature-toggles"])
 
                 scope.hasPrivilege = function (privilege) {
                     return CurrentSession.hasPrivilege(privilege);
-                }
-
-                scope.isFeatureEnabled = function (feature) {
-                    return FeatureToggles.isFeatureEnabled(feature);
                 }
 
                 sidebarService.getActionElements().each(function () {

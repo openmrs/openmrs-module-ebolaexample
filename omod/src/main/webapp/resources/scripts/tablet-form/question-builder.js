@@ -1,4 +1,4 @@
-angular.module('tabletapp')
+angular.module('tabletForm')
 
 .factory('questionHandlers', [ 'concepts', function(concepts) {
     var simpleObsHandler = {

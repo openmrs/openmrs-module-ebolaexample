@@ -37,7 +37,7 @@ angular.module("session", ["ui.router", "constants", "resources", "patients", "n
                     cachedEncounterPatientUUID = patientUUID;
                     cachedEncounter = new EncounterResource({
                         "patient": patientUUID,
-                        "encounterType": Constants.encounterType.ebolaInpatientFollowup.uuid
+                        "encounterType": Constants.encounterType.ebolaInpatientFollowup
                     }).$save();
                     return cachedEncounter;
                 },

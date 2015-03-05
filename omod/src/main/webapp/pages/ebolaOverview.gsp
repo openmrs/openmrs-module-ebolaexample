@@ -84,5 +84,12 @@ ${ui.includeFragment("ebolaexample", "overview/patientHeader", [patient: patient
 
         </div>
 
+        <div class="action-container column" style="display: none">
+            <div class="action-section">
+                <ul>
+                    <li>More actions here?</li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>

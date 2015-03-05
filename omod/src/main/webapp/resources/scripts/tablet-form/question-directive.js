@@ -1,4 +1,4 @@
-angular.module('tabletapp')
+angular.module('tabletForm')
 
     .directive("question", [ function() {
         return {
@@ -9,7 +9,7 @@ angular.module('tabletapp')
             link: function($scope, element, attrs) {
                 $scope.id = emr.domId(null, "question");
             },
-            templateUrl: 'templates/questionTemplate.html'
+            templateUrl: '../tabletForm/questionTemplate.html'
         }
     }])
 

@@ -32,22 +32,6 @@ angular.module("resources", ["ngResource"])
         });
     }])
 
-    .factory("VisitResource", [ "$resource", function ($resource) {
-        return $resource("/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/visit/:uuid", {
-            uuid: "@uuid"
-        }, {
-            query: { method: "GET" }
-        });
-    }])
-
-    .factory("ProviderResource", [ "$resource", function ($resource) {
-        return $resource("/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/provider/:uuid", {
-            uuid: "@uuid"
-        }, {
-            query: { method: "GET" }
-        });
-    }])
-
     .factory("DrugResource", [ "$resource", function ($resource) {
         return $resource("/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/drug/:uuid", {
             uuid: "@uuid"

@@ -10,9 +10,6 @@
                 <li>
                     <button ng-click="openAddNewPrescriptionForm()">Add new prescription</button>
                 </li>
-                <li ng-show="isFeatureEnabled('enterVitals')">
-                    <button ng-click="captureVitalsAndSymptoms()">Capture Vitals and Symptoms</button>
-                </li>
                 <li ng-show="hasPrivilege('App: coreapps.findPatient')">
                     <button ng-click="goToLaptopPatientSummary()">Laptop Patient Summary</button>
                 </li>

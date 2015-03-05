@@ -1,4 +1,4 @@
-angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "session", "filters", "feedback-messages"])
+angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "session", "filters"])
 
     .controller("ListWardsController", ["$scope", "WardResource", function ($scope, WardResource) {
 
@@ -45,10 +45,9 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
 
     .controller("PatientController", ["$state", "$scope", "PatientResource", "OrderResource", "ngDialog",
         "$rootScope", "Constants", "ScheduledDoseResource", "CurrentSession", "StopOrderService",
-        "Orders", "DoseHistory", "WardResource", 'FeedbackMessages',
+        "Orders", "DoseHistory", "WardResource",
         function ($state, $scope, PatientResource, OrderResource, ngDialog, $rootScope, Constants,
-                  ScheduledDoseResource, CurrentSession, StopOrderService, Orders, DoseHistory, WardResource,
-                  FeedbackMessages) {
+                  ScheduledDoseResource, CurrentSession, StopOrderService, Orders, DoseHistory, WardResource) {
 
             var patientUuid = $state.params.patientUUID;
             var wardUuid = $state.params.wardUUID;
@@ -77,7 +76,6 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             $rootScope.clearMessages = function () {
                 $rootScope.comeFromPrescriptionForm = null;
                 $rootScope.administeredDrug = null;
-                FeedbackMessages.clearMessages();
             }
 
             function mostRecentDose(doses) {
@@ -217,14 +215,6 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
 
             $scope.goToLaptopPatientSummary = function () {
                 location.href = emr.pageLink("ebolaexample", "ebolaOverview", {patient: patientUuid});
-            }
-
-            $scope.captureVitalsAndSymptoms = function () {
-                $state.go('patient.captureVitalsAndSymptoms');
-            }
-
-            $scope.successMessages = function() {
-                return FeedbackMessages.getSuccessMessages();
             }
 
         }])
