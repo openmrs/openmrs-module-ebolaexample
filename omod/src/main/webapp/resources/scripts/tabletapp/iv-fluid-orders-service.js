@@ -12,7 +12,14 @@ angular.module('prescription-service', ['tabletapp'])
                     "careSetting": Constants.careSetting.inpatient,
                     "orderer": sessionInfo["provider"]["uuid"]
                 }
+                if (order.admType == 'Bolus') {
+                    orderJson["bolusQuantity"] = order.bolusQuantity;
+                    orderJson["bolusUnits"] = order.bolusUnits;
+                    orderJson["duration"] = order.bolusRate;
+                    orderJson["durationUnits"] = Constants.fluids.bolusRateUnit.uuid;
+                } else if (order.dosingType == 'rounds') {
 
+                }
             }
 
 
