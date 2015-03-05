@@ -38,7 +38,26 @@ angular.module("iv-fluid-orders", ["tabletapp", "constants", "patients", "filter
                 setupStandardFunctions: function ($scope) {
                     $scope.clearServerError = function () {
                         $scope.serverError = null;
+                    };
+                    $scope.infusionRateDisplay = function(rate) {
+                        if (rate == 0) {
+                            return 'KVO';
+                        }
+                        return rate + " " + Constants.fluids.infusionRateNumeratorUnit.display + "/" +
+                            Constants.fluids.infusionRateDenominatorUnit.display;
+                    };
+
+                    $scope.infusionDurationDisplay = function(duration) {
+                        if (duration == 0) {
+                            return 'Continuous';
+                        }
+                        var unit = Constants.fluids.infusionDurationUnit.display;
+                        if (duration != 1) {
+                            unit = unit + 's';
+                        }
+                        return duration + " " + unit;
                     }
+
                 },
                 setupIvFluidOrder: function ($scope, concept, patient) {
                     var order = {

@@ -30,6 +30,58 @@
                            class="radio-button small">{{type}}</label>
                 </span>
             </div>
+
+            <div ng-show="addOrder.admType == 'Bolus'">
+                <span class="question-title">Bolus Amount</span>
+                <span ng-repeat="amount in bolusAmountOptions" class="checkboxes">
+                    <input type="radio"
+                           id="bolus_{{amount}}"
+                           value="{{amount}}"
+                           ng-model="addOrder.bolusQuantity"/>
+                    <label for="bolus_{{amount}}"
+                           class="radio-button small">{{amount}} {{bolusUnit.display}}</label>
+                </span>
+                <span class="question-title">over</span>
+                <span ng-repeat="rate in bolusRateOptions" class="checkboxes">
+                    <input type="radio"
+                           id="bolus_{{rate}}"
+                           value="{{rate}}"
+                           ng-model="addOrder.bolusRate"/>
+                    <label for="bolus_{{rate}}"
+                           class="radio-button small">{{rate}} {{bolusRateUnit.display}}</label>
+                </span>
+            </div>
+
+            <div ng-show="addOrder.admType == 'Infusion'">
+                <span class="question-title">Infusion Rate</span>
+                <span ng-repeat="rate in infusionRateOptions" class="checkboxes">
+                    <input type="radio"
+                           id="infusion_{{rate}}"
+                           value="{{rate}}"
+                           ng-model="addOrder.infusionRate"/>
+                    <label for="infusion_{{rate}}"
+                           class="radio-button small">{{infusionRateDisplay(rate)}}</label>
+                </span>
+                <span class="question-title">for</span>
+                <span ng-repeat="duration in infusionDurationOptions" class="checkboxes">
+                    <input type="radio"
+                           id="infusion{{duration}}"
+                           value="{{duration}}"
+                           ng-model="addOrder.infusionDuration"/>
+                    <label for="infusion{{duration}}"
+                           class="radio-button small">{{infusionDurationDisplay(duration)}}</label>
+                </span>
+            </div>
+
+            <div ng-show="addOrder.admType != null">
+                <span class="question-title">
+                    Comments
+                </span>
+                <textarea name="comments"
+                          ng-model="addOrder.comments"
+                          rows="5" cols="60">
+                </textarea>
+            </div>
         </div>
     </div>
 

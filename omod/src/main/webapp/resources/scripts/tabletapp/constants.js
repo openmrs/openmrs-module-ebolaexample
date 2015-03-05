@@ -1,6 +1,9 @@
 angular.module("constants", [])
     .factory("Constants", function () {
 
+        var continuous = 0;
+        var kvo = 0;
+
         var tablets = {
             display: "tablet(s)",
             uuid: "1513AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
@@ -663,8 +666,8 @@ angular.module("constants", [])
                 bolusRateOptions: [15, 30, 60, 120],
                 bolusUnit: mL,
                 bolusRateUnit: minutes,
-                infusionRateOptions: [50, 75, 100, 125, 150, 200, 500, 1000],
-                infusionDurationOptions: [0, 1, 2, 3, 4, 6, 8, 12, 24],
+                infusionRateOptions: [kvo, 50, 75, 100, 125, 150, 200, 500, 1000],
+                infusionDurationOptions: [continuous, 1, 2, 3, 4, 6, 8, 12, 24],
                 infusionRateNumeratorUnit: mL,
                 infusionRateDenominatorUnit: hours,
                 infusionDurationUnit: hours
