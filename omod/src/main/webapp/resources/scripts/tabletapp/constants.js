@@ -640,32 +640,32 @@ angular.module("constants", [])
                         uuid: "78617AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                     },
                     {
-                        display: "Normal saline + KCL 20 mmol/L",
+                        display: "Normal saline +<br/>KCL 20 mmol/L",
                         uuid: "162855AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                    },
-                    {
-                        display: "Normal saline + KCL 40 mmol/L",
-                        uuid: "162856AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                    },
-                    {
-                        display: "Phosphate Polyfusor",
-                        uuid: "162860AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                    },
-                    {
-                        display: "Sodium Bicarbonate 1.26% Polyfusor",
-                        uuid: "162861AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                     },
                     {
                         display: "Dextrose 5% in water",
                         uuid: "104184AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                     },
                     {
+                        display: "Normal saline +<br/>KCL 40 mmol/L",
+                        uuid: "162856AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                    },
+                    {
                         display: "Dextrose 10% in water",
                         uuid: "161922AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                     },
                     {
-                        display: "Dextrose 5% in normal saline",
+                        display: "Phosphate Polyfusor",
+                        uuid: "162860AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                    },
+                    {
+                        display: "Dextrose 5% in<br/>normal saline",
                         uuid: "104745AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                    },
+                    {
+                        display: "Sodium Bicarbonate<br/>1.26% Polyfusor",
+                        uuid: "162861AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                     }
                 ],
                 routeOptions: [
