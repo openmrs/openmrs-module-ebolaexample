@@ -640,7 +640,8 @@ angular.module("constants", [])
                         uuid: "78617AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                     },
                     {
-                        display: "Normal saline +<br/>KCL 20 mmol/L",
+                        display: "Normal saline",
+                        display2: "KCL 20 mmol/L",
                         uuid: "162855AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                     },
                     {
@@ -648,7 +649,8 @@ angular.module("constants", [])
                         uuid: "104184AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                     },
                     {
-                        display: "Normal saline +<br/>KCL 40 mmol/L",
+                        display: "Normal saline",
+                        display2: "KCL 40 mmol/L",
                         uuid: "162856AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                     },
                     {
@@ -660,11 +662,13 @@ angular.module("constants", [])
                         uuid: "162860AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                     },
                     {
-                        display: "Dextrose 5% in<br/>normal saline",
+                        display: "Dextrose 5% in",
+                        display2: "normal saline",
                         uuid: "104745AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                     },
                     {
-                        display: "Sodium Bicarbonate<br/>1.26% Polyfusor",
+                        display: "Sodium Bicarbonate",
+                        display2: "1.26% Polyfusor",
                         uuid: "162861AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                     }
                 ],

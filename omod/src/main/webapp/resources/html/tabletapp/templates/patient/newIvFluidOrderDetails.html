@@ -8,7 +8,7 @@
     </span>
 
     <div class="page-wrap-smaller">
-        <h1>{{ concept.display }}</h1>
+        <h1>{{ concept.display + ' ' + concept.display2 }}</h1>
 
         <div>
             <div class="inline" class="indented-more">
@@ -92,6 +92,6 @@
 
     <div class="actions small">
         <prev-button></prev-button>
-        <button class="right small" type="submit" ng-click="save(addOrder, 'patient.overview')">Save</button>
+        <button class="right small" type="submit" ng-disabled="!addOrder.admType" ng-click="save(addOrder, 'patient.overview')">Save</button>
     </div>
 </form>
