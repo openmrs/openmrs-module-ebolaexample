@@ -1,10 +1,6 @@
 package org.openmrs.module.ebolaexample.metadata;
 
-import org.openmrs.Concept;
-import org.openmrs.ConceptName;
-import org.openmrs.EncounterType;
-import org.openmrs.GlobalProperty;
-import org.openmrs.VisitType;
+import org.openmrs.*;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.ConceptService;
 import org.openmrs.module.appframework.AppFrameworkConstants;
@@ -17,10 +13,7 @@ import org.springframework.stereotype.Component;
 import java.util.Locale;
 import java.util.UUID;
 
-import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.encounterType;
-import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.locationTag;
-import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.personAttributeType;
-import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.visitType;
+import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.*;
 
 @Component
 public class EbolaTestBaseMetadata extends AbstractMetadataBundle {
@@ -49,6 +42,12 @@ public class EbolaTestBaseMetadata extends AbstractMetadataBundle {
 
         // We cannot do install(concept(...)) because of: java.lang.UnsupportedOperationException: Concepts can only be fetched for now
         conceptService.saveConcept(concept("Ebola Program", "162637AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "N/A", "Program"));
+
+        conceptService.saveConcept(concept("IV", "160242AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "N/A", "Route"));
+        conceptService.saveConcept(concept("IO Needle", "162624AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "N/A", "Route"));
+        conceptService.saveConcept(concept("mL", "162263AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "N/A", "Units"));
+        conceptService.saveConcept(concept("min", "1733AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "N/A", "Time Units"));
+        conceptService.saveConcept(concept("hr", "1822AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "N/A", "Time Units"));
     }
 
     private String uuid() {
