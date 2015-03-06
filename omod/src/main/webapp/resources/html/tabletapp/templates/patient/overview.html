@@ -3,9 +3,12 @@
         <back-button name="{{ getWard().display }}"></back-button>
     </patient-header>
 </header>
-<span class="success-message" ng-show="comeFromPrescriptionForm">Prescription added successfully!</span>
+<span class="success-message" ng-show="comeFromPrescriptionForm">Prescription added successfully</span>
 <span class="success-message" ng-show="administeredDrug">
     {{ administeredDrug.order.concept | concept }} &rarr; {{ administeredDrug.dose | doseStatus }}
+</span>
+<span class="success-message" ng-repeat="successMessage in successMessages()">
+    {{ successMessage.display }}
 </span>
 <div class="page-wrap-smaller">
     <div ng-show="loading" class="loading-spinner"></div>

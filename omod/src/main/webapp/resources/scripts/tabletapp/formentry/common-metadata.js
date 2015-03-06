@@ -1,10 +1,4 @@
-angular.module('tabletForm')
-
-    .factory('encounterTypes', [ function() {
-        return {
-            inpatientFollowup: "83413734-587d-11e4-af12-660e112eb3f5"
-        }
-    }])
+angular.module('tabletapp')
 
     .factory('concepts', [ function() {
         return {
