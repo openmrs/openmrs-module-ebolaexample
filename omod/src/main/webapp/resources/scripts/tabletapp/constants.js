@@ -653,6 +653,18 @@ angular.module("constants", [])
                     {
                         display: "Sodium Bicarbonate 1.26% Polyfusor",
                         uuid: "162861AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                    },
+                    {
+                        display: "Dextrose 5% in water",
+                        uuid: "104184AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                    },
+                    {
+                        display: "Dextrose 10% in water",
+                        uuid: "161922AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                    },
+                    {
+                        display: "Dextrose 5% in normal saline",
+                        uuid: "104745AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                     }
                 ],
                 routeOptions: [
