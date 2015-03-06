@@ -65,10 +65,10 @@ ${ui.includeFragment("ebolaexample", "overview/patientHeader", [patient: patient
                         <% if (doseHistory.orders.size() == 0) { %>
                         <tbody>
                         <tr>
-                            <td>No prescriptions during this time period</td>
+                            <td colspan="2">No prescriptions</td>
                         </tr>
                         </tbody>
-                        <% } %>
+                        <% } else { %>
                         <tr>
                             <th>Prescription</th>
                             <th>Modify Data</th>
@@ -124,6 +124,7 @@ ${ui.includeFragment("ebolaexample", "overview/patientHeader", [patient: patient
                         <% } %>
                         <% } %>
                         </tbody>
+                        <% } %>
                         <% } %>
                     </table>
                 </div>
