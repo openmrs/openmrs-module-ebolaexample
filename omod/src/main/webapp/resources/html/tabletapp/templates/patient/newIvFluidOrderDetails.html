@@ -28,7 +28,7 @@
                            name="admType"
                            ng-model="addOrder.admType"/>
                     <label for="{{type}}"
-                           class="radio-button small">{{type}}</label>
+                           class="radio-button small smallest">{{type}}</label>
                 </span>
             </div>
 
@@ -41,7 +41,7 @@
                            ng-model="addOrder.bolusQuantity"
                            ng-required="addOrder.admType == 'Bolus' && !addOrder.bolusQuantity"/>
                     <label for="bolus_{{amount}}"
-                           class="radio-button small">{{bolusAmountDisplay(amount)}}</label>
+                           class="radio-button small smallest">{{bolusAmountDisplay(amount)}}</label>
                 </span>
                 <span class="question-title">over</span>
                 <span ng-repeat="rate in bolusRateOptions" class="checkboxes">
@@ -51,7 +51,7 @@
                            ng-model="addOrder.bolusRate"
                            ng-required="addOrder.admType == 'Bolus' && !addOrder.bolusRate"/>
                     <label for="bolus_{{rate}}"
-                           class="radio-button small">{{bolusRateDisplay(rate)}}</label>
+                           class="radio-button small smallest">{{bolusRateDisplay(rate)}}</label>
                 </span>
             </div>
 
@@ -64,7 +64,7 @@
                            ng-model="addOrder.infusionRate"
                            ng-required="addOrder.admType == 'Infusion' && !addOrder.infusionRate"/>
                     <label for="infusion_{{rate}}"
-                           class="radio-button small">{{infusionRateDisplay(rate)}}</label>
+                           class="radio-button small smallest">{{infusionRateDisplay(rate)}}</label>
                 </span>
                 <span class="question-title">for</span>
                 <span ng-repeat="duration in infusionDurationOptions" class="checkboxes">
@@ -74,7 +74,7 @@
                            ng-model="addOrder.infusionDuration"
                            ng-required="addOrder.admType == 'Infusion' && !addOrder.infusionDuration"/>
                     <label for="infusion{{duration}}"
-                           class="radio-button small">{{infusionDurationDisplay(duration)}}</label>
+                           class="radio-button small smallest">{{infusionDurationDisplay(duration)}}</label>
                 </span>
             </div>
 
