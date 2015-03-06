@@ -24,18 +24,22 @@ angular.module("iv-fluid-orders", ["tabletapp", "constants", "patients", "filter
                     $scope.routes = angular.copy(Constants.fluids.routeOptions);
                     $scope.bolusAmountOptions = angular.copy(Constants.fluids.bolusAmountOptions);
                     $scope.bolusRateOptions = angular.copy(Constants.fluids.bolusRateOptions);
-                    $scope.bolusUnits = angular.copy(Constants.fluids.bolusUnits);
-                    $scope.bolusRateUnits = angular.copy(Constants.fluids.bolusRateUnits);
                     $scope.infusionRateOptions = angular.copy(Constants.fluids.infusionRateOptions);
                     $scope.infusionDurationOptions = angular.copy(Constants.fluids.infusionDurationOptions);
-                    $scope.infusionDurationUnits = angular.copy(Constants.fluids.infusionDurationUnits);
-                    $scope.infusionRateNumeratorUnit = angular.copy(Constants.fluids.infusionRateNumeratorUnit);
-                    $scope.infusionRateDenominatorUnit = angular.copy(Constants.fluids.infusionRateDenominatorUnit);
                 },
                 setupStandardFunctions: function ($scope) {
                     $scope.clearServerError = function () {
                         $scope.serverError = null;
                     };
+
+                    $scope.bolusAmountDisplay = function (amount) {
+                        return amount + " " + Constants.fluids.bolusUnits.display;
+                    };
+
+                    $scope.bolusRateDisplay = function (rate) {
+                        return rate + " " + Constants.fluids.bolusRateUnits.display;
+                    };
+
                     $scope.infusionRateDisplay = function(rate) {
                         if (rate == 0) {
                             return 'KVO';
@@ -54,7 +58,6 @@ angular.module("iv-fluid-orders", ["tabletapp", "constants", "patients", "filter
                         }
                         return duration + " " + unit;
                     }
-
                 },
                 setupIvFluidOrder: function ($scope, concept, patient) {
                     var order = {

@@ -41,7 +41,7 @@
                            ng-model="addOrder.bolusQuantity"
                            ng-required="addOrder.admType == 'Bolus' && !addOrder.bolusQuantity"/>
                     <label for="bolus_{{amount}}"
-                           class="radio-button small">{{amount}} {{bolusUnits.display}}</label>
+                           class="radio-button small">{{bolusAmountDisplay(amount)}}</label>
                 </span>
                 <span class="question-title">over</span>
                 <span ng-repeat="rate in bolusRateOptions" class="checkboxes">
@@ -51,7 +51,7 @@
                            ng-model="addOrder.bolusRate"
                            ng-required="addOrder.admType == 'Bolus' && !addOrder.bolusRate"/>
                     <label for="bolus_{{rate}}"
-                           class="radio-button small">{{rate}} {{bolusRateUnits.display}}</label>
+                           class="radio-button small">{{bolusRateDisplay(rate)}}</label>
                 </span>
             </div>
 
