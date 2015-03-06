@@ -51,8 +51,8 @@ public class IvFluidOrderTest extends BaseModuleContextSensitiveTest {
         ivFluidOrder.setAdministrationType(AdministrationType.BOLUS);
         ivFluidOrder.setBolusQuantity(50.0);
         ivFluidOrder.setBolusUnits(getConceptByUuid("162263AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"));
-        ivFluidOrder.setDuration(15);
-        ivFluidOrder.setDurationUnits(getConcept(1733));
+        ivFluidOrder.setBolusRate(15);
+        ivFluidOrder.setBolusRateUnits(getConcept(1733));
 
         ivFluidOrder.setPatient(patient);
         ivFluidOrder.setCareSetting(Context.getOrderService().getCareSetting(2));

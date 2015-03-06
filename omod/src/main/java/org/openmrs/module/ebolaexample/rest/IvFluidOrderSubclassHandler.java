@@ -50,11 +50,13 @@ public class IvFluidOrderSubclassHandler extends BaseDelegatingSubclassHandler<O
             d.addProperty("administrationType");
             d.addProperty("bolusQuantity");
             d.addProperty("bolusUnits", Representation.REF);
+            d.addProperty("bolusRate");
+            d.addProperty("bolusRateUnits", Representation.REF);
             d.addProperty("infusionRate");
             d.addProperty("infusionRateNumeratorUnit", Representation.REF);
             d.addProperty("infusionRateDenominatorUnit", Representation.REF);
-            d.addProperty("duration");
-            d.addProperty("durationUnits", Representation.REF);
+            d.addProperty("infusionDuration");
+            d.addProperty("infusionDurationUnits", Representation.REF);
             d.addProperty("comments");
             return d;
         }
@@ -71,11 +73,12 @@ public class IvFluidOrderSubclassHandler extends BaseDelegatingSubclassHandler<O
         d.addProperty("administrationType");
         d.addProperty("bolusQuantity");
         d.addProperty("bolusUnits");
-        d.addProperty("infusionRate");
+        d.addProperty("bolusRate");
+        d.addProperty("bolusRateUnits");
         d.addProperty("infusionRateNumeratorUnit");
         d.addProperty("infusionRateDenominatorUnit");
-        d.addProperty("duration");
-        d.addProperty("durationUnits");
+        d.addProperty("infusionDuration");
+        d.addProperty("infusionDurationUnits");
         d.addProperty("comments");
         return d;
     }
@@ -86,13 +89,14 @@ public class IvFluidOrderSubclassHandler extends BaseDelegatingSubclassHandler<O
             String ret = delegate.getConcept().getName().toString();
 
             if (delegate.getAdministrationType() == AdministrationType.BOLUS) {
-                ret = ret + ": " + delegate.getBolusQuantity() + " " + delegate.getBolusUnits() + " over";
+                ret = ret + ": " + delegate.getBolusQuantity() + " " + delegate.getBolusUnits() +
+                        " over " + delegate.getBolusRate() + " " + delegate.getBolusRateUnits();
             } else {
                 ret = ret + ": " + delegate.getInfusionRate() + " " +
-                        delegate.getInfusionRateNumeratorUnit() + "/" + delegate.getInfusionRateDenominatorUnit() + " for";
+                        delegate.getInfusionRateNumeratorUnit() + "/" + delegate.getInfusionRateDenominatorUnit() +
+                        " for " + delegate.getInfusionDuration() + " " + delegate.getInfusionDurationUnits();
             }
 
-            ret = ret + delegate.getDuration() + " " + delegate.getDurationUnits();
             return ret;
         } else {
             return "[no fluid]";

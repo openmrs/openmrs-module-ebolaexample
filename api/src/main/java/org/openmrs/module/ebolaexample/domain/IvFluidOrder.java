@@ -12,15 +12,19 @@ public class IvFluidOrder extends Order {
 
     private Concept bolusUnits;
 
+    private Integer bolusRate;
+
+    private Concept bolusRateUnits;
+
     private Double infusionRate;
 
     private Concept infusionRateNumeratorUnit;
 
     private Concept infusionRateDenominatorUnit;
 
-    private Integer duration;
+    private Integer infusionDuration;
 
-    private Concept durationUnits;
+    private Concept infusionDurationUnits;
 
     private String comments;
 
@@ -40,8 +44,8 @@ public class IvFluidOrder extends Order {
         target.setInfusionRate(getInfusionRate());
         target.setInfusionRateNumeratorUnit(getInfusionRateNumeratorUnit());
         target.setInfusionRateDenominatorUnit(getInfusionRateDenominatorUnit());
-        target.setDuration(getDuration());
-        target.setDurationUnits(getDurationUnits());
+        target.setInfusionDuration(getInfusionDuration());
+        target.setInfusionDurationUnits(getInfusionDurationUnits());
         target.setComments(getComments());
         return target;
     }
@@ -78,6 +82,22 @@ public class IvFluidOrder extends Order {
         this.bolusUnits = bolusUnits;
     }
 
+    public Integer getBolusRate() {
+        return bolusRate;
+    }
+
+    public void setBolusRate(Integer bolusRate) {
+        this.bolusRate = bolusRate;
+    }
+
+    public Concept getBolusRateUnits() {
+        return bolusRateUnits;
+    }
+
+    public void setBolusRateUnits(Concept bolusRateUnits) {
+        this.bolusRateUnits = bolusRateUnits;
+    }
+
     public Double getInfusionRate() {
         return infusionRate;
     }
@@ -102,20 +122,20 @@ public class IvFluidOrder extends Order {
         this.infusionRateDenominatorUnit = infusionRateDenominatorUnit;
     }
 
-    public Integer getDuration() {
-        return duration;
+    public Integer getInfusionDuration() {
+        return infusionDuration;
     }
 
-    public void setDuration(Integer duration) {
-        this.duration = duration;
+    public void setInfusionDuration(Integer duration) {
+        this.infusionDuration = duration;
     }
 
-    public Concept getDurationUnits() {
-        return durationUnits;
+    public Concept getInfusionDurationUnits() {
+        return infusionDurationUnits;
     }
 
-    public void setDurationUnits(Concept durationUnits) {
-        this.durationUnits = durationUnits;
+    public void setInfusionDurationUnits(Concept durationUnits) {
+        this.infusionDurationUnits = durationUnits;
     }
 
     public String getComments() {

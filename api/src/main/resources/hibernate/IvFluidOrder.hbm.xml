@@ -18,11 +18,13 @@
         </property>
         <property name="bolusQuantity" type="double" column="bolus_quantity" length="22"/>
         <many-to-one name="bolusUnits" class="org.openmrs.Concept" column="bolus_units"/>
+        <property name="bolusRate" type="int" column="bolus_rate"/>
+        <many-to-one name="bolusRateUnits" class="org.openmrs.Concept" column="bolus_rate_units"/>
         <property name="infusionRate" type="double" column="infusion_rate" length="22"/>
         <many-to-one name="infusionRateNumeratorUnit" class="org.openmrs.Concept" column="inf_rate_numerator_unit"/>
         <many-to-one name="infusionRateDenominatorUnit" class="org.openmrs.Concept" column="inf_rate_denominator_unit"/>
-        <property name="duration" type="int" column="duration"/>
-        <many-to-one name="durationUnits" class="org.openmrs.Concept" column="duration_units"/>
+        <property name="infusionDuration" type="int" column="infusion_duration"/>
+        <many-to-one name="infusionDurationUnits" class="org.openmrs.Concept" column="infusion_duration_units"/>
         <property name="comments" type="string" column="comments" length="255"/>
     </joined-subclass>
 

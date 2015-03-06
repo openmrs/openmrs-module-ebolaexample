@@ -79,11 +79,13 @@
             <column name="adm_type" type="varchar(255)"/>
             <column name="bolus_quantity" type="double precision"/>
             <column name="bolus_units" type="int"/>
+            <column name="bolus_rate" type="int"/>
+            <column name="bolus_rate_units" type="int"/>
             <column name="infusion_rate" type="double precision"/>
             <column name="inf_rate_numerator_unit" type="int"/>
             <column name="inf_rate_denominator_unit" type="int"/>
-            <column name="duration" type="int"/>
-            <column name="duration_units" type="int"/>
+            <column name="infusion_duration" type="int"/>
+            <column name="infusion_duration_units" type="int"/>
             <column name="comments" type="varchar(255)"/>
         </createTable>
         <addForeignKeyConstraint constraintName="ebola_iv_fluid_order_order_id_fk"
@@ -101,8 +103,12 @@
                                  constraintName="ebola_iv_fluid_order_inf_rate_denominator_unit"
                                  referencedTableName="concept"
                                  referencedColumnNames="concept_id"/>
-        <addForeignKeyConstraint baseTableName="ebola_iv_fluid_order" baseColumnNames="duration_units"
-                                 constraintName="ebola_iv_fluid_order_duration_units"
+        <addForeignKeyConstraint baseTableName="ebola_iv_fluid_order" baseColumnNames="bolus_rate_units"
+                                 constraintName="ebola_iv_fluid_order_bolus_rate_units"
+                                 referencedTableName="concept"
+                                 referencedColumnNames="concept_id"/>
+        <addForeignKeyConstraint baseTableName="ebola_iv_fluid_order" baseColumnNames="infusion_duration_units"
+                                 constraintName="ebola_iv_fluid_order_infusion_duration_units"
                                  referencedTableName="concept"
                                  referencedColumnNames="concept_id"/>
     </changeSet>
