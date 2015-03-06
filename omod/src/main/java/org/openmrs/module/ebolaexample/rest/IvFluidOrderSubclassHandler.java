@@ -75,6 +75,7 @@ public class IvFluidOrderSubclassHandler extends BaseDelegatingSubclassHandler<O
         d.addProperty("bolusUnits");
         d.addProperty("bolusRate");
         d.addProperty("bolusRateUnits");
+        d.addProperty("infusionRate");
         d.addProperty("infusionRateNumeratorUnit");
         d.addProperty("infusionRateDenominatorUnit");
         d.addProperty("infusionDuration");

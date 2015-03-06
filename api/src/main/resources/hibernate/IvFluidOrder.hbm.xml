@@ -9,11 +9,11 @@
 
         <key column="order_id"/>
 
-        <many-to-one name="route" class="org.openmrs.Concept" column="route"/>
+        <many-to-one name="route" class="org.openmrs.Concept" column="route" not-null="true"/>
         <property name="administrationType" column="adm_type" not-null="true">
             <type name="org.hibernate.type.EnumType">
                 <param name="enumClass">org.openmrs.module.ebolaexample.domain.AdministrationType</param>
-                <param name="useNamed">true</param>
+                <param name="type">12</param>
             </type>
         </property>
         <property name="bolusQuantity" type="double" column="bolus_quantity" length="22"/>

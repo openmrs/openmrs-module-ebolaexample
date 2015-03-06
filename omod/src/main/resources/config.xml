@@ -54,7 +54,7 @@
 
     <!-- Hibernate mapping files -->
     <mappingFiles>
-        <mapping resource="hibernate/IvFluidOrder.hbm.xml" />
+        hibernate/IvFluidOrder.hbm.xml
     </mappingFiles>
 
 	<!-- Internationalization -->
