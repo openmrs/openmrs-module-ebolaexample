@@ -25,6 +25,7 @@
                     <input type="radio"
                            id="{{type}}"
                            value="{{type}}"
+                           name="admType"
                            ng-model="addOrder.admType"/>
                     <label for="{{type}}"
                            class="radio-button small">{{type}}</label>
@@ -37,7 +38,8 @@
                     <input type="radio"
                            id="bolus_{{amount}}"
                            value="{{amount}}"
-                           ng-model="addOrder.bolusQuantity"/>
+                           ng-model="addOrder.bolusQuantity"
+                           ng-required="addOrder.admType == 'Bolus' && !addOrder.bolusQuantity"/>
                     <label for="bolus_{{amount}}"
                            class="radio-button small">{{amount}} {{bolusUnits.display}}</label>
                 </span>
@@ -46,7 +48,8 @@
                     <input type="radio"
                            id="bolus_{{rate}}"
                            value="{{rate}}"
-                           ng-model="addOrder.bolusRate"/>
+                           ng-model="addOrder.bolusRate"
+                           ng-required="addOrder.admType == 'Bolus' && !addOrder.bolusRate"/>
                     <label for="bolus_{{rate}}"
                            class="radio-button small">{{rate}} {{bolusRateUnits.display}}</label>
                 </span>
@@ -58,7 +61,8 @@
                     <input type="radio"
                            id="infusion_{{rate}}"
                            value="{{rate}}"
-                           ng-model="addOrder.infusionRate"/>
+                           ng-model="addOrder.infusionRate"
+                           ng-required="addOrder.admType == 'Infusion' && !addOrder.infusionRate"/>
                     <label for="infusion_{{rate}}"
                            class="radio-button small">{{infusionRateDisplay(rate)}}</label>
                 </span>
@@ -67,7 +71,8 @@
                     <input type="radio"
                            id="infusion{{duration}}"
                            value="{{duration}}"
-                           ng-model="addOrder.infusionDuration"/>
+                           ng-model="addOrder.infusionDuration"
+                           ng-required="addOrder.admType == 'Infusion' && !addOrder.infusionDuration"/>
                     <label for="infusion{{duration}}"
                            class="radio-button small">{{infusionDurationDisplay(duration)}}</label>
                 </span>
@@ -87,5 +92,6 @@
 
     <div class="actions small">
         <prev-button></prev-button>
+        <button class="right small" type="submit" ng-click="save(addOrder, 'patient.overview')">Save</button>
     </div>
 </form>

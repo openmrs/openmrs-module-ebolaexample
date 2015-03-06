@@ -107,7 +107,8 @@ angular.module("constants", [])
                 }
             },
             orderType: {
-                drugorder: "drugorder"
+                drugorder: "drugorder",
+                ivfluidorder: "ivfluidorder"
             },
             orderAction: {
                 discontinue: "DISCONTINUE",

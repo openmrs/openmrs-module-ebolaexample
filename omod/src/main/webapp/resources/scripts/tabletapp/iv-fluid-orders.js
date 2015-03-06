@@ -1,22 +1,19 @@
-angular.module("iv-fluid-orders", ["tabletapp", "constants", "patients", "filters", "constants"])
-    .controller("NewIvFluidOrderController", ['$state', '$scope', 'Constants',
-        function ($state, $scope, Constants) {
-            $scope.ivFluidsConcepts = Constants.fluids.list;
+angular.module("iv-fluid-orders", ["tabletapp", "constants", "patients", "filters", "constants", "iv-fluid-orders-service"])
+    .controller("NewIvFluidOrderController", ['$state', '$scope', 'IvFluidOrderService',
+        function ($state, $scope, IvFluidOrderService) {
+            $scope.ivFluidsConcepts = IvFluidOrderService.getAll();
         }
     ])
 
-    .controller("NewIvFluidOrderDetailsController", ["$state", "$scope", "$window", "Constants", "IvFluidOrderSetup",
-        function ($state, $scope, $window, Constants, IvFluidOrderSetup) {
-            function loadConcept(conceptUUID) {
-                $scope.concept = $.grep(Constants.fluids.list, function (concept) {
-                    return concept.uuid == conceptUUID;
-                })[0];
-            }
+    .controller("NewIvFluidOrderDetailsController", ["$state", "$scope", "$window", "IvFluidOrderService", "IvFluidOrderSetup",
+        function ($state, $scope, $window, IvFluidOrderService, IvFluidOrderSetup) {
+            $scope.concept = IvFluidOrderService.retrieveConcept($state.params.conceptUUID);
 
-            loadConcept($state.params.conceptUUID);
             IvFluidOrderSetup.setupScopeConstants($scope);
             IvFluidOrderSetup.setupStandardFunctions($scope);
             IvFluidOrderSetup.setupIvFluidOrder($scope, $scope.concept, $scope.patient);
+
+            $scope.save = IvFluidOrderService.buildSaveHandler($scope, $state);
         }
     ])
 
