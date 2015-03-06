@@ -51,7 +51,7 @@
                         </em>
                         <span class="prescriber">
                             <em>
-                                <span ng-show="order.orderer"> (prescribed by: {{order.orderer.display}})</span>
+                                <span ng-show="order.orderer"> (prescribed by: {{order.orderer.display | prescriber}})</span>
                                 <span ng-hide="order.orderer"> (prescribed by: Unknown User)</span>
                             </em>
                         </span>

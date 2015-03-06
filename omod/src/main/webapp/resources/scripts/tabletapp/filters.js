@@ -46,6 +46,14 @@ angular.module('filters', ['constants'])
         }
     })
 
+    //shorten provider display name
+    .filter('prescriber', function(){
+        return function(input){
+            if(!input) return "";
+            return input.split('-')[1];
+        }
+    })
+
     // currently applies both bed and ward filters, but may be changed independently
     .filter('backButton', function(bedFilter, wardFilter) {
         return function (input) {
