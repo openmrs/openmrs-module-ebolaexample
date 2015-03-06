@@ -32,6 +32,10 @@ angular.module("iv-fluid-orders", ["tabletapp", "constants", "patients", "filter
                         $scope.serverError = null;
                     };
 
+                    $scope.clearFormError = function () {
+                        $scope.hasErrors = false;
+                    };
+
                     $scope.bolusAmountDisplay = function (amount) {
                         return amount + " " + Constants.fluids.bolusUnits.display;
                     };

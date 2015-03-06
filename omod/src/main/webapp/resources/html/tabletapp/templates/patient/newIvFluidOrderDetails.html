@@ -12,7 +12,7 @@
 
         <div>
             <div class="inline" class="indented-more">
-                <span class="select-arrow" ng-class="{error: addOrder.form.route.$invalid && hasErrors}">
+                <span class="select-arrow">
                     <select ng-model="addOrder.route"
                             ng-required="true"
                             name="route"
@@ -27,27 +27,33 @@
                            value="{{type}}"
                            name="admType"
                            ng-model="addOrder.admType"/>
-                    <label for="{{type}}"
+                    <label for="{{type}}" ng-click="clearFormError()"
                            class="radio-button small smallest">{{type}}</label>
                 </span>
             </div>
 
             <div ng-show="addOrder.admType == 'Bolus'">
-                <span class="question-title">Bolus amount</span>
+                <span ng-class="{error: addOrder.form.bolusQuantity.$invalid && hasErrors}" class="question-title">
+                    Bolus amount<em>(select one)</em>
+                </span>
                 <span ng-repeat="amount in bolusAmountOptions" class="checkboxes">
                     <input type="radio"
                            id="bolus_{{amount}}"
                            value="{{amount}}"
+                           name="bolusQuantity"
                            ng-model="addOrder.bolusQuantity"
                            ng-required="addOrder.admType == 'Bolus' && !addOrder.bolusQuantity"/>
                     <label for="bolus_{{amount}}"
                            class="radio-button small smallest">{{bolusAmountDisplay(amount)}}</label>
                 </span>
-                <span class="question-title">over</span>
+                <span ng-class="{error: addOrder.form.bolusRate.$invalid && hasErrors}" class="question-title">
+                    over<em>(select one)</em>
+                </span>
                 <span ng-repeat="rate in bolusRateOptions" class="checkboxes">
                     <input type="radio"
                            id="bolus_{{rate}}"
                            value="{{rate}}"
+                           name="bolusRate"
                            ng-model="addOrder.bolusRate"
                            ng-required="addOrder.admType == 'Bolus' && !addOrder.bolusRate"/>
                     <label for="bolus_{{rate}}"
@@ -56,21 +62,27 @@
             </div>
 
             <div ng-show="addOrder.admType == 'Infusion'">
-                <span class="question-title">Infusion Rate</span>
+                <span  ng-class="{error: addOrder.form.infusionRate.$invalid && hasErrors}" class="question-title">
+                    Infusion Rate<em>(select one)</em>
+                </span>
                 <span ng-repeat="rate in infusionRateOptions" class="checkboxes">
                     <input type="radio"
                            id="infusion_{{rate}}"
                            value="{{rate}}"
+                           name="infusionRate"
                            ng-model="addOrder.infusionRate"
                            ng-required="addOrder.admType == 'Infusion' && !addOrder.infusionRate"/>
                     <label for="infusion_{{rate}}"
                            class="radio-button small smallest">{{infusionRateDisplay(rate)}}</label>
                 </span>
-                <span class="question-title">for</span>
+                <span ng-class="{error: addOrder.form.infusionDuration.$invalid && hasErrors}" class="question-title">
+                    for<em>(select one)</em>
+                </span>
                 <span ng-repeat="duration in infusionDurationOptions" class="checkboxes">
                     <input type="radio"
                            id="infusion{{duration}}"
                            value="{{duration}}"
+                           name="infusionDuration"
                            ng-model="addOrder.infusionDuration"
                            ng-required="addOrder.admType == 'Infusion' && !addOrder.infusionDuration"/>
                     <label for="infusion{{duration}}"
