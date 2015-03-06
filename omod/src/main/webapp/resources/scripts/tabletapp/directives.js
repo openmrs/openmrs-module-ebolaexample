@@ -151,11 +151,21 @@ angular.module("directives", ["session", "feature-toggles"])
                 scope.$watch(attrs.patientId, function (value) {
                     scope.patientId = value;
                 });
+
                 scope.bed = WardService.getBedDescriptionFor(scope.patient);
                 scope.ward = WardService.getWardDescription();
-                scope.$watch(scope.ward, function (value) {
-                    scope.ward = WardService.getWardDescription();
+                scope.$watch(attrs.ward, function (value) {
+                    if(!value){
+                        return;
+                    }
+                    scope.ward = value;
                 });
+                scope.$watch(attrs.bed, function(value){
+                    if(!value){
+                        return;
+                    }
+                    scope.bed = {display:value};
+                })
             }
         }
     }])

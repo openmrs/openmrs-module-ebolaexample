@@ -45,9 +45,9 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
 
     .controller("PatientController", ["$state", "$scope", "PatientResource", "OrderResource", "ngDialog",
         "$rootScope", "Constants", "ScheduledDoseResource", "CurrentSession", "StopOrderService",
-        "Orders", "DoseHistory", "WardResource", 'FeedbackMessages',
+        "Orders", "DoseHistory", "WardResource", 'WardService', 'FeedbackMessages',
         function ($state, $scope, PatientResource, OrderResource, ngDialog, $rootScope, Constants,
-                  ScheduledDoseResource, CurrentSession, StopOrderService, Orders, DoseHistory, WardResource,
+                  ScheduledDoseResource, CurrentSession, StopOrderService, Orders, DoseHistory, WardResource, WardService,
                   FeedbackMessages) {
 
             var patientUuid = $state.params.patientUUID;
@@ -59,9 +59,18 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                 $scope.ward = WardResource.get({uuid: wardUuid}, function (response) {
                     var recentWard = response.toJSON();
                     CurrentSession.setRecentWard(recentWard);
+                    $scope.bed = WardService.getBedDescriptionFor($scope.patient);
                     $scope.loading = false;
                 });
+
+                $scope.currentWard = function(){
+                    return $scope.ward && $scope.ward.display;
+                };
+                $scope.currentBed = function(){
+                    return $scope.bed && $scope.bed.display;
+                };
             }
+
 
             $scope.backButtonText = "Some Text";
 

@@ -1,5 +1,5 @@
 <header>
-    <patient-header patient-id="getPatientId()" patient="patient">
+    <patient-header patient-id="getPatientId()" patient="patient" ward="currentWard()" bed="currentBed()">
         <back-button name="{{ getWard().display }}"></back-button>
     </patient-header>
 </header>
@@ -26,7 +26,11 @@
                         <span class="drug-name">{{ order.concept.display.toUpperCase() }}</span><em>{{ order.drug.display }}</em>
                     </span>
                     <div>
-                        <span class="date">(<span ng-show="order.actualStopDate">{{order.dateStopped ? "STOPPED" : "EXPIRED"}}, </span>{{ order.dateActivated | date: 'dd MMM H:mm' }}<span ng-show="order.actualStopDate"> - {{ order.actualStopDate | date: 'dd MMM H:mm' }}</span>)</span>
+                        <span class="date">
+                            (<span ng-show="order.actualStopDate">{{order.dateStopped ? "STOPPED" : "EXPIRED"}}, </span>
+                            {{ order.dateActivated | date: 'dd MMM H:mm' }}
+                            <span ng-show="order.actualStopDate"> - {{ order.actualStopDate | date: 'dd MMM H:mm' }}</span>)
+                        </span>
                         <em>
                             {{order.dose}}
                             {{order.doseUnits.names[0].display}}
@@ -43,10 +47,14 @@
                             <span ng-show="order.duration">for {{ order.duration }} {{ order.durationUnits | concept }}</span>
                             <span class="tag" ng-show="order.asNeeded">In case of {{ order.asNeededCondition }}</span>
 
-                            <span ng-show="order.orderer"> - (prescribed by: {{order.orderer.display}})</span>
-                            <span ng-hide="order.orderer"> - (prescribed by: Unknown User)</span>
                              - {{ lastGiven(order) | lastGiven }}
                         </em>
+                        <span class="prescriber">
+                            <em>
+                                <span ng-show="order.orderer"> (prescribed by: {{order.orderer.display | prescriber}})</span>
+                                <span ng-hide="order.orderer"> (prescribed by: Unknown User)</span>
+                            </em>
+                        </span>
                     </div>
                 </span>
                 <span class="right" ng-show="orders.activeOnly">

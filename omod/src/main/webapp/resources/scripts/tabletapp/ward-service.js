@@ -4,9 +4,9 @@ angular.module('ward-service', [])
         var getBedForPatientObject = function(patient) {
             var assignment = _.find(CurrentSession.getRecentWard().bedAssignments, function(assignment, index) {
                     return patient.uuid == assignment.patient.uuid;
-                })
+                });
             return assignment ? assignment.bed.display : "";
-        }
+        };
         return {
             getBedDescriptionFor: function(patient) {
                 if (patient.$promise && !patient.$resolved) {
@@ -20,7 +20,7 @@ angular.module('ward-service', [])
                 }
                 return { display: getBedForPatientObject(patient) };
             },
-            getWardDescription: function() {
+        getWardDescription: function() {
                 var ward = CurrentSession.getRecentWard();
                 return ward ? ward.display : "";
             }
