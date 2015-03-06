@@ -679,13 +679,13 @@ angular.module("constants", [])
                 ],
                 bolusAmountOptions: [50, 70, 100, 250, 500, 1000],
                 bolusRateOptions: [15, 30, 60, 120],
-                bolusUnit: mL,
-                bolusRateUnit: minutes,
+                bolusUnits: mL,
+                bolusRateUnits: minutes,
                 infusionRateOptions: [kvo, 50, 75, 100, 125, 150, 200, 500, 1000],
                 infusionDurationOptions: [continuous, 1, 2, 3, 4, 6, 8, 12, 24],
                 infusionRateNumeratorUnit: mL,
                 infusionRateDenominatorUnit: hours,
-                infusionDurationUnit: hours
+                infusionDurationUnits: hours
             }
         }
     });

@@ -27,11 +27,11 @@ angular.module("iv-fluid-orders", ["tabletapp", "constants", "patients", "filter
                     $scope.routes = angular.copy(Constants.fluids.routeOptions);
                     $scope.bolusAmountOptions = angular.copy(Constants.fluids.bolusAmountOptions);
                     $scope.bolusRateOptions = angular.copy(Constants.fluids.bolusRateOptions);
-                    $scope.bolusUnit = angular.copy(Constants.fluids.bolusUnit);
-                    $scope.bolusRateUnit = angular.copy(Constants.fluids.bolusRateUnit);
+                    $scope.bolusUnits = angular.copy(Constants.fluids.bolusUnits);
+                    $scope.bolusRateUnits = angular.copy(Constants.fluids.bolusRateUnits);
                     $scope.infusionRateOptions = angular.copy(Constants.fluids.infusionRateOptions);
                     $scope.infusionDurationOptions = angular.copy(Constants.fluids.infusionDurationOptions);
-                    $scope.infusionDurationUnit = angular.copy(Constants.fluids.infusionDurationUnit);
+                    $scope.infusionDurationUnits = angular.copy(Constants.fluids.infusionDurationUnits);
                     $scope.infusionRateNumeratorUnit = angular.copy(Constants.fluids.infusionRateNumeratorUnit);
                     $scope.infusionRateDenominatorUnit = angular.copy(Constants.fluids.infusionRateDenominatorUnit);
                 },
@@ -51,7 +51,7 @@ angular.module("iv-fluid-orders", ["tabletapp", "constants", "patients", "filter
                         if (duration == 0) {
                             return 'Continuous';
                         }
-                        var unit = Constants.fluids.infusionDurationUnit.display;
+                        var unit = Constants.fluids.infusionDurationUnits.display;
                         if (duration != 1) {
                             unit = unit + 's';
                         }

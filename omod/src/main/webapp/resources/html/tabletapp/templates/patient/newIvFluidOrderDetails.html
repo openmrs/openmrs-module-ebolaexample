@@ -39,7 +39,7 @@
                            value="{{amount}}"
                            ng-model="addOrder.bolusQuantity"/>
                     <label for="bolus_{{amount}}"
-                           class="radio-button small">{{amount}} {{bolusUnit.display}}</label>
+                           class="radio-button small">{{amount}} {{bolusUnits.display}}</label>
                 </span>
                 <span class="question-title">over</span>
                 <span ng-repeat="rate in bolusRateOptions" class="checkboxes">
@@ -48,7 +48,7 @@
                            value="{{rate}}"
                            ng-model="addOrder.bolusRate"/>
                     <label for="bolus_{{rate}}"
-                           class="radio-button small">{{rate}} {{bolusRateUnit.display}}</label>
+                           class="radio-button small">{{rate}} {{bolusRateUnits.display}}</label>
                 </span>
             </div>
 

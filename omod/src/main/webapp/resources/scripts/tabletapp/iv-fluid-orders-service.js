@@ -1,5 +1,5 @@
-angular.module('prescription-service', ['tabletapp'])
-    .service('PrescriptionService', ['Orders', 'Constants', 'CurrentSession', 'OrderResource',
+angular.module('iv-fluid-orders-service', ['tabletapp'])
+    .service('IvFluidOrdersService', ['Orders', 'Constants', 'CurrentSession', 'OrderResource',
         function (Orders, Constants, CurrentSession, OrderResource) {
 
             var orderJson = function(order, encounter) {
@@ -15,10 +15,14 @@ angular.module('prescription-service', ['tabletapp'])
                 if (order.admType == 'Bolus') {
                     orderJson["bolusQuantity"] = order.bolusQuantity;
                     orderJson["bolusUnits"] = order.bolusUnits;
-                    orderJson["duration"] = order.bolusRate;
-                    orderJson["durationUnits"] = Constants.fluids.bolusRateUnit.uuid;
-                } else if (order.dosingType == 'rounds') {
-
+                    orderJson["bolusRate"] = order.bolusRate;
+                    orderJson["bolusRateUnits"] = Constants.fluids.bolusRateUnits.uuid;
+                } else if (order.admType == 'Infusion') {
+                    orderJson["infusionRate"] = order.infusionRate;
+                    orderJson["infusionRateNumeratorUnit"] = Constants.fluids.infusionRateNumeratorUnit;
+                    orderJson["infusionRateDenominatorUnit"] = Constants.fluids.infusionRateDenominatorUnit;
+                    orderJson["infusionDuration"] = order.infusionDuration;
+                    orderJson["infusionDurationUnits"] = order.infusionDurationUnits;
                 }
             }
 
