@@ -6,7 +6,7 @@
     <div ng-show="loading" class="loading-spinner"></div>
     <span ng-show="!loading" class="question-title">New IV Fluid Order</span>
     <div ng-show="!loading">
-        <div ng-show="ivFluidsConcepts" class="common-drugs-container">
+        <div ng-show="ivFluidsConcepts" class="common-fluids-container">
             <a class="radio-button small fixed" ng-repeat="concept in ivFluidsConcepts"
                ui-sref="patient.addIvFluidOrderDetails({ conceptUUID: concept.uuid})" type="button">
                 <span>{{concept.display}}<br/>{{concept.display2}}</span>
