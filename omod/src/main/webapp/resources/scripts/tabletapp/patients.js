@@ -54,12 +54,14 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             var wardUuid = $state.params.wardUUID;
             $scope.hasErrors = false;
             $scope.patient = PatientResource.get({uuid: patientUuid});
+            $scope.backButtonText = "Some Text";
 
             if (wardUuid) {
                 $scope.ward = WardResource.get({uuid: wardUuid}, function (response) {
                     var recentWard = response.toJSON();
                     CurrentSession.setRecentWard(recentWard);
                     $scope.bed = WardService.getBedDescriptionFor($scope.patient);
+                    $scope.backButtonText = recentWard.display;
                     $scope.loading = false;
                 });
 
@@ -70,9 +72,6 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                     return $scope.bed && $scope.bed.display;
                 };
             }
-
-
-            $scope.backButtonText = "Some Text";
 
             Orders.reload($scope, patientUuid);
             $scope.$watch(Orders.get, function (newOrders) {
