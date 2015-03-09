@@ -1,6 +1,6 @@
 angular.module('iv-fluid-orders-service', ['tabletapp'])
-    .service('IvFluidOrderService', ['Orders', 'Constants', 'CurrentSession', 'OrderResource',
-        function (Orders, Constants, CurrentSession, OrderResource) {
+    .service('IvFluidOrderService', ['Orders', 'Constants', 'CurrentSession', 'OrderResource', 'FeedbackMessages',
+        function (Orders, Constants, CurrentSession, OrderResource, FeedbackMessages) {
 
             var orderJson = function (order, encounter) {
                 var sessionInfo = CurrentSession.getInfo();
@@ -37,7 +37,12 @@ angular.module('iv-fluid-orders-service', ['tabletapp'])
                     $state.params['uuid'] = CurrentSession.getRecentWard().uuid;
                     $state.params['ivFluidOrderSuccess'] = true;
                     Orders.reload($scope, $state.params['patientUUID']);
-                    $state.go(newState, $state.params);
+                    $state.go(newState, $state.params).then(function () {
+                        // set this after transitioning state, because messages are cleared on $stateChangeSuccess
+                        FeedbackMessages.showSuccessMessage({
+                            display: "IV fluid order added successfully"
+                        });
+                    });
                 }
             };
 
@@ -78,7 +83,7 @@ angular.module('iv-fluid-orders-service', ['tabletapp'])
                         saveIvFluidOrder(order, newState, $scope, $state);
                     }
                 },
-                getAll: function() {
+                getAll: function () {
                     return Constants.fluids.list;
                 },
                 retrieveConcept: function (conceptUUID) {
