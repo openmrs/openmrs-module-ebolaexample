@@ -20,10 +20,13 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
         function ($state, $scope, WardResource, CurrentSession) {
             $scope.loading = true;
             var wardId = $state.params.uuid;
-            $scope.ward = WardResource.get({uuid: wardId}, function (response) {
-                CurrentSession.setRecentWard(response.toJSON());
-                $scope.loading = false;
-            });
+            if(!!wardId){
+                $scope.ward = WardResource.get({uuid: wardId}, function (response) {
+                    CurrentSession.setRecentWard(response.toJSON());
+                    $scope.loading = false;
+                });
+            }
+
 
             function toCamelCase(sentenceCase) {
                 var out = "";
@@ -45,13 +48,13 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
 
     .controller("PatientController", ["$state", "$scope", "PatientResource", "OrderResource", "ngDialog",
         "$rootScope", "Constants", "ScheduledDoseResource", "CurrentSession", "StopOrderService",
-        "Orders", "DoseHistory", "WardResource", 'WardService', 'FeedbackMessages',
+        "Orders", "DoseHistory", "WardResource", 'WardService', 'FeedbackMessages', '$http',
         function ($state, $scope, PatientResource, OrderResource, ngDialog, $rootScope, Constants,
                   ScheduledDoseResource, CurrentSession, StopOrderService, Orders, DoseHistory, WardResource, WardService,
-                  FeedbackMessages) {
+                  FeedbackMessages, $http) {
 
             var patientUuid = $state.params.patientUUID;
-            var wardUuid = $state.params.wardUUID;
+            $scope.patientUuid = patientUuid;
             $scope.hasErrors = false;
             $scope.patient = PatientResource.get({uuid: patientUuid});
             $scope.backButtonText = "Some Text";
@@ -60,17 +63,10 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                 $scope.ward = WardResource.get({uuid: wardUuid}, function (response) {
                     var recentWard = response.toJSON();
                     CurrentSession.setRecentWard(recentWard);
-                    $scope.bed = WardService.getBedDescriptionFor($scope.patient);
                     $scope.backButtonText = recentWard.display;
                     $scope.loading = false;
                 });
 
-                $scope.currentWard = function(){
-                    return $scope.ward && $scope.ward.display;
-                };
-                $scope.currentBed = function(){
-                    return $scope.bed && $scope.bed.display;
-                };
             }
 
             Orders.reload($scope, patientUuid);
