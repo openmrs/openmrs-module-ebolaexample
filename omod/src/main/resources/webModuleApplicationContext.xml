@@ -11,6 +11,9 @@
     <bean id="ebolaPharmacyPageController"
           class="org.openmrs.module.ebolaexample.page.controller.EbolaPharmacyPageController"/>
 
+    <bean id="activePatientsPageController"
+          class="org.openmrs.module.ebolaexample.page.controller.ActivePatientsPageController"/>
+
     <!-- Things to include in every UI Framework-based page -->
     <bean class="org.openmrs.ui.framework.page.GlobalResourceIncluder">
         <property name="resources">

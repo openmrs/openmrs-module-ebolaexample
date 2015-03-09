@@ -1,0 +1,18 @@
+[
+  {
+    "id": "ebolaexample.activePatient",
+    "description": "Dashboard for the active patients",
+    "order": 12,
+    "requiredPrivilege": "App: ebolaexample.activePatients",
+    "extensions": [
+      {
+        "id": "ebolaexample.ebolaDashboardHomepageLink",
+        "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
+        "type": "link",
+        "label": "Active Patients",
+        "url": "ebolaexample/activePatients.page?app=ebolaexample.activePatients",
+        "icon": "icon-user"
+      }
+    ]
+  }
+]
