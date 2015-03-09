@@ -20,10 +20,13 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
         function ($state, $scope, WardResource, CurrentSession) {
             $scope.loading = true;
             var wardId = $state.params.uuid;
-            $scope.ward = WardResource.get({uuid: wardId}, function (response) {
-                CurrentSession.setRecentWard(response.toJSON());
-                $scope.loading = false;
-            });
+            if (!!wardId) {
+                $scope.ward = WardResource.get({uuid: wardId}, function (response) {
+                    CurrentSession.setRecentWard(response.toJSON());
+                    $scope.loading = false;
+                });
+            }
+
 
             function toCamelCase(sentenceCase) {
                 var out = "";
@@ -51,7 +54,7 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                   WardResource, WardService, FeedbackMessages, FeatureToggles) {
 
             var patientUuid = $state.params.patientUUID;
-            var wardUuid = $state.params.wardUUID;
+            $scope.patientUuid = patientUuid;
             $scope.hasErrors = false;
             $scope.patient = PatientResource.get({uuid: patientUuid});
             $scope.backButtonText = "Some Text";
@@ -60,17 +63,10 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                 $scope.ward = WardResource.get({uuid: wardUuid}, function (response) {
                     var recentWard = response.toJSON();
                     CurrentSession.setRecentWard(recentWard);
-                    $scope.bed = WardService.getBedDescriptionFor($scope.patient);
                     $scope.backButtonText = recentWard.display;
                     $scope.loading = false;
                 });
 
-                $scope.currentWard = function(){
-                    return $scope.ward && $scope.ward.display;
-                };
-                $scope.currentBed = function(){
-                    return $scope.bed && $scope.bed.display;
-                };
             }
 
             DrugOrders.reload($scope, patientUuid);
@@ -80,21 +76,21 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
 
             FluidOrders.reload($scope, patientUuid);
             $scope.$watch(FluidOrders.get, function (newOrders) {
-                _.each(newOrders.orders, function(order){
-                    $http.get("/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/ivfluid-order-status?order_uuid="+order.uuid).success(function(status){
+                _.each(newOrders.orders, function (order) {
+                    $http.get("/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/ivfluid-order-status?order_uuid=" + order.uuid).success(function (status) {
                         order.status = status['ivfluid-order-status'];
                     });
                 });
                 $scope.fluidOrders = newOrders;
             }, true);
 
-            $scope.ivfluidStarted = function(order){
+            $scope.ivfluidStarted = function (order) {
                 return !!order.status && order.status.status == 'STARTED';
             };
 
-            $scope.startIvFluidOrder = function(order){
+            $scope.startIvFluidOrder = function (order) {
                 var url = "/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/ivfluid-order-status";
-                $http.post(url, data={'order_uuid':order.uuid, 'status':'STARTED'}).success(function(response){
+                $http.post(url, data = {'order_uuid': order.uuid, 'status': 'STARTED'}).success(function (response) {
                     order.status = response['ivfluid-order-status'];
                 });
             };
@@ -270,7 +266,7 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                 $state.go('patient.captureVitalsAndSymptoms');
             };
 
-            $scope.successMessages = function() {
+            $scope.successMessages = function () {
                 return FeedbackMessages.getSuccessMessages();
             };
 
@@ -313,7 +309,7 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                             "careSetting": Constants.careSetting.inpatient,
                             "orderer": sessionInfo["provider"]["uuid"]
                         };
-                        if(order.type == "drugorder") {
+                        if (order.type == "drugorder") {
                             orderJson["dosingType"] = Constants.dosingType.unvalidatedFreeText
                         }
                         if (order.drug) {

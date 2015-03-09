@@ -140,7 +140,7 @@ angular.module("directives", ["session", "feature-toggles"])
             }
         }
     }])
-    .directive('patientHeader', ['WardService', function (WardService) {
+    .directive('patientHeader', ['WardService', '$http', 'CurrentSession', function (WardService, $http, CurrentSession) {
         return {
             templateUrl: 'templates/patient/patientHeader.html',
             transclude: true,
@@ -151,21 +151,17 @@ angular.module("directives", ["session", "feature-toggles"])
                 scope.$watch(attrs.patientId, function (value) {
                     scope.patientId = value;
                 });
-
-                scope.bed = WardService.getBedDescriptionFor(scope.patient);
-                scope.ward = WardService.getWardDescription();
-                scope.$watch(attrs.ward, function (value) {
-                    if (!value) {
-                        return;
-                    }
-                    scope.ward = value;
-                });
-                scope.$watch(attrs.bed, function (value) {
-                    if (!value) {
-                        return;
-                    }
-                    scope.bed = {display: value};
-                })
+                $http.get("/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/assignment?patientUuid=" + scope.patientUuid)
+                    .success(function (assignment) {
+                        console.log(assignment)
+                        scope.ward = assignment['ward'];
+                        scope.bed = {display: assignment['bed']};
+                    })
+                    .error(function (data) {
+                        console.log("Error when getting patient's assignment:" + data);
+                        scope.ward = "###";
+                        scope.bed = {display: "###"};
+                    });
             }
         }
     }])
