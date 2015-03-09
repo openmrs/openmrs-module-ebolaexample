@@ -682,12 +682,12 @@ angular.module("constants", [])
                         uuid: '162624AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
                     }
                 ],
-                bolusAmountOptions: [50, 70, 100, 250, 500, 1000],
+                bolusAmountOptions: [50, 75, 100, 250, 500, 1000],
                 bolusRateOptions: [15, 30, 60, 120],
                 bolusUnits: mL,
                 bolusRateUnits: minutes,
-                infusionRateOptions: [kvo, 50, 75, 100, 125, 150, 200, 500, 1000],
-                infusionDurationOptions: [continuous, 1, 2, 3, 4, 6, 8, 12, 24],
+                infusionRateOptions: [kvo, 50, 75, 100, 125, 150, 200, 500],
+                infusionDurationOptions: [continuous, 1, 2, 4, 6, 8, 12, 24],
                 infusionRateNumeratorUnit: mL,
                 infusionRateDenominatorUnit: hours,
                 infusionDurationUnits: hours
