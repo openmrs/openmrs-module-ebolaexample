@@ -68,7 +68,7 @@ angular.module("directives", ["session", "feature-toggles"])
             return {
                 link: function (scope, element, attrs) {
 
-                   // CurrentSession.scope.setRecentWard(WardService.getBedDescriptionFor(scope.patient));
+                    // CurrentSession.scope.setRecentWard(WardService.getBedDescriptionFor(scope.patient));
                     scope.$watch('targetState', function (oldState, state) {
 
                         scope.backButtonText = backButtonFilter(state.current.data.back.description || scope.getWard().display);
@@ -94,32 +94,32 @@ angular.module("directives", ["session", "feature-toggles"])
     })
     .directive('actionButton', ['sidebarService', 'CurrentSession', 'FeatureToggles', '$rootScope',
         function (sidebarService, CurrentSession, FeatureToggles, $rootScope) {
-        return {
-            link: function (scope, element, attrs) {
+            return {
+                link: function (scope, element, attrs) {
 
-                sidebarService.setView($('#js-actions-sidebar'));
+                    sidebarService.setView($('#js-actions-sidebar'));
 
-                element.on('click', function () {
-                    sidebarService.toggle();
-                });
-
-                scope.hasPrivilege = function (privilege) {
-                    return CurrentSession.hasPrivilege(privilege);
-                }
-
-                scope.isFeatureEnabled = function (feature) {
-                    return FeatureToggles.isFeatureEnabled(feature);
-                }
-
-                sidebarService.getActionElements().each(function () {
-                    $(this).on('click', function () {
-                        sidebarService.hide();
+                    element.on('click', function () {
+                        sidebarService.toggle();
                     });
 
-                });
+                    scope.hasPrivilege = function (privilege) {
+                        return CurrentSession.hasPrivilege(privilege);
+                    }
+
+                    scope.isFeatureEnabled = function (feature) {
+                        return FeatureToggles.isFeatureEnabled(feature);
+                    }
+
+                    sidebarService.getActionElements().each(function () {
+                        $(this).on('click', function () {
+                            sidebarService.hide();
+                        });
+
+                    });
+                }
             }
-        }
-    }])
+        }])
     .directive('cancelButton', ['$state', 'BackService', function ($state, BackService) {
         return {
             link: function (scope, element, attrs) {
@@ -155,21 +155,29 @@ angular.module("directives", ["session", "feature-toggles"])
                 scope.bed = WardService.getBedDescriptionFor(scope.patient);
                 scope.ward = WardService.getWardDescription();
                 scope.$watch(attrs.ward, function (value) {
-                    if(!value){
+                    if (!value) {
                         return;
                     }
                     scope.ward = value;
                 });
-                scope.$watch(attrs.bed, function(value){
-                    if(!value){
+                scope.$watch(attrs.bed, function (value) {
+                    if (!value) {
                         return;
                     }
-                    scope.bed = {display:value};
+                    scope.bed = {display: value};
                 })
             }
         }
     }])
-    .directive('positive', [function () {
+    .directive('fluidName', ['IvFluidOrderService', function (IvFluidOrderService) {
+        return function (scope, elem, attrs) {
+            var fluid = IvFluidOrderService.retrieveConcept(attrs.uuid);
+            var separator = elem.html() || ' ';
+            elem.html("<span>" + fluid.display.join(separator) + "</span>");
+        }
+    }])
+    .
+    directive('positive', [function () {
         // This does validation that a number is positive
         return {
             require: 'ngModel',

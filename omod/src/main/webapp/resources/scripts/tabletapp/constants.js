@@ -632,43 +632,39 @@ angular.module("constants", [])
             fluids: {
                 list: [
                     {
-                        display: "Normal Saline",
+                        display: ["Normal Saline"],
                         uuid: "80804AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                     },
                     {
-                        display: "Ringer's Lactate",
+                        display: ["Ringer's Lactate"],
                         uuid: "78617AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                     },
                     {
-                        display: "Normal saline",
-                        display2: "KCL 20 mmol/L",
+                        display: ["Normal saline", "KCL 20 mmol/L"],
                         uuid: "162855AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                     },
                     {
-                        display: "Dextrose 5% in water",
+                        display: ["Dextrose 5% in water"],
                         uuid: "104184AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                     },
                     {
-                        display: "Normal saline",
-                        display2: "KCL 40 mmol/L",
+                        display: ["Normal saline", "KCL 40 mmol/L"],
                         uuid: "162856AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                     },
                     {
-                        display: "Dextrose 10% in water",
+                        display: ["Dextrose 10% in water"],
                         uuid: "161922AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                     },
                     {
-                        display: "Phosphate Polyfusor",
+                        display: ["Phosphate Polyfusor"],
                         uuid: "162860AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                     },
                     {
-                        display: "Dextrose 5% in",
-                        display2: "normal saline",
+                        display: ["Dextrose 5% in", "normal saline"],
                         uuid: "104745AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                     },
                     {
-                        display: "Sodium Bicarbonate",
-                        display2: "1.26% Polyfusor",
+                        display: ["Sodium Bicarbonate", "1.26% Polyfusor"],
                         uuid: "162861AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                     }
                 ],
