@@ -104,4 +104,43 @@ angular.module('filters', ['constants'])
             }
             return output;
         }
-    });
+    })
+    .filter('fluidOrder', ['Constants', function (Constants) {
+        function bolusAmountDisplay(amount) {
+            return amount + " " + Constants.fluids.bolusUnits.display;
+        }
+
+        function bolusRateDisplay(rate) {
+            return rate + " " + Constants.fluids.bolusRateUnits.longDisplay + 's';
+        }
+
+        function infusionRateDisplay(rate) {
+            if (rate == 0) {
+                return 'KVO';
+            }
+            return rate + " " + Constants.fluids.infusionRateNumeratorUnit.display + "/" +
+                Constants.fluids.infusionRateDenominatorUnit.display;
+        }
+
+        function infusionDurationDisplay(duration) {
+            if (duration == 0) {
+                return 'continuous';
+            }
+            var unit = Constants.fluids.infusionDurationUnits.longDisplay;
+            if (duration != 1) {
+                unit += 's';
+            }
+            return "for " + duration + " " + unit;
+        }
+
+        return function (order) {
+            if (order.administrationType == 'BOLUS') {
+                return bolusAmountDisplay(order.bolusQuantity) + ' over ' +
+                    bolusRateDisplay(order.bolusRate);
+            } else {
+                return '@ ' + infusionRateDisplay(order.infusionRate) + ' ' +
+                    infusionDurationDisplay(order.infusionDuration);
+
+            }
+        }
+    }]);

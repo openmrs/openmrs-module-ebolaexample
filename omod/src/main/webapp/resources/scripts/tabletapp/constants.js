@@ -70,10 +70,12 @@ angular.module("constants", [])
         };
         var minutes = {
             display: "min",
+            longDisplay: "minute",
             uuid: "1733AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
         };
         var hours = {
             display: "hr",
+            longDisplay: "hour",
             uuid: "1822AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
         };
         return {

@@ -1,0 +1,27 @@
+<span ng-show="!loading" class="question-title">
+    IV Fluids
+    <a class="smaller indented" href="" ng-show="fluidOrders.activeOnly" ng-click="showAllIvFluidOrders()">Show All</a>
+    <a class="smaller indented" href="" ng-hide="fluidOrders.activeOnly" ng-click="showActiveIvFluidOrders()">Show
+        Active Only</a>
+</span>
+
+<ul ng-show="!loading" class="list-items" id="patient-iv-fluid-orders">
+    <li ng-show="fluidOrders.none">None</li>
+    <li ng-repeat="order in fluidOrders.orders">
+        <span ng-class="{ left: fluidOrders.activeOnly }">
+            <span class="drug-name">
+                <fluid-name class="uppercase" uuid="{{ order.concept.uuid }}"></fluid-name>
+                <em>{{order | fluidOrder}}</em>
+            </span>
+            <div>
+                <span class="date">
+                    (ordered {{ order.dateActivated | date: 'dd MMM H:mm' }}
+                    by
+                    <span ng-show="order.orderer">{{order.orderer.display | prescriber}}</span>
+                    <span ng-hide="order.orderer">Unknown User</span>
+                    )
+                </span>
+            </div>
+        </span>
+    </li>
+</ul>
