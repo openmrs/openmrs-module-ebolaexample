@@ -114,7 +114,8 @@ public class DrugDoseHistoryControllerTest extends BaseModuleWebContextSensitive
         ScheduledDose scheduledDose = new ScheduledDose();
         scheduledDose.setReasonNotAdministeredNonCoded("Anxiety");
         scheduledDose.setOrder(drugOrder);
-        scheduledDose.setStatus(ScheduledDose.DoseStatus.FULL);
+        scheduledDose.setStatus(ScheduledDose.DoseStatus.PARTIAL);
+        scheduledDose.setScheduledDatetime(drugOrder.getDateActivated());
         pharmacyService.saveScheduledDose(scheduledDose);
         return scheduledDose;
     }

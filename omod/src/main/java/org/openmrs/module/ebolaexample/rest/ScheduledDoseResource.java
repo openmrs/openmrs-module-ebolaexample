@@ -5,6 +5,7 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.ebolaexample.api.PharmacyService;
 import org.openmrs.module.ebolaexample.domain.ScheduledDose;
 import org.openmrs.module.ebolaexample.pharmacy.DoseHistory;
+import org.openmrs.module.webservices.rest.SimpleObject;
 import org.openmrs.module.webservices.rest.web.ConversionUtil;
 import org.openmrs.module.webservices.rest.web.RequestContext;
 import org.openmrs.module.webservices.rest.web.RestConstants;
@@ -47,11 +48,21 @@ public class ScheduledDoseResource extends DelegatingCrudResource<ScheduledDose>
     }
 
     @Override
+    public Object create(SimpleObject propertiesToCreate, RequestContext context) throws ResponseException {
+        if (propertiesToCreate.get("scheduledDatetime") == null) {
+            propertiesToCreate.put("scheduledDatetime", new Date());
+        }
+        return super.create(propertiesToCreate, context);
+    }
+
+    @Override
     public ScheduledDose save(ScheduledDose delegate) {
         PharmacyService service = Context.getService(PharmacyService.class);
         delegate.setDateCreated(new Date());
         delegate.setCreator(Context.getAuthenticatedUser());
-        delegate.setScheduledDatetime(new Date());
+        if (delegate.getScheduledDatetime() == null) {
+            delegate.setScheduledDatetime(new Date());
+        }
         return service.saveScheduledDose(delegate);
     }
 

@@ -1,5 +1,7 @@
 <%
-    def timeFormat = new java.text.SimpleDateFormat("d MMM yyyy HH:mm")
+    def dateAndTimeFormat = new java.text.SimpleDateFormat("d.MMM HH:mm")
+    def dateFormat = new java.text.SimpleDateFormat("d.MMM")
+    def timeFormat = new java.text.SimpleDateFormat("HH:mm")
 
     def formatStatus = {
         def ret = it.name()
@@ -40,6 +42,14 @@
     text-align: left;
 }
 
+tr.deleted td {
+    text-decoration: line-through;
+}
+
+tr td.actions {
+    text-align: right;
+    text-decoration: none;
+}
 </style>
 
 ${ui.includeFragment("ebolaexample", "overview/patientHeader", [patient: patient.patient, activeVisit: activeVisit, appContextModel: appContextModel])}
@@ -56,8 +66,6 @@ ${ui.includeFragment("ebolaexample", "overview/patientHeader", [patient: patient
                     <i class="icon-medkit"></i>
 
                     <h3>Med Administration</h3>
-                    <a style="float: right"
-                       href="${ui.pageLink("ebolaexample", "doseManagement", [patient: patient.patient.uuid])}">Modify Data</a>
                 </div>
 
                 <div class="info-body">
@@ -65,63 +73,83 @@ ${ui.includeFragment("ebolaexample", "overview/patientHeader", [patient: patient
                         <% if (doseHistory.orders.size() == 0) { %>
                         <tbody>
                         <tr>
-                            <td colspan="2">No prescriptions</td>
+                            <td>No prescriptions</td>
                         </tr>
                         </tbody>
                         <% } else { %>
                         <tr>
-                            <th>Prescription</th>
-                            <th>Modify Data</th>
+                            <th colspan="3">Prescription</th>
+                            <th class="actions">Actions</th>
                         </tr>
-                        <% doseHistory.ordersGroupedByDrug.each { group -> %>
+                        <% doseHistory.dosesByOrder.each { orderToDoses ->
+                            def order = orderToDoses.key;
+                            def doses = orderToDoses.value.sort { left, right ->
+                                left.scheduledDatetime <=> right.scheduledDatetime
+                            }
+                        %>
                         <tbody>
                         <tr class="group">
-                            <td>
+                            <td colspan="3">
                                 <strong>
-                                    ${ui.format(group.key.concept)}
+                                    ${ui.format(order.drug)}
                                 </strong>
                                 <em>
-                                    ${ui.format(group.key)}
+                                    ${formatter.formatPrescription(order, context.locale, ui)}
+
+                                    from
+                                    ${dateAndTimeFormat.format(order.dateActivated)}
+                                    <% if (order.dateStopped) { %>
+                                        stopped
+                                        ${dateAndTimeFormat.format(order.dateStopped)}
+                                    <% } else if (order.autoExpireDate) { %>
+                                        until ${dateAndTimeFormat.format(order.autoExpireDate)}
+                                    <% } %>
                                 </em>
                             </td>
-                            <td>
-                                <a href="">Add</a>
+                            <td class="actions">
+                                <a href="${ui.pageLink("ebolaexample", "addEditDose", [patient: patient.patient.uuid, prescription: order.uuid])}">
+                                    Add
+                                </a>
                             </td>
                         </tr>
-                        <% group.key.each { drug -> %>
-                        <% if (doseHistory.getDosesForDrug(drug).size() == 0) { %>
-                        <tr>
-                            <td>No doses</td>
-                            <td></td>
-                        </tr>
+                        <% if (doses.size() == 0) { %>
+                            <tr>
+                                <td colspan="3">No doses</td>
+                                <td></td>
+                            </tr>
                         <% } %>
-                        <% doseHistory.getDosesForDrug(drug).each { dose -> %>
-                        <tr>
-                            <% if (dose.voided != true) { %>
-                            <td>
-                                ${timeFormat.format(dose.scheduledDatetime)}
-                                ${formatStatus(dose.status)}
-                            </td>
-                            <td>
-                                <a href="${
-                                        ui.actionLink("ebolaexample", "overview/doseManagement", "delete", [scheduledDoseUuid: dose.uuid])}">Delete</a>
-                                <a href="">Edit</a>
-                            </td>
-                            <% } else { %>
-                            <td>
-                                <strike>
+                        <% doses.each { dose -> %>
+                            <tr <% if (dose.voided) { %>class="deleted"<% } %>>
+                                <td>
+                                    ${dateFormat.format(dose.scheduledDatetime)}
+                                </td>
+                                <td>
                                     ${timeFormat.format(dose.scheduledDatetime)}
+                                </td>
+                                <td>
                                     ${formatStatus(dose.status)}
-                                </strike>
-                                &nbsp;(Deleted)
-                            </td>
-                            <td>
-                                <a href="${
-                                        ui.actionLink("ebolaexample", "overview/doseManagement", "restore", [scheduledDoseUuid: dose.uuid])}">Restore</a>
-                            </td>
-                            <% } %>
-                        </tr>
-                        <% } %>
+                                    <% if (dose.reasonNotAdministeredNonCoded) { %>
+                                        (${dose.reasonNotAdministeredNonCoded})
+                                    <% } %>
+                                    <% if (dose.voided) { %>
+                                        [ Deleted ]
+                                    <% } %>
+                                </td>
+                                <td class="actions">
+                                    <% if (dose.voided) { %>
+                                    <a href="${ui.actionLink("ebolaexample", "overview/doseManagement", "restore", [scheduledDoseUuid: dose.uuid])}">
+                                        Restore
+                                    </a>
+                                    <% } else { %>
+                                    <a href="">
+                                        Edit
+                                    </a>
+                                    <a href="${ui.actionLink("ebolaexample", "overview/doseManagement", "delete", [scheduledDoseUuid: dose.uuid])}">
+                                        Delete
+                                    </a>
+                                    <% } %>
+                                </td>
+                            </tr>
                         <% } %>
                         </tbody>
                         <% } %>

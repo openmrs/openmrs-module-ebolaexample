@@ -1,6 +1,7 @@
 package org.openmrs.module.ebolaexample.domain;
 
 import org.openmrs.DrugOrder;
+import org.openmrs.OpenmrsObject;
 import org.openmrs.User;
 
 import javax.persistence.Basic;
@@ -20,7 +21,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "ebola_scheduled_dose")
-public class ScheduledDose {
+public class ScheduledDose implements OpenmrsObject {
 
     public static enum DoseStatus {
         FULL, PARTIAL, NOT_GIVEN

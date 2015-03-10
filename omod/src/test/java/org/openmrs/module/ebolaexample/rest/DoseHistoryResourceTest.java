@@ -50,7 +50,7 @@ public class DoseHistoryResourceTest extends BaseEbolaResourceTest {
         dose.setDateCreated(new Date());
         dose.setStatus(ScheduledDose.DoseStatus.PARTIAL);
         dose.setReasonNotAdministeredNonCoded("Illnesses");
-        dose.setScheduledDatetime(new Date());
+        dose.setScheduledDatetime(order.getDateActivated());
         return dose;
     }
 

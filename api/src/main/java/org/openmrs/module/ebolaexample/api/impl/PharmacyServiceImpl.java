@@ -1,5 +1,6 @@
 package org.openmrs.module.ebolaexample.api.impl;
 
+import org.joda.time.DateTime;
 import org.openmrs.DrugOrder;
 import org.openmrs.Order;
 import org.openmrs.Patient;
@@ -10,7 +11,6 @@ import org.openmrs.module.ebolaexample.db.ScheduledDoseDAO;
 import org.openmrs.module.ebolaexample.domain.ScheduledDose;
 import org.openmrs.module.ebolaexample.pharmacy.DoseHistory;
 import org.openmrs.module.reporting.common.DateUtil;
-import org.openmrs.module.reporting.common.DurationUnit;
 import org.openmrs.util.OpenmrsUtil;
 
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ public class PharmacyServiceImpl extends BaseOpenmrsService implements PharmacyS
             onOrBefore = new Date();
         }
         if (onOrAfter == null) {
-            onOrAfter = DateUtil.adjustDate(onOrBefore, -30, DurationUnit.DAYS);
+            onOrAfter = new DateTime(onOrBefore).minusYears(10).toDate();
         }
         List<ScheduledDose> doses = scheduledDoseDAO.getScheduledDosesByPatientAndDateRange(onOrAfter, DateUtil.getEndOfDayIfTimeExcluded(onOrBefore), patient,
                 includeVoided);

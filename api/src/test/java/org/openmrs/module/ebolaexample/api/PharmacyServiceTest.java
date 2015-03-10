@@ -32,7 +32,7 @@ public class PharmacyServiceTest extends BaseModuleContextSensitiveTest {
 
         ScheduledDose dose = new ScheduledDose();
         dose.setOrder(order);
-        dose.setScheduledDatetime(new Date());
+        dose.setScheduledDatetime(new SimpleDateFormat("yyyy-MM-dd").parse("2008-08-09"));
         dose.setStatus(ScheduledDose.DoseStatus.FULL);
 
         pharmacyService.saveScheduledDose(dose);
@@ -44,13 +44,13 @@ public class PharmacyServiceTest extends BaseModuleContextSensitiveTest {
         Patient patient = order.getPatient();
         DrugOrder orderForOtherPatient = (DrugOrder) orderService.getOrder(2);
 
-        ScheduledDose dose1 = createDose(order, "2015-01-02 09:00");
-        ScheduledDose dose2 = createDose(order, "2015-01-02 17:00");
-        ScheduledDose dose3 = createDose(order, "2015-01-03 09:15");
-        createDose(order, "2015-01-13 09:15");
-        createDose(orderForOtherPatient, "2015-01-02 09:00");
+        ScheduledDose dose1 = createDose(order, "2008-08-08 09:00");
+        ScheduledDose dose2 = createDose(order, "2008-08-09 17:00");
+        ScheduledDose dose3 = createDose(order, "2008-08-10 09:15");
+        createDose(order, "2008-08-11 09:15");
+        createDose(orderForOtherPatient, "2007-12-03 09:00");
 
-        DoseHistory doseHistory = pharmacyService.getScheduledDosesByPatientAndDateRange(patient, date("2015-01-01 00:00"), date("2015-01-07 23:59"), false);
+        DoseHistory doseHistory = pharmacyService.getScheduledDosesByPatientAndDateRange(patient, date("2008-08-08 00:00"), date("2008-08-10 23:59"), false);
         assertThat(doseHistory.getDoses(), contains(is(dose1), is(dose2), is(dose3)));
     }
 
@@ -59,11 +59,11 @@ public class PharmacyServiceTest extends BaseModuleContextSensitiveTest {
         DrugOrder order = (DrugOrder) orderService.getOrder(1);
         DrugOrder orderForOtherPatient = (DrugOrder) orderService.getOrder(2);
 
-        ScheduledDose dose1 = createDose(order, "2015-01-02 09:00");
-        ScheduledDose dose2 = createDose(order, "2015-01-02 17:00");
-        ScheduledDose dose3 = createDose(order, "2015-01-03 09:15");
-        ScheduledDose dose4 = createDose(order, "2015-01-13 09:15");
-        ScheduledDose dose5 = createDose(orderForOtherPatient, "2015-01-02 09:00");
+        ScheduledDose dose1 = createDose(order, "2008-08-08 09:00");
+        ScheduledDose dose2 = createDose(order, "2008-08-09 17:00");
+        ScheduledDose dose3 = createDose(order, "2008-08-10 09:15");
+        ScheduledDose dose4 = createDose(order, "2008-08-11 09:15");
+        ScheduledDose dose5 = createDose(orderForOtherPatient, "2007-12-03 09:00");
 
         List<ScheduledDose> allScheduledDoses = pharmacyService.getAllScheduledDoses();
         assertThat(allScheduledDoses, contains(dose1, dose2, dose3, dose4, dose5));
@@ -73,6 +73,7 @@ public class PharmacyServiceTest extends BaseModuleContextSensitiveTest {
         ScheduledDose scheduledDose = new ScheduledDose();
         scheduledDose.setOrder(order);
         scheduledDose.setScheduledDatetime(date(ymdhm));
+        scheduledDose.setStatus(ScheduledDose.DoseStatus.FULL);
         return pharmacyService.saveScheduledDose(scheduledDose);
     }
 

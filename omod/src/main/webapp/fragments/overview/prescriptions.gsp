@@ -68,7 +68,7 @@
                             ${it.dateStopped ? "STOPPED" : "EXPIRED"}
                         </span>
                         <% } %>
-                        ${prescriptionFormatter.format(it, context.locale)}
+                        ${prescriptionFormatter.formatPrescription(it, context.locale, ui)}
 
                         <span class="prescriber">
                             <% if(it.orderer) { %>
