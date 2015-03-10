@@ -15,8 +15,9 @@ import org.openmrs.ui.framework.page.PageModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
+
+import static org.openmrs.module.reporting.common.DateUtil.getEndOfDay;
 
 @Controller
 public class ChangePatientDischargePageController {
@@ -51,7 +52,7 @@ public class ChangePatientDischargePageController {
     }
 
     private Date getDefaultDate(PatientProgram patientProgram) {
-        if(patientProgram==null || patientProgram.getDateCompleted() == null) {
+        if (patientProgram == null || patientProgram.getDateCompleted() == null) {
             return DateUtil.getDateToday();
         }
         return patientProgram.getDateCompleted();
@@ -77,9 +78,9 @@ public class ChangePatientDischargePageController {
                 model.put("error", "Patient program not found");
             }
 
-            dateCompleted = getCompletedDate(dateCompleted, patientProgram);
+            dateCompleted = getCompletedDate(dateCompleted);
 
-            if(outcome!= null && (OutComeType.DiedOnWard.toString().equals(outcome.toString()) || OutComeType.DeadOnArrival.toString().equals(outcome.toString()))){
+            if (outcome != null && (OutComeType.DiedOnWard.toString().equals(outcome.toString()) || OutComeType.DeadOnArrival.toString().equals(outcome.toString()))) {
                 SetPatientDead(patientService, dateCompleted, patient, outcome);
             }
 
@@ -96,7 +97,7 @@ public class ChangePatientDischargePageController {
 
             model.put("success", "Discharge information modified successfully");
 
-        } catch (Exception e)   {
+        } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
             model.put("error", e.getMessage());
             preparePageModel(patientService, programWorkflowService, conceptService, ui, patientUuid, model);
@@ -108,15 +109,14 @@ public class ChangePatientDischargePageController {
         return "redirect:" + ui.pageLink("ebolaexample", "ebolaOverview", args);
     }
 
-    private Date getCompletedDate(Date dateCompleted, PatientProgram patientProgram) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-        String dateCompletedStr = simpleDateFormat.format(dateCompleted);
-        String dateEnrolledStr = simpleDateFormat.format(patientProgram.getDateEnrolled());
-        if (dateCompletedStr.equalsIgnoreCase(dateEnrolledStr)) {
-            dateCompleted = new Date();
+    private Date getCompletedDate(Date dateCompleted) {
+        Date now = new Date();
+        Date endOfDateCompleted = getEndOfDay(dateCompleted);
+        if (endOfDateCompleted.after(now)) {
+            return now;
         }
-        return dateCompleted;
+
+        return endOfDateCompleted;
     }
 
     private void SetPatientDead(PatientService patientService, Date deathDate, Patient patient, Concept outcome) {
@@ -137,7 +137,7 @@ public class ChangePatientDischargePageController {
         return visits.size() > 0 ? visits.get(0) : null;
     }
 
-    enum OutComeType{
+    enum OutComeType {
         SuspectedNegativeAndDischarged(162684),
         CuredAndDischarged(159791),
         DischargedAgainstMedicalAdvice(1694),
@@ -153,7 +153,7 @@ public class ChangePatientDischargePageController {
         }
 
         @Override
-        public String toString(){
+        public String toString() {
             return String.valueOf(outComeId);
         }
     }
