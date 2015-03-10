@@ -1,14 +1,14 @@
 <span ng-show="!loading" class="question-title">
-    {{ orders.activeOnly ? "Active Prescriptions" : "All Prescriptions" }}
-    <a class="smaller indented" href="" ng-show="orders.activeOnly" ng-click="showAllPrescriptions()">Show All</a>
-    <a class="smaller indented" href="" ng-hide="orders.activeOnly" ng-click="showActivePrescriptions()">Show Active Only</a>
+    {{ drugOrders.activeOnly ? "Active Prescriptions" : "All Prescriptions" }}
+    <a class="smaller indented" href="" ng-show="drugOrders.activeOnly" ng-click="showAllPrescriptions()">Show All</a>
+    <a class="smaller indented" href="" ng-hide="drugOrders.activeOnly" ng-click="showActivePrescriptions()">Show Active Only</a>
 </span>
 
 <ul ng-show="!loading" class="list-items" id="patient-prescriptions">
-    <li ng-show="orders.none">None</li>
-    <li ng-repeat="group in orders.groupedOrders">
+    <li ng-show="drugOrders.none">None</li>
+    <li ng-repeat="group in drugOrders.groupedOrders">
             <span ng-repeat="order in group.orders">
-                <span ng-class="{ left: orders.activeOnly, inactive: order.actualStopDate }">
+                <span ng-class="{ left: drugOrders.activeOnly, inactive: order.actualStopDate }">
                     <span ng-show="$first">
                         <span class="drug-name">{{ order.concept.display.toUpperCase() }}</span><em>{{ order.drug.display }}</em>
                     </span>
@@ -44,7 +44,7 @@
                         </span>
                     </div>
                 </span>
-                <span class="right" ng-show="orders.activeOnly">
+                <span class="right" ng-show="drugOrders.activeOnly">
                     <button id="stop_{{order.uuid}}" ng-click="openStopOrderDialog(order)">Stop</button>
                     <button ng-click="editOrder(order)">Edit</button>
                     <button ng-click="showAdminister(order)">Administer</button>

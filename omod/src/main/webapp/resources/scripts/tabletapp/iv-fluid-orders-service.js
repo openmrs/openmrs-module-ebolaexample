@@ -1,6 +1,6 @@
 angular.module('iv-fluid-orders-service', ['tabletapp'])
-    .service('IvFluidOrderService', ['Orders', 'Constants', 'CurrentSession', 'OrderResource', 'FeedbackMessages',
-        function (Orders, Constants, CurrentSession, OrderResource, FeedbackMessages) {
+    .service('IvFluidOrderService', ['FluidOrders', 'Constants', 'CurrentSession', 'OrderResource', 'FeedbackMessages',
+        function (FluidOrders, Constants, CurrentSession, OrderResource, FeedbackMessages) {
 
             var orderJson = function (order, encounter) {
                 var sessionInfo = CurrentSession.getInfo();
@@ -35,8 +35,7 @@ angular.module('iv-fluid-orders-service', ['tabletapp'])
             var orderSuccessHandler = function ($scope, $state, newState) {
                 return function (order) {
                     $state.params['uuid'] = CurrentSession.getRecentWard().uuid;
-                    $state.params['ivFluidOrderSuccess'] = true;
-                    Orders.reload($scope, $state.params['patientUUID']);
+                    FluidOrders.reload($scope, $state.params['patientUUID']);
                     $state.go(newState, $state.params).then(function () {
                         // set this after transitioning state, because messages are cleared on $stateChangeSuccess
                         FeedbackMessages.showSuccessMessage({

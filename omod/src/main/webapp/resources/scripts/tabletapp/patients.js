@@ -45,10 +45,10 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
 
     .controller("PatientController", ["$state", "$scope", "PatientResource", "OrderResource", "ngDialog",
         "$rootScope", "Constants", "ScheduledDoseResource", "CurrentSession", "StopOrderService",
-        "Orders", "DoseHistory", "WardResource", 'WardService', 'FeedbackMessages',
+        "DrugOrders", "FluidOrders", "DoseHistory", "WardResource", 'WardService', 'FeedbackMessages',
         function ($state, $scope, PatientResource, OrderResource, ngDialog, $rootScope, Constants,
-                  ScheduledDoseResource, CurrentSession, StopOrderService, Orders, DoseHistory, WardResource, WardService,
-                  FeedbackMessages) {
+                  ScheduledDoseResource, CurrentSession, StopOrderService, DrugOrders, FluidOrders, DoseHistory,
+                  WardResource, WardService, FeedbackMessages) {
 
             var patientUuid = $state.params.patientUUID;
             var wardUuid = $state.params.wardUUID;
@@ -73,10 +73,17 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                 };
             }
 
-            Orders.reload($scope, patientUuid);
-            $scope.$watch(Orders.get, function (newOrders) {
-                $scope.orders = newOrders;
+            DrugOrders.reload($scope, patientUuid);
+            $scope.$watch(DrugOrders.get, function (newOrders) {
+                $scope.drugOrders = newOrders;
             }, true);
+
+            FluidOrders.reload($scope, patientUuid);
+            $scope.$watch(FluidOrders.get, function (newOrders) {
+                $scope.fluidOrders = newOrders;
+                console.log(newOrders);
+            }, true);
+
             $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
                 $rootScope.clearMessages();
                 $rootScope.comeFromPrescriptionForm = $state.params.prescriptionSuccess == 'true' && fromState && fromState.name == 'patient.addPrescriptionDetails';
@@ -127,15 +134,27 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             };
 
             $scope.isActivePrescriptionsOnly = function () {
-                return Orders.getActiveOnly();
+                return DrugOrders.getActiveOnly();
             };
 
             $scope.showActivePrescriptions = function () {
-                Orders.setActiveOnly(true);
+                DrugOrders.setActiveOnly(true);
             };
 
             $scope.showAllPrescriptions = function () {
-                Orders.setActiveOnly(false);
+                DrugOrders.setActiveOnly(false);
+            };
+
+            $scope.isActiveIvFluidOrdersOnly = function () {
+                return FluidOrders.getActiveOnly();
+            };
+
+            $scope.showActiveIvFluidOrders = function () {
+                FluidOrders.setActiveOnly(true);
+            };
+
+            $scope.showAllIvFluidOrders = function () {
+                FluidOrders.setActiveOnly(false);
             };
 
             $scope.showAdminister = function (order) {
@@ -201,7 +220,7 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
 
             $scope.onStopOrderSuccess = function () {
                 $scope.closeThisDialog();
-                Orders.reload($scope, patientUuid);
+                DrugOrders.reload($scope, patientUuid);
             };
 
             $scope.openStopOrderDialog = function (order) {
@@ -240,91 +259,6 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             }
 
         }])
-
-    .factory("Orders", ['OrderResource', function (OrderResource) {
-        var activeOnly = true;
-        var cachedActive;
-        var cachedPast;
-
-        function sortable(date) {
-            // Handle case where client and server aren't using the same timezone.
-            // (I'm sure there's a better way to do this, but I have no internet now and can't search)
-            if (typeof date === "string") {
-                date = new Date(date);
-            }
-            var ret = "";
-            ret += date.getUTCFullYear();
-            ret += date.getUTCMonth() < 10 ? ("0" + date.getUTCMonth()) : date.getUTCMonth();
-            ret += date.getUTCDate() < 10 ? ("0" + date.getUTCDate()) : date.getUTCDate();
-            ret += date.getUTCHours() < 10 ? ("0" + date.getUTCHours()) : date.getUTCHours();
-            ret += date.getUTCMinutes() < 10 ? ("0" + date.getUTCMinutes()) : date.getUTCMinutes();
-            ret += date.getUTCSeconds() < 10 ? ("0" + date.getUTCSeconds()) : date.getUTCSeconds();
-            return ret;
-        }
-
-        function decorateOrders(orders) {
-            var now = sortable(new Date());
-            return _.map(orders, function (order) {
-                order.actualStopDate = order.dateStopped ? order.dateStopped : (
-                    order.autoExpireDate && sortable(order.autoExpireDate) <= now ?
-                        order.autoExpireDate :
-                        null
-                );
-                return order;
-            });
-        }
-
-        return {
-            reload: function (scope, patientUuid) {
-                scope.loading = true;
-                OrderResource.query({t: "drugorder", v: 'full', patient: patientUuid}, function (response) {
-                    scope.loading = false;
-                    cachedActive = decorateOrders(response.results);
-
-                });
-                scope.loadingPastOrders = true;
-                OrderResource.query({t: "drugorder", v: 'full', patient: patientUuid, expired: true}, function (response) {
-                    scope.loadingPastOrders = false;
-                    cachedPast = decorateOrders(response.results);
-                });
-            },
-            setActiveOnly: function (newVal) {
-                activeOnly = newVal;
-            },
-            getActiveOnly: function () {
-                return activeOnly;
-            },
-            get: function () {
-                var orders;
-                if (activeOnly) {
-                    orders = cachedActive;
-                } else {
-                    orders = _.union(cachedActive, cachedPast);
-                }
-                var grouped;
-                if (orders) {
-                    orders = _.sortBy(orders, 'dateActivated').reverse();
-                    var drugs = _.map(_.uniq(_.pluck(_.pluck(orders, 'drug'), 'uuid')), function (uuid) {
-                        return {
-                            uuid: uuid,
-                            orders: []
-                        }
-                    });
-                    _.each(orders, function (order) {
-                        _.findWhere(drugs, {uuid: order.drug.uuid}).orders.push(order);
-                    });
-                    grouped = _.sortBy(drugs, function (group) {
-                        return group.orders[0].dateActivated;
-                    }).reverse();
-                }
-                return {
-                    activeOnly: activeOnly,
-                    none: orders && (orders.length == 0),
-                    groupedOrders: grouped
-                };
-            }
-        }
-    }])
 
     .factory("DoseHistory", ['DoseHistoryResource', function (DoseHistoryResource) {
         var cachedDoses;
