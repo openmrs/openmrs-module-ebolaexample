@@ -96,9 +96,8 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             };
 
             function mostRecentDose(doses) {
-                // TODO verify that these are always given to us sorted
                 // in the future, exclude future not-yet-given doses
-                return doses[doses.length - 1];
+                return doses[0];
             }
 
             $scope.doseHistory = DoseHistory.reload($scope, patientUuid);
