@@ -1,52 +1,34 @@
-describe('sidebar-service', function () {
+describe('directives tests', function () {
+    beforeEach(module('directives', 'iv-fluid-orders-service'));
 
-    beforeEach(function () {
-        module('directives');
+    describe('fluidName', function () {
+        var $compile,
+            $rootScope,
+            IvFluidOrderService;
+
+        beforeEach(inject(function (_$compile_, _$rootScope_, _IvFluidOrderService_) {
+            $compile = _$compile_;
+            $rootScope = _$rootScope_;
+            IvFluidOrderService = _IvFluidOrderService_;
+        }));
+
+        it('should return the name of the fluid', function () {
+            spyOn(IvFluidOrderService, 'retrieveConcept').andReturn({display: ['name'], uuid: '123'});
+            var element = $compile('<fluid-name uuid="123"></fluid-name>')($rootScope);
+            expect(element.html()).toContain("name");
+        });
+
+        it('should return all parts of the name', function () {
+            spyOn(IvFluidOrderService, 'retrieveConcept').andReturn({display: ['first', 'second'], uuid: '123'});
+            var element = $compile('<fluid-name uuid="123"></fluid-name>')($rootScope);
+            expect(element.html()).toContain("first second");
+        });
+
+        it('should use the tag content as a separator', function () {
+            spyOn(IvFluidOrderService, 'retrieveConcept').andReturn({display: ['first', 'second'], uuid: '123'});
+            var element = $compile('<fluid-name uuid="123"><br></fluid-name>')($rootScope);
+            expect(element.html()).toContain("first<br>second");
+        });
     });
 
-    describe('sidebarService tests', function () {
-        var sidebarsrvc;
-
-        beforeEach(function() {
-            inject(function(sidebarService) {
-                sidebarsrvc = sidebarService;
-                sidebarsrvc.setView($(''));
-            })
-        });
-
-        it('should return the opposite of visible', function(){
-            sidebarsrvc.visible = false;
-
-            sidebarsrvc.toggle();
-            this.expect(sidebarsrvc.visible).toBeTruthy();
-            
-            sidebarsrvc.toggle();
-            this.expect(sidebarsrvc.visible).toBeFalsy();
-        });
-
-        it('it should return anchors', function(){
-            var flag;
-            runs(function() {
-                $.ajax({
-                    url: '/src/main/webapp/resources/html/tabletapp/templates/sidebar.html',
-
-                })
-                .done(function(data) {
-                    sidebarsrvc.setView($(data));
-                    flag = true;
-                });
-            });
-
-            waitsFor(function() {
-                return flag;
-            }, "Oops", 3000);
-
-            runs(function() {
-                anchors = sidebarsrvc.getActionElements().length;
-                this.expect(anchors).toBeGreaterThan(0);
-            });
-        });
-
-
-    }); 
 });
