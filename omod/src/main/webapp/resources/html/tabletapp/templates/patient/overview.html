@@ -12,59 +12,8 @@
 </span>
 <div class="page-wrap-smaller">
     <div ng-show="loading" class="loading-spinner"></div>
-    <span ng-show="!loading" class="question-title">
-        {{ orders.activeOnly ? "Active Prescriptions" : "All Prescriptions" }}
-        <a class="smaller indented" href="" ng-show="orders.activeOnly" ng-click="showAllPrescriptions()">Show All</a>
-        <a class="smaller indented" href="" ng-hide="orders.activeOnly" ng-click="showActivePrescriptions()">Show Active Only</a>
-    </span>
-    <ul ng-show="!loading" class="list-items" id="patient-prescriptions">
-        <li ng-show="orders.none">None</li>
-        <li ng-repeat="group in orders.groupedOrders">
-            <span ng-repeat="order in group.orders">
-                <span ng-class="{ left: orders.activeOnly, inactive: order.actualStopDate }">
-                    <span ng-show="$first">
-                        <span class="drug-name">{{ order.concept.display.toUpperCase() }}</span><em>{{ order.drug.display }}</em>
-                    </span>
-                    <div>
-                        <span class="date">
-                            (<span ng-show="order.actualStopDate">{{order.dateStopped ? "STOPPED" : "EXPIRED"}}, </span>
-                            {{ order.dateActivated | date: 'dd MMM H:mm' }}
-                            <span ng-show="order.actualStopDate"> - {{ order.actualStopDate | date: 'dd MMM H:mm' }}</span>)
-                        </span>
-                        <em>
-                            {{order.dose}}
-                            {{order.doseUnits.names[0].display}}
-                            <span ng-show="order.route.display">{{ order.route | concept }}</span>
-                            <span ng-show="order.dosingType == 'org.openmrs.SimpleDosingInstructions'">
-                                {{ order.frequency.display }}
-                            </span>
-                            <span ng-show="order.dosingType == 'org.openmrs.module.ebolaexample.domain.RoundBasedDosingInstructions'">
-                                each {{ order.dosingInstructions }}
-                            </span>
-                            <span ng-hide="order.dosingType == 'org.openmrs.module.ebolaexample.domain.RoundBasedDosingInstructions'">
-                                {{ order.dosingInstructions ? '"' + order.dosingInstructions + '"' : "" }}
-                            </span>
-                            <span ng-show="order.duration">for {{ order.duration }} {{ order.durationUnits | concept }}</span>
-                            <span class="tag" ng-show="order.asNeeded">In case of {{ order.asNeededCondition }}</span>
 
-                             - {{ lastGiven(order) | lastGiven }}
-                        </em>
-                        <span class="prescriber">
-                            <em>
-                                <span ng-show="order.orderer"> (prescribed by: {{order.orderer.display | prescriber}})</span>
-                                <span ng-hide="order.orderer"> (prescribed by: Unknown User)</span>
-                            </em>
-                        </span>
-                    </div>
-                </span>
-                <span class="right" ng-show="orders.activeOnly">
-                    <button id="stop_{{order.uuid}}" ng-click="openStopOrderDialog(order)">Stop</button>
-                    <button ng-click="editOrder(order)">Edit</button>
-                    <button ng-click="showAdminister(order)">Administer</button>
-                </span>
-            </span>
-        </li>
-    </ul>
+    <ng-include src="'templates/patient/summaryPrescriptions.html'"></ng-include>
 
     <script type="text/ng-template" id="administerDialog">
         <ng-include src="'templates/patient/administerDrugDialog.html'"></ng-include>
