@@ -23,6 +23,22 @@ public class DoseHistory {
     public DoseHistory(List<DrugOrder> orders, List<ScheduledDose> doses) {
         this.orders = orders;
         this.doses = doses;
+        if (this.orders != null) {
+            Collections.sort(this.orders, new Comparator<DrugOrder>() {
+                @Override
+                public int compare(DrugOrder left, DrugOrder right) {
+                    return OpenmrsUtil.compareWithNullAsEarliest(right.getEffectiveStartDate(), left.getEffectiveStartDate());
+                }
+            });
+        }
+        if (this.doses != null) {
+            Collections.sort(this.doses, new Comparator<ScheduledDose>() {
+                @Override
+                public int compare(ScheduledDose left, ScheduledDose right) {
+                    return OpenmrsUtil.compareWithNullAsEarliest(right.getScheduledDatetime(), left.getScheduledDatetime());
+                }
+            });
+        }
     }
 
     public List<DrugOrder> getOrders() {

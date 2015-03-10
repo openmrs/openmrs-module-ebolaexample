@@ -17,6 +17,8 @@
 
     ui.includeCss("ebolaexample", "overview/ebolaOverview.css")
     ui.decorateWith("appui", "standardEmrPage")
+
+    def dosesByOrder = doseHistory.dosesByOrder
 %>
 
 <script type="text/javascript">
@@ -81,11 +83,8 @@ ${ui.includeFragment("ebolaexample", "overview/patientHeader", [patient: patient
                             <th colspan="3">Prescription</th>
                             <th class="actions">Actions</th>
                         </tr>
-                        <% doseHistory.dosesByOrder.each { orderToDoses ->
-                            def order = orderToDoses.key;
-                            def doses = orderToDoses.value.sort { left, right ->
-                                left.scheduledDatetime <=> right.scheduledDatetime
-                            }
+                        <% doseHistory.orders.each { order ->
+                            def doses = dosesByOrder[order] ?: []
                         %>
                         <tbody>
                         <tr class="group">
