@@ -141,7 +141,7 @@ ${ui.includeFragment("ebolaexample", "overview/patientHeader", [patient: patient
                                         Restore
                                     </a>
                                     <% } else { %>
-                                    <a href="">
+                                    <a href="" style="display: none">
                                         Edit
                                     </a>
                                     <a href="${ui.actionLink("ebolaexample", "overview/doseManagement", "delete", [scheduledDoseUuid: dose.uuid])}">
