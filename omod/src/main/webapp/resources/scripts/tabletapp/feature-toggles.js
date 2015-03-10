@@ -1,7 +1,7 @@
 angular.module("feature-toggles", [])
     .factory("FeatureToggles", function () {
         var toggleStates = {
-            enterVitals: true
+            enterVitals: false
         };
 
         return {
