@@ -50,6 +50,11 @@
         } else {
             jq('#add-edit-form button[type=submit]').prop('disabled', true);
         }
+        if (!post['status'] || post['status'] === 'FULL') {
+            jq('#add-edit-form select[name=reasonNotAdministeredNonCoded]').prop('disabled', true);
+        } else {
+            jq('#add-edit-form select[name=reasonNotAdministeredNonCoded]').prop('disabled', false);
+        }
     }
 
     jq(function() {
