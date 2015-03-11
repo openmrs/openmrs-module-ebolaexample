@@ -256,7 +256,7 @@
             <plugin>
                 <groupId>com.github.klieber</groupId>
                 <artifactId>phantomjs-maven-plugin</artifactId>
-                <version>0.4</version>
+                <version>0.5</version>
                 <executions>
                     <execution>
                         <goals>
@@ -296,11 +296,14 @@
                         <source>src/main/webapp/resources/scripts/tabletapp/session.js</source>
                         <source>src/main/webapp/resources/scripts/tabletapp/prescriptions.js</source>
                         <source>src/main/webapp/resources/scripts/tabletapp/patients.js</source>
+                        <source>src/main/webapp/resources/scripts/tabletapp/orders.js</source>
                         <source>src/main/webapp/resources/scripts/tabletapp/resources.js</source>
                         <source>src/main/webapp/resources/scripts/tabletapp/select-drug-name.js</source>
                         <source>src/main/webapp/resources/scripts/tabletapp/directives.js</source>
+                        <source>src/main/webapp/resources/scripts/tabletapp/filters.js</source>
                         <source>src/main/webapp/resources/scripts/tabletapp/constants.js</source>
                         <source>src/main/webapp/resources/scripts/tabletapp/prescription-service.js</source>
+                        <source>src/main/webapp/resources/scripts/tabletapp/iv-fluid-orders-service.js</source>
                         <source>src/main/webapp/resources/scripts/tabletapp/ward-service.js</source>
                         <source>src/main/webapp/resources/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts/directives/select-drug.js</source>
                         <source>src/main/webapp/resources/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts/services/drugService.js</source>

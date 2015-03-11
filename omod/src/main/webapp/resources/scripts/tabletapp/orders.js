@@ -1,4 +1,4 @@
-angular.module("patients")
+angular.module("orders", [])
 
     .factory("DrugOrders", ['OrdersService', function (OrdersService) {
         return new OrdersService('drugorder');

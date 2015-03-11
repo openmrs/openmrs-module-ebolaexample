@@ -1,4 +1,4 @@
-angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "session", "filters", "feedback-messages"])
+angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "session", "orders", "filters", "feedback-messages"])
 
     .controller("ListWardsController", ["$scope", "WardResource", function ($scope, WardResource) {
 
