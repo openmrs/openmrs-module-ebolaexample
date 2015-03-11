@@ -1,5 +1,6 @@
 package org.openmrs.module.ebolaexample.page.controller;
 
+import org.apache.commons.collections.keyvalue.DefaultMapEntry;
 import org.openmrs.Location;
 import org.openmrs.Patient;
 import org.openmrs.module.ebolaexample.DateUtil;
@@ -24,17 +25,23 @@ public class ActivePatientsPageController {
             }
         }
 
-        Map<Location, List<SimpleObject>> sortedAssignments = getSortedAssignments(activeAssignments);
+        List<Map.Entry<Location, List<SimpleObject>>> sortedAssignments = getSortedAssignments(activeAssignments);
         model.addAttribute("today", DateUtil.getDateToday());
         model.addAttribute("assignments", sortedAssignments);
     }
 
-    private Map<Location, List<SimpleObject>> getSortedAssignments(List<WardBedAssignments> activeAssignments) {
-        Map<Location, List<SimpleObject>> sortedAssignments = new HashMap<Location, List<SimpleObject>>();
+    private List<Map.Entry<Location, List<SimpleObject>>> getSortedAssignments(List<WardBedAssignments> activeAssignments) {
+        List<Map.Entry<Location, List<SimpleObject>>> sortedAssignments = new ArrayList<Map.Entry<Location, List<SimpleObject>>>();
         for(WardBedAssignments assignment: activeAssignments){
             List<SimpleObject> assignments = getSortedAssignmentsByBed(assignment);
-            sortedAssignments.put(assignment.getWard(), assignments);
+            sortedAssignments.add(new DefaultMapEntry(assignment.getWard(), assignments));
         }
+        Collections.sort(sortedAssignments, new Comparator<Map.Entry<Location, List<SimpleObject>>>() {
+            @Override
+            public int compare(Map.Entry<Location, List<SimpleObject>> o1, Map.Entry<Location, List<SimpleObject>> o2) {
+                return o1.getKey().getName().compareTo(o2.getKey().getName());
+            }
+        });
         return sortedAssignments;
     }
 
