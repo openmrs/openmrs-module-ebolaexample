@@ -67,8 +67,4 @@ public class IvFluidOrderTest extends BaseModuleContextSensitiveTest {
         return Context.getConceptService().getConceptByUuid(uuid);
     }
 
-    private Concept getConcept(Integer id) {
-        return Context.getConceptService().getConcept(id);
-    }
-
 }
