@@ -81,7 +81,6 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             FluidOrders.reload($scope, patientUuid);
             $scope.$watch(FluidOrders.get, function (newOrders) {
                 $scope.fluidOrders = newOrders;
-                console.log(newOrders);
             }, true);
 
             $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
