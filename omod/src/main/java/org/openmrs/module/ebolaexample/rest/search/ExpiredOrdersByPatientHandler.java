@@ -13,11 +13,11 @@
  */
 package org.openmrs.module.ebolaexample.rest.search;
 
-import org.openmrs.DrugOrder;
 import org.openmrs.Order;
 import org.openmrs.OrderType;
 import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
 import org.openmrs.module.webservices.rest.web.RequestContext;
 import org.openmrs.module.webservices.rest.web.RestConstants;
 import org.openmrs.module.webservices.rest.web.resource.api.PageableResult;
@@ -36,14 +36,16 @@ import java.util.List;
  * Allows finding a drug by mapping
  */
 @Component
-public class ExpiredDrugOrdersByPatientHandler implements SearchHandler {
+public class ExpiredOrdersByPatientHandler implements SearchHandler {
 
+    public static final String REQUEST_PARAM_TYPE = "t";
     public static final String REQUEST_PARAM_PATIENT = "patient";
     public static final String REQUEST_PARAM_EXPIRED = "expired";
 
     SearchQuery searchQuery = new SearchQuery.Builder(
             "Allows you to find expired drug orders by patient")
-            .withRequiredParameters(REQUEST_PARAM_PATIENT, REQUEST_PARAM_EXPIRED).build();
+            .withRequiredParameters(REQUEST_PARAM_PATIENT, REQUEST_PARAM_EXPIRED)
+            .withOptionalParameters(REQUEST_PARAM_TYPE).build();
 
     private final SearchConfig searchConfig = new SearchConfig("getExpiredDrugOrdersForPatient", RestConstants.VERSION_1 + "/order",
             Arrays.asList("1.10.*", "1.11.*"), searchQuery);
@@ -61,18 +63,26 @@ public class ExpiredDrugOrdersByPatientHandler implements SearchHandler {
      */
     @Override
     public PageableResult search(RequestContext context) throws ResponseException {
+        String type = context.getParameter(REQUEST_PARAM_TYPE);
         String uuid = context.getParameter(REQUEST_PARAM_PATIENT);
         Patient patient = Context.getPatientService().getPatientByUuid(uuid);
         List<Order> orders = Context.getOrderService().getAllOrdersByPatient(patient);
 
-        List<DrugOrder> expiredDrugOrders = new ArrayList<DrugOrder>();
-        OrderType drugOrderType = Context.getOrderService().getOrderTypeByUuid(OrderType.DRUG_ORDER_TYPE_UUID);
+        List<Order> expiredDrugOrders = new ArrayList<Order>();
+        OrderType requestedOrderType = getOrderType(type);
         for (Order order : orders) {
-            if(order.isType(drugOrderType) && !order.isActive()) {
-                expiredDrugOrders.add((DrugOrder) order);
+            if(order.isType(requestedOrderType) && !order.isActive()) {
+                expiredDrugOrders.add(order);
             }
         }
 
-        return new NeedsPaging<DrugOrder>(expiredDrugOrders, context);
+        return new NeedsPaging<Order>(expiredDrugOrders, context);
+    }
+
+    private OrderType getOrderType(String type) {
+        if ("ivfluidorder".equals(type)) {
+            return Context.getOrderService().getOrderTypeByUuid(EbolaMetadata._OrderType.IV_FLUID_ORDER_TYPE_UUID);
+        }
+        return Context.getOrderService().getOrderTypeByUuid(OrderType.DRUG_ORDER_TYPE_UUID);
     }
 }

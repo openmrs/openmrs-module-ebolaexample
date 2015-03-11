@@ -1,16 +1,10 @@
 package org.openmrs.module.ebolaexample.metadata;
 
-import org.openmrs.GlobalProperty;
-import org.openmrs.Location;
-import org.openmrs.LocationTag;
-import org.openmrs.Person;
-import org.openmrs.PersonName;
-import org.openmrs.Provider;
-import org.openmrs.api.AdministrationService;
-import org.openmrs.api.LocationService;
-import org.openmrs.api.PersonService;
-import org.openmrs.api.ProviderService;
-import org.openmrs.api.UserService;
+import org.openmrs.*;
+import org.openmrs.api.*;
+import org.openmrs.api.context.Context;
+import org.openmrs.module.ebolaexample.domain.AdministrationType;
+import org.openmrs.module.ebolaexample.domain.IvFluidOrder;
 import org.openmrs.module.emrapi.EmrApiConstants;
 import org.openmrs.module.metadatadeploy.MetadataUtils;
 import org.openmrs.module.metadatadeploy.bundle.AbstractMetadataBundle;
@@ -44,6 +38,9 @@ public class EbolaTestData extends AbstractMetadataBundle {
 
     @Autowired
     private PersonService personService;
+
+    @Autowired
+    private OrderService orderService;
 
     @Autowired @Qualifier("adminService")
     AdministrationService administrationService;
@@ -91,6 +88,32 @@ public class EbolaTestData extends AbstractMetadataBundle {
                 supportsTransfer, inpatientBed));
 
         createProvider(new PersonName("MoH", "", "Doctor"), DOCTOR_PROVIDER_IDENTIFIER);
+    }
+
+    public void createOrder(Patient patient, String orderTypeUuid, String fluidUuid, boolean active) {
+        OrderType ivFluidOrderType = Context.getOrderService().getOrderTypeByUuid(orderTypeUuid);
+
+        IvFluidOrder ivFluidOrder = new IvFluidOrder();
+        ivFluidOrder.setOrderType(ivFluidOrderType);
+        ivFluidOrder.setConcept(getConceptByUuid(fluidUuid));
+        ivFluidOrder.setRoute(getConceptByUuid("160242AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"));
+        ivFluidOrder.setAdministrationType(AdministrationType.BOLUS);
+        ivFluidOrder.setBolusQuantity(50.0);
+        ivFluidOrder.setBolusUnits(getConceptByUuid("162263AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"));
+        ivFluidOrder.setBolusRate(15);
+        ivFluidOrder.setBolusRateUnits(getConceptByUuid("1733AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"));
+
+        ivFluidOrder.setVoided(!active);
+        ivFluidOrder.setPatient(patient);
+        ivFluidOrder.setCareSetting(Context.getOrderService().getCareSetting(2));
+        ivFluidOrder.setEncounter(Context.getEncounterService().getEncountersByPatient(patient).get(0));
+        ivFluidOrder.setOrderer(Context.getProviderService().getAllProviders().get(0));
+        orderService.saveOrder(ivFluidOrder, null);
+        assert ivFluidOrder.getId() != null;
+    }
+
+    private Concept getConceptByUuid(String uuid) {
+        return Context.getConceptService().getConceptByUuid(uuid);
     }
 
     private void createProvider(PersonName name, String providerIdentifier) {
