@@ -17,9 +17,8 @@
                 <span class="date">
                     (ordered {{ order.dateActivated | date: 'dd MMM H:mm' }}
                     by
-                    <span ng-show="order.orderer">{{order.orderer.display | prescriber}}</span>
-                    <span ng-hide="order.orderer">Unknown User</span>
-                    )
+                    <span ng-show="order.orderer">{{order.orderer.display | prescriber}})</span>
+                    <span ng-hide="order.orderer">Unknown User)</span>
                 </span>
             </div>
         </span>
