@@ -26,12 +26,15 @@ public class AddEditDosePageController {
 
     public void get(@RequestParam("patient") Patient patient,
                     @RequestParam("prescription") Order prescription,
+                    @RequestParam(required = false, value = "dose") ScheduledDose dose,
                     @InjectBeans PatientDomainWrapper patientDomainWrapper,
                     @SpringBean AdtService adtService,
                     @SpringBean BedAssignmentService bedAssignmentService,
                     @SpringBean PharmacyService pharmacyService,
                     UiSessionContext sessionContext,
                     PageModel model) {
+
+        model.addAttribute("existing", dose);
 
         patientDomainWrapper.setPatient(patient);
         VisitDomainWrapper activeVisit = getActiveVisit(patient, adtService, sessionContext);
@@ -44,10 +47,16 @@ public class AddEditDosePageController {
         model.addAttribute("formatter", new FormatUtil());
     }
 
-    public String post(@BindParams ScheduledDose dose,
+    public String post(@BindParams @RequestParam("dose") ScheduledDose dose,
                        Errors errors,
                        @SpringBean PharmacyService pharmacyService,
                        UiUtils ui) {
+
+        // handle the case where we edit a dose by changing its status from PARTIAL to FULL, and therefore the reason
+        // dropdown is disabled, and not submitted
+        if (ScheduledDose.DoseStatus.FULL.equals(dose.getStatus())) {
+            dose.setReasonNotAdministeredNonCoded(null);
+        }
 
         ValidateUtil.validate(dose, errors);
         if (errors.hasErrors()) {

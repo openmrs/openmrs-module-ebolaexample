@@ -41,11 +41,6 @@
             valid = false;
         }
         if (valid) {
-            if (post['status'] == 'FULL' && post['reasonNotAdministeredNonCoded']) {
-                valid = false;
-            }
-        }
-        if (valid) {
             jq('#add-edit-form button[type=submit]').prop('disabled', false);
         } else {
             jq('#add-edit-form button[type=submit]').prop('disabled', true);
@@ -66,7 +61,11 @@
 </script>
 
 <h3>
-    Add a drug administration for
+    <% if (existing) { %>
+        Edit a drug administration for
+    <% } else { %>
+        Add a drug administration for
+    <% } %>
     <br/>
     <strong>${ui.format(prescription.drug)}</strong>
     <em>
@@ -81,10 +80,15 @@
             until ${dateAndTimeFormat.format(prescription.autoExpireDate)}
         <% } %>
     </em>
+    <% if (existing) { %>
+        <br/>
+        Recorded as: ${existing.status} @${dateAndTimeFormat.format(existing.scheduledDatetime)}
+    <% } %>
 </h3>
 
 <form id="add-edit-form" method="post" action="${ ui.pageLink("ebolaexample", "addEditDose", [patient: patient.patient.uuid, prescription: prescription.uuid]) }">
     <input type="hidden" name="order" value="${ prescription.uuid }">
+    <input type="hidden" name="dose" value="${ existing?.uuid }"/>
     <p>
         ${ ui.includeFragment("uicommons", "field/datetimepicker", [
                 id: "scheduledDate",
@@ -92,12 +96,14 @@
                 formFieldName: "scheduledDatetime",
                 startDate: prescription.effectiveStartDate,
                 endDate: prescription.effectiveStopDate ?: new Date(),
+                defaultDate: existing?.scheduledDatetime,
                 useTime: true
         ])}
     </p>
     ${ ui.includeFragment("uicommons", "field/dropDown", [
             formFieldName: "status",
             label: "Status",
+            initialValue: existing?.status?.toString(),
             options: [
                     [value: "FULL", label: "Fully Given"],
                     [value: "PARTIAL", label: "Partially Given"],
@@ -107,6 +113,7 @@
     ${ ui.includeFragment("uicommons", "field/dropDown", [
             formFieldName: "reasonNotAdministeredNonCoded",
             label: "Reason not administered",
+            initialValue: existing?.reasonNotAdministeredNonCoded,
             options: [
                     "Patient asleep",
                     "Patient vomiting",

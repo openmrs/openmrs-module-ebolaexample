@@ -49,7 +49,7 @@ tr.deleted td {
 }
 
 tr td.actions {
-    text-align: right;
+    text-align: center;
     text-decoration: none;
 }
 </style>
@@ -140,9 +140,14 @@ ${ui.includeFragment("ebolaexample", "overview/patientHeader", [patient: patient
                                         Restore
                                     </a>
                                     <% } else { %>
-                                    <a href="" style="display: none">
+                                    <a href="${ui.pageLink("ebolaexample", "addEditDose", [
+                                        patient: patient.patient.uuid,
+                                        prescription: order.uuid,
+                                        dose: dose.uuid
+                                    ])}">
                                         Edit
                                     </a>
+                                    |
                                     <a href="${ui.actionLink("ebolaexample", "overview/doseManagement", "delete", [scheduledDoseUuid: dose.uuid])}">
                                         Delete
                                     </a>
