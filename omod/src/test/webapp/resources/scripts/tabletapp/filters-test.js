@@ -1,12 +1,17 @@
 describe('filter specs', function () {
+    var Constants;
 
     beforeEach(module('filters'));
+
+    beforeEach(inject(function (_Constants_) {
+        Constants = _Constants_;
+    }));
 
     describe('fluidOrder.infusion', function () {
         var order;
 
         beforeEach(function () {
-            order = {administrationType: 'INFUSION'}
+            order = {administrationType: 'INFUSION', route: Constants.fluids.routeOptions[0]}
         });
 
         it('should format the rate and duration', inject(function (fluidOrderFilter) {
@@ -31,5 +36,17 @@ describe('filter specs', function () {
             var filtered = fluidOrderFilter(order);
             expect(filtered).toContain('continuous');
         }));
+
+        it('should include the route name', inject(function (fluidOrderFilter) {
+            var io = { display: 'IO Needle', uuid: '123'};
+            spyOn(Constants.fluids, 'routeOptions').andReturn([io]);
+            order.infusionRate = 10;
+            order.infusionDuration = 20;
+            order.route = io;
+            var filtered = fluidOrderFilter(order);
+
+            expect(filtered).toContain('IO Needle');
+        }));
+
     });
 });

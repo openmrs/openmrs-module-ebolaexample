@@ -105,7 +105,7 @@ angular.module('filters', ['constants'])
             return output;
         }
     })
-    .filter('fluidOrder', ['Constants', function (Constants) {
+    .filter('fluidOrder', ['Constants', 'conceptFilter', function (Constants, conceptFilter) {
         function bolusAmountDisplay(amount) {
             return amount + " " + Constants.fluids.bolusUnits.display;
         }
@@ -135,10 +135,12 @@ angular.module('filters', ['constants'])
 
         return function (order) {
             if (order.administrationType == 'BOLUS') {
-                return bolusAmountDisplay(order.bolusQuantity) + ' over ' +
-                    bolusRateDisplay(order.bolusRate);
+                return bolusAmountDisplay(order.bolusQuantity) + ' ' +
+                    conceptFilter(order.route) +
+                    ' over ' + bolusRateDisplay(order.bolusRate);
             } else {
                 return '@ ' + infusionRateDisplay(order.infusionRate) + ' ' +
+                    conceptFilter(order.route) + ' ' +
                     infusionDurationDisplay(order.infusionDuration);
 
             }
