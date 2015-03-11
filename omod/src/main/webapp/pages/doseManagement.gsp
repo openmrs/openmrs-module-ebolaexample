@@ -27,7 +27,7 @@
         <% if (wardAndBed && wardAndBed.ward) { %>
         {
             label: "${ ui.format(wardAndBed.ward) }",
-            link: '${ ui.escapeJs(ui.pageLink("ebolaexample", "findPatientByWard", [ ward: wardAndBed.ward.uuid ])) }'
+            link: '${ ui.escapeJs(ui.pageLink("ebolaexample", "activePatients", [ ward: wardAndBed.ward.uuid ])) }'
         },
         <% } %>
         {

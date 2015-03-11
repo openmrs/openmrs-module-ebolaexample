@@ -2,7 +2,7 @@
   {
     "id": "ebolaexample.activePatient",
     "description": "Dashboard for the active patients",
-    "order": 12,
+    "order": 3,
     "requiredPrivilege": "App: ebolaexample.activePatients",
     "extensions": [
       {

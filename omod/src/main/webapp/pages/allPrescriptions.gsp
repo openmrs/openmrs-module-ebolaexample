@@ -8,7 +8,7 @@
         { icon: "icon-home", link: '/' + OPENMRS_CONTEXT_PATH + '/index.htm' },
         <% if (wardAndBed && wardAndBed.ward) { %>
         { label: "${ ui.format(wardAndBed.ward) }",
-            link: '${ ui.escapeJs(ui.pageLink("ebolaexample", "findPatientByWard", [ ward: wardAndBed.ward.uuid ])) }' },
+            link: '${ ui.escapeJs(ui.pageLink("ebolaexample", "activePatients", [ ward: wardAndBed.ward.uuid ])) }' },
         <% } %>
         { label: "${ ui.format(patient.patient.familyName) }, ${ ui.format(patient.patient.givenName) }",
             link: '${ ui.pageLink("ebolaexample", "ebolaOverview", [ patient: patient.patient.uuid ]) }'},
