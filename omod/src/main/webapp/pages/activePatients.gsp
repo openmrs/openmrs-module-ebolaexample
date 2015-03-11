@@ -17,18 +17,6 @@
 
 <h2>View Active Patients:  ${today.format('dd MMM yyyy')}</h2>
 
-<form action="activePatients.page" style="margin-bottom: 20px;">
-    <span>Ward: <select name="ward" style="display: inline;">
-        <option value=""> All </option>
-        <% wards.each { %>
-        <option value="${it.uuid}"
-            <% if (selectedWard && it.equals(selectedWard)) { %> selected <% } %>>${it}
-        </option> <% } %>
-    </select>
-        <button type="submit">Load</button>
-    </span>
-</form>
-
 <% assignments.each { %>
 <strong> ${it.key} </strong>
 <table>

@@ -19,9 +19,6 @@ import static org.junit.Assert.assertTrue;
 public class ActivePatientsPageControllerTest extends BaseModuleWebContextSensitiveTest {
 
     @Autowired
-    private LocationService locationService;
-
-    @Autowired
     private BedAssignmentService bedAssignmentService;
 
     @Autowired
@@ -45,22 +42,9 @@ public class ActivePatientsPageControllerTest extends BaseModuleWebContextSensit
     public void shouldReturnModelAttributes() throws Exception {
         ActivePatientsPageController controller = (ActivePatientsPageController) applicationContext.getBean("activePatientsPageController");
         PageModel mav = new PageModel();
-        controller.get(null, bedAssignmentService, mav);
+        controller.get(bedAssignmentService, mav);
         assertTrue(mav.containsKey("assignments"));
-        assertTrue(mav.containsKey("selectedWard"));
         assertTrue(mav.containsKey("today"));
-        assertTrue(mav.containsKey("wards"));
-    }
-
-    @Test
-    public void shouldReturnCorrectModelAttributesForParticularWard() throws Exception {
-        //Uuid for location "Never Never Land" is 167ce20c-4785-4285-9119-d197268f7f4a
-        Location ward = locationService.getLocationByUuid("167ce20c-4785-4285-9119-d197268f7f4a");
-
-        ActivePatientsPageController controller = (ActivePatientsPageController) applicationContext.getBean("activePatientsPageController");
-        PageModel mav = new PageModel();
-        controller.get(ward.getUuid(), bedAssignmentService, mav);
-        assertEquals(mav.getAttribute("selectedWard"), ward);
     }
 
 }
