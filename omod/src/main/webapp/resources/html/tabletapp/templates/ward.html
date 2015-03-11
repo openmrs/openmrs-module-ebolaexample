@@ -8,13 +8,23 @@
     </div>
 </header>
 
+<style type="text/css">
+    span.name {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+</style>
+
 <div class="page-wrap spaced" ng-controller="WardController">
     <div ng-show="loading" class="loading-spinner"></div>
     <ul class="tablet-list tablet-list-two-column">
         <li ng-repeat="bedAssignment in ward.bedAssignments">
             <a class="radio-button card long small"
                ui-sref="patient.overview({patientUUID: bedAssignment.patient.uuid})">
-                <span>{{ getPatientName(bedAssignment.patient.display) }}</span>
+                <span class="name" title="{{ getPatientName(bedAssignment.patient.display) }}">
+                    {{ getPatientName(bedAssignment.patient.display) }}
+                </span>
                 <em>{{ getPatientId(bedAssignment.patient.display) }}</em>
                 <span class="number">{{ bedAssignment.bed.display}}</span>
             </a>
