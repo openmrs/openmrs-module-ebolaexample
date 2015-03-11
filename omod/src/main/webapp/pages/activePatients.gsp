@@ -30,7 +30,7 @@
 </form>
 
 <% assignments.each { %>
-<strong> ${it.getWard()} </strong>
+<strong> ${it.key} </strong>
 <table>
     <thead>
     <tr>
@@ -42,18 +42,20 @@
 
     <tbody>
     <%
-        def bedAssignments = it.getBedAssignments()
+        def bedAssignments = it.value
         bedAssignments.each { assignment ->
-        def patient = assignment.value
-        def bed = assignment.key
+        def patient = assignment.patient
+        def bed = assignment.bed
+        def patientName = patient.display.split('-')[-1]
+        def patientNumber = patient.display.split('-')[0..-2].join('-')
     %>
     <tr>
         <td width="20%">
             <a href="${ui.pageLink("ebolaexample", "ebolaOverview",
-                    [patient: patient.uuid])}">${patient.patientIdentifier }</a>
+                    [patient: patient.uuid])}">${ patientNumber }</a>
         </td>
-        <td width="50%">${ui.format(patient)} </td>
-        <td> ${bed} </td>
+        <td width="50%">${patientName} </td>
+        <td> ${bed.display} </td>
     </tr>
     <% } %>
     </tbody>
