@@ -95,7 +95,7 @@
                 label: "Date and time",
                 formFieldName: "scheduledDatetime",
                 startDate: prescription.effectiveStartDate,
-                endDate: prescription.effectiveStopDate ?: new Date(),
+                endDate: latestAllowed,
                 defaultDate: existing?.scheduledDatetime,
                 useTime: true
         ])}

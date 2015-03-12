@@ -22,6 +22,8 @@ import org.openmrs.validator.ValidateUtil;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Date;
+
 public class AddEditDosePageController {
 
     public void get(@RequestParam("patient") Patient patient,
@@ -45,6 +47,9 @@ public class AddEditDosePageController {
 
         model.addAttribute("prescription", prescription);
         model.addAttribute("formatter", new FormatUtil());
+
+        Date latestAllowed = earliest(prescription.getEffectiveStopDate());
+        model.addAttribute("latestAllowed", latestAllowed);
     }
 
     public String post(@BindParams @RequestParam("dose") ScheduledDose dose,
@@ -77,6 +82,16 @@ public class AddEditDosePageController {
             // location does not support visits
         }
         return visitLocation == null ? null : adtService.getActiveVisit(patient, visitLocation);
+    }
+
+    private Date earliest(Date... dates) {
+        Date soFar = new Date();
+        for (Date candidate : dates) {
+            if (candidate != null && OpenmrsUtil.compare(candidate, soFar) < 0) {
+                soFar = candidate;
+            }
+        }
+        return soFar;
     }
 
 }
