@@ -143,6 +143,7 @@
             <column name="voided_by" type="int"/>
             <column name="date_voided" type="datetime"/>
         </createTable>
+
         <addForeignKeyConstraint constraintName="ivfluid_order_status_order_fk"
                                  baseTableName="ebola_ivfluid_order_status" baseColumnNames="order_id"
                                  referencedTableName="ebola_iv_fluid_order" referencedColumnNames="order_id" />
@@ -155,6 +156,13 @@
         <addForeignKeyConstraint constraintName="ivfluid_order_status_voided_by_fk"
                                  baseTableName="ebola_ivfluid_order_status" baseColumnNames="voided_by"
                                  referencedTableName="users" referencedColumnNames="user_id" />
+    </changeSet>
+    
+    <changeSet id="update-ebola-ivfluid-order-status-table" author="ThoughtWorks">
+        <addUniqueConstraint tableName="ebola_ivfluid_order_status"
+                             columnNames="uuid" />
+        <addNotNullConstraint tableName="ebola_ivfluid_order_status" columnName="order_id"
+                columnDataType="int"/>
     </changeSet>
 
 </databaseChangeLog>

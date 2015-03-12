@@ -13,8 +13,9 @@ public class IvFluidOrderStatusServiceImpl extends BaseOpenmrsService implements
     public void setIvFluidOrderStatusDAO(IvFluidOrderStatusDAO dao){
         this.ivFluidOrderStatusDAO = dao;
     }
+
     @Override
-    public void setStatus(IvFluidOrder order, IvFluidOrderStatus.IVFluidOrderStatus status) {
+    public void saveStatus(IvFluidOrder order, IvFluidOrderStatus.IVFluidOrderStatus status) {
 
     }
 

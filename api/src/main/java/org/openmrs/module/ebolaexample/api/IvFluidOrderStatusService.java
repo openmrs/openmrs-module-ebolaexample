@@ -6,6 +6,6 @@ import org.openmrs.module.ebolaexample.domain.IvFluidOrder;
 import org.openmrs.module.ebolaexample.domain.IvFluidOrderStatus;
 
 public interface IvFluidOrderStatusService extends OpenmrsService {
-    public void setStatus(IvFluidOrder order, IvFluidOrderStatus.IVFluidOrderStatus status);
+    public void saveStatus(IvFluidOrder order, IvFluidOrderStatus.IVFluidOrderStatus status);
     public IvFluidOrderStatus getCurrentStatus(IvFluidOrder order);
 }

@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@Table(name = "ebola_ivfluild_order_status")
+@Table(name = "ebola_ivfluid_order_status")
 public class IvFluidOrderStatus implements OpenmrsObject {
 
     public IvFluidOrderStatus() {
