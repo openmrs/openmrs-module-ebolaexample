@@ -49,6 +49,25 @@
         </property>
     </bean>
 
+    <bean id="ivFluidOrderStatusService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="transactionManager">
+            <ref bean="transactionManager" />
+        </property>
+        <property name="target">
+            <bean class="${project.parent.groupId}.${project.parent.artifactId}.api.impl.IvFluidOrderStatusServiceImpl">
+                <property name="ivFluidOrderStatusDAO">
+                    <bean class="org.openmrs.module.ebolaexample.db.IvFluidOrderStatusDAO"/>
+                </property>
+            </bean>
+        </property>
+        <property name="preInterceptors">
+            <ref bean="serviceInterceptors" />
+        </property>
+        <property name="transactionAttributeSource">
+            <ref bean="transactionAttributeSource" />
+        </property>
+    </bean>
+
 	<bean parent="serviceContext">
 		<property name="moduleService">
 			<list merge="true">
@@ -63,6 +82,15 @@
 			<list merge="true">
 				<value>${project.parent.groupId}.${project.parent.artifactId}.api.PharmacyService</value>
 				<ref local="pharmacyService"/>
+			</list>
+		</property>
+	</bean>
+
+    <bean parent="serviceContext">
+		<property name="moduleService">
+			<list merge="true">
+				<value>${project.parent.groupId}.${project.parent.artifactId}.api.IvFluidOrderStatusService</value>
+				<ref local="ivFluidOrderStatusService"/>
 			</list>
 		</property>
 	</bean>

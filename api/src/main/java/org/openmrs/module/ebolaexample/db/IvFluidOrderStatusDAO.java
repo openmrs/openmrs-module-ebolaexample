@@ -1,0 +1,38 @@
+package org.openmrs.module.ebolaexample.db;
+
+import org.hibernate.SessionFactory;
+import org.openmrs.module.ebolaexample.domain.IvFluidOrder;
+import org.openmrs.module.ebolaexample.domain.IvFluidOrderStatus;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public class IvFluidOrderStatusDAO{
+    @Autowired
+    SessionFactory sessionFactory;
+
+    public IvFluidOrderStatus getLatestIvFluidOrderStatus(IvFluidOrder order){
+        IvFluidOrderStatus orderStatus = (IvFluidOrderStatus) sessionFactory.getCurrentSession().createQuery(
+                "from IvFluidOrderStatus s where s.fluidOrder = :order and s.voided = false order by dateCreated desc")
+                .setEntity("order", order).setMaxResults(1)
+                .uniqueResult();
+        return orderStatus;
+    }
+
+
+    public List<IvFluidOrderStatus> getIvFluidOrderStatuses(IvFluidOrder order){
+        List<IvFluidOrderStatus> orderStatus = sessionFactory.getCurrentSession().createQuery(
+                "from IvFluidOrderStatus s where s.fluidOrder = :order and s.voided = false order by dateCreated desc")
+                .setEntity("order", order).list();
+        return orderStatus;
+    }
+
+    public IvFluidOrderStatus save(IvFluidOrderStatus status){
+        sessionFactory.getCurrentSession().saveOrUpdate(status);
+        return status;
+    }
+
+}
+

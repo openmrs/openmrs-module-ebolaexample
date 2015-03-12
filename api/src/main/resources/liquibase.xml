@@ -112,5 +112,49 @@
                                  referencedTableName="concept"
                                  referencedColumnNames="concept_id"/>
     </changeSet>
+    <changeSet id="create-ebola-ivfluid-order-status-table" author="ThoughtWorks">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="ebola_ivfluid_order_status"/>
+            </not>
+        </preConditions>
+        <createTable tableName="ebola_ivfluid_order_status">
+            <column autoIncrement="true" name="order_status_id" type="int">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="uuid" type="varchar(38)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="varchar(255)" />
+            <column name="order_id" type="integer"/>
+
+            <column name="creator" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="date_created" type="datetime">
+                <constraints nullable="false" />
+            </column>
+            <column name="changed_by" type="int" />
+            <column name="date_changed" type="datetime" />
+
+            <column name="voided" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="voided_by" type="int"/>
+            <column name="date_voided" type="datetime"/>
+        </createTable>
+        <addForeignKeyConstraint constraintName="ivfluid_order_status_order_fk"
+                                 baseTableName="ebola_ivfluid_order_status" baseColumnNames="order_id"
+                                 referencedTableName="ebola_iv_fluid_order" referencedColumnNames="order_id" />
+        <addForeignKeyConstraint constraintName="ivfluid_order_status_creator_fk"
+                                 baseTableName="ebola_ivfluid_order_status" baseColumnNames="creator"
+                                 referencedTableName="users" referencedColumnNames="user_id" />
+        <addForeignKeyConstraint constraintName="ivfluid_order_status_changed_by_fk"
+                                 baseTableName="ebola_ivfluid_order_status" baseColumnNames="changed_by"
+                                 referencedTableName="users" referencedColumnNames="user_id" />
+        <addForeignKeyConstraint constraintName="ivfluid_order_status_voided_by_fk"
+                                 baseTableName="ebola_ivfluid_order_status" baseColumnNames="voided_by"
+                                 referencedTableName="users" referencedColumnNames="user_id" />
+    </changeSet>
 
 </databaseChangeLog>
