@@ -113,7 +113,7 @@
                     <% if (onDay(order.effectiveStartDate, day)) { %>
                         START<br/>
                     <% } %>
-                    <% doseHistory.getDosesFor(order, day).each { %>
+                    <% doseHistory.getDosesFor(order, day).reverse().each { %>
                         ${ timeFormat.format(it.scheduledDatetime) }
                         ${ formatStatus(it.status) }
                         <% if (it.reasonNotAdministeredNonCoded) { %>
