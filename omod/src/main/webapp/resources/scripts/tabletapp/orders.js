@@ -1,4 +1,4 @@
-angular.module("orders", [])
+angular.module("orders", ["constants"])
 
     .factory("DrugOrders", ['OrdersService', function (OrdersService) {
         return new OrdersService('drugorder');
@@ -12,7 +12,7 @@ angular.module("orders", [])
         return ordersService;
     }])
 
-    .factory("OrdersService", ['OrderResource', function (OrderResource) {
+    .factory("OrdersService", ['OrderResource', 'Constants', function (OrderResource, Constants) {
         return function (orderType) {
             this.orderType = orderType;
 
@@ -99,6 +99,9 @@ angular.module("orders", [])
                 } else {
                     orders = _.union(cachedActive, cachedPast);
                 }
+                orders = _.reject(orders, function(item) {
+                    return item.action == Constants.orderAction.discontinue;
+                });
                 if (orderType == 'drugorder') {
                     var groupedOrders = groupByDrug(orders);
                 }

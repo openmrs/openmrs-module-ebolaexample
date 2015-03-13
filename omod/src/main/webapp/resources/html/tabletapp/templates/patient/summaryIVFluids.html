@@ -8,7 +8,7 @@
 <ul ng-show="!loading" class="list-items" id="patient-iv-fluid-orders">
     <li ng-show="fluidOrders.none">None</li>
     <li ng-repeat="order in fluidOrders.orders">
-        <span ng-class="{ left: fluidOrders.activeOnly }">
+        <span ng-class="{ left: fluidOrders.activeOnly, inactive: order.actualStopDate }">
             <span class="drug-name">
                 <fluid-name class="uppercase" uuid="{{ order.concept.uuid }}"></fluid-name>
                 <em>{{order | fluidOrder}}</em>
@@ -23,6 +23,9 @@
 
                 </span>
             </div>
+        </span>
+        <span class="right" ng-show="fluidOrders.activeOnly">
+            <button id="stop_{{order.uuid}}" ng-click="openStopOrderDialog(order)">Stop</button>
         </span>
         <span class="right" ng-show="ivFluidStatusToggleOn && fluidOrders.activeOnly">
             <!--<div>-->

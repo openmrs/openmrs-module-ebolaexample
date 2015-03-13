@@ -292,14 +292,15 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                         orderJson = {
                             "action": Constants.orderAction.discontinue,
                             "orderReasonNonCoded": "",
-                            "type": Constants.orderType.drugorder,
+                            "type": order.type,
                             "patient": order.patient.uuid,
                             "encounter": encounter.uuid,
                             "careSetting": Constants.careSetting.inpatient,
-                            "orderer": sessionInfo["provider"]["uuid"],
-                            "dosingType": Constants.dosingType.unvalidatedFreeText
+                            "orderer": sessionInfo["provider"]["uuid"]
                         };
-
+                        if(order.type == "drugorder") {
+                            orderJson["dosingType"] = Constants.dosingType.unvalidatedFreeText
+                        }
                         if (order.drug) {
                             orderJson["drug"] = order.drug.uuid;
                         } else {
