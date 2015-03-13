@@ -9,13 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class EbolaWebTestBase extends BaseModuleWebContextSensitiveTest {
     @Autowired
-    private EbolaTestBaseMetadata ebolaTestBaseMetadata;
+    protected EbolaTestBaseMetadata ebolaTestBaseMetadata;
 
     @Autowired
-    private EbolaMetadata ebolaMetadata;
+    protected EbolaMetadata ebolaMetadata;
 
     @Autowired
-    private EbolaTestData ebolaTestData;
+    protected EbolaTestData ebolaTestData;
 
     @Before
     public void setUp()  throws Exception {

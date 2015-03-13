@@ -90,7 +90,7 @@ public class EbolaTestData extends AbstractMetadataBundle {
         createProvider(new PersonName("MoH", "", "Doctor"), DOCTOR_PROVIDER_IDENTIFIER);
     }
 
-    public void createOrder(Patient patient, String orderTypeUuid, String fluidUuid, boolean active) {
+    public IvFluidOrder createOrder(Patient patient, String orderTypeUuid, String fluidUuid, boolean active) {
         OrderType ivFluidOrderType = Context.getOrderService().getOrderTypeByUuid(orderTypeUuid);
 
         IvFluidOrder ivFluidOrder = new IvFluidOrder();
@@ -110,6 +110,7 @@ public class EbolaTestData extends AbstractMetadataBundle {
         ivFluidOrder.setOrderer(Context.getProviderService().getAllProviders().get(0));
         orderService.saveOrder(ivFluidOrder, null);
         assert ivFluidOrder.getId() != null;
+        return ivFluidOrder;
     }
 
     private Concept getConceptByUuid(String uuid) {

@@ -7,14 +7,11 @@ import org.springframework.mock.web.MockHttpServletResponse;
 
 public class EbolaWebRestTestBase extends EbolaWebTestBase {
     @Autowired
-    private WebMethods webMethods;
-
-    private MockHttpServletResponse response;
+    protected WebMethods webMethods;
 
     @Before
     public void setUp() throws Exception{
         super.setUp();
-        response = new MockHttpServletResponse();
     }
 
 }
