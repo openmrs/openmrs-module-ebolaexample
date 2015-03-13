@@ -647,7 +647,7 @@ angular.module("constants", [])
                     },
                     {
                         display: ["Dextrose 5% in water"],
-                        uuid: "104184AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                        uuid: "161250AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                     },
                     {
                         display: ["Normal saline", "KCL 40 mmol/L"],
@@ -663,7 +663,7 @@ angular.module("constants", [])
                     },
                     {
                         display: ["Dextrose 5% in", "normal saline"],
-                        uuid: "104745AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                        uuid: "162857AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
                     },
                     {
                         display: ["Sodium Bicarbonate", "1.26% Polyfusor"],

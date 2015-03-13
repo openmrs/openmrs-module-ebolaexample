@@ -157,6 +157,13 @@ public class EbolaExampleActivator extends BaseModuleActivator {
         setPreferredConceptName(service, "70116AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Paracetamol");
         setPreferredConceptName(service, "103525AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Gaviscon");
         setPreferredConceptName(service, "76464AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Flucloxacillin");
+
+        setPreferredConceptName(service, "162855AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "NS + KCL 20 mmol/L");
+        setPreferredConceptName(service, "162856AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "NS + KCL 40 mmol/L");
+        setPreferredConceptName(service, "161250AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Dextrose 5%");
+        setPreferredConceptName(service, "162860AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Phosphate Polyfusor");
+        setPreferredConceptName(service, "162857AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "D5 in normal saline");
+        setPreferredConceptName(service, "162861AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Sodium bicarbonate 1.26% Polyfusor");
     }
 
     // not private so we can test it
