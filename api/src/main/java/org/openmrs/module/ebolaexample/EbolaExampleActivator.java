@@ -91,8 +91,7 @@ public class EbolaExampleActivator extends BaseModuleActivator {
 
             removeTagsFromUnknownLocation(locationService, emrApiProperties);
 
-            // the latest CIEL has errors with multiple FSNs due to a bad upgrade script. Commenting out until this is fixed
-            //setPreferredConceptNames(conceptService);
+            setPreferredConceptNames(conceptService);
 
             // hack to set the SCI-requested address format for Sierra Leone
             GlobalProperty sciAddressTemplate = new GlobalProperty("layout.address.format",
@@ -131,12 +130,12 @@ public class EbolaExampleActivator extends BaseModuleActivator {
     }
 
     private void setPreferredConceptNames(ConceptService service) {
+        // TODO the CIEL dictionary was recently improved to have many of these as preferred names out of the box, so we can remove quite a few of these.
         setPreferredConceptName(service, "160240AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Oral");
         setPreferredConceptName(service, "160242AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "IV");
         setPreferredConceptName(service, "160243AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "IM");
         setPreferredConceptName(service, "160245AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Subcutaneous");
-        // the latest CIEL release has two concepts that share this fully-specified name. Commenting out until this is fixed:
-        // setPreferredConceptName(service, "160241AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Inhaled");
+        setPreferredConceptName(service, "160241AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Inhaled");
         setPreferredConceptName(service, "161253AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Intranasal");
         setPreferredConceptName(service, "162385AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "In left ear");
         setPreferredConceptName(service, "162386AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "In right ear");
