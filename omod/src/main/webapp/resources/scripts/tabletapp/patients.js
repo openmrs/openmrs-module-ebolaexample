@@ -43,10 +43,10 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             };
         }])
 
-    .controller("PatientController", ["$state", "$scope", "PatientResource", "OrderResource", "ngDialog",
+    .controller("PatientController", ["$http", "$state", "$scope", "PatientResource", "OrderResource", "ngDialog",
         "$rootScope", "Constants", "ScheduledDoseResource", "CurrentSession", "StopOrderService",
         "DrugOrders", "FluidOrders", "DoseHistory", "WardResource", 'WardService', 'FeedbackMessages',
-        function ($state, $scope, PatientResource, OrderResource, ngDialog, $rootScope, Constants,
+        function ($http, $state, $scope, PatientResource, OrderResource, ngDialog, $rootScope, Constants,
                   ScheduledDoseResource, CurrentSession, StopOrderService, DrugOrders, FluidOrders, DoseHistory,
                   WardResource, WardService, FeedbackMessages) {
 
@@ -80,8 +80,15 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
 
             FluidOrders.reload($scope, patientUuid);
             $scope.$watch(FluidOrders.get, function (newOrders) {
+                _.each(newOrders.orders, function(order){
+                    $http.get("/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/ivfluid-order-status?order_uuid="+order.uuid).success(function(status){
+                        order.status = status['ivfluid-order']['status'].replace('_', ' ')
+                    });
+                });
                 $scope.fluidOrders = newOrders;
             }, true);
+
+            $scope.ivFluidStatusToggleOn = window.location.hostname == 'localhost';
 
             $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
                 $rootScope.clearMessages();

@@ -5,7 +5,11 @@ angular.module("orders", [])
     }])
 
     .factory("FluidOrders", ['OrdersService', function (OrdersService) {
-        return new OrdersService('ivfluidorder');
+        var ordersService = new OrdersService('ivfluidorder');
+        ordersService.getStatuses = function(){
+
+        }
+        return ordersService;
     }])
 
     .factory("OrdersService", ['OrderResource', function (OrderResource) {

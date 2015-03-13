@@ -28,7 +28,7 @@ public class IvFluidOrderStatusController {
     public Object get(@RequestParam(value="order_uuid", required=false) String orderUuid) throws Exception {
         SimpleObject response = new SimpleObject();
         Order ivFluidOrder = orderService.getOrderByUuid(orderUuid);
-        if(ivFluidOrder == null || ivFluidOrder.getOrderType().getUuid() != EbolaMetadata._OrderType.IV_FLUID_ORDER_TYPE_UUID){
+        if(ivFluidOrder == null || !ivFluidOrder.getOrderType().getUuid().equals(EbolaMetadata._OrderType.IV_FLUID_ORDER_TYPE_UUID)){
             throw new ResourceDoesNotSupportOperationException("This is not an IV fluid order");
         }
 
