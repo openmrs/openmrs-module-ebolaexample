@@ -10,7 +10,7 @@
                 <li>
                     <button ng-click="openAddNewPrescriptionForm()">Add new prescription</button>
                 </li>
-                <li>
+                <li ng-show="isFeatureEnabled('enterIvFluids')">
                     <button ng-click="openAddIvFluidOrderForm()">Add IV fluid order</button>
                 </li>
                 <li ng-show="isFeatureEnabled('enterVitals')">

@@ -15,7 +15,7 @@
 
     <ng-include src="'templates/patient/summaryPrescriptions.html'"></ng-include>
 
-    <ng-include src="'templates/patient/summaryIVFluids.html'"></ng-include>
+    <ng-include ng-if="isFeatureEnabled('enterIvFluids')" src="'templates/patient/summaryIVFluids.html'"></ng-include>
 
     <script type="text/ng-template" id="administerDialog">
         <ng-include src="'templates/patient/administerDrugDialog.html'"></ng-include>

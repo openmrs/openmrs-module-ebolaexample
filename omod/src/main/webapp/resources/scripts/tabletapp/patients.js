@@ -45,10 +45,10 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
 
     .controller("PatientController", ["$http", "$state", "$scope", "PatientResource", "OrderResource", "ngDialog",
         "$rootScope", "Constants", "ScheduledDoseResource", "CurrentSession", "StopOrderService",
-        "DrugOrders", "FluidOrders", "DoseHistory", "WardResource", 'WardService', 'FeedbackMessages',
+        "DrugOrders", "FluidOrders", "DoseHistory", "WardResource", 'WardService', 'FeedbackMessages', 'FeatureToggles',
         function ($http, $state, $scope, PatientResource, OrderResource, ngDialog, $rootScope, Constants,
                   ScheduledDoseResource, CurrentSession, StopOrderService, DrugOrders, FluidOrders, DoseHistory,
-                  WardResource, WardService, FeedbackMessages) {
+                  WardResource, WardService, FeedbackMessages, FeatureToggles) {
 
             var patientUuid = $state.params.patientUUID;
             var wardUuid = $state.params.wardUUID;
@@ -261,6 +261,10 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
 
             $scope.successMessages = function() {
                 return FeedbackMessages.getSuccessMessages();
+            }
+
+            $scope.isFeatureEnabled = function (feature) {
+                return FeatureToggles.isFeatureEnabled(feature);
             }
 
         }])
