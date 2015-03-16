@@ -22,7 +22,7 @@
 
         <div ng-show="order.type == 'ivfluidorder'">
             <h2>
-                <span class="drug-name">{{ order.concept.display }}</span><em>{{order | fluidOrder}}</em>
+                <fluid-name class="uppercase" uuid="{{ order.concept.uuid }}"></fluid-name><em>{{order | fluidOrder}}</em>
             </h2>
             <span class="date">({{ order.dateActivated | date: 'dd MMM' }})</span>
         </div>
