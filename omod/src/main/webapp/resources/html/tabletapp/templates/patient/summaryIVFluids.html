@@ -28,14 +28,22 @@
             <button id="stop_{{order.uuid}}" ng-click="openStopOrderDialog(order)">Stop</button>
         </span>
         <span class="right" ng-show="ivFluidStatusToggleOn && fluidOrders.activeOnly">
-            <!--<div>-->
-                <button ng-click="#">Restart</button>
-                <button ng-click="startIvFluidOrder(order)">Start</button>
-            <!--</div>-->
-            <!--<div>-->
-                <button ng-click="#">Finished</button>
-                <button ng-click="#">Hold</button>
-            <!--</div>-->
+            <div class="ivfluid-action">
+                <div>
+                    <button class="top-button" ng-click="startIvFluidOrder(order)">Start</button>
+                </div>
+                <div>
+                    <button >Hold</button>
+                </div>
+            </div>
+             <div class="ivfluid-action">
+                 <div>
+                     <button class="top-button" >Restart</button>
+                 </div>
+                 <div>
+                     <button>Finished</button>
+                 </div>
+             </div>
         </span>
     </li>
 </ul>

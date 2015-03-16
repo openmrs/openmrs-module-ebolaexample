@@ -82,7 +82,7 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             $scope.$watch(FluidOrders.get, function (newOrders) {
                 _.each(newOrders.orders, function(order){
                     $http.get("/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/ivfluid-order-status?order_uuid="+order.uuid).success(function(status){
-                        order.status = status['ivfluid-order-status']
+                        order.status = status['ivfluid-order-status'];
                     });
                 });
                 $scope.fluidOrders = newOrders;
@@ -91,7 +91,7 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             $scope.startIvFluidOrder = function(order){
                 var url = "/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/ivfluid-order-status";
                 $http.post(url, data={'order_uuid':order.uuid, 'status':'STARTED'}).success(function(response){
-                    order.status = response['ivfluid-order-status']
+                    order.status = response['ivfluid-order-status'];
                 });
             };
 
