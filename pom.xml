@@ -40,9 +40,9 @@
         <appframeworkVersion>2.3</appframeworkVersion>
         <metadatadeployVersion>1.4</metadatadeployVersion>
         <metadatasharingVersion>1.1.8</metadatasharingVersion>
-        <emrapiVersion>1.5-SNAPSHOT</emrapiVersion>
+        <emrapiVersion>1.5</emrapiVersion>
         <uiframeworkVersion>3.3.1</uiframeworkVersion>
-        <coreappsVersion>1.5-SNAPSHOT</coreappsVersion>
+        <coreappsVersion>1.5</coreappsVersion>
         <reportingVersion>0.9.2.1</reportingVersion>
         <htmlformentryVersion>2.5</htmlformentryVersion>
         <htmlformentryuiVersion>1.1</htmlformentryuiVersion>
