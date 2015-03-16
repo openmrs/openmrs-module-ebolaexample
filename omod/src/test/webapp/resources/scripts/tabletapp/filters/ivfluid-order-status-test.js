@@ -17,11 +17,13 @@ describe('ivfliuidStatus filter specs', function () {
         expect(result).toBe("NOT STARTED");
     }));
 
-    it("should set status as STARTED with dateCreated", inject(function (ivfliuidStatusFilter) {
-        ivfluidOrderStatus.dateCreated = 1426484460000;//"2015-03-16 13:41")
+    it("should set status as STARTED with dateCreated", inject(function (ivfliuidStatusFilter, dateFilter) {
+        var date = new Date();
+        var expected = dateFilter(date, "d MMM H:mm");
+        ivfluidOrderStatus.dateCreated = date.getTime();
         ivfluidOrderStatus.status = 'STARTED';
         var result = ivfliuidStatusFilter(ivfluidOrderStatus);
 
-        expect(result).toBe("STARTED: 16 Mar 13:41");
+        expect(result).toBe("STARTED: " + expected);
     }));
 });
