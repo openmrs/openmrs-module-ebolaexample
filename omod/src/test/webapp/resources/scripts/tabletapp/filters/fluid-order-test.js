@@ -1,4 +1,4 @@
-describe('filter specs', function () {
+describe('fluidOrder filter specs', function () {
     var Constants;
 
     beforeEach(module('filters'));

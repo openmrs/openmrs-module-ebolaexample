@@ -56,7 +56,7 @@ public class IvFluidOrderStatusDAOTest extends BaseModuleContextSensitiveTest {
         IvFluidOrder ivFluidOrder = prepareIvFluidOrder();
         IvFluidOrderStatus startedStatus = new IvFluidOrderStatus(ivFluidOrder, IvFluidOrderStatus.IVFluidOrderStatus.STARTED);
         startedStatus.setCreator(user);
-        dao.save(startedStatus);
+        dao.saveOrUpdate(startedStatus);
 
         IvFluidOrderStatus latestIvFluidOrderStatus = dao.getLatestIvFluidOrderStatus(ivFluidOrder);
 
@@ -73,11 +73,11 @@ public class IvFluidOrderStatusDAOTest extends BaseModuleContextSensitiveTest {
         startedStatus.setCreator(user);
         Date dateCreated = addDays(new Date(), -1);
         startedStatus.setDateCreated(dateCreated);
-        dao.save(startedStatus);
+        dao.saveOrUpdate(startedStatus);
 
         IvFluidOrderStatus heldStatus = new IvFluidOrderStatus(ivFluidOrder, IvFluidOrderStatus.IVFluidOrderStatus.HELD);
         heldStatus.setCreator(user);
-        dao.save(heldStatus);
+        dao.saveOrUpdate(heldStatus);
 
         List<IvFluidOrderStatus> ivFluidOrderStatuses = dao.getIvFluidOrderStatuses(ivFluidOrder);
         Assert.assertEquals(2, ivFluidOrderStatuses.size());
@@ -92,11 +92,11 @@ public class IvFluidOrderStatusDAOTest extends BaseModuleContextSensitiveTest {
         startedStatus.setCreator(user);
         Date dateCreated = addDays(new Date(), -1);
         startedStatus.setDateCreated(dateCreated);
-        dao.save(startedStatus);
+        dao.saveOrUpdate(startedStatus);
 
         IvFluidOrderStatus heldStatus = new IvFluidOrderStatus(ivFluidOrder, IvFluidOrderStatus.IVFluidOrderStatus.HELD);
         heldStatus.setCreator(user);
-        dao.save(heldStatus);
+        dao.saveOrUpdate(heldStatus);
 
         IvFluidOrderStatus latestIvFluidOrderStatus = dao.getLatestIvFluidOrderStatus(ivFluidOrder);
         Assert.assertEquals(latestIvFluidOrderStatus.getCreator().getId(), heldStatus.getCreator().getId());

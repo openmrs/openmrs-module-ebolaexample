@@ -6,8 +6,6 @@ import org.openmrs.module.ebolaexample.db.IvFluidOrderStatusDAO;
 import org.openmrs.module.ebolaexample.domain.IvFluidOrder;
 import org.openmrs.module.ebolaexample.domain.IvFluidOrderStatus;
 
-import java.util.List;
-
 public class IvFluidOrderStatusServiceImpl extends BaseOpenmrsService implements IvFluidOrderStatusService {
 
     IvFluidOrderStatusDAO ivFluidOrderStatusDAO;
@@ -17,9 +15,9 @@ public class IvFluidOrderStatusServiceImpl extends BaseOpenmrsService implements
     }
 
     @Override
-    public void saveStatus(IvFluidOrder order, IvFluidOrderStatus.IVFluidOrderStatus status) {
+    public IvFluidOrderStatus saveStatus(IvFluidOrder order, IvFluidOrderStatus.IVFluidOrderStatus status) {
         IvFluidOrderStatus ivFluidOrderStatus = new IvFluidOrderStatus(order, status);
-        ivFluidOrderStatusDAO.save(ivFluidOrderStatus);
+        return ivFluidOrderStatusDAO.saveOrUpdate(ivFluidOrderStatus);
     }
 
     @Override

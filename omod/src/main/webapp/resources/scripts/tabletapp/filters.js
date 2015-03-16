@@ -83,6 +83,20 @@ angular.module('filters', ['constants'])
         }
     })
 
+    .filter('ivfliuidStatus', function(dateFilter){
+        return function(ivfluidStatus){
+            if(!ivfluidStatus){
+                return "";
+            }
+            var output = "";
+            output += ivfluidStatus.status.replace('_', ' ');
+            if(!!ivfluidStatus.dateCreated){
+                output += ": " + dateFilter(new Date(ivfluidStatus.dateCreated), "d MMM H:mm");
+            }
+            return output;
+        }
+    })
+
     .filter('lastGiven', function(dateFilter) {
         return function(scheduledDose) {
             if (!scheduledDose) {

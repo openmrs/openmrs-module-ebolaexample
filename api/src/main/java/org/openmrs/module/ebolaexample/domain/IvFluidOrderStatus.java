@@ -19,7 +19,7 @@ public class IvFluidOrderStatus implements OpenmrsObject {
     }
 
     public IvFluidOrderStatus(IvFluidOrder order, IVFluidOrderStatus status) {
-        this.fluidOrder = order;
+        this.ivFluidOrder = order;
         this.status = status;
         this.dateCreated = this.dateChanged = new Date();
     }
@@ -35,7 +35,7 @@ public class IvFluidOrderStatus implements OpenmrsObject {
 
     @ManyToOne
     @JoinColumn(name="order_id")
-    private IvFluidOrder fluidOrder;
+    private IvFluidOrder ivFluidOrder;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
@@ -129,21 +129,13 @@ public class IvFluidOrderStatus implements OpenmrsObject {
         this.dateVoided = dateVoided;
     }
 
-//    public IvFluidOrder getIvFluidOrder(){
-//        return fluidOrder;
-//    }
-//
-//    public void setIvFluidOrder (IvFluidOrder order){
-//        fluidOrder = order;
-//    }
-//
-//    public IVFluidOrderStatus getIVFluidOrderStatus(){
-//        return status;
-//    }
-//
-//    public void setIVFluidOrderStatus(IVFluidOrderStatus status){
-//        this.status = status;
-//    }
+    public IvFluidOrder getIvFluidOrder(){
+        return ivFluidOrder;
+    }
+
+    public void setIvFluidOrder (IvFluidOrder order){
+        ivFluidOrder = order;
+    }
 
     @Override
     public Integer getId() {

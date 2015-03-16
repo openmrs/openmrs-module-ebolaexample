@@ -300,7 +300,7 @@
                         <source>src/main/webapp/resources/scripts/tabletapp/resources.js</source>
                         <source>src/main/webapp/resources/scripts/tabletapp/select-drug-name.js</source>
                         <source>src/main/webapp/resources/scripts/tabletapp/directives.js</source>
-                        <source>src/main/webapp/resources/scripts/tabletapp/filters.js</source>
+                        <source>src/main/webapp/resources/scripts/tabletapp/filters/*.js</source>
                         <source>src/main/webapp/resources/scripts/tabletapp/constants.js</source>
                         <source>src/main/webapp/resources/scripts/tabletapp/prescription-service.js</source>
                         <source>src/main/webapp/resources/scripts/tabletapp/iv-fluid-orders-service.js</source>

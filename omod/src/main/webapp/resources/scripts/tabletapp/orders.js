@@ -6,9 +6,6 @@ angular.module("orders", ["constants"])
 
     .factory("FluidOrders", ['OrdersService', function (OrdersService) {
         var ordersService = new OrdersService('ivfluidorder');
-        ordersService.getStatuses = function(){
-
-        }
         return ordersService;
     }])
 

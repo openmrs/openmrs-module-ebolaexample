@@ -53,9 +53,13 @@ public class IvFluidOrderStatusControllerTest  extends EbolaWebRestTestBase {
         MockHttpServletResponse response = webMethods.handle(request);
         SimpleObject responseObject = new ObjectMapper().readValue(response.getContentAsString(), SimpleObject.class);
 
-        LinkedHashMap order = (LinkedHashMap)responseObject.get("ivfluid-order");
+        LinkedHashMap orderStatus = (LinkedHashMap)responseObject.get(IvFluidOrderStatusController.IVFLUID_ORDER_STATUS_KEY);
+        Assert.assertNull(orderStatus.get("uuid"));
+        Assert.assertEquals(null, orderStatus.get("dateCreated"));
+        Assert.assertEquals(orderStatus.get("status"), IvFluidOrderStatus.IVFluidOrderStatus.NOT_STARTED.toString());
+
+        LinkedHashMap order = (LinkedHashMap)orderStatus.get("order");
         Assert.assertEquals(order.get("uuid"), ivFluidOrder.getUuid());
-        Assert.assertEquals(order.get("status"), IvFluidOrderStatus.IVFluidOrderStatus.NOT_STARTED.toString());
     }
 
     @Test
@@ -68,11 +72,14 @@ public class IvFluidOrderStatusControllerTest  extends EbolaWebRestTestBase {
         MockHttpServletResponse response = webMethods.handle(request);
         SimpleObject responseObject = new ObjectMapper().readValue(response.getContentAsString(), SimpleObject.class);
 
-        LinkedHashMap order = (LinkedHashMap)responseObject.get("ivfluid-order");
-        Assert.assertEquals(order.get("uuid"), ivFluidOrder.getUuid());
-        Assert.assertEquals(order.get("status"), IvFluidOrderStatus.IVFluidOrderStatus.STARTED.toString());
-    }
+        LinkedHashMap orderStatus = (LinkedHashMap)responseObject.get(IvFluidOrderStatusController.IVFLUID_ORDER_STATUS_KEY);
+        Assert.assertNotNull(orderStatus.get("uuid"));
+        Assert.assertEquals(orderStatus.get("status"), IvFluidOrderStatus.IVFluidOrderStatus.STARTED.toString());
+        Assert.assertEquals(orderStatus.get("dateCreated"), ivFluidOrder.getDateCreated());
 
+        LinkedHashMap order = (LinkedHashMap)orderStatus.get("order");
+        Assert.assertEquals(order.get("uuid"), ivFluidOrder.getUuid());
+    }
 
     @Test
     public void testShouldSaveIvFluidOrderStatusAsStarted() throws Exception {
@@ -82,10 +89,13 @@ public class IvFluidOrderStatusControllerTest  extends EbolaWebRestTestBase {
         String content = "{\"order_uuid\": \"" + ivFluidOrder.getUuid() + "\", \"status\": \"STARTED\"}";
 
         request.setContent(content.getBytes());
-        webMethods.handle(request);
+        MockHttpServletResponse response = webMethods.handle(request);
 
-        IvFluidOrderStatus currentStatus = ivFluidOrderStatusService.getCurrentStatus(ivFluidOrder);
-        Assert.assertEquals(IvFluidOrderStatus.IVFluidOrderStatus.STARTED, currentStatus.getStatus());
+        SimpleObject responseObject = new ObjectMapper().readValue(response.getContentAsString(), SimpleObject.class);
+
+        LinkedHashMap orderStatus = (LinkedHashMap)responseObject.get("ivfluid-order-status");
+        String status = (String)orderStatus.get("status");
+        Assert.assertEquals(IvFluidOrderStatus.IVFluidOrderStatus.STARTED.toString(), status);
 
     }
 }

@@ -19,7 +19,7 @@
                     by
                     <span ng-show="order.orderer">{{order.orderer.display | prescriber}})</span>
                     <span ng-hide="order.orderer">Unknown User)</span>
-                <span ng-show="ivFluidStatusToggleOn"> - {{order.status}}</span>
+                <span ng-show="ivFluidStatusToggleOn"> - {{order.status | ivfliuidStatus}}</span>
 
                 </span>
             </div>
@@ -30,7 +30,7 @@
         <span class="right" ng-show="ivFluidStatusToggleOn && fluidOrders.activeOnly">
             <!--<div>-->
                 <button ng-click="#">Restart</button>
-                <button ng-click="#">Start</button>
+                <button ng-click="startIvFluidOrder(order)">Start</button>
             <!--</div>-->
             <!--<div>-->
                 <button ng-click="#">Finished</button>
