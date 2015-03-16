@@ -64,7 +64,7 @@ public class IvFluidOrderStatusControllerTest  extends EbolaWebRestTestBase {
 
     @Test
     public void testShouldGetIvFluidOrderStatusAsStarted() throws Exception{
-        ivFluidOrderStatusService.saveStatus(ivFluidOrder, IvFluidOrderStatus.IVFluidOrderStatus.STARTED);
+        IvFluidOrderStatus ivFluidOrderStatus = ivFluidOrderStatusService.saveStatus(ivFluidOrder, IvFluidOrderStatus.IVFluidOrderStatus.STARTED);
 
         MockHttpServletRequest request = new MockHttpServletRequest("GET", requestURI);
         request.addParameter("order_uuid", ivFluidOrder.getUuid());
@@ -75,7 +75,7 @@ public class IvFluidOrderStatusControllerTest  extends EbolaWebRestTestBase {
         LinkedHashMap orderStatus = (LinkedHashMap)responseObject.get(IvFluidOrderStatusController.IVFLUID_ORDER_STATUS_KEY);
         Assert.assertNotNull(orderStatus.get("uuid"));
         Assert.assertEquals(orderStatus.get("status"), IvFluidOrderStatus.IVFluidOrderStatus.STARTED.toString());
-        Assert.assertEquals(orderStatus.get("dateCreated"), ivFluidOrder.getDateCreated());
+        Assert.assertEquals(orderStatus.get("dateCreated"), ivFluidOrderStatus.getDateCreated().getTime());
 
         LinkedHashMap order = (LinkedHashMap)orderStatus.get("order");
         Assert.assertEquals(order.get("uuid"), ivFluidOrder.getUuid());
