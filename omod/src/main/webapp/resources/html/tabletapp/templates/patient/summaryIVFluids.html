@@ -30,18 +30,18 @@
         <span class="right" ng-show="ivFluidStatusToggleOn && fluidOrders.activeOnly">
             <div class="ivfluid-action">
                 <div>
-                    <button class="top-button" ng-click="startIvFluidOrder(order)">Start</button>
+                    <button ng-disabled="ivfluidStarted(order)" class="top-button" ng-click="startIvFluidOrder(order)">Start</button>
                 </div>
                 <div>
-                    <button >Hold</button>
+                    <button ng-disabled="!ivfluidStarted(order)">Hold</button>
                 </div>
             </div>
              <div class="ivfluid-action">
                  <div>
-                     <button class="top-button" >Restart</button>
+                     <button ng-disabled="true"class="top-button" >Restart</button>
                  </div>
                  <div>
-                     <button>Finished</button>
+                     <button ng-disabled="!ivfluidStarted(order)">Finished</button>
                  </div>
              </div>
         </span>

@@ -88,6 +88,10 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                 $scope.fluidOrders = newOrders;
             }, true);
 
+            $scope.ivfluidStarted = function(order){
+                return !!order.status && order.status.status == 'STARTED';
+            };
+
             $scope.startIvFluidOrder = function(order){
                 var url = "/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/ivfluid-order-status";
                 $http.post(url, data={'order_uuid':order.uuid, 'status':'STARTED'}).success(function(response){
@@ -260,15 +264,15 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
 
             $scope.goToLaptopPatientSummary = function () {
                 location.href = emr.pageLink("ebolaexample", "ebolaOverview", {patient: patientUuid});
-            }
+            };
 
             $scope.captureVitalsAndSymptoms = function () {
                 $state.go('patient.captureVitalsAndSymptoms');
-            }
+            };
 
             $scope.successMessages = function() {
                 return FeedbackMessages.getSuccessMessages();
-            }
+            };
 
             $scope.isFeatureEnabled = function (feature) {
                 return FeatureToggles.isFeatureEnabled(feature);
