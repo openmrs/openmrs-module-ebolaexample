@@ -21,6 +21,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/rest/" + RestConstants.VERSION_1 + "/ebola/assignment")
 public class PatientAssignmentController extends BaseRestController {
+
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET)
     public Object get(@RequestParam String patientUuid){
@@ -30,7 +31,6 @@ public class PatientAssignmentController extends BaseRestController {
         List<Visit> activeVisitsByPatient = Context.getVisitService().getActiveVisitsByPatient(patient);
         BedAssignmentService bedAssignmentService = Context.getService(BedAssignmentService.class);
         WardAndBed assignedWardAndBedFor = bedAssignmentService.getAssignedWardAndBedFor(activeVisitsByPatient.get(0));
-//        List<WardBedAssignments> allBedAssignments = bedAssignmentService.getAllBedAssignments();
         response.put("ward", assignedWardAndBedFor.getWard().getName());
         response.put("bed", assignedWardAndBedFor.getBed().getName());
         return response;

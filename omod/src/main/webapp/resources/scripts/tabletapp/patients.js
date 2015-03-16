@@ -54,6 +54,7 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                   WardResource, WardService, FeedbackMessages, FeatureToggles) {
 
             var patientUuid = $state.params.patientUUID;
+            var wardUuid = $state.params.wardUUID;
             $scope.patientUuid = patientUuid;
             $scope.hasErrors = false;
             $scope.patient = PatientResource.get({uuid: patientUuid});
