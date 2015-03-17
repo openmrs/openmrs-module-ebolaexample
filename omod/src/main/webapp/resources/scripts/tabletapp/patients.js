@@ -86,12 +86,19 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             }, true);
 
             $scope.ivfluidStarted = function (order) {
-                return !!order.status && order.status.status == 'STARTED';
+                return !!order.status && (order.status.status == 'STARTED' || order.status.status == 'RESTARTED');
+            };
+            $scope.ivfluidNotStarted = function (order) {
+                return !!order.status && order.status.status == 'NOT_STARTED';
             };
 
-            $scope.startIvFluidOrder = function (order) {
+            $scope.ivfluidHeld = function (order) {
+                return !!order.status && order.status.status == 'HELD';
+            };
+
+            $scope.administerIvFluidsOrder = function (order, status) {
                 var url = "/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/ivfluid-order-status";
-                $http.post(url, data = {'order_uuid': order.uuid, 'status': 'STARTED'}).success(function (response) {
+                $http.post(url, data = {'order_uuid': order.uuid, 'status': status}).success(function (response) {
                     order.status = response['ivfluid-order-status'];
                 });
             };

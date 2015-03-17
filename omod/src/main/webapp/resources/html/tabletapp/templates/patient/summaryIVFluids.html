@@ -30,15 +30,15 @@
         <span class="right" ng-show="isFeatureEnabled('administerIvFluids') && fluidOrders.activeOnly">
             <div class="ivfluid-action">
                 <div>
-                    <button ng-disabled="ivfluidStarted(order)" class="top-button" ng-click="startIvFluidOrder(order)">Start</button>
+                    <button ng-disabled="!ivfluidNotStarted(order)" class="top-button" ng-click="administerIvFluidsOrder(order, 'STARTED')">Start</button>
                 </div>
                 <div>
-                    <button ng-disabled="!ivfluidStarted(order)">Hold</button>
+                    <button ng-disabled="!ivfluidStarted(order)"  ng-click="administerIvFluidsOrder(order, 'HELD')">Hold</button>
                 </div>
             </div>
              <div class="ivfluid-action">
                  <div>
-                     <button ng-disabled="true"class="top-button" >Restart</button>
+                     <button ng-disabled="!ivfluidHeld(order)" class="top-button"  ng-click="administerIvFluidsOrder(order, 'RESTARTED')">Restart</button>
                  </div>
                  <div>
                      <button ng-disabled="!ivfluidStarted(order)">Finished</button>
