@@ -239,6 +239,8 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
             $scope.onStopOrderSuccess = function () {
                 $scope.closeThisDialog();
                 DrugOrders.reload($scope, patientUuid);
+                FluidOrders.reload($scope, patientUuid);
+                $rootScope.clearMessages();
             };
 
             $scope.openStopOrderDialog = function (order) {
