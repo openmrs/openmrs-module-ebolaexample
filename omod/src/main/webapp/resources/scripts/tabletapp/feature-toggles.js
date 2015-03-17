@@ -1,55 +1,67 @@
 angular.module("feature-toggles", [])
-    .factory("FeatureToggles", ["$http", function ($http) {
-        var toggleStates = {
-            enterVitals: false,
-            enterIvFluids: true,
-            administerIvFluids:false
-        };
+    .factory("FeatureToggles", ["$http", "CurrentSession", function ($http) {
+        var toggleStates = [
+            {name:'enterVitals', enabled:false},
+            {name:'enterIvFluids', enabled:false},
+            {name:'administerIvFluids', enabled:false}
+        ];
         var url = "/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/feature-toggle";
 
-
-        function reload(){
-            $http.get(url).success(function(response){
+        function init(){
+            console.log('init');
+            return $http.get(url).success(function(response){
                 var featureToggles = response["featureToggles"];
                 _.each(featureToggles, function(featureToggle){
-                    toggleStates[featureToggle.name] = featureToggle.enabled;
-                })
+                    console.log(featureToggle);
+                    setToggle(featureToggle.name, featureToggle.enabled);
+                });
             });
         }
-        reload();
 
+        function setToggle(key, value){
+            var item = _.find(toggleStates, function (toggle) {
+                return toggle.name == key
+            });
+            if(!item){
+                toggleStates.push({name:key, enabled:value})
+            }else{
+                item.enabled = value;
+            }
+        }
+        init();
 
         return {
             isFeatureEnabled: function(key) {
-                return toggleStates[key];
+                var item = _.find(toggleStates, function (toggle) {
+                    return toggle.name == key
+                });
+                return item.enabled;
+            },
+            turnOff: function(key){
+                $http.post(url, data={'featureName':key, 'action':'turnOff'}).success(function(data){
+                    setToggle(key, false);
+                });
+            },
+            turnOn: function(key){
+                $http.post(url, data={'featureName':key, 'action':'turnOn'}).success(function(data){
+                    setToggle(key, true);
+                });
             },
             allFeatureToggles: function(){
                 return toggleStates;
-            },
-            turnOn : function(toggleName){
-                $http.post(url, data={'featureName':toggleName, 'action':'turnOn'}).success(function(data){
-                    toggleStates[toggleName] = true;
-                });
-            },
-            turnOff : function(toggleName){
-                $http.post(url, data={'featureName':toggleName, 'action':'turnOn'}).success(function(data){
-                    toggleStates[toggleName] = false;
-                });
-            },
-            reload:reload
+            }
         };
     }])
+
     .controller("FeatureToggleController", ["$scope", "FeatureToggles", function ($scope, FeatureToggles) {
-        $scope.allFeatureToggles = _.pairs(FeatureToggles.allFeatureToggles());
+        $scope.allFeatureToggles = FeatureToggles.allFeatureToggles();
 
         $scope.turnOff = function(toggleName){
-            console.log('turn off ' + toggleName );
             FeatureToggles.turnOff(toggleName);
 
         };
 
         $scope.turnOn = function(toggleName){
-            console.log('turn on ' + toggleName );
             FeatureToggles.turnOn(toggleName);
         }
 

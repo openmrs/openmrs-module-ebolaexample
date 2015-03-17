@@ -27,7 +27,7 @@
         <span class="right" ng-show="fluidOrders.activeOnly">
             <button id="stop_{{order.uuid}}" ng-click="openStopOrderDialog(order)">Stop</button>
         </span>
-        <span class="right" ng-show="ivFluidStatusToggleOn && fluidOrders.activeOnly">
+        <span class="right" ng-show="isFeatureEnabled('administerIvFluids') && fluidOrders.activeOnly">
             <div class="ivfluid-action">
                 <div>
                     <button ng-disabled="ivfluidStarted(order)" class="top-button" ng-click="startIvFluidOrder(order)">Start</button>

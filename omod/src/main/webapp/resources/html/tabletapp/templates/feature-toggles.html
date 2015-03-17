@@ -5,8 +5,8 @@
 </header>
 <ul ng-show="!loading"  ng-controller="FeatureToggleController" class="list-items">
     <li ng-repeat="featureToggle in allFeatureToggles" class="ng-scope">
-        <span> {{featureToggle[0]}} </span>
-        <button ng-disabled="!featureToggle[1]" ng-click="turnOff(featureToggle[0])">Turn off</button>
-        <button ng-disabled="featureToggle[1]" ng-click="turnOn(featureToggle[0])">Turn On</button>
+        <span> {{featureToggle.name}} </span>
+        <button ng-disabled="!featureToggle.enabled" ng-click="turnOff(featureToggle.name)">Turn off</button>
+        <button ng-disabled="featureToggle.enabled" ng-click="turnOn(featureToggle.name)">Turn On</button>
     </li>
 </ul>
