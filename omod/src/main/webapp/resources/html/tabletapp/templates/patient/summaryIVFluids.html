@@ -19,7 +19,7 @@
                     by
                     <span ng-show="order.orderer">{{order.orderer.display | prescriber}})</span>
                     <span ng-hide="order.orderer">Unknown User)</span>
-                <span ng-show="ivFluidStatusToggleOn"> - {{order.status | ivfliuidStatus}}</span>
+                <span ng-show="isFeatureEnabled('administerIvFluids')"> - {{order.status | ivfliuidStatus}}</span>
 
                 </span>
             </div>

@@ -96,8 +96,6 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                 });
             };
 
-            $scope.ivFluidStatusToggleOn = window.location.hostname == 'localhost';
-
             $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
                 $rootScope.clearMessages();
                 $rootScope.comeFromPrescriptionForm = $state.params.prescriptionSuccess == 'true' && fromState && fromState.name == 'patient.addPrescriptionDetails';
