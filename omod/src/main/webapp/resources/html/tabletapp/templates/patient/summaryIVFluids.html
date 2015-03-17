@@ -19,15 +19,11 @@
                     by
                     <span ng-show="order.orderer">{{order.orderer.display | prescriber}})</span>
                     <span ng-hide="order.orderer">Unknown User)</span>
-                <span ng-show="isFeatureEnabled('administerIvFluids')"> - {{order.status | ivfliuidStatus}}</span>
-
+                    <span> - {{order.status | ivfliuidStatus}}</span>
                 </span>
             </div>
         </span>
         <span class="right" ng-show="fluidOrders.activeOnly">
-            <button id="stop_{{order.uuid}}" ng-click="openStopOrderDialog(order)">Stop</button>
-        </span>
-        <span class="right" ng-show="isFeatureEnabled('administerIvFluids') && fluidOrders.activeOnly">
             <div class="ivfluid-action">
                 <div>
                     <button ng-disabled="!ivfluidNotStarted(order)" class="top-button" ng-click="administerIvFluidsOrder(order, 'STARTED')">Start</button>
@@ -41,7 +37,7 @@
                      <button ng-disabled="!ivfluidHeld(order)" class="top-button"  ng-click="administerIvFluidsOrder(order, 'RESTARTED')">Restart</button>
                  </div>
                  <div>
-                     <button ng-disabled="!ivfluidStarted(order)">Finished</button>
+                     <button id="stop_{{order.uuid}}" ng-click="openStopOrderDialog(order)">Stop</button>
                  </div>
              </div>
         </span>

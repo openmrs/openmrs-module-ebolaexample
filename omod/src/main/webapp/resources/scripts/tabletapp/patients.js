@@ -101,6 +101,8 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                 $http.post(url, data = {'order_uuid': order.uuid, 'status': status}).success(function (response) {
                     order.status = response['ivfluid-order-status'];
                 });
+                $rootScope.clearMessages();
+                FeedbackMessages.showSuccessMessage({display: status+ " " + order.concept.display});
             };
 
             $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {

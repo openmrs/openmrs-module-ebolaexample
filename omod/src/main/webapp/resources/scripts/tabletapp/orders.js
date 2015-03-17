@@ -70,7 +70,6 @@ angular.module("orders", ["constants"])
                 OrderResource.query({t: orderType, v: 'full', patient: patientUuid}, function (response) {
                     scope.loading = false;
                     cachedActive = decorateOrders(response.results);
-
                 });
                 scope.loadingPastOrders = true;
                 OrderResource.query({
@@ -94,9 +93,13 @@ angular.module("orders", ["constants"])
                 if (activeOnly) {
                     orders = cachedActive;
                 } else {
-                    orders = _.union(cachedActive, cachedPast);
+                    if (orderType == 'ivfluidorder') {
+                        orders = _.union(cachedActive, _.sortBy(cachedPast, 'actualStopDate').reverse());
+                    } else {
+                        orders = _.union(cachedActive, cachedPast);
+                    }
                 }
-                orders = _.reject(orders, function(item) {
+                orders = _.reject(orders, function (item) {
                     return item.action == Constants.orderAction.discontinue;
                 });
                 if (orderType == 'drugorder') {

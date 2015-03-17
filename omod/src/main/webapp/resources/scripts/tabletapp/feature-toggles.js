@@ -2,8 +2,7 @@ angular.module("feature-toggles", [])
     .factory("FeatureToggles", ["$http", "CurrentSession", function ($http) {
         var toggleStates = [
             {name:'enterVitals', enabled:false},
-            {name:'enterIvFluids', enabled:false},
-            {name:'administerIvFluids', enabled:false}
+            {name:'ivFluids', enabled:true}
         ];
         var url = "/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/feature-toggle";
 
@@ -34,6 +33,9 @@ angular.module("feature-toggles", [])
                 var item = _.find(toggleStates, function (toggle) {
                     return toggle.name == key
                 });
+                if(!item) {
+                    console.log("No feature toggle named "+ key);
+                }
                 return item.enabled;
             },
             turnOff: function(key){
