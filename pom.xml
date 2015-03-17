@@ -52,7 +52,7 @@
         <providermanagementVersion>2.2</providermanagementVersion>
         <uicommonsVersion>1.4</uicommonsVersion>
         <appuiVersion>1.3</appuiVersion>
-        <webservices.restVersion>2.11-SNAPSHOT</webservices.restVersion>
+        <webservices.restVersion>2.11</webservices.restVersion>
     </properties>
 
 	<dependencyManagement>
