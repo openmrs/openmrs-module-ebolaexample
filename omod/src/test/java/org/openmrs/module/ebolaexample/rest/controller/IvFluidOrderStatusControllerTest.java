@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.openmrs.Patient;
 import org.openmrs.api.OrderService;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.ebolaexample.EbolaWebRestTestBase;
+import org.openmrs.module.ebolaexample.EbolaRestTestBase;
 import org.openmrs.module.ebolaexample.api.IvFluidOrderStatusService;
 import org.openmrs.module.ebolaexample.domain.IvFluidOrder;
 import org.openmrs.module.ebolaexample.domain.IvFluidOrderStatus;
@@ -22,7 +22,7 @@ import java.util.LinkedHashMap;
 
 import static org.openmrs.module.ebolaexample.metadata.EbolaMetadata._OrderType.IV_FLUID_ORDER_TYPE_UUID;
 
-public class IvFluidOrderStatusControllerTest  extends EbolaWebRestTestBase {
+public class IvFluidOrderStatusControllerTest  extends EbolaRestTestBase {
 
     private String requestURI = "/rest/" + RestConstants.VERSION_1 + "/ebola/ivfluid-order-status";
 

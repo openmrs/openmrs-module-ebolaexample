@@ -7,7 +7,7 @@ import org.openmrs.module.ebolaexample.metadata.EbolaTestData;
 import org.openmrs.web.test.BaseModuleWebContextSensitiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class EbolaWebTestBase extends BaseModuleWebContextSensitiveTest {
+public class EbolaTestBase extends BaseModuleWebContextSensitiveTest {
     @Autowired
     protected EbolaTestBaseMetadata ebolaTestBaseMetadata;
 

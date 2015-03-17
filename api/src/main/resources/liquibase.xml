@@ -165,4 +165,49 @@
                 columnDataType="int"/>
     </changeSet>
 
+    <changeSet id="create-ebola-feature-toggle-table" author="ThoughtWorks">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="ebola_feature_toggle"/>
+            </not>
+        </preConditions>
+        <createTable tableName="ebola_feature_toggle">
+            <column autoIncrement="true" name="feature_toggle_id" type="int">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(38)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="enabled" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="uuid" type="varchar(38)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="creator" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="date_created" type="datetime">
+                <constraints nullable="false" />
+            </column>
+            <column name="changed_by" type="int" />
+            <column name="date_changed" type="datetime" />
+
+            <column name="voided" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="voided_by" type="int"/>
+            <column name="date_voided" type="datetime"/>
+        </createTable>
+        <addForeignKeyConstraint constraintName="ebola_feature_toggle_creator_fk"
+                                 baseTableName="ebola_feature_toggle" baseColumnNames="creator"
+                                 referencedTableName="users" referencedColumnNames="user_id" />
+        <addForeignKeyConstraint constraintName="ebola_feature_toggle_changed_by_fk"
+                                 baseTableName="ebola_feature_toggle" baseColumnNames="changed_by"
+                                 referencedTableName="users" referencedColumnNames="user_id" />
+        <addForeignKeyConstraint constraintName="ebola_feature_toggle_voided_by_fk"
+                                 baseTableName="ebola_feature_toggle" baseColumnNames="voided_by"
+                                 referencedTableName="users" referencedColumnNames="user_id" />
+    </changeSet>
+
 </databaseChangeLog>

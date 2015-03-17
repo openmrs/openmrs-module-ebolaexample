@@ -13,6 +13,10 @@ angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "selec
                 url: "/login",
                 templateUrl: "templates/login.html"
             })
+            .state("feature-toggles", {
+                url: "/feature-toggles",
+                templateUrl: "templates/feature-toggles.html"
+            })
             .state("wards", {
                 url: "/wards",
                 templateUrl: "templates/wards.html",

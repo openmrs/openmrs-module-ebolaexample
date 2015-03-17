@@ -58,6 +58,7 @@ describe('patients', function () {
                     httpMock.when('GET', apiUrl + 'order?expired=true&t=ivfluidorder&v=full').respond({});
                     httpMock.when('GET', apiUrl + 'patient').respond({});
                     httpMock.when('GET', apiUrl + 'ebola/dosehistory').respond({});
+                    httpMock.when('GET', apiUrl + 'ebola/feature-toggle').respond({});
                     $controller('PatientController', {$scope: scope});
                 }
             });
