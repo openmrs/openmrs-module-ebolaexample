@@ -21,7 +21,8 @@ angular.module("feature-toggles", [])
                 return toggle.name == key
             });
             if(!item){
-                toggleStates.push({name:key, enabled:value})
+                //comment this to show the toggles defined in this file only.
+                //toggleStates.push({name:key, enabled:value})
             }else{
                 item.enabled = value;
             }
