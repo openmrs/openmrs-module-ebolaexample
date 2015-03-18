@@ -49,6 +49,12 @@
         </property>
     </bean>
 
+    <bean id="ivFluidOrderStatusDAO" class="org.openmrs.module.ebolaexample.db.IvFluidOrderStatusDAO" >
+        <property name="sessionFactory">
+            <ref bean="sessionFactory"></ref>
+        </property>
+    </bean>
+
     <bean id="ivFluidOrderStatusService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
         <property name="transactionManager">
             <ref bean="transactionManager" />
@@ -56,7 +62,7 @@
         <property name="target">
             <bean class="${project.parent.groupId}.${project.parent.artifactId}.api.impl.IvFluidOrderStatusServiceImpl">
                 <property name="ivFluidOrderStatusDAO">
-                    <bean class="org.openmrs.module.ebolaexample.db.IvFluidOrderStatusDAO"/>
+                    <ref bean="ivFluidOrderStatusDAO"></ref>
                 </property>
             </bean>
         </property>
@@ -68,6 +74,13 @@
         </property>
     </bean>
 
+    <bean id="featureToggleDAO" class="org.openmrs.module.ebolaexample.db.FeatureToggleDAO">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory"></ref>
+        </property>
+    </bean>
+
+
     <bean id="featureToggleService" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
         <property name="transactionManager">
             <ref bean="transactionManager" />
@@ -75,7 +88,7 @@
         <property name="target">
             <bean class="${project.parent.groupId}.${project.parent.artifactId}.api.impl.FeatureToggleServiceImpl">
                 <property name="featureToggleDAO">
-                    <bean class="org.openmrs.module.ebolaexample.db.FeatureToggleDAO"/>
+                    <ref bean="featureToggleDAO"></ref>
                 </property>
             </bean>
         </property>

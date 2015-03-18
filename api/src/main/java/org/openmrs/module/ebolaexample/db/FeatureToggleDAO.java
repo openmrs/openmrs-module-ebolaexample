@@ -8,12 +8,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Repository
+@Repository("featureToggleDAO")
 public class FeatureToggleDAO {
 
     @Autowired
     SessionFactory sessionFactory;
 
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Transactional(readOnly = true)
     public FeatureToggle getByName(String toggleName){
