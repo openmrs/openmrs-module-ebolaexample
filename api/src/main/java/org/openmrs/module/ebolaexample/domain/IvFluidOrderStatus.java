@@ -15,7 +15,7 @@ public class IvFluidOrderStatus implements OpenmrsObject {
     }
 
     public static enum IVFluidOrderStatus{
-        NOT_STARTED, STARTED, RESTARTED, HELD, FINISHED
+        NOT_STARTED, STARTED, RESTARTED, HELD, STOPPED
     }
 
     public IvFluidOrderStatus(IvFluidOrder order, IVFluidOrderStatus status) {

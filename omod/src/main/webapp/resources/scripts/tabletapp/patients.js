@@ -240,6 +240,9 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
 
             $scope.onStopOrderSuccess = function () {
                 $scope.closeThisDialog();
+                if($scope.order.type == Constants.orderType.ivfluidorder){
+                    $scope.administerIvFluidsOrder($scope.order, "STOPPED");
+                }
                 DrugOrders.reload($scope, patientUuid);
                 FluidOrders.reload($scope, patientUuid);
                 $rootScope.clearMessages();
