@@ -3,7 +3,6 @@ package org.openmrs.module.ebolaexample.db;
 import org.hibernate.SessionFactory;
 import org.openmrs.module.ebolaexample.domain.IvFluidOrder;
 import org.openmrs.module.ebolaexample.domain.IvFluidOrderStatus;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,8 +10,9 @@ import java.util.List;
 
 @Repository("ivFluidOrderStatusDAO")
 public class IvFluidOrderStatusDAO{
-    @Autowired
-    SessionFactory sessionFactory;
+
+    private SessionFactory sessionFactory;
+
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
