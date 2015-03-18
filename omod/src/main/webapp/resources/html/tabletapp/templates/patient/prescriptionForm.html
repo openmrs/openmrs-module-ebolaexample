@@ -131,7 +131,8 @@
         </div>
     </div>
     <div class="actions small">
-        <button class="left small secondary" ng-click="goToPrev()">Back</button>
+        <cancel-button ng-if="showCancelButton"></cancel-button>
+        <button ng-if="!showCancelButton" class="left small secondary" ng-click="goToPrev()">Back</button>
         <button class="right small" type="submit" ng-click="save(addOrder, 'patient.overview')">Save</button>
     </div>
 </form>

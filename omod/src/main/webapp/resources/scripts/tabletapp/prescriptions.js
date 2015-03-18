@@ -26,6 +26,7 @@ angular.module("prescriptions", ["tabletapp", "constants", "patients", "filters"
                 PrescriptionSetup.setupDrugOrder($scope, undefined, $scope.patient, preexistingOrder);
                 $scope.save = PrescriptionService.buildUpdateHandler($scope, $state);
             });
+            $scope.showCancelButton = true;
         }])
 
     .factory('PrescriptionSetup', ['Constants', 'DrugResource', 'PrescriptionService',
