@@ -14,7 +14,10 @@
                     <button ng-click="openAddIvFluidOrderForm()">Add IV fluid order</button>
                 </li>
                 <li ng-show="isFeatureEnabled('enterVitals')">
-                    <button ng-click="captureVitalsAndSymptoms()">Capture Vitals and Symptoms</button>
+                    <button ng-click="captureVitals()">Capture Vitals</button>
+                </li>
+                <li ng-show="isFeatureEnabled('enterSymptoms')">
+                    <button ng-click="captureSymptoms()">Capture Symptoms</button>
                 </li>
                 <li ng-show="hasPrivilege('App: coreapps.findPatient')">
                     <button ng-click="goToLaptopPatientSummary()">Laptop Patient Summary</button>

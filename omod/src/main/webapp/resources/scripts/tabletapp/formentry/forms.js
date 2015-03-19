@@ -12,6 +12,20 @@ angular.module('tabletapp')
         }
 
         return {
+            vitals: {
+                encounterType: Constants.encounterType.ebolaInpatientFollowup,
+                views: [
+                    createView('vital-signs', 'templates/formScreens/vital-signs.html', 'VITAL SIGNS', true),
+                    createView('vital-signs', 'templates/formScreens/vital-signs2.html', 'VITAL SIGNS 2', false),
+                ]
+            },
+            Symptoms: {
+                encounterType: Constants.encounterType.ebolaInpatientFollowup,
+                views: [
+                    createView('symptoms', 'templates/formScreens/symptoms.html', 'SYMPTOMS', true),
+                    createView('symptoms', 'templates/formScreens/symptoms2.html', 'SYMPTOMS 2', false)
+                ]
+            },
             vitalsAndSymptoms: {
                 encounterType: Constants.encounterType.ebolaInpatientFollowup,
                 views: [

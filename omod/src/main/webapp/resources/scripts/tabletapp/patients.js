@@ -279,6 +279,14 @@ angular.module("patients", ["ui.router", "resources", "ngDialog", "constants", "
                 $state.go('patient.captureVitalsAndSymptoms');
             };
 
+            $scope.captureVitals = function () {
+                $state.go('patient.captureVitals');
+            };
+
+            $scope.captureSymptoms = function () {
+                $state.go('patient.captureSymptoms');
+            };
+
             $scope.successMessages = function () {
                 return FeedbackMessages.getSuccessMessages();
             };
