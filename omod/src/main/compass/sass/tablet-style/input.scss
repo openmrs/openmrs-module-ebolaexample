@@ -51,6 +51,15 @@
     }
   }
 
+  &.medium2 {
+    font-size: 1.65em;
+    vertical-align: baseline;
+    height: 70px;
+    &.long span {
+      padding-top: 7px;
+    }
+  }
+
   &.small {
     font-size: 1.4em;
 

@@ -43,6 +43,23 @@ form {
 	}
 }
 
+.question-label{
+  width: 10%;
+  display: inline-block;
+  font-size: 1.65em;
+  font-family: 'OpenSansBold';
+  text-align: right;
+}
+
+.question-body{
+  width:70%;
+  display: inline-table
+}
+
+.question-section{
+  border-bottom: 1px solid #AAA
+}
+
 .info {
 	font-size: 2em;
 	border: 4px solid $grey2;

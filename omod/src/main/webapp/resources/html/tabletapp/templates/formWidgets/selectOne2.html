@@ -1,0 +1,9 @@
+<div class="question-label">
+    {{ question.label }}
+</div>
+<span class="question-body">
+<span ng-repeat="option in question.options">
+    <input type="radio" id="{{ id }}{{ $index }}" name="{{ id }}" ng-model="question.value" value="{{ option.value }}" />
+    <label for="{{ id }}{{ $index }}" class="radio-button" ng-class="question.buttonClass">{{ option.label }}</label>
+</span>
+</span>

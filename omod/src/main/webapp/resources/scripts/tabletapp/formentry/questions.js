@@ -44,15 +44,16 @@ angular.module('tabletapp')
                 { label: "Better", value: "162677AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
             ]),
             fatigue: questionBuilder.symptomSeverity("FATIGUE", "140501AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"),
-            bleeding: questionBuilder.selectMultipleObs("BLEEDING", "162668AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", [
-                { label: "Nose/Oral", value: "160495AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+            bleeding: questionBuilder.selectMultipleObs2("Bleeding", "162668AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", [
+                { label: "Nose/Mouth", value: "160495AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+                { label: "Vomitus", value: "162670AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
                 { label: "Cough", value: "162669AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-                { label: "Vomit", value: "162670AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
                 { label: "Stool", value: "162671AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-                { label: "Vaginal (not menstrual)", value: "162673AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+                { label: "IV Site", value: "162671AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+                { label: "Vagina", value: "162673AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
                 { label: "Other", value: "5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
             ]),
-            ebolaStage: questionBuilder.selectOneObs("Ebola Stage", "162834AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",[
+            ebolaStage: questionBuilder.selectOneObs2("Ebola Stage", "162834AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",[
                 { label: "1 - Early/Dry", value: "162829AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"},
                 { label: "2 - GI/Wet", value: "162830AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"},
                 { label: "3 - Severe", value: "162831AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"}
@@ -61,9 +62,9 @@ angular.module('tabletapp')
             headache: questionBuilder.symptomPresentCheckbox("Headache", "139084AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"),
             general:{
                 handler: questionHandlers.multipleSymptomsPresent,
-                template: "selectMulti",
+                template: "selectMulti2",
                 label: "General",
-                buttonClass: "medium long",
+                buttonClass: "medium2 long",
                 options: [
                     { label: "Confusion", value: "120345AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
                     { label: "Fatigue", value: "140501AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
@@ -73,21 +74,22 @@ angular.module('tabletapp')
                     { label: "Other", value: "5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
                 ]
             },
-            Respiratory:{
+            respiratory:{
                 handler: questionHandlers.multipleSymptomsPresent,
-                template: "selectMulti",
-                label: "Pain",
-                buttonClass: "medium long",
+                template: "selectMulti2",
+                label: "Respiratory",
+                buttonClass: "medium2 long",
                 options: [
                     { label: "Short of breath", value: "122496AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
                     { label: "Cough", value: "143264AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
                     { label: "Hiccups", value: "138662AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
                 ]
-            }, pain:{
+            },
+            pain:{
                 handler: questionHandlers.multipleSymptomsPresent,
-                template: "selectMulti",
+                template: "selectMulti2",
                 label: "Pain",
-                buttonClass: "medium long",
+                buttonClass: "medium2 long",
                 options: [
                     { label: "Head", value: "139084AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
                     { label: "Muscle/Joint", value: "133632AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
@@ -100,9 +102,9 @@ angular.module('tabletapp')
             //nausea: questionBuilder.symptomPresentCheckbox("Nausea", "5978AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"),
             GI:{
                 handler: questionHandlers.multipleSymptomsPresent,
-                template: "selectMulti",
+                template: "selectMulti2",
                 label: "GI",
-                buttonClass: "medium long",
+                buttonClass: "medium2 long",
                 options: [
                     { label: "Diarrhoea", value: "142412AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
                     { label: "Vomiting", value: "122983AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },

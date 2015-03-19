@@ -169,6 +169,17 @@ angular.module('tabletapp')
             };
         }
 
+        function selectOneObs2(label, concept, options) {
+            return {
+                handler: questionHandlers.simpleObs,
+                template: "selectOne2",
+                label: label,
+                buttonClass: "medium2 long",
+                options: options,
+                concept: concept
+            };
+        }
+
         function selectMultipleObs(label, concept, options) {
             return {
                 handler: questionHandlers.multipleObs,
@@ -180,12 +191,25 @@ angular.module('tabletapp')
             };
         }
 
+        function selectMultipleObs2(label, concept, options) {
+            return {
+                handler: questionHandlers.multipleObs,
+                template: "selectMulti2",
+                label: label,
+                buttonClass: "medium2 long",
+                options: options,
+                concept: concept
+            };
+        }
+
         return {
             simpleNumeric: simpleNumericQuestion,
             symptomPresent: symptomPresentQuestion,
             symptomPresentCheckbox: symptomPresentCheckboxQuestion,
             symptomSeverity: symptomSeverityQuestion,
             selectOneObs: selectOneObs,
-            selectMultipleObs: selectMultipleObs
+            selectOneObs2: selectOneObs2,
+            selectMultipleObs: selectMultipleObs,
+            selectMultipleObs2: selectMultipleObs2
         };
     }])
