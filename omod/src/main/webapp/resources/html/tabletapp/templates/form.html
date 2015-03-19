@@ -28,7 +28,7 @@
     <div class="actions small">
         <button class="left small secondary" ng-show="shouldDisplayCancelButton()" ng-click="cancel()">Cancel</button>
         <button class="left small secondary" ng-show="shouldDisplayBackButton()" ng-click="back()">Back</button>
-        <span class="progress">{{ getCurrentViewNumber() }} of {{ views.length }}</span>
+        <span class="progress" ng-if="views.length > 1">{{ getCurrentViewNumber() }} of {{ views.length }}</span>
         <button class="right small" ng-show="shouldDisplayNextButton()" ng-click="next()">Next</button>
         <button class="right small" ng-show="shouldDisplayFinishButton()" ng-click="finish()"
                 ng-disabled="!inpatientForm.$valid">Save

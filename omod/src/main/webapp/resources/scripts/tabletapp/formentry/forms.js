@@ -22,8 +22,9 @@ angular.module('tabletapp')
             Symptoms: {
                 encounterType: Constants.encounterType.ebolaInpatientFollowup,
                 views: [
-                    createView('symptoms', 'templates/formScreens/symptoms.html', 'SYMPTOMS', true),
-                    createView('symptoms', 'templates/formScreens/symptoms2.html', 'SYMPTOMS 2', false)
+                    createView('symptoms', 'templates/formScreens/symptoms3.html', 'SYMPTOMS', true),
+                    //createView('symptoms', 'templates/formScreens/symptoms.html', 'SYMPTOMS', true),
+                    //createView('symptoms', 'templates/formScreens/symptoms2.html', 'SYMPTOMS 2', false)
                 ]
             },
             vitalsAndSymptoms: {

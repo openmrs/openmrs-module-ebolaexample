@@ -52,8 +52,63 @@ angular.module('tabletapp')
                 { label: "Vaginal (not menstrual)", value: "162673AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
                 { label: "Other", value: "5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
             ]),
+            ebolaStage: questionBuilder.selectOneObs("Ebola Stage", "162834AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",[
+                { label: "1 - Early/Dry", value: "162829AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"},
+                { label: "2 - GI/Wet", value: "162830AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"},
+                { label: "3 - Severe", value: "162831AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"}
+            ]),
 
             headache: questionBuilder.symptomPresentCheckbox("Headache", "139084AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"),
+            general:{
+                handler: questionHandlers.multipleSymptomsPresent,
+                template: "selectMulti",
+                label: "General",
+                buttonClass: "medium long",
+                options: [
+                    { label: "Confusion", value: "120345AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+                    { label: "Fatigue", value: "140501AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+                    { label: "Dehydration", value: "142630AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+                    { label: "Rash", value: "512AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+                    { label: "Pallor", value: "5245AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+                    { label: "Other", value: "5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
+                ]
+            },
+            Respiratory:{
+                handler: questionHandlers.multipleSymptomsPresent,
+                template: "selectMulti",
+                label: "Pain",
+                buttonClass: "medium long",
+                options: [
+                    { label: "Short of breath", value: "122496AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+                    { label: "Cough", value: "143264AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+                    { label: "Hiccups", value: "138662AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
+                ]
+            }, pain:{
+                handler: questionHandlers.multipleSymptomsPresent,
+                template: "selectMulti",
+                label: "Pain",
+                buttonClass: "medium long",
+                options: [
+                    { label: "Head", value: "139084AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+                    { label: "Muscle/Joint", value: "133632AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+                    { label: "Chest", value: "120749AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+                    { label: "Abdomen", value: "151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
+                ]
+            },
+            //diarrhoea: questionBuilder.symptomPresentCheckbox("Diarrhoea", "142412AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"),
+            //vomiting: questionBuilder.symptomPresentCheckbox("Vomiting", "122983AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"),
+            //nausea: questionBuilder.symptomPresentCheckbox("Nausea", "5978AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"),
+            GI:{
+                handler: questionHandlers.multipleSymptomsPresent,
+                template: "selectMulti",
+                label: "GI",
+                buttonClass: "medium long",
+                options: [
+                    { label: "Diarrhoea", value: "142412AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+                    { label: "Vomiting", value: "122983AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+                    { label: "Nausea", value: "5978AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
+                ]
+            },
             moreSymptoms: {
                 handler: questionHandlers.multipleSymptomsPresent,
                 template: "selectMulti",
