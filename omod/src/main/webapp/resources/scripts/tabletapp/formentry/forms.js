@@ -16,7 +16,6 @@ angular.module('tabletapp')
                 encounterType: Constants.encounterType.ebolaInpatientFollowup,
                 views: [
                     createView('vital-signs', 'templates/formScreens/vital-signs.html', 'VITAL SIGNS', true),
-                    createView('vital-signs', 'templates/formScreens/vital-signs2.html', 'VITAL SIGNS 2', false),
                 ]
             },
             Symptoms: {
@@ -31,7 +30,7 @@ angular.module('tabletapp')
             vitalsAndSymptoms: {
                 encounterType: Constants.encounterType.ebolaInpatientFollowup,
                 views: [
-                    createView('vital-signs', 'templates/formScreens/vital-signs.html', 'VITAL SIGNS', true),
+                    createView('vital-signs', 'templates/formScreens/vital-signs1.html', 'VITAL SIGNS', true),
                     createView('vital-signs', 'templates/formScreens/vital-signs2.html', 'VITAL SIGNS 2', false),
                     createView('symptoms', 'templates/formScreens/symptoms.html', 'SYMPTOMS', true),
                     createView('symptoms', 'templates/formScreens/symptoms2.html', 'SYMPTOMS 2', false)

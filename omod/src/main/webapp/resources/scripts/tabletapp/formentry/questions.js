@@ -8,10 +8,10 @@ angular.module('tabletapp')
                     { label: "P", value: "162644AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
                     { label: "U", value: "159508AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
                 ]),
-            temperature: questionBuilder.simpleNumeric("TEMPERATURE", "5088AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "˚C", 30, 45),
-            o2sat: questionBuilder.simpleNumeric("OXYGEN SATURATION", "5092AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "%", 0, 100),
-            respiratoryRate: questionBuilder.simpleNumeric("RESPIRATORY RATE", "5242AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "breaths/ min", 0, 120),
-            heartRate: questionBuilder.simpleNumeric("HEART RATE", "5087AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "beats/ min", 0, 999),
+            temperature: questionBuilder.simpleNumeric("Temp", "5088AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "˚C", 30, 45),
+            o2sat: questionBuilder.simpleNumeric("O2 Sat", "5092AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "%", 0, 100),
+            respiratoryRate: questionBuilder.simpleNumeric("Resp. Rate", "5242AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "breaths/ min", 0, 120),
+            heartRate: questionBuilder.simpleNumeric("Pulse", "5087AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "beats/ min", 0, 999),
             systolicBP: questionBuilder.simpleNumeric("SYSTOLIC BP", "5085AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "mmHg", 0, 250),
             diastolicBP: questionBuilder.simpleNumeric("DIASTOLIC BP", "5086AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "mmHg", 0, 200),
 
