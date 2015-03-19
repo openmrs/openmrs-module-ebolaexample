@@ -4,15 +4,14 @@ import org.openmrs.*;
 import org.openmrs.api.EncounterService;
 import org.openmrs.api.ObsService;
 import org.openmrs.api.ProgramWorkflowService;
+import org.openmrs.module.ebolaexample.EncounterUtil;
 import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
 import org.openmrs.module.emrapi.patient.PatientDomainWrapper;
 import org.openmrs.module.metadatadeploy.MetadataUtils;
 import org.openmrs.ui.framework.annotation.FragmentParam;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.fragment.FragmentModel;
-import org.openmrs.util.OpenmrsUtil;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -39,7 +38,7 @@ public class EbolaProgramFragmentController {
 
         model.addAttribute("currentEnrollment", currentEnrollment);
         // TODO this should consider the date bounds of currentEnrollment
-        model.addAttribute("triageEncounter", lastEncounter(encounterService, patient.getPatient(), triageEncType));
+        model.addAttribute("triageEncounter", EncounterUtil.lastEncounter(encounterService, patient.getPatient(), triageEncType));
     }
 
     private void getObs(PatientDomainWrapper patient, ObsService obsService, FragmentModel model) {
@@ -72,23 +71,6 @@ public class EbolaProgramFragmentController {
                 model.addAttribute("typeOfPatient", ob);
             }
         }
-    }
-
-    private Encounter lastEncounter(EncounterService service, Patient patient, EncounterType type) {
-        List<Encounter> encounters = service.getEncounters(patient, null, null, null, null, Arrays.asList(type), null, null, null, false);
-        return mostRecent(encounters);
-    }
-
-    private Encounter mostRecent(List<Encounter> encounters) {
-        Encounter mostRecent = null;
-        if (encounters != null) {
-            for (Encounter candidate : encounters) {
-                if (mostRecent == null || OpenmrsUtil.compare(mostRecent.getEncounterDatetime(), candidate.getEncounterDatetime()) < 0) {
-                    mostRecent = candidate;
-                }
-            }
-        }
-        return mostRecent;
     }
 
 }
