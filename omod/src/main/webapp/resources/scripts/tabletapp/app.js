@@ -155,7 +155,7 @@ angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "selec
             })
             .state("patient.captureVitals", {
                 url: "/captureVitals",
-                templateUrl: "templates/vitalsForm.html",
+                templateUrl: "templates/form.html",
                 data: {
                     requiresLogin: true,
                     activeForm: true,
@@ -164,7 +164,7 @@ angular.module("tabletapp", ["ui.router", "uicommons.widget.select-drug", "selec
             })
             .state("patient.captureSymptoms", {
                 url: "/captureSymptoms",
-                templateUrl: "templates/symptomsForm.html",
+                templateUrl: "templates/form.html",
                 data: {
                     requiresLogin: true,
                     activeForm: true,
