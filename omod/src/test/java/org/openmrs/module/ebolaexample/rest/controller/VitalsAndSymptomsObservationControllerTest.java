@@ -29,9 +29,16 @@ public class VitalsAndSymptomsObservationControllerTest extends EbolaRestTestBas
         Patient patient = Context.getPatientService().getPatient(2);
 
         Date yesterday = DateUtils.addDays(new Date(), -1);
+        HashSet<Obs> obses = new HashSet<Obs>();
+        obses.add(getNumericObs(patient, yesterday));
+        createEncounter(patient, EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS, yesterday, obses);
+
         Date today = new Date();
-        createEncounter(patient, EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS, yesterday, 3);
-        createEncounter(patient, EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS, today, 2);
+        HashSet<Obs> obses1 = new HashSet<Obs>();
+        obses1.add(getNumericObs(patient, today));
+        obses1.add(getNumericObs(patient, today));
+        createEncounter(patient, EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS, today, obses1);
+
         MockHttpServletRequest request = new MockHttpServletRequest("GET", requestURI);
         request.addHeader("content-type", "application/json");
         request.addParameter("patientUuid", patient.getUuid());
@@ -49,9 +56,16 @@ public class VitalsAndSymptomsObservationControllerTest extends EbolaRestTestBas
         Patient patient = Context.getPatientService().getPatient(2);
 
         Date yesterday = DateUtils.addDays(new Date(), -1);
+        HashSet<Obs> obses = new HashSet<Obs>();
+        obses.add(getNumericObs(patient, yesterday));
+        createEncounter(patient, EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS, yesterday, obses);
+
         Date today = new Date();
-        createEncounter(patient, EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS, yesterday, 3);
-        createEncounter(patient, EbolaMetadata._Form.EBOLA_VITALS_FORM, today, 2);
+        HashSet<Obs> obses1 = new HashSet<Obs>();
+        obses1.add(getNumericObs(patient, today));
+        obses1.add(getCodedObs(patient, today));
+        createEncounter(patient, EbolaMetadata._Form.EBOLA_VITALS_FORM, today, obses1);
+
         MockHttpServletRequest request = new MockHttpServletRequest("GET", requestURI);
         request.addHeader("content-type", "application/json");
         request.addParameter("patientUuid", patient.getUuid());
@@ -60,16 +74,49 @@ public class VitalsAndSymptomsObservationControllerTest extends EbolaRestTestBas
         SimpleObject responseObject = new ObjectMapper().readValue(response.getContentAsString(), SimpleObject.class);
         ArrayList<LinkedHashMap> obs = (ArrayList<LinkedHashMap>)responseObject.get("obs");
 
-        Assert.assertEquals(3, obs.size());
+        Assert.assertEquals(1, obs.size());
     }
 
-    private void createEncounter(Patient patient, String formUuid, Date dateCreated, int obsCount) {
+    @Test
+    public void shouldGetResultForObsWithNumericAndCodedConcepts() throws Exception{
+        Patient patient = Context.getPatientService().getPatient(2);
+
+        Date today = new Date();
+        HashSet<Obs> obses1 = new HashSet<Obs>();
+        Obs numericObs = getNumericObs(patient, today);
+        obses1.add(numericObs);
+        Obs codedObs = getCodedObs(patient, today);
+        obses1.add(codedObs);
+        createEncounter(patient, EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS, today, obses1);
+
+        MockHttpServletRequest request = new MockHttpServletRequest("GET", requestURI);
+        request.addHeader("content-type", "application/json");
+        request.addParameter("patientUuid", patient.getUuid());
+        request.addParameter("formUuid", EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS);
+
+        MockHttpServletResponse response = webMethods.handle(request);
+        SimpleObject responseObject = new ObjectMapper().readValue(response.getContentAsString(), SimpleObject.class);
+        ArrayList<LinkedHashMap> obs = (ArrayList<LinkedHashMap>)responseObject.get("obs");
+
+        Assert.assertEquals(2, obs.size());
+
+        for(LinkedHashMap map : obs){
+            String concept = (String)map.get("concept");
+            if(!concept.equals(numericObs.getConcept().getUuid())){
+                Assert.assertEquals(codedObs.getValueCoded().getUuid(), map.get("value"));
+            }
+            else{
+                Assert.assertEquals(numericObs.getValueNumeric(), map.get("value"));
+            }
+        }
+    }
+
+    private void createEncounter(Patient patient, String formUuid, Date dateCreated, HashSet<Obs> obs) {
         EncounterService encounterService = Context.getEncounterService();
         Visit visit = Context.getVisitService().getActiveVisitsByPatient(patient).get(0);
         Provider provider = Context.getProviderService().getAllProviders().get(0);
         EncounterType encounterType = encounterService.getEncounterTypeByUuid(EbolaMetadata._EncounterType.EBOLA_INPATIENT_FOLLOWUP);
         EncounterRole encounterRole = MetadataUtils.existing(EncounterRole.class, EncounterRole.UNKNOWN_ENCOUNTER_ROLE_UUID);
-        Concept concept = Context.getConceptService().getConcept(5089);
         Form form = Context.getFormService().getFormByUuid(formUuid);
         Encounter encounter = new Encounter();
         encounter.setForm(form);
@@ -78,14 +125,23 @@ public class VitalsAndSymptomsObservationControllerTest extends EbolaRestTestBas
         encounter.setEncounterType(encounterType);
         encounter.setProvider(encounterRole, provider);
         encounter.setEncounterDatetime(dateCreated);
-        HashSet<Obs> obs = new HashSet<Obs>();
-        for(int i = 0; i< obsCount; i++){
-            Obs obs1 = new Obs(patient, concept, dateCreated, null);
-            obs1.setValueNumeric(1.0);
-            obs.add(obs1);
-        }
         encounter.setObs(obs);
 
         encounterService.saveEncounter(encounter);
+    }
+
+    private Obs getCodedObs(Patient patient, Date dateCreated) {
+        Concept concept = Context.getConceptService().getConcept(21);
+        Obs obs = new Obs(patient, concept, dateCreated, null);
+        Concept answer_concept = Context.getConceptService().getConcept(7);
+        obs.setValueCoded(answer_concept);
+        return obs;
+    }
+
+    private Obs getNumericObs(Patient patient, Date dateCreated) {
+        Concept concept = Context.getConceptService().getConcept(5089);
+        Obs obs = new Obs(patient, concept, dateCreated, null);
+        obs.setValueNumeric(1.0);
+        return obs;
     }
 }

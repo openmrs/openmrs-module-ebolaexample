@@ -9,6 +9,10 @@ angular.module('tabletapp')
         $scope.views = currentForm.views;
         $scope.questions = questions;
 
+        _.each($scope.questions, function(question){
+            delete question.value;
+        });
+
         var unknownProvider = ProviderResource.query({ q: "UNKNOWN", v: "default" });
 
         var activeView = undefined;
@@ -30,30 +34,45 @@ angular.module('tabletapp')
         }
 
         function setSymptomsAnswer(obs){
-
             _.each($scope.questions, function(question){
-                console.log(obs);
                 if(!!question.concept){
                     // # handle single selection and multiple selection.
                     _.each(obs, function (ob) {
                         if(ob.concept == question.concept){
-                            if(question.template == "selectOne2"){
+                            if(question.template == "selectOne2" || question.template == "selectOne"){
                                 question.value = ob.value;
-                            }else if(question.template == "selectMulti2"){
+                                console.log("S:" + question.value);
+
+                            }else if(question.template == "selectMulti2" || question.template == "selectMulti"){
                                 question.value = question.value || [];
                                 question.value.push(ob.value);
+                                console.log("M:" + question.value);
                             }
+
                         }
                     });
                 }
-                //else if(question.template == "selectMulti2"){
-                // #handle grouped questions
-                //    _.each(obs, function(ob){
-                //        if(ob.concept == concepts.whichSymptom){
-                //            _.contains()
-                //        }
-                //    })
-                //}
+                else if(question.template == "selectMulti2" || question.template == "selectMulti"){
+                //#handle grouped questions
+                    question.value = question.value || [];
+
+                    _.each(obs, function(ob){
+                    if(ob.concept == concepts.symptomConstruct){
+                        var questionValue = ob.groupMembers[0].value;
+                        if(ob.groupMembers[0].concept != concepts.whichSymptom){
+                            questionValue = ob.groupMembers[1].value;
+                        }
+
+                        var isAnswer = _.some(question.options, function (option) {
+                            return option.value == questionValue;
+                        });
+                        if(isAnswer){
+                            question.value.push(questionValue);
+                            console.log("G:" + question.value);
+                        }
+                    }
+                    })
+                }
             })
         }
 
@@ -124,6 +143,15 @@ angular.module('tabletapp')
             data.form = currentForm.form_uuid;
 
             EncounterResource.save(data).$promise.then(function() {
+                //_.each($scope.questions, function(question){
+                //    //if(question.template == "selectOne2" || question.template == "selectOne"){
+                //    //    question.value = null;
+                //    //}else if(question.template == "selectMulti" || question.template == "selectMulti2"){
+                //    //    question.value = null;
+                //    //}
+                //    delete question.value;
+                //});
+
                 $state.go("^.overview").then(function() {
                     // set this after transitioning state, because messages are cleared on $stateChangeSuccess
                     FeedbackMessages.showSuccessMessage({

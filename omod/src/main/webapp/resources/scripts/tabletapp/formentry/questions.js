@@ -28,22 +28,22 @@ angular.module('tabletapp')
                 { label: "None", value: concepts.none },
                 { label: "Unknown", value: concepts.unknown }
             ]),
-            vomiting: questionBuilder.symptomSeverity("VOMITING", "122983AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"),
+            //vomiting: questionBuilder.symptomSeverity("VOMITING", "122983AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"),
 
-            stoolFrequency: questionBuilder.simpleNumeric("STOOL FREQUENCY", "1837AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "#/24h", 0, 9),
-            mainStoolType: questionBuilder.selectOneObs("MAIN STOOL TYPE", "162654AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", [
-                    { label: "None", value: concepts.none },
-                    { label: "Formed", value: "162655AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-                    { label: "Semi-Formed", value: "162656AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-                    { label: "Liquid", value: "162657AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
-                ]),
+            //stoolFrequency: questionBuilder.simpleNumeric("STOOL FREQUENCY", "1837AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "#/24h", 0, 9),
+            //mainStoolType: questionBuilder.selectOneObs("MAIN STOOL TYPE", "162654AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", [
+            //        { label: "None", value: concepts.none },
+            //        { label: "Formed", value: "162655AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+            //        { label: "Semi-Formed", value: "162656AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+            //        { label: "Liquid", value: "162657AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
+            //    ]),
 
-            overallSymptoms: questionBuilder.selectOneObs("OVERALL SYMPTOMS", "162676AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", [
-                { label: "Same", value: "162679AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-                { label: "Worse", value: "162678AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-                { label: "Better", value: "162677AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
-            ]),
-            fatigue: questionBuilder.symptomSeverity("FATIGUE", "140501AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"),
+            //overallSymptoms: questionBuilder.selectOneObs("OVERALL SYMPTOMS", "162676AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", [
+            //    { label: "Same", value: "162679AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+            //    { label: "Worse", value: "162678AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+            //    { label: "Better", value: "162677AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
+            //]),
+            //fatigue: questionBuilder.symptomSeverity("FATIGUE", "140501AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"),
             bleeding: questionBuilder.selectMultipleObs2("Bleeding", "162668AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", [
                 { label: "Nose/Mouth", value: "160495AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
                 { label: "Vomitus", value: "162670AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
@@ -59,7 +59,7 @@ angular.module('tabletapp')
                 { label: "3 - Severe", value: "162831AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"}
             ]),
 
-            headache: questionBuilder.symptomPresentCheckbox("Headache", "139084AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"),
+            //headache: questionBuilder.symptomPresentCheckbox("Headache", "139084AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"),
             general:{
                 handler: questionHandlers.multipleSymptomsPresent,
                 template: "selectMulti2",
@@ -112,25 +112,25 @@ angular.module('tabletapp')
                 ]
             },
 
-            moreSymptoms: {
-                handler: questionHandlers.multipleSymptomsPresent,
-                template: "selectMulti",
-                label: "SYMPTOMS",
-                buttonClass: "medium long",
-                options: [
-                    { label: "Headache", value: "139084AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-                    { label: "Muscle Pain", value: "133632AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-                    { label: "Unable to Drink", value: "1983AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-                    { label: "Unable to Eat", value: "162706AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-                    { label: "Difficult to Swallow", value: "118789AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-                    { label: "Difficult to Breathe", value: "122496AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-                    { label: "Abdominal Pain", value: "151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-                    { label: "Hiccups", value: "138662AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-                    { label: "Urine Pain", value: "118771AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-                    { label: "Cough", value: "143264AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-                    { label: "Rash", value: "512AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
-                ]
-            },
+            //moreSymptoms: {
+            //    handler: questionHandlers.multipleSymptomsPresent,
+            //    template: "selectMulti",
+            //    label: "SYMPTOMS",
+            //    buttonClass: "medium long",
+            //    options: [
+            //        { label: "Headache", value: "139084AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+            //        { label: "Muscle Pain", value: "133632AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+            //        { label: "Unable to Drink", value: "1983AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+            //        { label: "Unable to Eat", value: "162706AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+            //        { label: "Difficult to Swallow", value: "118789AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+            //        { label: "Difficult to Breathe", value: "122496AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+            //        { label: "Abdominal Pain", value: "151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+            //        { label: "Hiccups", value: "138662AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+            //        { label: "Urine Pain", value: "118771AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+            //        { label: "Cough", value: "143264AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+            //        { label: "Rash", value: "512AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
+            //    ]
+            //},
 
             // TODO fluid management
             targetVolume: questionBuilder.simpleNumeric("TARGET VOLUME IN NEXT 24H", "162675AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "mL", 0, 9999)

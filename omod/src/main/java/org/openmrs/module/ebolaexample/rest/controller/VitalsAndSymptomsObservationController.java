@@ -41,12 +41,32 @@ public class VitalsAndSymptomsObservationController {
         ArrayList<SimpleObject> obsResult = new ArrayList<SimpleObject>();
 
         for(Obs obs : allObs){
-            String conceptUuid = obs.getConcept().getUuid();
-            Object conceptValue = getValue(obs);
-            obsResult.add(new SimpleObject().add("concept", conceptUuid).add("value", conceptValue));
+            if(obs.getObsGroup() != null){
+                continue;
+            }
+            if(obs.isObsGrouping()){
+                SimpleObject result = new SimpleObject();
+                result.add("concept", obs.getConcept().getUuid());
+                ArrayList<SimpleObject> group = new ArrayList<SimpleObject>();
+                for(Obs child : obs.getGroupMembers()){
+                    group.add(getObsConceptPair(child));
+                }
+                result.add("groupMembers", group);
+                obsResult.add(result);
+            }else{
+                SimpleObject pair = getObsConceptPair(obs);
+                obsResult.add(pair);
+
+            }
         }
         response.add("obs", obsResult);
         return response;
+    }
+
+    private SimpleObject getObsConceptPair(Obs obs) {
+        String conceptUuid = obs.getConcept().getUuid();
+        Object conceptValue = getValue(obs);
+        return new SimpleObject().add("concept", conceptUuid).add("value", conceptValue);
     }
 
     private Object getValue(Obs obs) {
