@@ -111,6 +111,7 @@ angular.module('tabletapp')
                     { label: "Nausea", value: "5978AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
                 ]
             },
+
             moreSymptoms: {
                 handler: questionHandlers.multipleSymptomsPresent,
                 template: "selectMulti",

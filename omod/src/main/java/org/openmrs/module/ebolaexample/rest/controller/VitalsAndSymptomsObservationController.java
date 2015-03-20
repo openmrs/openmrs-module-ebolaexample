@@ -7,15 +7,14 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.ebolaexample.EncounterUtil;
 import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
 import org.openmrs.module.webservices.rest.SimpleObject;
-import org.openmrs.module.webservices.rest.web.ConversionUtil;
 import org.openmrs.module.webservices.rest.web.RestConstants;
-import org.openmrs.module.webservices.rest.web.representation.Representation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
 
@@ -39,7 +38,39 @@ public class VitalsAndSymptomsObservationController {
 
         Encounter encounter = EncounterUtil.lastEncounter(encounterService, patient, encounterType, Arrays.asList(form));
         Set<Obs> allObs = encounter.getAllObs();
-        response.add("obs", ConversionUtil.convertToRepresentation(allObs, Representation.DEFAULT));
+        ArrayList<SimpleObject> obsResult = new ArrayList<SimpleObject>();
+
+        for(Obs obs : allObs){
+            String conceptUuid = obs.getConcept().getUuid();
+            Object conceptValue = getValue(obs);
+            obsResult.add(new SimpleObject().add("concept", conceptUuid).add("value", conceptValue));
+        }
+        response.add("obs", obsResult);
         return response;
+    }
+
+    private Object getValue(Obs obs) {
+        Concept concept = obs.getConcept();
+        ConceptDatatype datatype = concept.getDatatype();
+        if(datatype.isBoolean()){
+            return obs.getValueBoolean();
+        }
+        else if(datatype.isCoded()){
+            return obs.getValueCoded().getUuid();
+        }
+        else if(datatype.isDate()){
+            return obs.getValueDate();
+        }
+        else if(datatype.isDateTime()){
+            return obs.getValueDatetime();
+        }
+        else if(datatype.isNumeric()){
+            return obs.getValueNumeric();
+        }
+        else if(datatype.isComplex()){
+            return obs.getValueComplex();
+        }
+
+        return null;
     }
 }

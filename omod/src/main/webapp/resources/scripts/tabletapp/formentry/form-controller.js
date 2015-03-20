@@ -21,14 +21,33 @@ angular.module('tabletapp')
         function initialize() {
             activeView = $scope.views[0];
             var url = "/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/vitals-and-symptoms-obs";
+            url += "?patientUuid=" + $scope.patient.uuid;
+            url  += "&formUuid=" + currentForm.form_uuid;
 
-            $http.get(url + "?patientUuid=" + $scope.patient.uuid).success(function(response){
-                console.log('set data' + response)
+            $http.get(url).success(function(response){
+                setSymptomsAnswer(response['obs']);
             })
         }
+
+        function setSymptomsAnswer(obs){
+
+            _.each($scope.questions, function(question){
+                if(!!question.concept){
+                    _.each(obs, function (ob) {
+                        if(ob.concept == question.concept){
+                            //question.value = question.value || [];
+                            //question.value.push(ob.value);
+                            //console.log(question.concept + '/' + question.value);
+                        }
+
+                    });
+                }
+            })
+        }
+
         function getActiveViewIndex() {
             return _.indexOf($scope.views, activeView);
-        };
+        }
 
         $scope.shouldDisplay = function (view) {
             return activeView === view;
