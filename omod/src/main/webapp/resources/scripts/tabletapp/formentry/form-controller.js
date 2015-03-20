@@ -1,6 +1,6 @@
 angular.module('tabletapp')
 
-    .controller('MainController', function ($scope, $state, forms, questions, $http, $location, EncounterResource,
+    .controller('MainController', function ($scope, $state, forms, questions,concepts, $http, $location, EncounterResource,
                                             VisitResource, ProviderResource, CurrentSession, FeedbackMessages) {
         var that = this;
 
@@ -32,16 +32,28 @@ angular.module('tabletapp')
         function setSymptomsAnswer(obs){
 
             _.each($scope.questions, function(question){
+                console.log(obs);
                 if(!!question.concept){
+                    // # handle single selection and multiple selection.
                     _.each(obs, function (ob) {
                         if(ob.concept == question.concept){
-                            //question.value = question.value || [];
-                            //question.value.push(ob.value);
-                            //console.log(question.concept + '/' + question.value);
+                            if(question.template == "selectOne2"){
+                                question.value = ob.value;
+                            }else if(question.template == "selectMulti2"){
+                                question.value = question.value || [];
+                                question.value.push(ob.value);
+                            }
                         }
-
                     });
                 }
+                //else if(question.template == "selectMulti2"){
+                // #handle grouped questions
+                //    _.each(obs, function(ob){
+                //        if(ob.concept == concepts.whichSymptom){
+                //            _.contains()
+                //        }
+                //    })
+                //}
             })
         }
 
