@@ -37,30 +37,38 @@ public class VitalsAndSymptomsObservationController {
         Form form = Context.getFormService().getFormByUuid(formUuid);
 
         Encounter encounter = EncounterUtil.lastEncounter(encounterService, patient, encounterType, Arrays.asList(form));
-        Set<Obs> allObs = encounter.getAllObs();
-        ArrayList<SimpleObject> obsResult = new ArrayList<SimpleObject>();
 
-        for(Obs obs : allObs){
-            if(obs.getObsGroup() != null){
-                continue;
-            }
-            if(obs.isObsGrouping()){
-                SimpleObject result = new SimpleObject();
-                result.add("concept", obs.getConcept().getUuid());
-                ArrayList<SimpleObject> group = new ArrayList<SimpleObject>();
-                for(Obs child : obs.getGroupMembers()){
-                    group.add(getObsConceptPair(child));
-                }
-                result.add("groupMembers", group);
-                obsResult.add(result);
-            }else{
-                SimpleObject pair = getObsConceptPair(obs);
-                obsResult.add(pair);
+        ArrayList<SimpleObject> obsResult = getAllObs(encounter);
 
-            }
-        }
         response.add("obs", obsResult);
         return response;
+    }
+
+    private ArrayList<SimpleObject> getAllObs(Encounter encounter) {
+        ArrayList<SimpleObject> obsResult = new ArrayList<SimpleObject>();
+        if(encounter  != null ){
+            Set<Obs> allObs = encounter.getAllObs();
+
+            for(Obs obs : allObs){
+                if(obs.getObsGroup() != null){
+                    continue;
+                }
+                if(obs.isObsGrouping()){
+                    SimpleObject result = new SimpleObject();
+                    result.add("concept", obs.getConcept().getUuid());
+                    ArrayList<SimpleObject> group = new ArrayList<SimpleObject>();
+                    for(Obs child : obs.getGroupMembers()){
+                        group.add(getObsConceptPair(child));
+                    }
+                    result.add("groupMembers", group);
+                    obsResult.add(result);
+                }else{
+                    SimpleObject pair = getObsConceptPair(obs);
+                    obsResult.add(pair);
+                }
+            }
+        }
+        return obsResult;
     }
 
     private SimpleObject getObsConceptPair(Obs obs) {

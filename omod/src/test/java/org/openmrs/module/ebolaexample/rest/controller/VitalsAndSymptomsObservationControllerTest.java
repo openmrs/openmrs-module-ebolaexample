@@ -25,6 +25,21 @@ public class VitalsAndSymptomsObservationControllerTest extends EbolaRestTestBas
     private String requestURI = "/rest/" + RestConstants.VERSION_1 + "/ebola/vitals-and-symptoms-obs";
 
     @Test
+    public void shouldGetEmptyListIfEncounterNotExisted() throws Exception{
+        Patient patient = Context.getPatientService().getPatient(2);
+
+        MockHttpServletRequest request = new MockHttpServletRequest("GET", requestURI);
+        request.addHeader("content-type", "application/json");
+        request.addParameter("patientUuid", patient.getUuid());
+        request.addParameter("formUuid", EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS);
+
+        MockHttpServletResponse response = webMethods.handle(request);
+        SimpleObject responseObject = new ObjectMapper().readValue(response.getContentAsString(), SimpleObject.class);
+        ArrayList<LinkedHashMap> obs = (ArrayList<LinkedHashMap>)responseObject.get("obs");
+
+        Assert.assertEquals(0, obs.size());
+    }
+    @Test
     public void testGetLatest() throws Exception {
         Patient patient = Context.getPatientService().getPatient(2);
 
