@@ -1,5 +1,6 @@
 package org.openmrs.module.ebolaexample.db;
 
+import org.apache.commons.lang.time.DateUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +19,6 @@ import org.openmrs.module.ebolaexample.metadata.EbolaTestData;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -71,7 +71,7 @@ public class IvFluidOrderStatusDAOTest extends BaseModuleContextSensitiveTest {
         IvFluidOrder ivFluidOrder = prepareIvFluidOrder();
         IvFluidOrderStatus startedStatus = new IvFluidOrderStatus(ivFluidOrder, IvFluidOrderStatus.IVFluidOrderStatus.STARTED);
         startedStatus.setCreator(user);
-        Date dateCreated = addDays(new Date(), -1);
+        Date dateCreated = DateUtils.addDays(new Date(), -1);
         startedStatus.setDateCreated(dateCreated);
         dao.saveOrUpdate(startedStatus);
 
@@ -90,7 +90,7 @@ public class IvFluidOrderStatusDAOTest extends BaseModuleContextSensitiveTest {
         IvFluidOrder ivFluidOrder = prepareIvFluidOrder();
         IvFluidOrderStatus startedStatus = new IvFluidOrderStatus(ivFluidOrder, IvFluidOrderStatus.IVFluidOrderStatus.STARTED);
         startedStatus.setCreator(user);
-        Date dateCreated = addDays(new Date(), -1);
+        Date dateCreated = DateUtils.addDays(new Date(), -1);
         startedStatus.setDateCreated(dateCreated);
         dao.saveOrUpdate(startedStatus);
 
@@ -125,14 +125,6 @@ public class IvFluidOrderStatusDAOTest extends BaseModuleContextSensitiveTest {
         orderService.saveOrder(ivFluidOrder, null);
         return ivFluidOrder;
     }
-
-    public static Date addDays(Date self, int days) {
-        Calendar calendar = (Calendar)Calendar.getInstance().clone();
-        calendar.setTime(self);
-        calendar.add(6, days);
-        return calendar.getTime();
-    }
-
     private Concept getConceptByUuid(String uuid) {
         return Context.getConceptService().getConceptByUuid(uuid);
     }

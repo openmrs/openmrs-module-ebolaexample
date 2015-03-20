@@ -21,6 +21,7 @@ angular.module('tabletapp')
             },
             Symptoms: {
                 encounterType: Constants.encounterType.ebolaInpatientFollowup,
+                form_uuid: "c1d1b5b7-2d51-4f58-b8f3-7d9cb542fe4a",
                 views: [
                     createView('symptoms', 'templates/formScreens/symptoms3.html', 'SYMPTOMS', true),
                     //createView('symptoms', 'templates/formScreens/symptoms.html', 'SYMPTOMS', true),

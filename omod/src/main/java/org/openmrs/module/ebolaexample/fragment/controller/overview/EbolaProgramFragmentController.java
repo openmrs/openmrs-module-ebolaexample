@@ -38,7 +38,7 @@ public class EbolaProgramFragmentController {
 
         model.addAttribute("currentEnrollment", currentEnrollment);
         // TODO this should consider the date bounds of currentEnrollment
-        model.addAttribute("triageEncounter", EncounterUtil.lastEncounter(encounterService, patient.getPatient(), triageEncType));
+        model.addAttribute("triageEncounter", EncounterUtil.lastEncounter(encounterService, patient.getPatient(), triageEncType, null));
     }
 
     private void getObs(PatientDomainWrapper patient, ObsService obsService, FragmentModel model) {

@@ -14,6 +14,14 @@ public class DateUtil {
         return diff<1;
     }
 
+
+    public static Date addDays(Date self, int days) {
+        Calendar calendar = (Calendar)Calendar.getInstance().clone();
+        calendar.setTime(self);
+        calendar.add(6, days);
+        return calendar.getTime();
+    }
+
     private static long differenceInDays(Date date1, Date date2){
         long diff = date2.getTime() - date1.getTime();
         long diffDays = diff / (24 * 60 * 60 * 1000);

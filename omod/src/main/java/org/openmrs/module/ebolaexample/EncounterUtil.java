@@ -2,6 +2,7 @@ package org.openmrs.module.ebolaexample;
 
 import org.openmrs.Encounter;
 import org.openmrs.EncounterType;
+import org.openmrs.Form;
 import org.openmrs.Patient;
 import org.openmrs.api.EncounterService;
 import org.openmrs.util.OpenmrsUtil;
@@ -11,8 +12,8 @@ import java.util.List;
 
 public class EncounterUtil {
 
-    public static Encounter lastEncounter(EncounterService service, Patient patient, EncounterType type) {
-        List<Encounter> encounters = service.getEncounters(patient, null, null, null, null, Arrays.asList(type), null, null, null, false);
+    public static Encounter lastEncounter(EncounterService service, Patient patient, EncounterType type, List<Form> enteredViaForms) {
+        List<Encounter> encounters = service.getEncounters(patient, null, null, null, enteredViaForms, Arrays.asList(type), null, null, null, false);
         return mostRecent(encounters);
     }
 

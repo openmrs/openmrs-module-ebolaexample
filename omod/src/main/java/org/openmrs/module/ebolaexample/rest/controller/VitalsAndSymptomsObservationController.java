@@ -1,10 +1,7 @@
 package org.openmrs.module.ebolaexample.rest.controller;
 
 
-import org.openmrs.Encounter;
-import org.openmrs.EncounterType;
-import org.openmrs.Obs;
-import org.openmrs.Patient;
+import org.openmrs.*;
 import org.openmrs.api.EncounterService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.ebolaexample.EncounterUtil;
@@ -19,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Arrays;
 import java.util.Set;
 
 @Controller
@@ -27,12 +25,19 @@ public class VitalsAndSymptomsObservationController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET)
-    public SimpleObject getLatest(@RequestParam String patientUuid){
+    public SimpleObject getLatest(@RequestParam String patientUuid, @RequestParam String formUuid){
         SimpleObject response = new SimpleObject();
         EncounterService encounterService = Context.getEncounterService();
         Patient patient = Context.getPatientService().getPatientByUuid(patientUuid);
         EncounterType encounterType = encounterService.getEncounterTypeByUuid(EbolaMetadata._EncounterType.EBOLA_INPATIENT_FOLLOWUP);
-        Encounter encounter = EncounterUtil.lastEncounter(encounterService, patient, encounterType);
+
+        if(!formUuid.equals(EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS) &&
+                !formUuid.equals(EbolaMetadata._Form.EBOLA_VITALS_FORM)){
+            throw new UnsupportedOperationException("The form uuid can be only vital or symptoms form uuid");
+        }
+        Form form = Context.getFormService().getFormByUuid(formUuid);
+
+        Encounter encounter = EncounterUtil.lastEncounter(encounterService, patient, encounterType, Arrays.asList(form));
         Set<Obs> allObs = encounter.getAllObs();
         response.add("obs", ConversionUtil.convertToRepresentation(allObs, Representation.DEFAULT));
         return response;

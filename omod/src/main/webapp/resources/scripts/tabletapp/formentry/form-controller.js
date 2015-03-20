@@ -20,6 +20,11 @@ angular.module('tabletapp')
 
         function initialize() {
             activeView = $scope.views[0];
+            var url = "/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/vitals-and-symptoms-obs";
+
+            $http.get(url + "?patientUuid=" + $scope.patient.uuid).success(function(response){
+                console.log('set data' + response)
+            })
         }
         function getActiveViewIndex() {
             return _.indexOf($scope.views, activeView);
@@ -85,6 +90,7 @@ angular.module('tabletapp')
             data.provider = unknownProvider.results[0].person.uuid;
 
             data.encounterType = currentForm.encounterType.uuid;
+            data.form = currentForm.form_uuid;
 
             EncounterResource.save(data).$promise.then(function() {
                 $state.go("^.overview").then(function() {

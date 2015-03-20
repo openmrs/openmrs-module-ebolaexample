@@ -73,6 +73,7 @@ public class EbolaMetadata extends AbstractMetadataBundle {
         public static final String EBOLA_TRIAGE_FORM = "787608c8-512d-44fe-b793-fe54b660987a";
         public static final String EBOLA_ASSESSMENT_FORM = "230af74f-f1b5-4e43-ae6a-27208ed46540";
         public static final String EBOLA_DISCHARGE_FORM = "2541a157-fd45-41e0-ad2b-f6a24c65463a";
+        public static final String EBOLA_VITALS_FORM = "a000cb34-9ec1-4344-a1c8-f692232f6edd";
     }
 
 	public static class _VisitAttributeType {
