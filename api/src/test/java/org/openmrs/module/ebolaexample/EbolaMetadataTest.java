@@ -1,18 +1,13 @@
 package org.openmrs.module.ebolaexample;
 
 import org.junit.Before;
-import org.openmrs.Concept;
-import org.openmrs.ConceptName;
-import org.openmrs.GlobalProperty;
-import org.openmrs.LocationTag;
-import org.openmrs.VisitType;
-import org.openmrs.api.AdministrationService;
-import org.openmrs.api.ConceptService;
-import org.openmrs.api.EncounterService;
-import org.openmrs.api.LocationService;
-import org.openmrs.api.VisitService;
+import org.openmrs.*;
+import org.openmrs.api.*;
 import org.openmrs.module.appframework.AppFrameworkConstants;
+import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
 import org.openmrs.module.emrapi.EmrApiConstants;
+import org.openmrs.module.metadatadeploy.MetadataUtils;
+import org.openmrs.module.metadatasharing.api.MetadataSharingService;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -38,6 +33,9 @@ public abstract class EbolaMetadataTest extends BaseModuleContextSensitiveTest {
     @Autowired
     EncounterService encounterService;
 
+    @Autowired
+    PersonService personService;
+
     @Autowired @Qualifier("adminService")
     AdministrationService administrationService;
 
@@ -47,6 +45,15 @@ public abstract class EbolaMetadataTest extends BaseModuleContextSensitiveTest {
         createExpectedLocationTags();
         createExpectedVisitTypes();
         createExpectedEncounterTypes();
+        createExpectedPersonAttributeTypes();
+    }
+
+    private void createExpectedPersonAttributeTypes() {
+        PersonAttributeType phoneAttributeType = new PersonAttributeType();
+        phoneAttributeType.setUuid(EbolaMetadata._PersonAttributeType.TELEPHONE_NUMBER);
+        phoneAttributeType.setName("Telephone Number");
+        phoneAttributeType.setDescription("The telephone number for the person");
+        personService.savePersonAttributeType(phoneAttributeType);
     }
 
     private void createExpectedLocationTags() {
@@ -59,13 +66,34 @@ public abstract class EbolaMetadataTest extends BaseModuleContextSensitiveTest {
     }
 
     private void createExpectedCielConcepts() {
-        Concept concept = new Concept();
-        concept.setUuid("162637AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        concept.addName(new ConceptName("Ebola Program", Locale.ENGLISH));
-        concept.setDatatype(conceptService.getConceptDatatypeByName("N/A"));
-        concept.setConceptClass(conceptService.getConceptClassByName("Misc"));
+        Concept ebolaProgram = new Concept();
+        ebolaProgram.setUuid(EbolaMetadata._Concept.EBOLA_PROGRAM);
+        ebolaProgram.addName(new ConceptName("Ebola Program", Locale.ENGLISH));
+        ebolaProgram.setDatatype(conceptService.getConceptDatatypeByName("N/A"));
+        ebolaProgram.setConceptClass(conceptService.getConceptClassByName("Misc"));
 
-        conceptService.saveConcept(concept);
+        Concept weightInKg = new Concept();
+        weightInKg.setUuid(EbolaMetadata._Concept.WEIGHT_IN_KG);
+        weightInKg.addName(new ConceptName("Weight In Kg", Locale.ENGLISH));
+        weightInKg.setDatatype(conceptService.getConceptDatatypeByName("Numeric"));
+        weightInKg.setConceptClass(conceptService.getConceptClassByName("Misc"));
+
+        Concept typeOfPatient = new Concept();
+        typeOfPatient.setUuid(EbolaMetadata._Concept.TYPE_OF_PATIENT);
+        typeOfPatient.addName(new ConceptName("Type of Patient", Locale.ENGLISH));
+        typeOfPatient.setDatatype(conceptService.getConceptDatatypeByName("Coded"));
+        typeOfPatient.setConceptClass(conceptService.getConceptClassByName("Misc"));
+
+        Concept ebolaStage = new Concept();
+        ebolaStage.setUuid(EbolaMetadata._Concept.EBOLA_STAGE);
+        ebolaStage.addName(new ConceptName("Ebola Stage", Locale.ENGLISH));
+        ebolaStage.setDatatype(conceptService.getConceptDatatypeByName("Coded"));
+        ebolaStage.setConceptClass(conceptService.getConceptClassByName("Misc"));
+
+        conceptService.saveConcept(ebolaStage);
+        conceptService.saveConcept(ebolaProgram);
+        conceptService.saveConcept(weightInKg);
+        conceptService.saveConcept(typeOfPatient);
     }
 
     private void createExpectedVisitTypes() {
@@ -91,5 +119,6 @@ public abstract class EbolaMetadataTest extends BaseModuleContextSensitiveTest {
 
         encounterService.saveEncounterType(encounterType("Transfer", "Transfer within hospital", TRANSFER_ENCOUNTER_TYPE_UUID));
         administrationService.saveGlobalProperty(new GlobalProperty(EmrApiConstants.GP_TRANSFER_WITHIN_HOSPITAL_ENCOUNTER_TYPE, TRANSFER_ENCOUNTER_TYPE_UUID));
+
     }
 }

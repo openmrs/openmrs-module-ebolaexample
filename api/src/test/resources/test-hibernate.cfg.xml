@@ -7,5 +7,6 @@
     <session-factory>
         <mapping resource="AppFramework.hbm.xml"/>
         <mapping resource="hibernate/IvFluidOrder.hbm.xml"/>
+        <mapping resource="ReportDesign.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>
