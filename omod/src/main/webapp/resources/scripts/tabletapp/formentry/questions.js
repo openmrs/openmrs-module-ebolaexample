@@ -48,10 +48,10 @@ angular.module('tabletapp')
                 { label: "Nose/Mouth", value: "160495AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
                 { label: "Vomitus", value: "162670AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
                 { label: "Cough", value: "162669AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-                { label: "IV Site(WIP)", value: "" },
+                //{ label: "IV Site(WIP)", value: "" },
                 { label: "Stool", value: "162671AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-                { label: "Vagina", value: "162673AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-                { label: "Urine(WIP)", value: "" }
+                { label: "Vagina", value: "162673AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
+                //{ label: "Urine(WIP)", value: "" }
             ]),
             ebolaStage: questionBuilder.selectOneObs2("Ebola Stage", "162834AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",[
                 { label: "1 - Early/Dry", value: "162829AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"},
