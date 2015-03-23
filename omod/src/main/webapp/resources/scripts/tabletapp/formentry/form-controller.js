@@ -4,7 +4,8 @@ angular.module('tabletapp')
                                             VisitResource, ProviderResource, CurrentSession, FeedbackMessages) {
         var that = this;
 
-        var currentForm = forms[$state.current.data.form];
+        $scope.formName = $state.current.data.form;
+        var currentForm = forms[$scope.formName];
 
         $scope.views = currentForm.views;
         $scope.questions = questions;
@@ -155,7 +156,7 @@ angular.module('tabletapp')
                 $state.go("^.overview").then(function() {
                     // set this after transitioning state, because messages are cleared on $stateChangeSuccess
                     FeedbackMessages.showSuccessMessage({
-                        display: "Saved vitals for " + $scope.patient.display
+                        display: "Saved " + $scope.formName.toLowerCase() + " for " + $scope.patient.display
                     });
                 });
             });
