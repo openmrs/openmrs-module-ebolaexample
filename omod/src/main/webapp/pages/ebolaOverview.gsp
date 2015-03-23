@@ -2,6 +2,13 @@
     ui.includeJavascript("uicommons", "handlebars/handlebars.min.js")
     ui.includeCss("ebolaexample", "overview/ebolaOverview.css")
     ui.decorateWith("appui", "standardEmrPage")
+
+    ui.includeJavascript("uicommons", "angular.min.js")
+    ui.includeJavascript("uicommons", "angular-app.js")
+    ui.includeJavascript("uicommons", "angular-resource.min.js")
+    ui.includeJavascript("uicommons", "angular-common.js")
+
+    ui.includeJavascript("ebolaexample", "tabletapp/feature-toggles.js")
 %>
 <script type="text/template" id="last-encounter-template">
 <!-- TO DO: do not make this template more complex! We need to provide a better representation, e.g. that knows about symptoms  -->
@@ -73,6 +80,12 @@ ${ui.includeFragment("ebolaexample", "overview/patientHeader", [patient: patient
 
         <div class="long-info-container column">
             ${ui.includeFragment("ebolaexample", "overview/inpatientLocation", [patient: patient, activeVisit: activeVisit])}
+        </div>
+
+        <div class="clear"></div>
+
+        <div class="long-info-container column" >
+            ${ui.includeFragment("ebolaexample", "overview/symptoms", [patient: patient, activeVisit: activeVisit])}
         </div>
 
         <div class="clear"></div>

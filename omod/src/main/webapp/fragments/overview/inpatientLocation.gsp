@@ -1,10 +1,6 @@
 <%
     def EmrApiConstants = context.loadClass("org.openmrs.module.emrapi.EmrApiConstants")
 
-    ui.includeJavascript("uicommons", "angular.min.js")
-    ui.includeJavascript("uicommons", "angular-app.js")
-    ui.includeJavascript("uicommons", "angular-resource.min.js")
-    ui.includeJavascript("uicommons", "angular-common.js")
     ui.includeJavascript("uicommons", "angular-ui/ui-bootstrap-tpls-0.11.2.js")
     ui.includeJavascript("uicommons", "services/locationService.js")
 

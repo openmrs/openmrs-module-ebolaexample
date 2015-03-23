@@ -1,8 +1,9 @@
 angular.module("feature-toggles", [])
-    .factory("FeatureToggles", ["$http", "CurrentSession", function ($http) {
+    .factory("FeatureToggles", ["$http", function ($http) {
         var toggleStates = [
             {name:'enterVitals', enabled:false},
             {name:'enterSymptoms', enabled:false},
+            {name:'symptomsSummaryDesktop', enabled:false},
             {name:'ivFluids', enabled:true}
         ];
         var url = "/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/feature-toggle";
