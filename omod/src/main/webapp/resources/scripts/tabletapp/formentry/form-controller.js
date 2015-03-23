@@ -19,7 +19,7 @@ angular.module('tabletapp')
         var activeView = undefined;
 
         var activeVisits = VisitResource.query({
-            patient: $scope.patient.uuid,
+            patient: $scope.patientUuid,
             includeInactive: false
         });
 
@@ -127,7 +127,7 @@ angular.module('tabletapp')
                     console.log("no handler for question: " + question);
                 }
             });
-            data.patient = $scope.patient.uuid;
+            data.patient = $scope.patientUuid;
             if (activeVisits.results.length == 0) {
                 window.alert("Error: patient doesn't have an active visit");
                 return;
