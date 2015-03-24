@@ -73,7 +73,7 @@ angular.module('tabletapp')
                     { label: "Dehydration", value: "142630AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
                     { label: "Rash", value: "512AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
                     { label: "Pallor", value: "5245AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-                    { label: "Other", value: "5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
+                    //{ label: "Other", value: "5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
                 ]
             },
             respiratory:{
