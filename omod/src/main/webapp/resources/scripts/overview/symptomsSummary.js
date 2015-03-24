@@ -22,6 +22,10 @@ angular.module('symptomsSummary', ['feature-toggles', 'tabletapp', 'filters'])
                 url  += "&formUuid=" + "c1d1b5b7-2d51-4f58-b8f3-7d9cb542fe4a";
                 if(!!top){
                     url  += "&top=" + top;
+                    $scope.showAll = false;
+                }else{
+                    $scope.showAll = true;
+
                 }
                 $http.get(url).success(function(response) {
                     $scope.symptomsEncounters = response["encounters"];
