@@ -68,7 +68,7 @@ public class DataExportTest extends EbolaMetadataTest {
 
         PatientDataSetDefinition dischargeDataSetDefinition = dataExport.buildDischargeDataSetDefinition();
         SimpleDataSet dataSet = (SimpleDataSet) dataSetDefinitionService.evaluate(dischargeDataSetDefinition, new EvaluationContext());
-        DataSetRow row = dataSet.getRows().get(0);
+        DataSetRow row = findRowForDischarge(dataSet.getRows());
 
         assertThat(row.getColumnValue("datedischarged").toString(), is(NOW.toString()));
     }
@@ -82,7 +82,7 @@ public class DataExportTest extends EbolaMetadataTest {
 
         DataSetDefinition registrationDataSetDefinition = dataExport.buildRegistrationDataSetDefinition();
         SimpleDataSet dataSet = (SimpleDataSet) dataSetDefinitionService.evaluate(registrationDataSetDefinition, new EvaluationContext());
-        DataSetRow patientRow = findPatientRow(dataSet.getRows(), GIVEN_NAME, FAMILY_NAME);
+        DataSetRow patientRow = findRowForRegistration(dataSet.getRows(), GIVEN_NAME, FAMILY_NAME);
 
 
         assertThat(convertTimeStampToDateString((Timestamp) patientRow.getColumnValue("registrationdate")), is(NOW.toString()));
@@ -158,7 +158,16 @@ public class DataExportTest extends EbolaMetadataTest {
         return new java.util.Date(milliseconds).toString();
     }
 
-    private DataSetRow findPatientRow(DataSetRowList rows, String givenName, String familyName) {
+    private DataSetRow findRowForDischarge(DataSetRowList rows) {
+        for (DataSetRow row : rows) {
+            if (row.getColumnValue("dateDischarged") != null) {
+                return row;
+            }
+        }
+        return null;
+    }
+
+    private DataSetRow findRowForRegistration(DataSetRowList rows, String givenName, String familyName) {
         for (DataSetRow row : rows) {
             if (row.getColumnValue("givenname").equals(givenName) && row.getColumnValue("familyname").equals(familyName)) {
                 return row;
