@@ -15,21 +15,21 @@
 ng-init="init({patientUuid:'${patient.patient.uuid}'})">
 
     <div class="info-header" >
-        <i class="icon-hospital"></i>
+        <i class="icon-medkit"></i>
 
         <h3>Symptoms</h3>
-        <span style="margin-left: 100px">
+        <span>
             <a href="" ng-click="getSymptomsEncounters(3)" ng-class="{'disabled': !showAll}">Show last 3 observations</a>
             <a href="" ng-click="getSymptomsEncounters()" ng-class="{'disabled': showAll}">View All</a>
         </span>
-
+        ${ui.includeFragment("ebolaexample", "overview/actions", [patient: patient, currentAssignment:wardAndBed])}
     </div>
 
     <div class="info-body">
-        <table>
-            <tr  ng-repeat="encounter in symptomsEncounters">
-                <td >{{encounter.dateCreated | simpleDate }}</td>
-                <td >
+        <table >
+            <tr ng-repeat="encounter in symptomsEncounters">
+                <td width="100px" style="border: none">{{encounter.dateCreated | simpleDate }}</td>
+                <td style="border:none">
                     <span ng-repeat="row in getObsDesc(encounter.obs)">
                         {{row}}
                     </span>

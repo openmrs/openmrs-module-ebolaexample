@@ -54,8 +54,10 @@
     <div class="info-header">
         <i class="icon-medkit"></i>
 
-        <h3>Med Administration</h3>
-        <a style="float: right" href="${ ui.pageLink("ebolaexample", "doseManagement", [ patient: patient.patient.uuid]) }">Modify Data</a>
+        <h3>Medication Administration</h3>
+        <a href="${ ui.pageLink("ebolaexample", "doseManagement", [ patient: patient.patient.uuid]) }">Modify Data</a>
+        ${ui.includeFragment("ebolaexample", "overview/actions", [patient: patient, currentAssignment:wardAndBed])}
+
     </div>
 
     <div class="info-body">

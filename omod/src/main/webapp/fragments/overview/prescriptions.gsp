@@ -23,11 +23,20 @@
             Back to Summary
         </a>
         <% } else { %>
-        <a class="right" href="${ui.pageLink("ebolaexample", "allPrescriptions", [patient: patient.patient.id])}">
+        <a href="${ui.pageLink("ebolaexample", "allPrescriptions", [patient: patient.patient.id])}">
             View All
         </a>
         <% } %>
+        <div style="margin-top:1px; margin-right: 10px; float: right;" ng-app="inpatientLocation" ng-controller="InpatientLocationCtrl"
+             ng-init="init({patientUuid:'${patient.patient.uuid}',
+            currentWard: <% if (currentWard) { %>{display:'${currentWard}', uuid:'${currentWard.uuid}'}<%
+                 } else { %>null<% } %>,
+            currentBed: <% if (currentBed) { %>{display:'${currentBed}', uuid:'${currentBed.uuid}'}<% } else { %>null<%
+                 } %>
+            })">
+            ${ui.includeFragment("ebolaexample", "overview/actions", [patient: patient, currentAssignment:wardAndBed])}
 
+        </div>
     </div>
 
     <div class="info-body">
@@ -88,21 +97,7 @@
         ${ui.message("coreapps.none")}
         <% } %>
 
-        <div style="margin-top:1px; margin-right: 10px; float: right;" ng-app="inpatientLocation" ng-controller="InpatientLocationCtrl"
-             ng-init="init({patientUuid:'${patient.patient.uuid}',
-            currentWard: <% if (currentWard) { %>{display:'${currentWard}', uuid:'${currentWard.uuid}'}<%
-                 } else { %>null<% } %>,
-            currentBed: <% if (currentBed) { %>{display:'${currentBed}', uuid:'${currentBed.uuid}'}<% } else { %>null<%
-                 } %>
-            })">
-            <% if (currentWard) { %>
-                <a class="button"
-                   href="/${ui.contextPath()}/ms/uiframework/resource/ebolaexample/html/tabletapp/index.html#/patients/${
-                           patient.patient.uuid}/overview2/${patient.patient.uuid}/${currentWard.uuid}">
-                    <b>Actions</b>
-                </a>
-            <% } %>
-        </div>
+
 
         <div style="clear:both;"></div>
     </div>
