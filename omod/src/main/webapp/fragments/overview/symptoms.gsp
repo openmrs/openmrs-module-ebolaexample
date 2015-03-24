@@ -40,6 +40,7 @@ ng-init="init({patientUuid:'${patient.patient.uuid}'})">
         <div style="clear: both;"></div>
 
     </div>
+    <br/>
 
 </div>
 

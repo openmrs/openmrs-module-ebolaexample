@@ -32,6 +32,7 @@ public class VitalsAndSymptomsObservationControllerTest extends EbolaRestTestBas
         request.addHeader("content-type", "application/json");
         request.addParameter("patientUuid", patient.getUuid());
         request.addParameter("formUuid", EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS);
+        request.addParameter("top", "3");
 
         MockHttpServletResponse response = webMethods.handle(request);
         SimpleObject responseObject = new ObjectMapper().readValue(response.getContentAsString(), SimpleObject.class);
@@ -59,6 +60,8 @@ public class VitalsAndSymptomsObservationControllerTest extends EbolaRestTestBas
         request.addHeader("content-type", "application/json");
         request.addParameter("patientUuid", patient.getUuid());
         request.addParameter("formUuid", EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS);
+        request.addParameter("top", "3");
+
         MockHttpServletResponse response = webMethods.handle(request);
         SimpleObject responseObject = new ObjectMapper().readValue(response.getContentAsString(), SimpleObject.class);
         ArrayList<LinkedHashMap> encounters = (ArrayList<LinkedHashMap>)responseObject.get("encounters");

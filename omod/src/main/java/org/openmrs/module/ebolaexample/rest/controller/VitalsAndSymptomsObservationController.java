@@ -36,7 +36,7 @@ public class VitalsAndSymptomsObservationController {
         ArrayList<SimpleObject> encounters = new ArrayList<SimpleObject>();
         List<Encounter> allEncounters = encounterService.getEncounters(patient, null, null, null, Arrays.asList(form), Arrays.asList(encounterType), null, null, null, false);
         Collections.reverse(allEncounters);
-        if(top!=0){
+        if(top!=0 && allEncounters.size() > top){
             allEncounters = allEncounters.subList(0, top);
         }
         for(Encounter encounter: allEncounters){
