@@ -27,49 +27,6 @@ angular.module('tabletapp')
             activeView = $scope.views[0];
         }
 
-        function setSymptomsAnswer(obs){
-            _.each($scope.questions, function(question){
-                if(!!question.concept){
-                    // # handle single selection and multiple selection.
-                    _.each(obs, function (ob) {
-                        if(ob.concept == question.concept){
-                            if(question.template == "selectOne2" || question.template == "selectOne"){
-                                question.value = ob.value;
-                                console.log("S:" + question.value);
-
-                            }else if(question.template == "selectMulti2" || question.template == "selectMulti"){
-                                question.value = question.value || [];
-                                question.value.push(ob.value);
-                                console.log("M:" + question.value);
-                            }
-
-                        }
-                    });
-                }
-                else if(question.template == "selectMulti2" || question.template == "selectMulti"){
-                //#handle grouped questions
-                    question.value = question.value || [];
-
-                    _.each(obs, function(ob){
-                    if(ob.concept == concepts.symptomConstruct){
-                        var questionValue = ob.groupMembers[0].value;
-                        if(ob.groupMembers[0].concept != concepts.whichSymptom){
-                            questionValue = ob.groupMembers[1].value;
-                        }
-
-                        var isAnswer = _.some(question.options, function (option) {
-                            return option.value == questionValue;
-                        });
-                        if(isAnswer){
-                            question.value.push(questionValue);
-                            console.log("G:" + question.value);
-                        }
-                    }
-                    })
-                }
-            })
-        }
-
         function getActiveViewIndex() {
             return _.indexOf($scope.views, activeView);
         }

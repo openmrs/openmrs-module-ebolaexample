@@ -82,6 +82,14 @@ angular.module('filters', ['constants'])
             return output;
         }
     })
+    .filter('simpleDate', function(dateFilter){
+        return function(date){
+            if(!date){
+                return "";
+            }
+            return dateFilter(new Date(date), "d MMM H:mm");
+        }
+    })
 
     .filter('ivfliuidStatus', function(dateFilter){
         return function(ivfluidStatus){
