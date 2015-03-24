@@ -1,6 +1,7 @@
 package org.openmrs.module.ebolaexample.reporting;
 
 import org.openmrs.*;
+import org.openmrs.api.context.Context;
 import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
 import org.openmrs.module.ebolaexample.metadata.KerryTownMetadata;
 import org.openmrs.module.metadatadeploy.MetadataUtils;
@@ -10,12 +11,15 @@ import org.openmrs.module.reporting.data.converter.BirthdateConverter;
 import org.openmrs.module.reporting.data.converter.ObsValueConverter;
 import org.openmrs.module.reporting.data.converter.PropertyConverter;
 import org.openmrs.module.reporting.data.patient.definition.PatientIdentifierDataDefinition;
+import org.openmrs.module.reporting.data.patient.definition.ProgramEnrollmentsForPatientDataDefinition;
 import org.openmrs.module.reporting.data.patient.definition.SqlPatientDataDefinition;
 import org.openmrs.module.reporting.data.person.definition.*;
 import org.openmrs.module.reporting.dataset.definition.DataSetDefinition;
 import org.openmrs.module.reporting.dataset.definition.PatientDataSetDefinition;
-import org.openmrs.module.reporting.dataset.definition.SqlDataSetDefinition;
+import org.openmrs.module.reporting.evaluation.parameter.Parameter;
 import org.openmrs.module.reporting.report.definition.ReportDefinition;
+
+import java.util.Date;
 
 public class DataExport {
 
@@ -45,6 +49,23 @@ public class DataExport {
         addTypeOfPatient(dsd, registrationEncounterType);
 
         addEbolaStage(dsd, registrationEncounterType);
+
+        return dsd;
+    }
+
+    public PatientDataSetDefinition buildDischargeDataSetDefinition() {
+        PatientDataSetDefinition dsd = new PatientDataSetDefinition();
+
+        ProgramEnrollmentsForPatientDataDefinition programEnrollmentsDefinition = new ProgramEnrollmentsForPatientDataDefinition();
+        Program program = Context.getProgramWorkflowService().getProgram(1);
+
+        programEnrollmentsDefinition.setProgram(program);
+        programEnrollmentsDefinition.setWhichEnrollment(TimeQualifier.FIRST);
+        programEnrollmentsDefinition.addParameter(new Parameter("datedischarged", "datedischarged", Date.class));
+        programEnrollmentsDefinition.addParameter(new Parameter("outcome", "outcome", Object.class));
+
+        dsd.addColumn("datedischarged", programEnrollmentsDefinition, "", new PropertyConverter(PatientProgram.class, "dateCompleted"));
+        dsd.addColumn("outcome", programEnrollmentsDefinition, "", new PropertyConverter(PatientProgram.class, "outcome"));
 
         return dsd;
     }
@@ -119,7 +140,9 @@ public class DataExport {
 
     public ReportDefinition buildFullDataExport() {
         ReportDefinition reportDefinition = new ReportDefinition();
-        reportDefinition.addDataSetDefinition("patient", buildRegistrationDataSetDefinition(), null);
+        reportDefinition.addDataSetDefinition("patientregistration", buildRegistrationDataSetDefinition(), null);
+        reportDefinition.addDataSetDefinition("patientdischarge", buildDischargeDataSetDefinition(), null);
+
         return reportDefinition;
     }
 }
