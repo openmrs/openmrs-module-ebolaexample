@@ -35,7 +35,7 @@ angular.module('symptomsSummary', ['feature-toggles', 'tabletapp', 'filters'])
                 var answers = SymptomAnswerBuilder.getAnswers(obs);
                 var row1 = answers.general.concat(answers.pain, answers.respiratory);
                 var row2 = answers.GI.concat(answers.bleeding, answers.ebolaStage);
-                return {row1:row1.toString(), row2:row2.toString()};
+                return {row1:row1.join(', '), row2:row2.join(', ')};
             };
         }])
 
