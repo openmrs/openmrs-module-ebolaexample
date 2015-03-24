@@ -25,13 +25,6 @@ angular.module('tabletapp')
 
         function initialize() {
             activeView = $scope.views[0];
-            //var url = "/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/vitals-and-symptoms-obs";
-            //url += "?patientUuid=" + $scope.patient.uuid;
-            //url  += "&formUuid=" + currentForm.form_uuid;
-            //
-            //$http.get(url).success(function(response){
-            //    setSymptomsAnswer(response['obs']);
-            //})
         }
 
         function setSymptomsAnswer(obs){

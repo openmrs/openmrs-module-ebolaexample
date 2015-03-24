@@ -4,7 +4,6 @@ package org.openmrs.module.ebolaexample.rest.controller;
 import org.openmrs.*;
 import org.openmrs.api.EncounterService;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.ebolaexample.EncounterUtil;
 import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
 import org.openmrs.module.webservices.rest.SimpleObject;
 import org.openmrs.module.webservices.rest.web.RestConstants;
@@ -14,17 +13,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Set;
+import java.util.*;
 
 @Controller
-@RequestMapping("/rest/" + RestConstants.VERSION_1 + "/ebola/vitals-and-symptoms-obs")
+@RequestMapping("/rest/" + RestConstants.VERSION_1 + "/ebola/encounter/vitals-and-symptoms")
 public class VitalsAndSymptomsObservationController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET)
-    public SimpleObject getLatest(@RequestParam String patientUuid, @RequestParam String formUuid){
+    public SimpleObject getAll(@RequestParam String patientUuid, @RequestParam String formUuid, @RequestParam(required = false, defaultValue = "0") int top){
         SimpleObject response = new SimpleObject();
         EncounterService encounterService = Context.getEncounterService();
         Patient patient = Context.getPatientService().getPatientByUuid(patientUuid);
@@ -36,11 +33,22 @@ public class VitalsAndSymptomsObservationController {
         }
         Form form = Context.getFormService().getFormByUuid(formUuid);
 
-        Encounter encounter = EncounterUtil.lastEncounter(encounterService, patient, encounterType, Arrays.asList(form));
+        ArrayList<SimpleObject> encounters = new ArrayList<SimpleObject>();
+        List<Encounter> allEncounters = encounterService.getEncounters(patient, null, null, null, Arrays.asList(form), Arrays.asList(encounterType), null, null, null, false);
+        Collections.reverse(allEncounters);
+        if(top!=0){
+            allEncounters = allEncounters.subList(0, top);
+        }
+        for(Encounter encounter: allEncounters){
+            ArrayList<SimpleObject> obsResult = getAllObs(encounter);
+            SimpleObject encounterDTO = new SimpleObject()
+                    .add("uuid", encounter.getUuid())
+                    .add("dateCreated", encounter.getEncounterDatetime())
+                    .add("obs", obsResult);
+            encounters.add(encounterDTO);
+        }
 
-        ArrayList<SimpleObject> obsResult = getAllObs(encounter);
-
-        response.add("obs", obsResult);
+        response.add("encounters", encounters);
         return response;
     }
 

@@ -22,7 +22,7 @@ import java.util.LinkedHashMap;
 
 public class VitalsAndSymptomsObservationControllerTest extends EbolaRestTestBase {
 
-    private String requestURI = "/rest/" + RestConstants.VERSION_1 + "/ebola/vitals-and-symptoms-obs";
+    private String requestURI = "/rest/" + RestConstants.VERSION_1 + "/ebola/encounter/vitals-and-symptoms";
 
     @Test
     public void shouldGetEmptyListIfEncounterNotExisted() throws Exception{
@@ -35,35 +35,9 @@ public class VitalsAndSymptomsObservationControllerTest extends EbolaRestTestBas
 
         MockHttpServletResponse response = webMethods.handle(request);
         SimpleObject responseObject = new ObjectMapper().readValue(response.getContentAsString(), SimpleObject.class);
-        ArrayList<LinkedHashMap> obs = (ArrayList<LinkedHashMap>)responseObject.get("obs");
+        ArrayList<LinkedHashMap> encounters = (ArrayList<LinkedHashMap>)responseObject.get("encounters");
 
-        Assert.assertEquals(0, obs.size());
-    }
-    @Test
-    public void testGetLatest() throws Exception {
-        Patient patient = Context.getPatientService().getPatient(2);
-
-        Date yesterday = DateUtils.addDays(new Date(), -1);
-        HashSet<Obs> obses = new HashSet<Obs>();
-        obses.add(getNumericObs(patient, yesterday));
-        createEncounter(patient, EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS, yesterday, obses);
-
-        Date today = new Date();
-        HashSet<Obs> obses1 = new HashSet<Obs>();
-        obses1.add(getNumericObs(patient, today));
-        obses1.add(getNumericObs(patient, today));
-        createEncounter(patient, EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS, today, obses1);
-
-        MockHttpServletRequest request = new MockHttpServletRequest("GET", requestURI);
-        request.addHeader("content-type", "application/json");
-        request.addParameter("patientUuid", patient.getUuid());
-        request.addParameter("formUuid", EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS);
-
-        MockHttpServletResponse response = webMethods.handle(request);
-        SimpleObject responseObject = new ObjectMapper().readValue(response.getContentAsString(), SimpleObject.class);
-        ArrayList<LinkedHashMap> obs = (ArrayList<LinkedHashMap>)responseObject.get("obs");
-
-        Assert.assertEquals(2, obs.size());
+        Assert.assertEquals(0, encounters.size());
     }
 
     @Test
@@ -87,9 +61,9 @@ public class VitalsAndSymptomsObservationControllerTest extends EbolaRestTestBas
         request.addParameter("formUuid", EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS);
         MockHttpServletResponse response = webMethods.handle(request);
         SimpleObject responseObject = new ObjectMapper().readValue(response.getContentAsString(), SimpleObject.class);
-        ArrayList<LinkedHashMap> obs = (ArrayList<LinkedHashMap>)responseObject.get("obs");
+        ArrayList<LinkedHashMap> encounters = (ArrayList<LinkedHashMap>)responseObject.get("encounters");
 
-        Assert.assertEquals(1, obs.size());
+        Assert.assertEquals(1, encounters.size());
     }
 
     @Test
@@ -111,9 +85,11 @@ public class VitalsAndSymptomsObservationControllerTest extends EbolaRestTestBas
 
         MockHttpServletResponse response = webMethods.handle(request);
         SimpleObject responseObject = new ObjectMapper().readValue(response.getContentAsString(), SimpleObject.class);
-        ArrayList<LinkedHashMap> obs = (ArrayList<LinkedHashMap>)responseObject.get("obs");
-
+        ArrayList<LinkedHashMap> encounters = (ArrayList<LinkedHashMap>)responseObject.get("encounters");
+        ArrayList<LinkedHashMap> obs = (ArrayList<LinkedHashMap>)encounters.get(0).get("obs");
+        Assert.assertEquals(1, encounters.size());
         Assert.assertEquals(2, obs.size());
+
 
         for(LinkedHashMap map : obs){
             String concept = (String)map.get("concept");
@@ -124,6 +100,71 @@ public class VitalsAndSymptomsObservationControllerTest extends EbolaRestTestBas
                 Assert.assertEquals(numericObs.getValueNumeric(), map.get("value"));
             }
         }
+    }
+
+    @Test
+    public void shouldGetAllSymptomsObs() throws Exception{
+        Patient patient = Context.getPatientService().getPatient(2);
+
+        Date threeDaysAgo = DateUtils.addDays(new Date(), -3);
+        Date twoDaysAgo = DateUtils.addDays(new Date(), -2);
+        Date yesterday = DateUtils.addDays(new Date(), -1);
+        Date today = DateUtils.addDays(new Date(), 0);
+
+        createSymptomEncounter(patient, threeDaysAgo);
+        createSymptomEncounter(patient, twoDaysAgo);
+        createSymptomEncounter(patient, yesterday);
+        createSymptomEncounter(patient, today);
+
+        MockHttpServletRequest request = new MockHttpServletRequest("GET", requestURI);
+        request.addHeader("content-type", "application/json");
+        request.addParameter("patientUuid", patient.getUuid());
+        request.addParameter("formUuid", EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS);
+
+        MockHttpServletResponse response = webMethods.handle(request);
+        SimpleObject responseObject = new ObjectMapper().readValue(response.getContentAsString(), SimpleObject.class);
+        ArrayList<LinkedHashMap> encounters = (ArrayList<LinkedHashMap>)responseObject.get("encounters");
+        Assert.assertEquals(4, encounters.size());
+        Assert.assertEquals(today.getTime()/1000, (Long) encounters.get(0).get("dateCreated") /1000);
+        Assert.assertEquals(yesterday.getTime()/1000, (Long) encounters.get(1).get("dateCreated") /1000);
+        Assert.assertEquals(twoDaysAgo.getTime()/1000, (Long) encounters.get(2).get("dateCreated") /1000);
+        Assert.assertEquals(threeDaysAgo.getTime()/1000, (Long) encounters.get(3).get("dateCreated") /1000);
+    }
+
+    @Test
+    public void shouldGetLatest3SymptomsObs() throws Exception{
+        Patient patient = Context.getPatientService().getPatient(2);
+
+        Date threeDaysAgo = DateUtils.addDays(new Date(), -3);
+        Date twoDaysAgo = DateUtils.addDays(new Date(), -2);
+        Date yesterday = DateUtils.addDays(new Date(), -1);
+        Date today = DateUtils.addDays(new Date(), 0);
+
+        createSymptomEncounter(patient, threeDaysAgo);
+        createSymptomEncounter(patient, twoDaysAgo);
+        createSymptomEncounter(patient, yesterday);
+        createSymptomEncounter(patient, today);
+
+        MockHttpServletRequest request = new MockHttpServletRequest("GET", requestURI);
+        request.addHeader("content-type", "application/json");
+        request.addParameter("patientUuid", patient.getUuid());
+        request.addParameter("formUuid", EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS);
+        request.addParameter("top", "3");
+
+        MockHttpServletResponse response = webMethods.handle(request);
+        SimpleObject responseObject = new ObjectMapper().readValue(response.getContentAsString(), SimpleObject.class);
+        ArrayList<LinkedHashMap> encounters = (ArrayList<LinkedHashMap>)responseObject.get("encounters");
+        Assert.assertEquals(3, encounters.size());
+        Assert.assertEquals(today.getTime()/1000, (Long) encounters.get(0).get("dateCreated") /1000);
+        Assert.assertEquals(yesterday.getTime()/1000, (Long) encounters.get(1).get("dateCreated") /1000);
+        Assert.assertEquals(twoDaysAgo.getTime()/1000, (Long) encounters.get(2).get("dateCreated") /1000);
+    }
+
+    private void createSymptomEncounter(Patient patient, Date dateCreated) {
+        HashSet<Obs> obses = new HashSet<Obs>();
+        Obs codedObs = getCodedObs(patient, dateCreated);
+        obses.add(codedObs);
+        createEncounter(patient, EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS, dateCreated, obses);
     }
 
     private void createEncounter(Patient patient, String formUuid, Date dateCreated, HashSet<Obs> obs) {
