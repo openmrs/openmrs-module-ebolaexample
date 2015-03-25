@@ -26,6 +26,10 @@ ng-init="init({patientUuid:'${patient.patient.uuid}'})">
     </div>
 
     <div class="info-body">
+        <div ng-if="symptomsEncounters.length == 0">
+            ${ui.message("coreapps.none")}
+        </div>
+
         <table >
             <tr ng-repeat="encounter in symptomsEncounters">
                 <td width="100px" style="border: none">{{encounter.dateCreated | simpleDate }}</td>
