@@ -30,20 +30,21 @@ ng-init="init({patientUuid:'${patient.patient.uuid}'})">
             <tr ng-repeat="encounter in symptomsEncounters">
                 <td width="100px" style="border: none">{{encounter.dateCreated | simpleDate }}</td>
                 <td style="border:none">
-                    <span ng-repeat="row in getObsDesc(encounter.obs)">
+                    <div ng-repeat="row in getObsDesc(encounter.obs)">
                         {{row}}
-                    </span>
-                    <span></span>
+
+                    </div>
                 </td>
             </tr>
         </table>
-        <div style="clear: both;"></div>
-
+    </div>
+    <div>
+        <a href="#" class="right">Back to top</a>
     </div>
     <br/>
 
-</div>
 
+</div>
 
 <script>
     angular.bootstrap("#symptoms", ['symptomsSummary']);
