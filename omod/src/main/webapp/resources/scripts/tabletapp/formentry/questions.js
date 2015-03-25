@@ -50,10 +50,10 @@ angular.module('tabletapp')
                 { label: "Nose/Mouth", value: "160495AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
                 { label: "Vomitus", value: "162670AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
                 { label: "Cough", value: "162669AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-                //{ label: "IV Site(WIP)", value: "" },
+                { label: "IV Site", value: "162920AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
                 { label: "Stool", value: "162671AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-                { label: "Vagina", value: "162673AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
-                //{ label: "Urine(WIP)", value: "" }
+                { label: "Vagina", value: "162673AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+                { label: "Urine", value: "162919AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
             ]),
             ebolaStage: questionBuilder.selectOneObs2("Ebola Stage", "162834AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",[
                 { label: "1 - Early/Dry", value: "162829AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"},
@@ -113,26 +113,6 @@ angular.module('tabletapp')
                     { label: "Nausea", value: "5978AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
                 ]
             },
-
-            //moreSymptoms: {
-            //    handler: questionHandlers.multipleSymptomsPresent,
-            //    template: "selectMulti",
-            //    label: "SYMPTOMS",
-            //    buttonClass: "medium long",
-            //    options: [
-            //        { label: "Headache", value: "139084AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-            //        { label: "Muscle Pain", value: "133632AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-            //        { label: "Unable to Drink", value: "1983AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-            //        { label: "Unable to Eat", value: "162706AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-            //        { label: "Difficult to Swallow", value: "118789AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-            //        { label: "Difficult to Breathe", value: "122496AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-            //        { label: "Abdominal Pain", value: "151AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-            //        { label: "Hiccups", value: "138662AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-            //        { label: "Urine Pain", value: "118771AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-            //        { label: "Cough", value: "143264AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
-            //        { label: "Rash", value: "512AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
-            //    ]
-            //},
 
             // TODO fluid management
             targetVolume: questionBuilder.simpleNumeric("TARGET VOLUME IN NEXT 24H", "162675AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "mL", 0, 9999)
