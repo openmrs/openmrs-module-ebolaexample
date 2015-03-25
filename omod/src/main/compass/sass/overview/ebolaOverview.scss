@@ -34,9 +34,21 @@
 }
 
 .dashboard {
+  .long-info-section{
+    margin-bottom: 25px;
+  }
   .info-header{
     h3{
       width:250px;
     }
+  }
+
+  [class^="icon-"],
+  [class*=" icon-"]{
+    display: inline;
+  }
+
+  .back-to-top{
+    margin-top: 10px;
   }
 }

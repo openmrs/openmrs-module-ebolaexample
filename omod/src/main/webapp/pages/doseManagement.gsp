@@ -34,7 +34,7 @@
             label: "${ ui.format(patient.patient.familyName) }, ${ ui.format(patient.patient.givenName) }",
             link: '${ ui.pageLink("ebolaexample", "ebolaOverview", [ patient: patient.patient.uuid ]) }'
         },
-        {label: "Med Administration"}
+        {label: "Medication Administration"}
     ]
     var patient = {id: ${ patient.id }};
 </script>
@@ -58,8 +58,6 @@ ${ui.includeFragment("ebolaexample", "overview/patientHeader", [patient: patient
 
 <div class="clear"></div>
 
-<a href="${ui.pageLink("ebolaexample", "ebolaOverview", [patient: patient.patient.uuid])}">Back to Summary</a>
-
 <div class="container">
     <div class="dashboard clear">
         <div class="long-info-container column">
@@ -67,7 +65,10 @@ ${ui.includeFragment("ebolaexample", "overview/patientHeader", [patient: patient
                 <div class="info-header">
                     <i class="icon-medkit"></i>
 
-                    <h3>Med Administration</h3>
+                    <h3>Medication Administration</h3>
+
+                    <a href="${ui.pageLink("ebolaexample", "ebolaOverview", [patient: patient.patient.uuid])}">Back to Summary</a>
+
                 </div>
 
                 <div class="info-body">

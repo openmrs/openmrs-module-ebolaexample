@@ -19,15 +19,15 @@
         <h3>Prescriptions</h3>
 
         <% if (showAll) { %>
-        <a class="right" href="${ui.pageLink("ebolaexample", "ebolaOverview", [patient: patient.patient.uuid])}">
+        <a href="${ui.pageLink("ebolaexample", "ebolaOverview", [patient: patient.patient.uuid])}">
             Back to Summary
         </a>
         <% } else { %>
         <a href="${ui.pageLink("ebolaexample", "allPrescriptions", [patient: patient.patient.id])}">
             View All
         </a>
-        <% } %>
-        <div style="margin-top:1px; margin-right: 10px; float: right;" ng-app="inpatientLocation" ng-controller="InpatientLocationCtrl"
+
+        <div style="margin-top:1px; float: right;" ng-app="inpatientLocation" ng-controller="InpatientLocationCtrl"
              ng-init="init({patientUuid:'${patient.patient.uuid}',
             currentWard: <% if (currentWard) { %>{display:'${currentWard}', uuid:'${currentWard.uuid}'}<%
                  } else { %>null<% } %>,
@@ -37,6 +37,7 @@
             ${ui.includeFragment("ebolaexample", "overview/actions", [patient: patient, currentAssignment:wardAndBed])}
 
         </div>
+        <% } %>
     </div>
 
     <div class="info-body">
@@ -101,8 +102,7 @@
 
         <div style="clear:both;"></div>
     </div>
-
-</div>
-<div>
-    <a href="#" class="right">Back to top</a>
+    <div>
+        <a href="#" class="right back-to-top">Back to top</a>
+    </div>
 </div>

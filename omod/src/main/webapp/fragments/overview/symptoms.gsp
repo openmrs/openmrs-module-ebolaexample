@@ -43,7 +43,7 @@ ng-init="init({patientUuid:'${patient.patient.uuid}'})">
         </table>
     </div>
     <div>
-        <a href="#" class="right">Back to top</a>
+        <a href="#" class="right back-to-top">Back to top</a>
     </div>
     <br/>
 

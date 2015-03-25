@@ -135,7 +135,7 @@
         </table>
     </div>
 
-</div>
-<div>
-    <a href="#" class="right">Back to top</a>
+    <div>
+        <a href="#" class="right back-to-top">Back to top</a>
+    </div>
 </div>
