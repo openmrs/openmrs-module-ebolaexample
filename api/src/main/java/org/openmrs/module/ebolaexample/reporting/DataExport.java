@@ -140,8 +140,8 @@ public class DataExport {
 
     public ReportDefinition buildFullDataExport() {
         ReportDefinition reportDefinition = new ReportDefinition();
-        reportDefinition.addDataSetDefinition("patientregistration", buildRegistrationDataSetDefinition(), null);
-        reportDefinition.addDataSetDefinition("patientdischarge", buildDischargeDataSetDefinition(), null);
+        reportDefinition.addDataSetDefinition("patient_registration", buildRegistrationDataSetDefinition(), null);
+        reportDefinition.addDataSetDefinition("patient_discharge", buildDischargeDataSetDefinition(), null);
 
         return reportDefinition;
     }

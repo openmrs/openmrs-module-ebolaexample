@@ -17,6 +17,7 @@ public class EbolaRolePrivilegeMetadata extends AbstractMetadataBundle {
         public static final String APP_REGISTRATIONAPP_REGISTER_PATIENT = "App: registrationapp.registerPatient";
         public static final String APP_EBOLAEXAMPLE_EBOLA_PHARMACY = "App: ebolaexample.ebolaPharmacy";
         public static final String APP_EBOLAEXAMPLE_ACTIVE_PATIENTS = "App: ebolaexample.activePatients";
+        public static final String APP_EBOLAEXAMPLE_DATA_EXPORT = "App: ebolaexample.dataExport";
     }
 
     public static class _Role {
@@ -37,9 +38,11 @@ public class EbolaRolePrivilegeMetadata extends AbstractMetadataBundle {
         install(privilege(_Privilege.APP_REGISTRATIONAPP_REGISTER_PATIENT, "Able to access the register patient app"));
         install(privilege(_Privilege.APP_EBOLAEXAMPLE_EBOLA_PHARMACY, "Able to access the find Ebola pharmacy app"));
         install(privilege(_Privilege.APP_EBOLAEXAMPLE_ACTIVE_PATIENTS, "Able to list active patients app"));
+        install(privilege(_Privilege.APP_EBOLAEXAMPLE_DATA_EXPORT, "Able to download patient data as CSV"));
 
         install(role(_Role.APPLICATION_LOOKS_UP_PATIENTS, "Looks up patients", idSet(), idSet(
-                _Privilege.APP_COREAPPS_FIND_PATIENT)));
+                _Privilege.APP_COREAPPS_FIND_PATIENT,
+                _Privilege.APP_EBOLAEXAMPLE_DATA_EXPORT)));
 
         install(role(_Role.APPLICATION_REGISTERS_PATIENTS, "Registers patients", idSet(), idSet(
                 _Privilege.APP_COREAPPS_ACTIVE_VISITS,
