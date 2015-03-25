@@ -6,7 +6,7 @@ angular.module('symptomsSummary', ['feature-toggles', 'tabletapp', 'filters'])
         'concepts', 'questions','SymptomAnswerBuilder',
         function ($scope, $http, FeatureToggles, dateFilter, concepts, questions, SymptomAnswerBuilder) {
             $scope.isFeatureEnabled = function(){
-                return FeatureToggles.isFeatureEnabled("symptomsSummaryDesktop");
+                return FeatureToggles.isFeatureEnabled("vitalsAndSymptomsSummaryDesktop");
             };
             var config = {};
             $scope.init = function(setConfig){
@@ -67,7 +67,7 @@ angular.module('symptomsSummary', ['feature-toggles', 'tabletapp', 'filters'])
             }
 
             function getAnswers(obs){
-                var answers = {ebolaStage:[], bleeding:[], pain:[], GI:[], general:[], respiratory:[]};
+                var answers = {ebolaStage:null, bleeding:[], pain:[], GI:[], general:[], respiratory:[]};
                 _.each(obs, function(ob){
 
                     if(ob.concept == questions.ebolaStage.concept){

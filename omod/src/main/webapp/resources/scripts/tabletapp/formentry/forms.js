@@ -14,17 +14,16 @@ angular.module('tabletapp')
         return {
             vitals: {
                 encounterType: Constants.encounterType.ebolaInpatientFollowup,
+                form_uuid: "a000cb34-9ec1-4344-a1c8-f692232f6edd",
                 views: [
-                    createView('vital-signs', 'templates/formScreens/vital-signs.html', 'VITAL SIGNS', true),
+                    createView('vital-signs', 'templates/formScreens/vital-signs.html', 'VITAL SIGNS', true)
                 ]
             },
             Symptoms: {
                 encounterType: Constants.encounterType.ebolaInpatientFollowup,
                 form_uuid: "c1d1b5b7-2d51-4f58-b8f3-7d9cb542fe4a",
                 views: [
-                    createView('symptoms', 'templates/formScreens/symptoms3.html', 'SYMPTOMS', true),
-                    //createView('symptoms', 'templates/formScreens/symptoms.html', 'SYMPTOMS', true),
-                    //createView('symptoms', 'templates/formScreens/symptoms2.html', 'SYMPTOMS 2', false)
+                    createView('symptoms', 'templates/formScreens/symptoms3.html', 'SYMPTOMS', true)
                 ]
             },
             vitalsAndSymptoms: {
