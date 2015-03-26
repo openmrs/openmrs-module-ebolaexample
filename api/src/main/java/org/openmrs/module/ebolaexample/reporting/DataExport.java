@@ -16,6 +16,7 @@ import org.openmrs.module.reporting.data.patient.definition.SqlPatientDataDefini
 import org.openmrs.module.reporting.data.person.definition.*;
 import org.openmrs.module.reporting.dataset.definition.DataSetDefinition;
 import org.openmrs.module.reporting.dataset.definition.PatientDataSetDefinition;
+import org.openmrs.module.reporting.dataset.definition.SqlDataSetDefinition;
 import org.openmrs.module.reporting.evaluation.parameter.Parameter;
 import org.openmrs.module.reporting.report.definition.ReportDefinition;
 
@@ -138,10 +139,46 @@ public class DataExport {
         dsd.addColumn("registrationdate", sqlPatientDataDefinition, "");
     }
 
+    private SqlDataSetDefinition addDrugOrders() {
+        SqlDataSetDefinition sqlDataSetDefinition = new SqlDataSetDefinition();
+        sqlDataSetDefinition.setSqlQuery(
+        "SELECT\n" +
+        "  orders.patient_id,\n" +
+        "  coalesce(creator.username, creator.system_id) entered_by,\n" +
+        "  orderer.username as ordered_by,\n" +
+        "  orders.date_activated,\n" +
+        "  orders.date_stopped,\n" +
+        "  orders.auto_expire_date,\n" +
+        "  concept_name.name as concept,\n" +
+        "  drug.name as formulation,\n" +
+        "  route.name as route,\n" +
+        "  drug_order.frequency,\n" +
+        "  drug_order.dosing_type,\n" +
+        "  drug_order.dose,\n" +
+        "  drug_order.dose_units,\n" +
+        "  drug_order.dosing_instructions,\n" +
+        "  drug_order.duration,\n" +
+        "  drug_order.duration_units,\n" +
+        "  drug_order.as_needed,\n" +
+        "  drug_order.as_needed_condition,\n" +
+        "  drug_order.dispense_as_written\n" +
+        "FROM orders \n" +
+        "  JOIN drug_order ON orders.order_id = drug_order.order_id\n" +
+        "  JOIN drug ON drug_order.drug_inventory_id = drug.drug_id\n" +
+        "  JOIN concept_name ON orders.concept_id = concept_name.concept_id AND concept_name.locale = 'en' AND concept_name.locale_preferred = 1\n" +
+        "  JOIN concept_name as route ON drug_order.route = route.concept_id AND route.locale = 'en' AND route.locale_preferred = 1\n" +
+        "  JOIN users as creator ON creator.user_id = orders.creator\n" +
+        "  JOIN users as orderer ON orderer.user_id = orders.orderer\n" +
+        "WHERE orders.voided != 1 AND order_action != 'DISCONTINUE';\n");
+
+        return sqlDataSetDefinition;
+    }
+
     public ReportDefinition buildFullDataExport() {
         ReportDefinition reportDefinition = new ReportDefinition();
         reportDefinition.addDataSetDefinition("patient_registration", buildRegistrationDataSetDefinition(), null);
         reportDefinition.addDataSetDefinition("patient_discharge", buildDischargeDataSetDefinition(), null);
+        reportDefinition.addDataSetDefinition("drug_orders", addDrugOrders(), null);
 
         return reportDefinition;
     }
