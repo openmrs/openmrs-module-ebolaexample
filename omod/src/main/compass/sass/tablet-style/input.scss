@@ -43,6 +43,12 @@
     padding: 0 15px;
   }
 
+  &.long2 {
+    width: 138px;
+    max-width: 138px;
+    padding: 0 15px;
+  }
+
   &.medium {
     font-size: 2.2em;
     width: 140px;
@@ -56,7 +62,7 @@
   &.medium2 {
     font-size: 1.65em;
     vertical-align: baseline;
-    height: 70px;
+    height: 50px;
     &.long span {
       padding-top: 7px;
     }

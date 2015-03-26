@@ -65,7 +65,7 @@ angular.module('tabletapp')
                 handler: questionHandlers.multipleSymptomsPresent,
                 template: "selectMulti2",
                 label: "General",
-                buttonClass: "medium2 long",
+                buttonClass: "medium2 long2",
                 options: [
                     { label: "Confusion", value: "120345AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
                     { label: "Fatigue", value: "140501AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
@@ -79,7 +79,7 @@ angular.module('tabletapp')
                 handler: questionHandlers.multipleSymptomsPresent,
                 template: "selectMulti2",
                 label: "Respiratory",
-                buttonClass: "medium2 long",
+                buttonClass: "medium2 long2",
                 options: [
                     { label: "Short of breath", value: "122496AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
                     { label: "Cough", value: "143264AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
@@ -90,7 +90,7 @@ angular.module('tabletapp')
                 handler: questionHandlers.multipleSymptomsPresent,
                 template: "selectMulti2",
                 label: "Pain",
-                buttonClass: "medium2 long",
+                buttonClass: "medium2 long2",
                 options: [
                     { label: "Head", value: "139084AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
                     { label: "Muscle/Joint", value: "133632AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
@@ -105,7 +105,7 @@ angular.module('tabletapp')
                 handler: questionHandlers.multipleSymptomsPresent,
                 template: "selectMulti2",
                 label: "GI",
-                buttonClass: "medium2 long",
+                buttonClass: "medium2 long2",
                 options: [
                     { label: "Diarrhoea", value: "142412AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
                     { label: "Vomiting", value: "122983AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },

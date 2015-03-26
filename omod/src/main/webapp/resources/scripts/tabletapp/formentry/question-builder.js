@@ -174,7 +174,7 @@ angular.module('tabletapp')
                 handler: questionHandlers.simpleObs,
                 template: "selectOne2",
                 label: label,
-                buttonClass: "medium2 long",
+                buttonClass: "medium2 long2",
                 options: options,
                 concept: concept
             };
@@ -196,7 +196,7 @@ angular.module('tabletapp')
                 handler: questionHandlers.multipleObs,
                 template: "selectMulti2",
                 label: label,
-                buttonClass: "medium2 long",
+                buttonClass: "medium2 long2",
                 options: options,
                 concept: concept
             };
