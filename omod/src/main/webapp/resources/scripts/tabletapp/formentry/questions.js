@@ -12,10 +12,9 @@ angular.module('tabletapp')
             o2sat: questionBuilder.simpleNumeric("O2 Sat", "5092AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "%", 0, 100),
             respiratoryRate: questionBuilder.simpleNumeric("Resp. Rate", "5242AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "breaths/ min", 0, 120),
             heartRate: questionBuilder.simpleNumeric("Pulse", "5087AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "beats/ min", 0, 999),
-            // systolicBP: questionBuilder.simpleNumeric("SYSTOLIC BP", "5085AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "mmHg", 0, 250),
-            // diastolicBP: questionBuilder.simpleNumeric("DIASTOLIC BP", "5086AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "mmHg", 0, 200),
-            systolicBP: questionBuilder.simpleNumeric("Blood", "5085AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "mmHg", 0, 250),
-            diastolicBP: questionBuilder.simpleNumeric("Pressure", "5086AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "mmHg", 0, 200),
+            // "SYSTOLIC BP" and "DIASTOLIC BP" for Blood Pressure
+            systolicBP: questionBuilder.simpleNumeric("", "5085AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "mmHg", 0, 250),
+            diastolicBP: questionBuilder.simpleNumeric("", "5086AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "mmHg", 0, 200),
 
             raisedJVP: questionBuilder.simpleNumeric("RAISED JVP", "162646AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "cm", 0, 19),
             capillaryRefillTime: questionBuilder.simpleNumeric("CAPILLARY REFILL", "162513AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "sec", 0, 60),
