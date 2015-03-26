@@ -13,7 +13,7 @@
 %>
 <div class="long-info-section">
 
-    <div class="info-header">
+    <div  id = "prescriptions" class="info-header">
         <i class="icon-medkit"></i>
 
         <h3>Prescriptions</h3>

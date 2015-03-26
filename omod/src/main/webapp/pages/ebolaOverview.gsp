@@ -66,11 +66,22 @@ ${ui.includeFragment(it.extensionParams.provider, it.extensionParams.fragment)}
 
 ${ui.includeFragment("ebolaexample", "overview/patientHeader", [patient: patient.patient, activeVisit: activeVisit, appContextModel: appContextModel])}
 
+
+<div class="info-body jump-header">
+    <span class="jump-label">Jump to:</span>
+    <i class="icon-vitals"><a href="#vitals">Vitals</a></i>
+    <i class="icon-medkit"><a href="#symptoms">Symptoms</a></i>
+    <i class="icon-medkit"><a href="#prescriptions">Prescriptions</a></i>
+    <i class="icon-medkit"><a href="#med-admin">Med admin</a></i>
+    <i class="icon-medkit"><a href="#ivfluids">IV fluids</a></i>
+</div>
 <div class="clear"></div>
 
 <div class="container">
 
     <div class="dashboard clear">
+
+
 
         <div class="long-info-container column">
             ${ui.includeFragment("ebolaexample", "overview/ebolaProgram", [patient: patient])}

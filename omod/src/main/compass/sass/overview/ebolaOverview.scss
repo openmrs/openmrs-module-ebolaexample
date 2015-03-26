@@ -33,6 +33,28 @@
   }
 }
 
+.jump-header{
+
+    font-weight: bold;
+    font-size: 0.9em;
+    font-family: "OpenSansBold", serif;
+    margin-bottom: 20px;
+    margin-top: 15px;
+
+  .jump-label{
+    padding-left: 10px;
+  }
+  i{
+    padding-left: 20px !important;
+  }
+  a{
+
+    font-weight: bold;
+    text-decoration: underline;
+    padding-left: 3px;
+    padding-right: 30px;
+  }
+}
 .dashboard {
   .long-info-section{
     margin-bottom: 25px;
@@ -68,4 +90,5 @@
   .back-to-top{
     margin-top: 10px;
   }
+
 }

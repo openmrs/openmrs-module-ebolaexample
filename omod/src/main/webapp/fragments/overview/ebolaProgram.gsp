@@ -35,7 +35,12 @@
             ${ui.message("coreapps.patientHeader.activeVisit.outpatient")}
         </span>
         <% } %>
+        <% } else if(currentOutcome) { %>
+            <span class="active-visit-message">
+                Out of ETC
+            </span>
         <% } %>
+
         </span>
 
     </div>

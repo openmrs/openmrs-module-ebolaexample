@@ -51,7 +51,7 @@
 
 <div class="long-info-section">
 
-    <div class="info-header">
+    <div class="info-header" id="med-admin">
         <i class="icon-medkit"></i>
 
         <h3>Medication Administration</h3>
