@@ -11,7 +11,7 @@
 
 %>
 
-<div id="symptoms" ng-show="isFeatureEnabled()" class="long-info-section"  ng-controller="SymptomsSummaryController"
+<div id="symptoms" class="long-info-section"  ng-controller="SymptomsSummaryController"
 ng-init="init({patientUuid:'${patient.patient.uuid}'})">
 
     <div class="info-header" >

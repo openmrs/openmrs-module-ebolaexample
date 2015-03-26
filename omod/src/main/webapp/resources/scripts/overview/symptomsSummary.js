@@ -5,9 +5,6 @@ angular.module('symptomsSummary', ['feature-toggles', 'tabletapp', 'filters'])
     .controller('SymptomsSummaryController', ['$scope', '$http', 'FeatureToggles','dateFilter',
         'concepts', 'questions','SymptomAnswerBuilder',
         function ($scope, $http, FeatureToggles, dateFilter, concepts, questions, SymptomAnswerBuilder) {
-            $scope.isFeatureEnabled = function(){
-                return FeatureToggles.isFeatureEnabled("vitalsAndSymptomsSummaryDesktop");
-            };
             var config = {};
             $scope.init = function(setConfig){
                 config = setConfig;
