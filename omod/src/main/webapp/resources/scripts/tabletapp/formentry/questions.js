@@ -79,7 +79,7 @@ angular.module('tabletapp')
                 handler: questionHandlers.multipleSymptomsPresent,
                 template: "selectMulti2",
                 label: "Respiratory",
-                buttonClass: "medium2 long2",
+                buttonClass: "medium2 long3",
                 options: [
                     { label: "Short of breath", value: "122496AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
                     { label: "Cough", value: "143264AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
