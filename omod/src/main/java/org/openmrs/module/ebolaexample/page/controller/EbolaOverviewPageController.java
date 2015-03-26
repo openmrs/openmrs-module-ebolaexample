@@ -1,11 +1,13 @@
 package org.openmrs.module.ebolaexample.page.controller;
 
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.openmrs.EncounterType;
 import org.openmrs.Location;
 import org.openmrs.Patient;
 import org.openmrs.PatientProgram;
 import org.openmrs.Program;
 import org.openmrs.api.ProgramWorkflowService;
+import org.openmrs.api.context.Context;
 import org.openmrs.module.appframework.context.AppContextModel;
 import org.openmrs.module.appframework.domain.Extension;
 import org.openmrs.module.appframework.service.AppFrameworkService;
@@ -70,6 +72,10 @@ public class EbolaOverviewPageController {
         model.addAttribute("activeVisit", activeVisit);
         model.addAttribute("wardAndBed", activeVisit == null ? null : bedAssignmentService.getAssignedWardAndBedFor(activeVisit.getVisit()));
 
+        if (activeVisit != null) {
+            model.addAttribute("activeVisitStartDatetime",
+                    DateFormatUtils.format(activeVisit.getStartDatetime(), "dd MMM yyyy hh:mm a", Context.getLocale()));
+        }
         AppContextModel contextModel = sessionContext.generateAppContextModel();
         contextModel.put("patient", new PatientContextModel(patient));
         contextModel.put("visit", activeVisit == null ? null : new VisitContextModel(activeVisit));

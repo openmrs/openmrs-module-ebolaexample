@@ -18,6 +18,26 @@
         <i class="icon-medkit"></i>
 
         <h3>${ui.message("ebolaexample.ebolaOverview.title")}</h3>
+        <span class="right">
+
+        <% if (activeVisit) { %>
+        <% def visit = activeVisit.visit %>
+
+        <span class="active-visit-started-at-message">
+            ${ui.message("coreapps.patientHeader.activeVisit.at", activeVisitStartDatetime)}
+        </span>
+        <% if (activeVisit.admitted) { %>
+        <span class="active-visit-message">
+            ${ui.message("coreapps.patientHeader.activeVisit.inpatient", ui.format(activeVisit.latestAdtEncounter.location))}
+        </span>
+        <% } else { %>
+        <span class="active-visit-message">
+            ${ui.message("coreapps.patientHeader.activeVisit.outpatient")}
+        </span>
+        <% } %>
+        <% } %>
+        </span>
+
     </div>
 
     <div class="info-body">

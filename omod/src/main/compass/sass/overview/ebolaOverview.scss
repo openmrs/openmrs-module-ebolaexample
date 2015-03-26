@@ -41,6 +41,23 @@
     h3{
       width:250px;
     }
+    .active-visit-started-at-message {
+      background: #51a351;
+      border-color: #51a351;
+    }
+    .active-visit-message {
+      background: #666;
+      border-color: #666;
+    }
+
+    .active-visit-message, .active-visit-started-at-message{
+      display: inline-block;
+      vertical-align: text-bottom;
+      color: #FFF;
+      padding: 2px 4px;
+      border-radius: 1px;
+      font-size: 0.8em;
+    }
   }
 
   [class^="icon-"],
