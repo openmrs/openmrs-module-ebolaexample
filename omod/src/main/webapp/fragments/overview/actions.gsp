@@ -1,7 +1,7 @@
 <%
-config.require("currentAssignment")
 config.require("patient")
 %>
+
 <% if (config.currentAssignment && config.currentAssignment.ward) { %>
 <a class="right"
    href="/${ui.contextPath()}/ms/uiframework/resource/ebolaexample/html/tabletapp/index.html#/patients/${
