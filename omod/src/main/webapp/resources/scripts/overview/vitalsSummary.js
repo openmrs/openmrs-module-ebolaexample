@@ -33,10 +33,13 @@ angular.module('vitalsSummary', ['feature-toggles', 'tabletapp', 'filters'])
             };
             $scope.getObsDesc = function(obs){
                 var answers = VitalsAnswerBuilder.getAnswers(obs);
-                var newVar = [answers.consciousness, 'T: ' + answers.temperature, 'Pulse: ' + answers.heartRate,
-                    'Resp: ' + answers.respiratoryRate, 'O2: ' + answers.o2sat, 'BP: ' + answers.systolicBP + ' / ' + answers.diastolicBP];
-                console.log(newVar);
-                return newVar
+                var result = [answers.consciousness,
+                                'T: ' + answers.temperature,
+                                'Pulse: ' + answers.heartRate,
+                                'Resp: ' + answers.respiratoryRate,
+                                'O₂: ' + answers.o2sat,
+                                'BP: ' + answers.systolicBP + ' / ' + answers.diastolicBP];
+                return result;
             };
         }])
 

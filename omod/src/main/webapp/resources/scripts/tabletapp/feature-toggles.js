@@ -9,7 +9,6 @@ angular.module("feature-toggles", [])
         var url = "/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/feature-toggle";
 
         function init(){
-            console.log('init');
             return $http.get(url).success(function(response){
                 var featureToggles = response["featureToggles"];
                 _.each(featureToggles, function(featureToggle){

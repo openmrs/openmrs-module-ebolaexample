@@ -15,7 +15,7 @@
 ng-init="init({patientUuid:'${patient.patient.uuid}'})">
 
     <div class="info-header" >
-        <i class="icon-medkit"></i>
+        <i class="icon-vitals"></i>
 
         <h3>Vitals</h3>
         <span>
@@ -29,12 +29,12 @@ ng-init="init({patientUuid:'${patient.patient.uuid}'})">
         <div ng-if="vitalsEncounters.length == 0">
             ${ui.message("coreapps.none")}
         </div>
-
         <table >
+
             <tr ng-repeat="encounter in vitalsEncounters">
                 <td width="100px" style="border: none">{{encounter.dateCreated | simpleDate }}</td>
                 <td style="border:none" ng-repeat="ob in getObsDesc(encounter.obs)">
-                        {{ob}}
+                    {{ob}}
                 </td>
             </tr>
         </table>
