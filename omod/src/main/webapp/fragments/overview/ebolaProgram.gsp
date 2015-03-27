@@ -47,8 +47,7 @@
     <div class="info-body">
         ${ui.includeFragment("ebolaexample", "overview/inpatientLocation",
                 [patient: patient, activeVisit: activeVisit, ebolaStage:ebolaStage, ebolaStageAtAdmission:ebolaStageAtAdmission])}
-        <span class="">
-
+        <span style="padding-left: 30px; border-left: 1px solid #EEE;">
         <div>
             <strong>Weight:</strong>
             <em>

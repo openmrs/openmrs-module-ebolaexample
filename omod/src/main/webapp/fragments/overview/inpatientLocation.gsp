@@ -56,6 +56,7 @@
 
             <% } else if (!currentWard) { %>
 
+            --
             <% } else { %>
 
             <p class="current-ward">${ui.format(currentWard)},
