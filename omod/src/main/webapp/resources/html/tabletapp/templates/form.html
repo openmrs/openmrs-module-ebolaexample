@@ -31,7 +31,7 @@
         <span class="progress" ng-if="views.length > 1">{{ getCurrentViewNumber() }} of {{ views.length }}</span>
         <button class="right small" ng-show="shouldDisplayNextButton()" ng-click="next()">Next</button>
         <button class="right small" ng-show="shouldDisplayFinishButton()" ng-click="finish()"
-                ng-disabled="!inpatientForm.$valid">Save
+                ng-disabled="!inpatientForm.$valid || !saveButtonActive">Save
         </button>
     </div>
 </form>

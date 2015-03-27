@@ -9,6 +9,7 @@ angular.module('tabletapp')
 
         $scope.views = currentForm.views;
         $scope.questions = questions;
+        $scope.saveButtonActive = true;
 
         _.each($scope.questions, function(question){
             delete question.value;
@@ -68,6 +69,7 @@ angular.module('tabletapp')
         };
 
         $scope.finish = function () {
+            $scope.saveButtonActive = false;
             var data = {};
             angular.forEach($scope.questions, function(question) {
                 if (question.handler) {
@@ -77,9 +79,17 @@ angular.module('tabletapp')
                     console.log("no handler for question: " + question);
                 }
             });
+
+            if(data.obs == undefined){
+                window.alert("Error: no values specified");
+                $scope.saveButtonActive = true;
+                return;
+            }
+
             data.patient = $scope.patientUuid;
             if (activeVisits.results.length == 0) {
                 window.alert("Error: patient doesn't have an active visit");
+                $scope.saveButtonActive = true;
                 return;
             }
             data.visit = activeVisits.results[0].uuid; // the API will enforce that there's never more than one
