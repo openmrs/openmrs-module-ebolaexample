@@ -9,24 +9,24 @@
 
     ui.includeCss("ebolaexample", "overview/inpatientLocation.css")
 %>
-<div class="long-info-section">
 
-    <div class="info-header">
-        <i class="icon-hospital"></i>
 
-        <h3>Location & Discharge</h3>
-    </div>
-
-    <div class="info-body" style="overflow: auto;">
-
-        <% if (currentOutcome) { %>
-        <div style="float: left; width: 50%;">
-            Patient out of ETC!!
+    <span style="width: 50%">
+        <div>
+            <strong>Ebola stage:</strong>
+            <span> Stage1 (Early/Dry)##</span>
         </div>
+        <div>
+
+        <strong>Location:</strong>
+            <% if (currentOutcome) { %>
+            <span >
+                Out of ETC
+            </span>
 
         <% } else { %>
 
-        <div style="float: left; width: 50%;" ng-app="inpatientLocation" ng-controller="InpatientLocationCtrl"
+        <span  ng-app="inpatientLocation" ng-controller="InpatientLocationCtrl"
              ng-init="init({patientUuid:'${patient.patient.uuid}',
             currentWard: <% if (currentWard) { %>{display:'${currentWard}', uuid:'${currentWard.uuid}'}<%
                  } else { %>null<% } %>,
@@ -38,7 +38,7 @@
 
             <em>No active visit.</em> <br/>
 
-            <a class="button"
+            <a class=""
                href="${ui.actionLink("ebolaexample", "overview/inpatientLocation", "startOutpatientVisit",
                        [patient: patient.patient.uuid])}">
                 <i class="icon-exchange"></i>
@@ -71,15 +71,16 @@
 
         </p>
 
-            <a class="button" ng-click="changeLocationPatient()">Change</a>
+            <a class="" ng-click="changeLocationPatient()">Change</a>
 
             <% } %>
-        </div>
+        </span>
 
         <% } %>
+        </div>
 
-        <div style="float:right; width: 50%;">
-            <span style="display: block;"><strong>Ebola Treatment Outcome:</strong>
+        <div style="">
+            <span style=""><strong>Ebola Treatment Outcome:</strong>
                 <em>
                     <% if (currentOutcome) { %>
                     ${ui.format(currentOutcome)}, ${patientProgram.dateCompleted.format('dd MMM yyyy, HH:mm')}
@@ -88,14 +89,13 @@
             </span>
 
             <% if (!currentOutcome) { %>
-            <a class="button" href="${ui.pageLink("ebolaexample", "changePatientDischarge",
+            <a class="" href="${ui.pageLink("ebolaexample", "changePatientDischarge",
                     [patientUuid: patient.patient.uuid])}">Discharge/Deceased</a>
             <% } %>
         </div>
 
         <div style="clear: both;"></div>
-    </div>
-</div>
+    </span>
 
 <script type="text/javascript">
     angular.bootstrap("")

@@ -44,9 +44,11 @@
         </span>
 
     </div>
-
     <div class="info-body">
-        <p>
+        ${ui.includeFragment("ebolaexample", "overview/inpatientLocation", [patient: patient, activeVisit: activeVisit])}
+        <span class="">
+
+        <div>
             <strong>Weight:</strong>
             <em>
                 <% if (mostRecentWeight) { %>
@@ -55,9 +57,9 @@
                 not recorded
                 <% } %>
             </em>
-        </p>
+        </div>
 
-        <p>
+        <div>
             <strong>Ebola Stage At Admission:</strong>
             <em>
                 <% if (ebolaStage) { %>
@@ -66,9 +68,9 @@
                 --
                 <% } %>
             </em>
-        </p>
+        </div>
 
-        <p>
+        <div>
             <strong>Type of Patient At Admission:</strong>
             <em>
                 <% if (typeOfPatient) { %>
@@ -77,9 +79,9 @@
                 --
                 <% } %>
             </em>
-        </p>
+        </div>
 
-        <p>
+        <div>
             <strong>Enrollment Status:</strong>
             <em>
                 <% if (currentEnrollment == null) { %>
@@ -88,7 +90,7 @@
                 Enrolled since ${ui.format(currentEnrollment.dateEnrolled)}
                 <% } %>
             </em>
-        </p>
+        </div>
 
         <% if (triageEncounter) { %>
         <a href="${triageViewLink}">
@@ -99,6 +101,7 @@
             Triage
         </a>
         <% } %>
+        </span>
 
     </div>
 </div>

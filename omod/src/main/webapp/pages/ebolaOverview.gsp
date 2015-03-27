@@ -89,9 +89,7 @@ ${ui.includeFragment("ebolaexample", "overview/patientHeader", [patient: patient
 
         <div class="clear"></div>
 
-        <div class="long-info-container column">
-            ${ui.includeFragment("ebolaexample", "overview/inpatientLocation", [patient: patient, activeVisit: activeVisit])}
-        </div>
+
 
         <div class="clear"></div>
         <br/>
