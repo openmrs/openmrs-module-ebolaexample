@@ -14,7 +14,16 @@
     <span style="width: 50%">
         <div>
             <strong>Ebola stage:</strong>
-            <span> Stage1 (Early/Dry)##</span>
+            <span>
+                <% if (config.ebolaStage) { %>
+                    ${ui.format(config.ebolaStage)}
+                <% } else if (config.ebolaStageAtAdmission) { %>
+                    ${ui.format(config.ebolaStageAtAdmission)}
+                <% } else { %>
+                --
+                <% } %>
+
+            </span>
         </div>
         <div>
 
@@ -46,8 +55,6 @@
             </a>
 
             <% } else if (!currentWard) { %>
-
-            
 
             <% } else { %>
 

@@ -45,7 +45,8 @@
 
     </div>
     <div class="info-body">
-        ${ui.includeFragment("ebolaexample", "overview/inpatientLocation", [patient: patient, activeVisit: activeVisit])}
+        ${ui.includeFragment("ebolaexample", "overview/inpatientLocation",
+                [patient: patient, activeVisit: activeVisit, ebolaStage:ebolaStage, ebolaStageAtAdmission:ebolaStageAtAdmission])}
         <span class="">
 
         <div>
@@ -62,8 +63,8 @@
         <div>
             <strong>Ebola Stage At Admission:</strong>
             <em>
-                <% if (ebolaStage) { %>
-                ${ui.format(ebolaStage)}
+                <% if (ebolaStageAtAdmission) { %>
+                ${ui.format(ebolaStageAtAdmission)}
                 <% } else { %>
                 --
                 <% } %>

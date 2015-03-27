@@ -46,6 +46,7 @@ public class EbolaProgramFragmentController {
         List<Obs> obs = obsService.getObservationsByPerson(whom.get(0));
         model.addAttribute("mostRecentWeight", null);
         model.addAttribute("ebolaStage", null);
+        model.addAttribute("ebolaStageAtAdmission", null);
         model.addAttribute("typeOfPatient", null);
 
         for(Obs ob : obs){
@@ -62,9 +63,17 @@ public class EbolaProgramFragmentController {
                     }else if(uuid.equals("162830AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")){
                         ebolaStage = "Stage 2(GI/Wet)";
                     }else if(uuid.equals("162831AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")){
-                        ebolaStage = "Stage 2(GI/Wet)";
+                        ebolaStage = "Stage 3(Severe)";
                     }
-                    model.addAttribute("ebolaStage", ebolaStage);
+                    Form form = ob.getEncounter().getForm();
+                    if(form != null && form.getFormId() == 7){
+                        if(model.getAttribute("ebolaStage") == null){
+                            model.addAttribute("ebolaStage", ebolaStage);
+                        }
+                    }
+                    else if(model.getAttribute("ebolaStageAtAdmission") == null){
+                        model.addAttribute("ebolaStageAtAdmission", ebolaStage);
+                    }
                 }
 
             }else if(conceptUUID.equals(EbolaMetadata._Concept.TYPE_OF_PATIENT)){
