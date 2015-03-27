@@ -47,29 +47,14 @@
 
             <% } else if (!currentWard) { %>
 
-            <p class="current-ward"><em>Not yet admitted</em></p>
-
-            <em>(To Do: Triage form should automatically admit.)</em>
-
-            <form method="POST"
-                  action="${
-                          ui.actionLink("ebolaexample", "overview/inpatientLocation", "admit", [patient: patient.patient.uuid])}">
-                ${ui.includeFragment("uicommons", "field/location", [
-                        label        : "Admit to",
-                        formFieldName: "location",
-                        withTag      : EmrApiConstants.LOCATION_TAG_SUPPORTS_ADMISSION
-                ])}
-                <button type="submit">
-                    Admit
-                </button>
-            </form>
+            
 
             <% } else { %>
 
             <p class="current-ward">${ui.format(currentWard)},
                 <span class="current-bed">${currentBed ? ui.format(currentBed) : "(No Bed)"}</span>
 
-        </p>
+            </p>
 
             <a class="" ng-click="changeLocationPatient()">Change</a>
 
