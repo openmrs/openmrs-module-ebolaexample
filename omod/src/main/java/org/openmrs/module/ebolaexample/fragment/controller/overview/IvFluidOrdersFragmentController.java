@@ -94,6 +94,7 @@ public class IvFluidOrdersFragmentController {
         private IvFluidOrderStatus status;
         private String lastStatus;
         private Date lastStatusChange;
+        private Date sortDate;
 
         public OrderView(IvFluidOrder order, IvFluidOrderStatus status) {
             this.order = order;
@@ -101,9 +102,10 @@ public class IvFluidOrdersFragmentController {
             if (status != null) {
                 lastStatus = status.getStatus().toString().replace('_', ' ') + ":";
                 lastStatusChange = status.getDateCreated();
+                sortDate = status.getDateCreated();
             } else {
                 lastStatus = "NOT STARTED";
-                lastStatusChange = order.getDateCreated();
+                sortDate = order.getDateCreated();
             }
         }
 
@@ -125,7 +127,7 @@ public class IvFluidOrdersFragmentController {
 
         @Override
         public int compareTo(OrderView that) {
-            return -OpenmrsUtil.compare(this.lastStatusChange, that.lastStatusChange);
+            return -OpenmrsUtil.compare(this.sortDate, that.sortDate);
         }
     }
 
