@@ -2,14 +2,20 @@ package org.openmrs.module.ebolaexample.fragment.controller.overview;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
+import org.openmrs.Location;
 import org.openmrs.Order;
 import org.openmrs.Patient;
 import org.openmrs.api.OrderService;
+import org.openmrs.module.appui.UiSessionContext;
 import org.openmrs.module.ebolaexample.FormatUtil;
+import org.openmrs.module.ebolaexample.PatientLocationUtil;
 import org.openmrs.module.ebolaexample.api.IvFluidOrderStatusService;
 import org.openmrs.module.ebolaexample.domain.IvFluidOrder;
 import org.openmrs.module.ebolaexample.domain.IvFluidOrderStatus;
+import org.openmrs.module.ebolaexample.page.controller.ChangeInPatientLocationPageController;
+import org.openmrs.module.emrapi.adt.AdtService;
 import org.openmrs.module.emrapi.patient.PatientDomainWrapper;
+import org.openmrs.module.emrapi.visit.VisitDomainWrapper;
 import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.annotation.FragmentParam;
 import org.openmrs.ui.framework.annotation.SpringBean;
@@ -27,13 +33,22 @@ public class IvFluidOrdersFragmentController {
                            @FragmentParam(value = "showAll", defaultValue = "false") Boolean showAll,
                            @SpringBean("orderService") OrderService orderService,
                            @SpringBean("ivFluidOrderStatusService") IvFluidOrderStatusService ivFluidOrderStatusService,
+                           @SpringBean AdtService adtService,
                            final UiUtils ui,
+                           UiSessionContext sessionContext,
                            FragmentModel model) {
 
         List<OrderView> orders = getOrders(orderService, ivFluidOrderStatusService, patient.getPatient(), showAll);
 
         model.put("orders", orders);
+        model.put("showAll", showAll);
         model.put("fluidOrderFormatter", new FormatUtil());
+
+        VisitDomainWrapper activeVisit = ChangeInPatientLocationPageController.getActiveVisit(patient.getPatient(), adtService, sessionContext);
+        Location currentWard = PatientLocationUtil.getCurrentWard(activeVisit);
+        Location currentBed = PatientLocationUtil.getCurrentBed(activeVisit);
+        model.addAttribute("currentWard", currentWard);
+        model.addAttribute("currentBed", currentBed);
     }
 
     private List<OrderView> getOrders(OrderService orderService, IvFluidOrderStatusService ivFluidOrderStatusService,
@@ -84,7 +99,7 @@ public class IvFluidOrdersFragmentController {
             this.order = order;
             this.status = status;
             if (status != null) {
-                lastStatus = status.getStatus().toString().replace('_', ' ') + ": ";
+                lastStatus = status.getStatus().toString().replace('_', ' ') + ":";
                 lastStatusChange = status.getDateCreated();
             } else {
                 lastStatus = "NOT STARTED";

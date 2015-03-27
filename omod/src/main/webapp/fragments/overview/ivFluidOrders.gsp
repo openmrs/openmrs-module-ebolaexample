@@ -8,10 +8,16 @@
 
         <h3>IV Fluids</h3>
 
-        <a href="#">
+        <% if (showAll) { %>
+        <a href="${ui.pageLink("ebolaexample", "ebolaOverview", [patient: patient.patient.uuid])}">
+            Back to Summary
+        </a>
+        <% } else { %>
+        <a href="${ui.pageLink("ebolaexample", "allFluidOrders", [patient: patient.patient.id])}">
             View All
         </a>
         ${ui.includeFragment("ebolaexample", "overview/actions", [patient: patient, currentAssignment:wardAndBed])}
+        <% } %>
     </div>
 
     <div class="info-body">
@@ -19,8 +25,9 @@
             <ul>
                 <% orders.each { orderView ->
                     def order = orderView.order
+                    def inactive = (orderView.lastStatus == "STOPPED:");
                 %>
-                <li class="iv-fluid-order">
+                <li class="iv-fluid-order<% if (inactive) { %> inactive<% } %>">
                     <div>
                         <span class="concept-name"><strong>${ui.format(order.getConcept())}</strong></span>
                         <em>${fluidOrderFormatter.formatIvFluidOrder(order, ui)}</em>

@@ -37,6 +37,9 @@
   .concept-name {
     text-transform: uppercase;
   }
+  &.inactive, .inactive {
+    background-color: darkgray;
+  }
   .prescriber{
     font-size: 0.9em;
   }
@@ -64,15 +67,6 @@
     padding-right: 30px;
   }
 }
-.iv-fluid-order {
-  .concept-name {
-    text-transform: uppercase;
-  }
-  .prescriber{
-    font-size: 0.9em;
-  }
-}
-
 .dashboard {
   .long-info-section{
     margin-bottom: 25px;
