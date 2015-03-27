@@ -99,7 +99,8 @@ ${ui.includeFragment("ebolaexample", "overview/patientHeader", [patient: patient
             ${ui.includeFragment("ebolaexample", "overview/prescriptions", [patient: patient])}
             <br/>
             ${ui.includeFragment("ebolaexample", "overview/scheduledDoseHistory", [patient: patient])}
-
+            <br/>
+            ${ui.includeFragment("ebolaexample", "overview/ivFluidOrders", [patient: patient])}
         </div>
 
     </div>

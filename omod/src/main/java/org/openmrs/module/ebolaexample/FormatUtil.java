@@ -2,6 +2,8 @@ package org.openmrs.module.ebolaexample;
 
 import org.openmrs.DrugOrder;
 import org.openmrs.SimpleDosingInstructions;
+import org.openmrs.module.ebolaexample.domain.AdministrationType;
+import org.openmrs.module.ebolaexample.domain.IvFluidOrder;
 import org.openmrs.ui.framework.UiUtils;
 
 import java.util.Locale;
@@ -45,10 +47,47 @@ public class FormatUtil {
                 dosingInstructions.append(instructions.getAdministrationInstructions());
             }
             return dosingInstructions.toString();
-        }
-        else {
+        } else {
             return order.getDosingInstructionsInstance().getDosingInstructionsAsString(locale);
         }
     }
+
+    public static String formatIvFluidOrder(Object o, UiUtils ui) {
+        IvFluidOrder order = (IvFluidOrder) o;
+
+        StringBuilder fluidOrder = new StringBuilder();
+        if (order.getAdministrationType() == AdministrationType.BOLUS) {
+            fluidOrder.append(order.getBolusQuantity()).append(' ');
+            fluidOrder.append(ui.format(order.getBolusUnits())).append(' ');
+            fluidOrder.append(ui.format(order.getRoute()));
+            fluidOrder.append(" over ");
+            fluidOrder.append(order.getBolusRate()).append(' ');
+            fluidOrder.append(ui.format(order.getBolusRateUnits())).append(' ');
+        } else {
+            fluidOrder.append("@ ").append(infusionRateDisplay(order, ui)).append(' ');
+            fluidOrder.append(ui.format(order.getRoute())).append(' ');
+            fluidOrder.append(infusionDurationDisplay(order, ui));
+        }
+
+        return fluidOrder.toString();
+    }
+
+    private static String infusionRateDisplay(IvFluidOrder order, UiUtils ui) {
+        if (order.getInfusionRate() == 0) {
+            return "KVO";
+        }
+        return order.getInfusionRate() + " " +
+                ui.format(order.getInfusionRateNumeratorUnit()) + "/" +
+                ui.format(order.getInfusionRateDenominatorUnit());
+    }
+
+    private static String  infusionDurationDisplay(IvFluidOrder order, UiUtils ui) {
+        if (order.getInfusionDuration() == 0) {
+            return "continuous";
+        }
+
+        return "for " + order.getInfusionDuration() + " " + ui.format(order.getInfusionDurationUnits());
+    }
+
 
 }
