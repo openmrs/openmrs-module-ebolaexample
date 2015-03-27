@@ -17,12 +17,7 @@ package org.openmrs.module.ebolaexample;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.Concept;
-import org.openmrs.ConceptName;
-import org.openmrs.ConceptNameTag;
-import org.openmrs.GlobalProperty;
-import org.openmrs.Location;
-import org.openmrs.LocationTag;
+import org.openmrs.*;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.FormService;
@@ -161,9 +156,11 @@ public class EbolaExampleActivator extends BaseModuleActivator {
         setPreferredConceptName(service, "162855AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "NS + KCL 20 mmol/L");
         setPreferredConceptName(service, "162856AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "NS + KCL 40 mmol/L");
         setPreferredConceptName(service, "161250AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Dextrose 5%");
+        setPreferredConceptName(service, "161922AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Dextrose 10%");
         setPreferredConceptName(service, "162860AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Phosphate Polyfusor");
         setPreferredConceptName(service, "162857AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "D5 in normal saline");
         setPreferredConceptName(service, "162861AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Sodium bicarbonate 1.26% Polyfusor");
+        setPreferredConceptName(service, "78617AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Ringer's Lactate");
     }
 
     // not private so we can test it
