@@ -35,40 +35,40 @@
 
         <% } else { %>
 
-        <span  ng-app="inpatientLocation" ng-controller="InpatientLocationCtrl"
-             ng-init="init({patientUuid:'${patient.patient.uuid}',
-            currentWard: <% if (currentWard) { %>{display:'${currentWard}', uuid:'${currentWard.uuid}'}<%
-                 } else { %>null<% } %>,
-            currentBed: <% if (currentBed) { %>{display:'${currentBed}', uuid:'${currentBed.uuid}'}<% } else { %>null<%
-                     } %>
-            })">
+            <div  ng-app="inpatientLocation" ng-controller="InpatientLocationCtrl" style="display: inline;"
+                 ng-init="init({patientUuid:'${patient.patient.uuid}',
+                currentWard: <% if (currentWard) { %>{display:'${currentWard}', uuid:'${currentWard.uuid}'}<%
+                     } else { %>null<% } %>,
+                currentBed: <% if (currentBed) { %>{display:'${currentBed}', uuid:'${currentBed.uuid}'}<% } else { %>null<%
+                         } %>
+                })">
 
-            <% if (!config.activeVisit) { %>
+                <% if (!config.activeVisit) { %>
 
-            <em>No active visit.</em> <br/>
+                <em>No active visit.</em> <br/>
 
-            <a class=""
-               href="${ui.actionLink("ebolaexample", "overview/inpatientLocation", "startOutpatientVisit",
-                       [patient: patient.patient.uuid])}">
-                <i class="icon-exchange"></i>
-                Outpatient visit
-            </a>
+                <a class=""
+                   href="${ui.actionLink("ebolaexample", "overview/inpatientLocation", "startOutpatientVisit",
+                           [patient: patient.patient.uuid])}">
+                    <i class="icon-exchange"></i>
+                    Outpatient visit
+                </a>
 
-            <% } else if (!currentWard) { %>
+                <% } else if (!currentWard) { %>
 
-            --
-            <% } else { %>
+                --
+                <% } else { %>
 
-            <p class="current-ward">${ui.format(currentWard)},
-                <span class="current-bed">${currentBed ? ui.format(currentBed) : "(No Bed)"}</span>
+                <p class="current-ward">${ui.format(currentWard)},
+                    <span class="current-bed">${currentBed ? ui.format(currentBed) : "(No Bed)"}</span>
 
-            </p>
+                </p>
 
-            <a class="" ng-click="changeLocationPatient()">Change</a>
 
-            <% } %>
-        </span>
+                <% } %>
+                <a class="right" style="margin-right: 60px" ng-click="changeLocationPatient()">Change</a>
 
+            </div>
         <% } %>
         </div>
 
@@ -82,8 +82,8 @@
             </span>
 
             <% if (!currentOutcome) { %>
-            <a class="" href="${ui.pageLink("ebolaexample", "changePatientDischarge",
-                    [patientUuid: patient.patient.uuid])}">Discharge/Deceased</a>
+            <a class="right" style="margin-right: 60px" href="${ui.pageLink("ebolaexample", "changePatientDischarge",
+                    [patientUuid: patient.patient.uuid])}">Change</a>
             <% } %>
         </div>
 
