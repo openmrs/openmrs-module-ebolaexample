@@ -4,7 +4,8 @@ angular.module("feature-toggles", [])
             {name:'enterVitals', enabled:false},
             {name:'enterSymptoms', enabled:false},
             {name:'vitalsAndSymptomsSummaryDesktop', enabled:false},
-            {name:'ivFluids', enabled:true}
+            {name:'ivFluids', enabled:true},
+            {name:'laboratory', enabled:false}
         ];
         var url = "/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/feature-toggle";
 
