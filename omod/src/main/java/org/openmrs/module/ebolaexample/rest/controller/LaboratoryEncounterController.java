@@ -25,7 +25,7 @@ public class LaboratoryEncounterController {
         SimpleObject response = new SimpleObject();
         EncounterService encounterService = Context.getEncounterService();
         Patient patient = Context.getPatientService().getPatientByUuid(patientUuid);
-        EncounterType encounterType = encounterService.getEncounterTypeByUuid(EbolaMetadata._EncounterType.EBOLA_INPATIENT_FOLLOWUP);
+        EncounterType encounterType = encounterService.getEncounterTypeByUuid(EbolaMetadata._EncounterType.EBOLA_LAB_TEST);
 
         Form form = Context.getFormService().getFormByUuid(EbolaMetadata._Form.EBOLA_LAB_FORM);
 
@@ -54,63 +54,5 @@ public class LaboratoryEncounterController {
         ArrayList<Map.Entry<String, ArrayList<SimpleObject>>> entries = new ArrayList<Map.Entry<String, ArrayList<SimpleObject>>>(obsMap.entrySet());
         response.add("encounters", entries);
         return response;
-    }
-
-    private ArrayList<SimpleObject> getAllObs(Encounter encounter) {
-        ArrayList<SimpleObject> obsResult = new ArrayList<SimpleObject>();
-        if(encounter  != null ){
-            Set<Obs> allObs = encounter.getAllObs();
-
-            for(Obs obs : allObs){
-                if(obs.getObsGroup() != null){
-                    continue;
-                }
-                if(obs.isObsGrouping()){
-                    SimpleObject result = new SimpleObject();
-                    result.add("concept", obs.getConcept().getUuid());
-                    ArrayList<SimpleObject> group = new ArrayList<SimpleObject>();
-                    for(Obs child : obs.getGroupMembers()){
-                        group.add(getObsConceptPair(child));
-                    }
-                    result.add("groupMembers", group);
-                    obsResult.add(result);
-                }else{
-                    SimpleObject pair = getObsConceptPair(obs);
-                    obsResult.add(pair);
-                }
-            }
-        }
-        return obsResult;
-    }
-
-    private SimpleObject getObsConceptPair(Obs obs) {
-        String conceptUuid = obs.getConcept().getUuid();
-        Object conceptValue = getValue(obs);
-        return new SimpleObject().add("concept", conceptUuid).add("value", conceptValue);
-    }
-
-    private Object getValue(Obs obs) {
-        Concept concept = obs.getConcept();
-        ConceptDatatype datatype = concept.getDatatype();
-        if(datatype.isBoolean()){
-            return obs.getValueBoolean();
-        }
-        else if(datatype.isCoded()){
-            return obs.getValueCoded().getUuid();
-        }
-        else if(datatype.isDate()){
-            return obs.getValueDate();
-        }
-        else if(datatype.isDateTime()){
-            return obs.getValueDatetime();
-        }
-        else if(datatype.isNumeric()){
-            return obs.getValueNumeric();
-        }
-        else if(datatype.isComplex()){
-            return obs.getValueComplex();
-        }
-
-        return null;
     }
 }

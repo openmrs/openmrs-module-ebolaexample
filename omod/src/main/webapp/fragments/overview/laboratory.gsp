@@ -9,7 +9,8 @@
     ])
 %>
 
-<div id="laboratory" ng-show="isFeatureEnabled()" class="long-info-section"  ng-controller="LaboratoryController">
+<div id="laboratory" ng-show="isFeatureEnabled()" class="long-info-section"  ng-controller="LaboratoryController"
+     ng-init="init({patientUuid:'${patient.patient.uuid}'})">
 
     <div class="info-header" >
         <i class="icon-medkit"></i>
@@ -26,10 +27,13 @@
         <div ng-if="encounters.length == 0">
             ${ui.message("coreapps.none")}
         </div>
-        <table >
-            <tr ng-repeat="encounter in encounters">
-            </tr>
-        </table>
+        <div style="width: 50%;">
+            <span ng-repeat = "ebola in ebolaTests">ebola {{ebola}}</span>
+        </div>
+        <div>
+            <span ng-repeat = "malaria in malariaTests">malaria {{malaria}}</span>
+
+        </div>
     </div>
     <br/>
 </div>

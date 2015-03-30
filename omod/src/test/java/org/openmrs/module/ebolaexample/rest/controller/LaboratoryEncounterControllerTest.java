@@ -115,7 +115,7 @@ public class LaboratoryEncounterControllerTest  extends EbolaRestTestBase {
             Obs codedObs = getEbolaCodedObs(patient, dateCreated);
             obses.add(codedObs);
         }
-        new EbolaEncounterBuilder().createEncounter(patient, EbolaMetadata._Form.EBOLA_LAB_FORM, dateCreated, obses);
+        new EbolaEncounterBuilder().createEncounter(patient, EbolaMetadata._Form.EBOLA_LAB_FORM, dateCreated, obses, EbolaMetadata._EncounterType.EBOLA_LAB_TEST);
     }
 
     private Obs getMalariaCodedObs(Patient patient, Date dateCreated) {

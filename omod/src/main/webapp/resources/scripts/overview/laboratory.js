@@ -10,7 +10,7 @@ angular.module('laboratory', ['feature-toggles'])
             var config = {};
             $scope.init = function(setConfig){
                 config = setConfig;
-                //$scope.getEncounters(2);
+                $scope.getEncounters(2);
             };
             $scope.encounters = [];
 
@@ -26,8 +26,18 @@ angular.module('laboratory', ['feature-toggles'])
                 }
                 $http.get(url).success(function(response) {
                     $scope.encounters = response["encounters"];
+
+                    _.each($scope.encounters, function(encounter){
+                        if(encounter.key == "1030AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"){
+                            $scope.ebolaTests = encounter.value;
+                        }
+                        if(encounter.key == "32AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"){
+                            $scope.malariaTests = encounter.value;
+                        }
+                    });
                 });
             };
+
             $scope.getObsDesc = function(obs){
                return [];
             };

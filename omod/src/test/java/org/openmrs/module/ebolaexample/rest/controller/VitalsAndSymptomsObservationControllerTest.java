@@ -46,13 +46,13 @@ public class VitalsAndSymptomsObservationControllerTest extends EbolaRestTestBas
         Date yesterday = DateUtils.addDays(new Date(), -1);
         HashSet<Obs> obses = new HashSet<Obs>();
         obses.add(getNumericObs(patient, yesterday));
-        new EbolaEncounterBuilder().createEncounter(patient, EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS, yesterday, obses);
+        new EbolaEncounterBuilder().createEncounter(patient, EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS, yesterday, obses, EbolaMetadata._EncounterType.EBOLA_INPATIENT_FOLLOWUP);
 
         Date today = new Date();
         HashSet<Obs> obses1 = new HashSet<Obs>();
         obses1.add(getNumericObs(patient, today));
         obses1.add(getCodedObs(patient, today));
-        new EbolaEncounterBuilder().createEncounter(patient, EbolaMetadata._Form.EBOLA_VITALS_FORM, today, obses1);
+        new EbolaEncounterBuilder().createEncounter(patient, EbolaMetadata._Form.EBOLA_VITALS_FORM, today, obses1, EbolaMetadata._EncounterType.EBOLA_INPATIENT_FOLLOWUP);
 
         MockHttpServletRequest request = new MockHttpServletRequest("GET", requestURI);
         request.addHeader("content-type", "application/json");
@@ -77,7 +77,7 @@ public class VitalsAndSymptomsObservationControllerTest extends EbolaRestTestBas
         obses1.add(numericObs);
         Obs codedObs = getCodedObs(patient, today);
         obses1.add(codedObs);
-        new EbolaEncounterBuilder().createEncounter(patient, EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS, today, obses1);
+        new EbolaEncounterBuilder().createEncounter(patient, EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS, today, obses1, EbolaMetadata._EncounterType.EBOLA_INPATIENT_FOLLOWUP);
 
         MockHttpServletRequest request = new MockHttpServletRequest("GET", requestURI);
         request.addHeader("content-type", "application/json");
@@ -165,7 +165,7 @@ public class VitalsAndSymptomsObservationControllerTest extends EbolaRestTestBas
         HashSet<Obs> obses = new HashSet<Obs>();
         Obs codedObs = getCodedObs(patient, dateCreated);
         obses.add(codedObs);
-        new EbolaEncounterBuilder().createEncounter(patient, EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS, dateCreated, obses);
+        new EbolaEncounterBuilder().createEncounter(patient, EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS, dateCreated, obses, EbolaMetadata._EncounterType.EBOLA_INPATIENT_FOLLOWUP);
     }
 
     private Obs getCodedObs(Patient patient, Date dateCreated) {
