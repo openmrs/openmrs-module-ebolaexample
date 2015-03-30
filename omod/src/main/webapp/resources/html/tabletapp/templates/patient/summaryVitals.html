@@ -1,0 +1,18 @@
+<div ng-controller="VitalsSummaryController"
+     ng-init="init({patientUuid: patientUuid, numItems: 2})">
+
+    <span ng-show="!loading" class="question-title">
+        Vitals
+        <a class="smaller indented" href="" ng-click="captureVitals()">Capture vitals</a>
+    </span>
+
+    <ul ng-show="!loading" class="list-items" id="patient-vitals">
+        <li ng-show="vitalsEncounters.length == 0">None</li>
+        <li ng-repeat="encounter in vitalsEncounters">
+            <span style="float: left; width: 150px; border: none">{{encounter.dateCreated | simpleDate }}</span>
+            <span style="float: left; width: 13%; border:none" ng-repeat="ob in getObsDesc(encounter.obs)">
+                {{ob}}
+            </span>
+        </li>
+    </ul>
+</div>

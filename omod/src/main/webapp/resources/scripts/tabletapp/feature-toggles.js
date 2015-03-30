@@ -4,6 +4,7 @@ angular.module("feature-toggles", [])
             {name:'enterVitals', enabled:false},
             {name:'enterSymptoms', enabled:false},
             {name:'vitalsAndSymptomsSummaryDesktop', enabled:false},
+            {name:'vitalsAndSymptomsSummaryTablet', enabled:false},
             {name:'ivFluids', enabled:true},
             {name:'laboratory', enabled:false}
         ];

@@ -294,6 +294,7 @@
                         <source>src/main/webapp/resources/scripts/tabletapp/app.js</source>
                         <source>src/main/webapp/resources/scripts/tabletapp/login.js</source>
                         <source>src/main/webapp/resources/scripts/tabletapp/session.js</source>
+                        <source>src/main/webapp/resources/scripts/overview/vitalsSummary.js</source>
                         <source>src/main/webapp/resources/scripts/tabletapp/prescriptions.js</source>
                         <source>src/main/webapp/resources/scripts/tabletapp/patients.js</source>
                         <source>src/main/webapp/resources/scripts/tabletapp/orders.js</source>

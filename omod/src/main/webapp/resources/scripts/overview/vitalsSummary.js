@@ -11,7 +11,8 @@ angular.module('vitalsSummary', ['feature-toggles', 'tabletapp', 'filters'])
             var config = {};
             $scope.init = function(setConfig){
                 config = setConfig;
-                $scope.getVitalsEncounters(3);
+                var numItems = config.numItems || 3;
+                $scope.getVitalsEncounters(numItems);
             };
 
             $scope.questions = questions;
