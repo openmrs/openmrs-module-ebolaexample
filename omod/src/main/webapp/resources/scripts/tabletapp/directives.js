@@ -153,7 +153,6 @@ angular.module("directives", ["session", "feature-toggles"])
                 });
                 $http.get("/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/assignment?patientUuid=" + scope.patientUuid)
                     .success(function (assignment) {
-                        console.log(assignment)
                         scope.ward = assignment['ward'];
                         scope.bed = {display: assignment['bed']};
                     })
