@@ -48,6 +48,26 @@ public class EbolaTestBaseMetadata extends AbstractMetadataBundle {
         conceptService.saveConcept(concept("mL", "162263AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "N/A", "Units"));
         conceptService.saveConcept(concept("min", "1733AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "N/A", "Time Units"));
         conceptService.saveConcept(concept("hr", "1822AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "N/A", "Time Units"));
+
+        installLabTestData();
+    }
+
+    private void installLabTestData(){
+        Concept concept = concept("MALARIAL SMEAR", "32AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Coded", "Test");
+        Concept concept2 = concept("Ebola SMEAR", "1030AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Coded", "Test");
+        Concept concept664 = concept("Neg", "664AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "N/A", "Misc");
+        Concept concept703 = concept("Pos", "703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "N/A", "Misc");
+
+        concept.addAnswer(new ConceptAnswer(concept664));
+        concept.addAnswer(new ConceptAnswer(concept703));
+
+        concept2.addAnswer(new ConceptAnswer(concept664));
+        concept2.addAnswer(new ConceptAnswer(concept703));
+
+        conceptService.saveConcept(concept664);
+        conceptService.saveConcept(concept703);
+        conceptService.saveConcept(concept);
+        conceptService.saveConcept(concept2);
     }
 
     private String uuid() {

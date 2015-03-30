@@ -5,11 +5,9 @@ import org.apache.commons.lang.time.DateUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;
 import org.openmrs.*;
-import org.openmrs.api.EncounterService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.ebolaexample.EbolaRestTestBase;
 import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
-import org.openmrs.module.metadatadeploy.MetadataUtils;
 import org.openmrs.module.webservices.rest.SimpleObject;
 import org.openmrs.module.webservices.rest.web.RestConstants;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -48,13 +46,13 @@ public class VitalsAndSymptomsObservationControllerTest extends EbolaRestTestBas
         Date yesterday = DateUtils.addDays(new Date(), -1);
         HashSet<Obs> obses = new HashSet<Obs>();
         obses.add(getNumericObs(patient, yesterday));
-        createEncounter(patient, EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS, yesterday, obses);
+        new EbolaEncounterBuilder().createEncounter(patient, EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS, yesterday, obses);
 
         Date today = new Date();
         HashSet<Obs> obses1 = new HashSet<Obs>();
         obses1.add(getNumericObs(patient, today));
         obses1.add(getCodedObs(patient, today));
-        createEncounter(patient, EbolaMetadata._Form.EBOLA_VITALS_FORM, today, obses1);
+        new EbolaEncounterBuilder().createEncounter(patient, EbolaMetadata._Form.EBOLA_VITALS_FORM, today, obses1);
 
         MockHttpServletRequest request = new MockHttpServletRequest("GET", requestURI);
         request.addHeader("content-type", "application/json");
@@ -79,7 +77,7 @@ public class VitalsAndSymptomsObservationControllerTest extends EbolaRestTestBas
         obses1.add(numericObs);
         Obs codedObs = getCodedObs(patient, today);
         obses1.add(codedObs);
-        createEncounter(patient, EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS, today, obses1);
+        new EbolaEncounterBuilder().createEncounter(patient, EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS, today, obses1);
 
         MockHttpServletRequest request = new MockHttpServletRequest("GET", requestURI);
         request.addHeader("content-type", "application/json");
@@ -167,26 +165,7 @@ public class VitalsAndSymptomsObservationControllerTest extends EbolaRestTestBas
         HashSet<Obs> obses = new HashSet<Obs>();
         Obs codedObs = getCodedObs(patient, dateCreated);
         obses.add(codedObs);
-        createEncounter(patient, EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS, dateCreated, obses);
-    }
-
-    private void createEncounter(Patient patient, String formUuid, Date dateCreated, HashSet<Obs> obs) {
-        EncounterService encounterService = Context.getEncounterService();
-        Visit visit = Context.getVisitService().getActiveVisitsByPatient(patient).get(0);
-        Provider provider = Context.getProviderService().getAllProviders().get(0);
-        EncounterType encounterType = encounterService.getEncounterTypeByUuid(EbolaMetadata._EncounterType.EBOLA_INPATIENT_FOLLOWUP);
-        EncounterRole encounterRole = MetadataUtils.existing(EncounterRole.class, EncounterRole.UNKNOWN_ENCOUNTER_ROLE_UUID);
-        Form form = Context.getFormService().getFormByUuid(formUuid);
-        Encounter encounter = new Encounter();
-        encounter.setForm(form);
-        encounter.setPatient(patient);
-        encounter.setVisit(visit);
-        encounter.setEncounterType(encounterType);
-        encounter.setProvider(encounterRole, provider);
-        encounter.setEncounterDatetime(dateCreated);
-        encounter.setObs(obs);
-
-        encounterService.saveEncounter(encounter);
+        new EbolaEncounterBuilder().createEncounter(patient, EbolaMetadata._Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS, dateCreated, obses);
     }
 
     private Obs getCodedObs(Patient patient, Date dateCreated) {
