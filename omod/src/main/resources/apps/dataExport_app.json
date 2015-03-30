@@ -1,0 +1,18 @@
+[
+  {
+    "id": "ebolaexample.dataExport",
+    "description": "Download patient data as CSV",
+    "order": 12,
+    "requiredPrivilege": "App: ebolaexample.dataExport",
+    "extensions": [
+      {
+        "id": "ebolaexample.ebolaDashboardHomepageLink",
+        "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
+        "type": "link",
+        "label": "Download CSV",
+        "url": "ebolaexample/dataExport.page?app=ebolaexample.dataExport",
+        "icon": "icon-th"
+      }
+    ]
+  }
+]
