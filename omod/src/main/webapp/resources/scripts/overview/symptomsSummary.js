@@ -8,7 +8,8 @@ angular.module('symptomsSummary', ['feature-toggles', 'tabletapp', 'filters'])
             var config = {};
             $scope.init = function(setConfig){
                 config = setConfig;
-                $scope.getSymptomsEncounters(3);
+                var numItems = config.numItems || 3;
+                $scope.getSymptomsEncounters(numItems);
             };
 
             $scope.questions = questions;

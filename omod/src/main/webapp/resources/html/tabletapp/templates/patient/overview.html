@@ -15,6 +15,8 @@
 
     <ng-include ng-if="isFeatureEnabled('vitalsAndSymptomsSummaryTablet')" src="'templates/patient/summaryVitals.html'"></ng-include>
 
+    <ng-include ng-if="isFeatureEnabled('vitalsAndSymptomsSummaryTablet')" src="'templates/patient/summarySymptoms.html'"></ng-include>
+
     <ng-include src="'templates/patient/summaryPrescriptions.html'"></ng-include>
 
     <ng-include ng-if="isFeatureEnabled('ivFluids')" src="'templates/patient/summaryIVFluids.html'"></ng-include>

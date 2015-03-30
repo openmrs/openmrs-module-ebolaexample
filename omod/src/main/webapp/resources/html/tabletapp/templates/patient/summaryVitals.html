@@ -6,11 +6,11 @@
         <a class="smaller indented" href="" ng-click="captureVitals()">Capture vitals</a>
     </span>
 
-    <ul ng-show="!loading" class="list-items" id="patient-vitals">
+    <ul ng-show="!loading" class="vitals-symptoms-items">
         <li ng-show="vitalsEncounters.length == 0">None</li>
         <li ng-repeat="encounter in vitalsEncounters">
-            <span style="float: left; width: 150px; border: none">{{encounter.dateCreated | simpleDate }}</span>
-            <span style="float: left; width: 13%; border:none" ng-repeat="ob in getObsDesc(encounter.obs)">
+            <span class="encounter-date">{{encounter.dateCreated | simpleDate }}</span>
+            <span class="vitals-obs" ng-repeat="ob in getObsDesc(encounter.obs)">
                 {{ob}}
             </span>
         </li>

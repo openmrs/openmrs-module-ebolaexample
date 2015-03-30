@@ -1,0 +1,22 @@
+<div ng-controller="SymptomsSummaryController"
+     ng-init="init({patientUuid: patientUuid, numItems: 2})">
+
+    <span ng-show="!loading" class="question-title">
+        Symptoms
+        <a class="smaller indented" href="" ng-click="captureSymptoms()">Capture symptoms</a>
+    </span>
+
+    <ul ng-show="!loading" class="vitals-symptoms-items">
+        <li ng-show="symptomsEncounters.length == 0">None</li>
+        <li ng-repeat="encounter in symptomsEncounters">
+                <div class="encounter-date">
+                    {{encounter.dateCreated | simpleDate }}
+                </div>
+                <div class="symptoms-obs">
+                    <div ng-repeat="ob in getObsDesc(encounter.obs)">
+                        {{ob}}
+                    </div>
+                </div>
+        </li>
+    </ul>
+</div>

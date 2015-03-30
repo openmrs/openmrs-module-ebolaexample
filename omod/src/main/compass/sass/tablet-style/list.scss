@@ -42,6 +42,30 @@ ul.list-items {
     }
 }
 
+ul.vitals-symptoms-items {
+  @extend ul.list-items;
+  li {
+	font-family: "OpenSans";
+
+	.encounter-date {
+	  border: none;
+	  float: left;
+	  width: 170px;
+	}
+
+	.vitals-obs {
+	  border: none;
+	  float: left;
+	  width: 13%;
+	}
+
+	.symptoms-obs {
+	  overflow: hidden;
+	  border: none;
+	}
+  }
+}
+
 .date {
 	font-family: "OpenSansBold";
 	font-size: 0.75em;
