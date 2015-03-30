@@ -51,6 +51,7 @@ public class EbolaMetadata extends AbstractMetadataBundle {
         public static final String EBOLA_TRIAGE = "4a8da825-2896-4f3f-be07-2c3d9214c040";
         public static final String EBOLA_ASSESSMENT = "c49903a6-af3f-44ec-8ed3-abcfbfcea6e7";
         public static final String EBOLA_DISCHARGE = "181820aa-88c9-479b-9077-af92f5364329";
+        public static final String EBOLA_LAB_TEST = "edc1bdb6-6a72-4cee-a7fb-7ca7498e43c8";
     }
 
     public static class _EncounterRole {
@@ -74,6 +75,7 @@ public class EbolaMetadata extends AbstractMetadataBundle {
         public static final String EBOLA_ASSESSMENT_FORM = "230af74f-f1b5-4e43-ae6a-27208ed46540";
         public static final String EBOLA_DISCHARGE_FORM = "2541a157-fd45-41e0-ad2b-f6a24c65463a";
         public static final String EBOLA_VITALS_FORM = "a000cb34-9ec1-4344-a1c8-f692232f6edd";
+        public static final String EBOLA_LAB_FORM = "1741df70-3f41-45a6-a436-55db1d4c1654";
     }
 
 	public static class _VisitAttributeType {
@@ -146,13 +148,15 @@ public class EbolaMetadata extends AbstractMetadataBundle {
         install(encounterType("ETU Triage", "Triage of patients arriving at Ebola Treatment Unit (ETU)",  _EncounterType.EBOLA_TRIAGE));
         install(encounterType("ETU Assessment", "Assessment of patients at Ebola Treatment Unit (ETU)",  _EncounterType.EBOLA_ASSESSMENT));
         install(encounterType("ETU Discharge", "Discharge patients at Ebola Treatment Unit (ETU)",  _EncounterType.EBOLA_DISCHARGE));
+        install(encounterType("Ebola Laboratory Test", "Record laboratory test result of patient",  _EncounterType.EBOLA_LAB_TEST));
 
         install(form("Ebola Inpatient Observations and Treatment", "", _EncounterType.EBOLA_INPATIENT_FOLLOWUP, "0.1", _Form.INPATIENT_OBSERVATIONS_AND_TREATMENT));
         install(form("Ebola Clinical Signs and Symptoms", "", _EncounterType.EBOLA_CASE_INVESTIGATION, "0.1", _Form.EBOLA_CLINICAL_SIGNS_AND_SYMPTOMS));
         install(form("Ebola Triage", "", _EncounterType.EBOLA_TRIAGE, "2.0", _Form.EBOLA_TRIAGE_FORM));
         install(form("Ebola Assessment", "", _EncounterType.EBOLA_ASSESSMENT, "2.0", _Form.EBOLA_ASSESSMENT_FORM));
         install(form("Ebola Assessment", "", _EncounterType.EBOLA_DISCHARGE, "2.0", _Form.EBOLA_DISCHARGE_FORM));
-     		
+        install(form("Ebola Laboratory Test", "", _EncounterType.EBOLA_LAB_TEST, "2.0", _Form.EBOLA_LAB_FORM));
+
 		install(visitAttributeType("Assigned ward", "", LocationDatatype.class, null, 0, 1, _VisitAttributeType.ASSIGNED_WARD));
 		install(visitAttributeType("Assigned bed", "", LocationDatatype.class, null, 0, 1, _VisitAttributeType.ASSIGNED_BED));
 

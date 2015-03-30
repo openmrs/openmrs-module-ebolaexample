@@ -1,5 +1,12 @@
 <%
     ui.includeJavascript("ebolaexample", "overview/laboratory.js")
+
+    def laboratoryUrl = ui.pageLink("htmlformentryui", "htmlform/enterHtmlFormWithStandardUi", [
+            patientId: patient.patient.uuid,
+            visitId:activeVisit?.visit?.uuid,
+            definitionUiResource: "ebolaexample:htmlforms/laboratory.xml",
+            returnUrl: ui.thisUrl()
+    ])
 %>
 
 <div id="laboratory" ng-show="isFeatureEnabled()" class="long-info-section"  ng-controller="LaboratoryController">
@@ -12,7 +19,7 @@
             <a href="" ng-click="getEncounters(2)" ng-class="{'disabled': !showAll}">Show last 2 observations</a>
             <a href="" ng-click="getEncounters()" ng-class="{'disabled': showAll}">View All</a>
         </span>
-        <a href="" class="right">Add lab result</a>
+        <a href=${laboratoryUrl} class="right">Add lab result</a>
     </div>
 
     <div class="info-body">
