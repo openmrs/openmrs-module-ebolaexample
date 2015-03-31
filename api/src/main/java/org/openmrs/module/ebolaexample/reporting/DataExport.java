@@ -22,9 +22,19 @@ import org.openmrs.module.reporting.report.definition.ReportDefinition;
 
 import java.util.Date;
 
+import static org.openmrs.module.ebolaexample.metadata.EbolaMetadata._Concept.EBOLA_STAGE;
+import static org.openmrs.module.ebolaexample.metadata.EbolaMetadata._Concept.TYPE_OF_PATIENT;
+import static org.openmrs.module.ebolaexample.metadata.EbolaMetadata._Concept.WEIGHT_IN_KG;
+import static org.openmrs.module.ebolaexample.metadata.EbolaMetadata._EncounterType.EBOLA_REGISTRATION;
+import static org.openmrs.module.ebolaexample.metadata.EbolaMetadata._PersonAttributeType.NEXT_OF_KIN_NAME;
+import static org.openmrs.module.ebolaexample.metadata.EbolaMetadata._PersonAttributeType.NEXT_OF_KIN_PHONE;
+import static org.openmrs.module.ebolaexample.metadata.EbolaMetadata._PersonAttributeType.TELEPHONE_NUMBER;
+import static org.openmrs.module.ebolaexample.metadata.KerryTownMetadata._PatientIdentifierType.KERRY_TOWN_IDENTIFIER;
+import static org.openmrs.module.reporting.common.TimeQualifier.FIRST;
+
 public class DataExport {
 
-    public DataSetDefinition buildRegistrationDataSetDefinition() {
+    public DataSetDefinition buildRegistrationAndDischargeDataSetDefinition() {
         PatientDataSetDefinition dsd = new PatientDataSetDefinition();
 
         addRegistrationDate(dsd);
@@ -43,7 +53,7 @@ public class DataExport {
 
         addIdNumber(dsd);
 
-        EncounterType registrationEncounterType = MetadataUtils.existing(EncounterType.class, EbolaMetadata._EncounterType.EBOLA_REGISTRATION);
+        EncounterType registrationEncounterType = MetadataUtils.existing(EncounterType.class, EBOLA_REGISTRATION);
 
         addWeight(dsd, registrationEncounterType);
 
@@ -51,57 +61,55 @@ public class DataExport {
 
         addEbolaStage(dsd, registrationEncounterType);
 
+        addDischargeInformation(dsd);
+
         return dsd;
     }
 
-    public PatientDataSetDefinition buildDischargeDataSetDefinition() {
-        PatientDataSetDefinition dsd = new PatientDataSetDefinition();
-
+    public void addDischargeInformation(PatientDataSetDefinition dsd) {
         ProgramEnrollmentsForPatientDataDefinition programEnrollmentsDefinition = new ProgramEnrollmentsForPatientDataDefinition();
         Program program = Context.getProgramWorkflowService().getProgram(1);
 
         programEnrollmentsDefinition.setProgram(program);
-        programEnrollmentsDefinition.setWhichEnrollment(TimeQualifier.FIRST);
+        programEnrollmentsDefinition.setWhichEnrollment(FIRST);
         programEnrollmentsDefinition.addParameter(new Parameter("datedischarged", "datedischarged", Date.class));
         programEnrollmentsDefinition.addParameter(new Parameter("outcome", "outcome", Object.class));
 
         dsd.addColumn("datedischarged", programEnrollmentsDefinition, "", new PropertyConverter(PatientProgram.class, "dateCompleted"));
         dsd.addColumn("outcome", programEnrollmentsDefinition, "", new PropertyConverter(PatientProgram.class, "outcome"));
-
-        return dsd;
     }
 
     private void addEbolaStage(PatientDataSetDefinition dsd, EncounterType registrationEncounterType) {
-        Concept ebolaStageConcept = MetadataUtils.existing(Concept.class, EbolaMetadata._Concept.EBOLA_STAGE);
-        ObsForPersonDataDefinition obsForPersonDataDefinition3 = new ObsForPersonDataDefinition("ebolastage", TimeQualifier.FIRST, ebolaStageConcept, null, null);
+        Concept ebolaStageConcept = MetadataUtils.existing(Concept.class, EBOLA_STAGE);
+        ObsForPersonDataDefinition obsForPersonDataDefinition3 = new ObsForPersonDataDefinition("ebolastage", FIRST, ebolaStageConcept, null, null);
         obsForPersonDataDefinition3.addEncounterType(registrationEncounterType);
         dsd.addColumn("ebolastage", obsForPersonDataDefinition3, "", new ObsValueConverter());
     }
 
     private void addTypeOfPatient(PatientDataSetDefinition dsd, EncounterType registrationEncounterType) {
-        Concept typeOfPatientConcept = MetadataUtils.existing(Concept.class, EbolaMetadata._Concept.TYPE_OF_PATIENT);
-        ObsForPersonDataDefinition obsForPersonDataDefinition2 = new ObsForPersonDataDefinition("typeofpatient", TimeQualifier.FIRST, typeOfPatientConcept, null, null);
+        Concept typeOfPatientConcept = MetadataUtils.existing(Concept.class, TYPE_OF_PATIENT);
+        ObsForPersonDataDefinition obsForPersonDataDefinition2 = new ObsForPersonDataDefinition("typeofpatient", FIRST, typeOfPatientConcept, null, null);
         obsForPersonDataDefinition2.addEncounterType(registrationEncounterType);
         dsd.addColumn("typeofpatient", obsForPersonDataDefinition2, "", new ObsValueConverter());
     }
 
     private void addWeight(PatientDataSetDefinition dsd, EncounterType registrationEncounterType) {
-        Concept weightConcept = MetadataUtils.existing(Concept.class, EbolaMetadata._Concept.WEIGHT_IN_KG);
-        ObsForPersonDataDefinition obsForPersonDataDefinition = new ObsForPersonDataDefinition("weight", TimeQualifier.FIRST, weightConcept, null, null);
+        Concept weightConcept = MetadataUtils.existing(Concept.class, WEIGHT_IN_KG);
+        ObsForPersonDataDefinition obsForPersonDataDefinition = new ObsForPersonDataDefinition("weight", FIRST, weightConcept, null, null);
         obsForPersonDataDefinition.addEncounterType(registrationEncounterType);
         dsd.addColumn("weight", obsForPersonDataDefinition, "", new ObsValueConverter());
     }
 
     private void addNextOfKin(PatientDataSetDefinition dsd) {
-        PersonAttributeType nextOfKinName = MetadataUtils.existing(PersonAttributeType.class, EbolaMetadata._PersonAttributeType.NEXT_OF_KIN_NAME);
+        PersonAttributeType nextOfKinName = MetadataUtils.existing(PersonAttributeType.class, NEXT_OF_KIN_NAME);
         dsd.addColumn("nextofkinname", new PersonAttributeDataDefinition("nextofkinname", nextOfKinName), "", new PropertyConverter(PersonAttribute.class, "value"));
 
-        PersonAttributeType nextOfKinPhoneNumber = MetadataUtils.existing(PersonAttributeType.class, EbolaMetadata._PersonAttributeType.NEXT_OF_KIN_PHONE);
+        PersonAttributeType nextOfKinPhoneNumber = MetadataUtils.existing(PersonAttributeType.class, NEXT_OF_KIN_PHONE);
         dsd.addColumn("nextofkinphonenumber", new PersonAttributeDataDefinition("nextofkinphonenumber", nextOfKinPhoneNumber), "", new PropertyConverter(PersonAttribute.class, "value"));
     }
 
     private void addPhoneNumber(PatientDataSetDefinition dsd) {
-        PersonAttributeType phoneNumber = MetadataUtils.existing(PersonAttributeType.class, EbolaMetadata._PersonAttributeType.TELEPHONE_NUMBER);
+        PersonAttributeType phoneNumber = MetadataUtils.existing(PersonAttributeType.class, TELEPHONE_NUMBER);
         dsd.addColumn("phone", new PersonAttributeDataDefinition("phone", phoneNumber), "", new PropertyConverter(PersonAttribute.class, "value"));
     }
 
@@ -127,7 +135,7 @@ public class DataExport {
     }
 
     private void addIdNumber(PatientDataSetDefinition dsd) {
-        PatientIdentifierType kerryTownId = MetadataUtils.existing(PatientIdentifierType.class, KerryTownMetadata._PatientIdentifierType.KERRY_TOWN_IDENTIFIER);
+        PatientIdentifierType kerryTownId = MetadataUtils.existing(PatientIdentifierType.class, KERRY_TOWN_IDENTIFIER);
         PatientIdentifierDataDefinition patientIdentifierDataDefinition = new PatientIdentifierDataDefinition("ktidnumber", kerryTownId);
         patientIdentifierDataDefinition.setIncludeFirstNonNullOnly(true);
         dsd.addColumn("ktidnumber", patientIdentifierDataDefinition, "", new PropertyConverter(PatientIdentifier.class, "identifier"));
@@ -142,7 +150,8 @@ public class DataExport {
     private SqlDataSetDefinition addDrugAdministrations() {
         SqlDataSetDefinition sqlDataSetDefinition = new SqlDataSetDefinition();
         sqlDataSetDefinition.setSqlQuery("SELECT\n" +
-                "  orders.patient_id,\n" +
+                "  orders.patient_id as internal_patient_id,\n" +
+                "  patient_identifier.identifier as ktidnumber,\n" +
                 "  coalesce(creator.username, creator.system_id) administered_by,\n" +
                 "  concept_name.name as concept,\n" +
                 "  drug.name as formulation,\n" +
@@ -166,7 +175,13 @@ public class DataExport {
                 "  JOIN concept_name ON orders.concept_id = concept_name.concept_id AND concept_name.locale = 'en' AND concept_name.locale_preferred = 1\n" +
                 "  JOIN concept_name as route ON drug_order.route = route.concept_id AND route.locale = 'en' AND route.locale_preferred = 1\n" +
                 "  JOIN users as creator ON creator.user_id = ebola_scheduled_dose.creator\n" +
-                "WHERE orders.voided != 1 AND order_action != 'DISCONTINUE' AND ebola_scheduled_dose.voided != 1;\n");
+                "  JOIN patient_identifier ON orders.patient_id = patient_identifier.patient_id\n" +
+                "  JOIN patient_identifier_type ON patient_identifier.identifier_type = patient_identifier_type.patient_identifier_type_id\n" +
+                "WHERE \n" +
+                "  orders.voided != 1 \n" +
+                "  AND order_action != 'DISCONTINUE' \n" +
+                "  AND ebola_scheduled_dose.voided != 1 \n" +
+                "  AND patient_identifier_type.uuid = '" + KERRY_TOWN_IDENTIFIER + "';");
 
         return sqlDataSetDefinition;
     }
@@ -175,7 +190,8 @@ public class DataExport {
         SqlDataSetDefinition sqlDataSetDefinition = new SqlDataSetDefinition();
         sqlDataSetDefinition.setSqlQuery(
         "SELECT\n" +
-        "  orders.patient_id,\n" +
+        "  orders.patient_id as internal_patient_id,\n" +
+        "  patient_identifier.identifier as ktidnumber,\n" +
         "  coalesce(creator.username, creator.system_id) entered_by,\n" +
         "  orderer.username as ordered_by,\n" +
         "  orders.date_activated,\n" +
@@ -201,15 +217,16 @@ public class DataExport {
         "  JOIN concept_name as route ON drug_order.route = route.concept_id AND route.locale = 'en' AND route.locale_preferred = 1\n" +
         "  JOIN users as creator ON creator.user_id = orders.creator\n" +
         "  JOIN users as orderer ON orderer.user_id = orders.orderer\n" +
-        "WHERE orders.voided != 1 AND order_action != 'DISCONTINUE';\n");
+        "  JOIN patient_identifier ON orders.patient_id = patient_identifier.patient_id\n" +
+        "  JOIN patient_identifier_type ON patient_identifier.identifier_type = patient_identifier_type.patient_identifier_type_id\n" +
+        "WHERE orders.voided != 1 AND order_action != 'DISCONTINUE' AND patient_identifier_type.uuid = '" + KERRY_TOWN_IDENTIFIER + "';");
 
         return sqlDataSetDefinition;
     }
 
     public ReportDefinition buildFullDataExport() {
         ReportDefinition reportDefinition = new ReportDefinition();
-        reportDefinition.addDataSetDefinition("patient_registration", buildRegistrationDataSetDefinition(), null);
-        reportDefinition.addDataSetDefinition("patient_discharge", buildDischargeDataSetDefinition(), null);
+        reportDefinition.addDataSetDefinition("patient_registration_and_discharge", buildRegistrationAndDischargeDataSetDefinition(), null);
         reportDefinition.addDataSetDefinition("drug_orders", addDrugOrders(), null);
         reportDefinition.addDataSetDefinition("drug_administrations", addDrugAdministrations(), null);
 

@@ -60,27 +60,13 @@ public class DataExportTest extends EbolaMetadataTest {
     DataExport dataExport = new DataExport();
 
     @Test
-    public void testDischargeDataExport() throws Exception {
-        ebolaMetadata.install();
-        kerryTownMetadata.install();
-
-        createTestPatient();
-
-        PatientDataSetDefinition dischargeDataSetDefinition = dataExport.buildDischargeDataSetDefinition();
-        SimpleDataSet dataSet = (SimpleDataSet) dataSetDefinitionService.evaluate(dischargeDataSetDefinition, new EvaluationContext());
-        DataSetRow row = findRowForDischarge(dataSet.getRows());
-
-        assertThat(row.getColumnValue("datedischarged").toString(), is(NOW.toString()));
-    }
-
-    @Test
     public void testRegistrationDataExport() throws Exception {
         ebolaMetadata.install();
         kerryTownMetadata.install();
 
         createTestPatient();
 
-        DataSetDefinition registrationDataSetDefinition = dataExport.buildRegistrationDataSetDefinition();
+        DataSetDefinition registrationDataSetDefinition = dataExport.buildRegistrationAndDischargeDataSetDefinition();
         SimpleDataSet dataSet = (SimpleDataSet) dataSetDefinitionService.evaluate(registrationDataSetDefinition, new EvaluationContext());
         DataSetRow patientRow = findRowForRegistration(dataSet.getRows(), GIVEN_NAME, FAMILY_NAME);
 
@@ -106,6 +92,7 @@ public class DataExportTest extends EbolaMetadataTest {
         assertThat((String) patientRow.getColumnValue("weight"), is(WEIGHT));
         assertThat((String) patientRow.getColumnValue("typeofpatient"), is(TYPE_OF_PATIENT));
         assertThat((String) patientRow.getColumnValue("ebolastage"), is(EBOLA_STAGE));
+        assertThat((String) patientRow.getColumnValue("datedischarged"), is(NOW.toString()));
     }
 
     private void createTestPatient() {
