@@ -36,7 +36,10 @@ public class LaboratoryEncounterController {
             Set<Obs> allObs = encounter.getAllObs();
             for(Obs obs : allObs){
                 String uuid = obs.getConcept().getUuid();
-                SimpleObject obsDTO = new SimpleObject().add("encounterDatetime", encounter.getEncounterDatetime()).add("value", obs.getValueCoded().getUuid());
+                SimpleObject obsDTO = new SimpleObject()
+                        .add("encounterDatetime", encounter.getEncounterDatetime())
+                        .add("value", obs.getValueCoded().getUuid())
+                        .add("name", obs.getValueCoded().getDisplayString());
 
                 if(obsMap.containsKey(uuid)){
                     ArrayList<SimpleObject> obsArray = obsMap.get(uuid);

@@ -1,4 +1,7 @@
 <%
+    ui.includeJavascript("ebolaexample", "overview/tabletappForDesktop.js")
+    ui.includeJavascript("ebolaexample", "tabletapp/constants.js")
+    ui.includeJavascript("ebolaexample", "tabletapp/filters.js")
     ui.includeJavascript("ebolaexample", "overview/laboratory.js")
 
     def laboratoryUrl = ui.pageLink("htmlformentryui", "htmlform/enterHtmlFormWithStandardUi", [
@@ -27,13 +30,12 @@
         <div ng-if="encounters.length == 0">
             ${ui.message("coreapps.none")}
         </div>
-        <div style="width: 50%;">
-            <span ng-repeat = "ebola in ebolaTests">ebola {{ebola}}</span>
-        </div>
-        <div>
-            <span ng-repeat = "malaria in malariaTests">malaria {{malaria}}</span>
-
-        </div>
+        <span style="width: 50%;">
+            <div ng-repeat = "ebola in ebolaTests"><strong>Ebola test</strong> {{ebola.name | capital}} (as of {{ebola.encounterDatetime | dateTime}})</div>
+        </span>
+        <span  style="padding-left: 30px; border-left: 1px solid #EEE;">
+            <div ng-repeat = "malaria in malariaTests"><strong>Malaria test</strong> {{malaria.name | capital}} (as of {{malaria.encounterDatetime | dateTime}})</div>
+        </span>
     </div>
     <br/>
 </div>

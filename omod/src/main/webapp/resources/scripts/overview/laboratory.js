@@ -1,6 +1,6 @@
 
 
-angular.module('laboratory', ['feature-toggles'])
+angular.module('laboratory', ['feature-toggles', 'filters'])
 
     .controller('LaboratoryController', ['$scope', '$http', 'FeatureToggles',
         function ($scope, $http, FeatureToggles) {
@@ -36,9 +36,5 @@ angular.module('laboratory', ['feature-toggles'])
                         }
                     });
                 });
-            };
-
-            $scope.getObsDesc = function(obs){
-               return [];
             };
         }]);

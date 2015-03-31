@@ -95,11 +95,11 @@ public class LaboratoryEncounterControllerTest  extends EbolaRestTestBase {
 
         LinkedHashMap obs = (LinkedHashMap)obsArray.get(0);
         Assert.assertEquals(yesterday.getTime()/1000, (Long)obs.get("encounterDatetime")/1000);
-        Assert.assertEquals("703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", obs.get("value"));
+        Assert.assertEquals("703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", obs.get("value"));
 
         obs = (LinkedHashMap)obsArray.get(1);
         Assert.assertEquals(twoDaysAgo.getTime()/1000, (Long)obs.get("encounterDatetime")/1000);
-        Assert.assertEquals("703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", obs.get("value"));
+        Assert.assertEquals("703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", obs.get("value"));
     }
 
     private void createEncounter(Patient patient, Date dateCreated, boolean hasMalaria, boolean hasEbola) {
@@ -121,7 +121,7 @@ public class LaboratoryEncounterControllerTest  extends EbolaRestTestBase {
     private Obs getMalariaCodedObs(Patient patient, Date dateCreated) {
         Concept concept = Context.getConceptService().getConceptByUuid("32AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         Obs obs = new Obs(patient, concept, dateCreated, null);
-        Concept answer_concept = Context.getConceptService().getConceptByUuid("703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        Concept answer_concept = Context.getConceptService().getConceptByUuid("703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         obs.setValueCoded(answer_concept);
         return obs;
     }
@@ -129,7 +129,7 @@ public class LaboratoryEncounterControllerTest  extends EbolaRestTestBase {
     private Obs getEbolaCodedObs(Patient patient, Date dateCreated) {
         Concept concept = Context.getConceptService().getConceptByUuid("1030AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         Obs obs = new Obs(patient, concept, dateCreated, null);
-        Concept answer_concept = Context.getConceptService().getConceptByUuid("703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        Concept answer_concept = Context.getConceptService().getConceptByUuid("703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         obs.setValueCoded(answer_concept);
         return obs;
     }

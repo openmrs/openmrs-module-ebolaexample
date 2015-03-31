@@ -90,6 +90,22 @@ angular.module('filters', ['constants'])
             return dateFilter(new Date(date), "d MMM H:mm");
         }
     })
+    .filter('dateTime', function(dateFilter){
+        return function(date){
+            if(!date){
+                return "";
+            }
+            return dateFilter(new Date(date), "d MMM, yyyy H:mm:ss");
+        }
+    })
+    .filter('capital', function(){
+        return function(input){
+            if(!input){
+                return "";
+            }
+            return input.substring(0,1).toUpperCase() + input.substring(1).toLowerCase();
+        }
+    })
 
     .filter('ivfliuidStatus', function(dateFilter){
         return function(ivfluidStatus){
