@@ -11,7 +11,7 @@
 %>
 
 
-    <span style="width: 50%">
+    <span style="width: 50%; display:inline-table">
         <div>
             <strong>Ebola stage:</strong>
             <span>
