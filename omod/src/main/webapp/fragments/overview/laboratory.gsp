@@ -30,10 +30,10 @@
         <div ng-if="encounters.length == 0">
             ${ui.message("coreapps.none")}
         </div>
-        <span style="width: 50%;">
+        <span style="width: 50%; display: inline-table">
             <div ng-repeat = "ebola in ebolaTests"><strong>Ebola test</strong> {{ebola.name | capital}} (as of {{ebola.encounterDatetime | dateTime}})</div>
         </span>
-        <span  style="padding-left: 30px; border-left: 1px solid #EEE;">
+        <span  style="padding-left: 30px; border-left: 1px solid #EEE; display: inline-table">
             <div ng-repeat = "malaria in malariaTests"><strong>Malaria test</strong> {{malaria.name | capital}} (as of {{malaria.encounterDatetime | dateTime}})</div>
         </span>
     </div>
