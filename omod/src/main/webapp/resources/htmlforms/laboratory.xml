@@ -75,7 +75,7 @@
     <submit submitClass="confirm right" submitCode="uicommons.saveForm"/>
 
     <ifMode mode="VIEW" include="false">
-        <button class="cancel">
+        <button type="button" class="cancel">
             <uimessage code="uicommons.cancelForm"/>
         </button>
     </ifMode>
