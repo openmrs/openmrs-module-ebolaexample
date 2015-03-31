@@ -1,12 +1,6 @@
 <%
     def EmrApiConstants = context.loadClass("org.openmrs.module.emrapi.EmrApiConstants")
 
-    ui.includeJavascript("uicommons", "angular-ui/ui-bootstrap-tpls-0.11.2.js")
-    ui.includeJavascript("uicommons", "services/locationService.js")
-
-    ui.includeJavascript("ebolaexample", "tabletapp/resources.js")
-    ui.includeJavascript("ebolaexample", "overview/inpatientLocation.js")
-
     ui.includeCss("ebolaexample", "overview/inpatientLocation.css")
 %>
 
@@ -35,13 +29,7 @@
 
         <% } else { %>
 
-            <div  ng-app="inpatientLocation" ng-controller="InpatientLocationCtrl" style="display: inline;"
-                 ng-init="init({patientUuid:'${patient.patient.uuid}',
-                currentWard: <% if (currentWard) { %>{display:'${currentWard}', uuid:'${currentWard.uuid}'}<%
-                     } else { %>null<% } %>,
-                currentBed: <% if (currentBed) { %>{display:'${currentBed}', uuid:'${currentBed.uuid}'}<% } else { %>null<%
-                         } %>
-                })">
+            <div style="display: inline;">
 
                 <% if (!config.activeVisit) { %>
 
@@ -66,7 +54,8 @@
 
 
                 <% } %>
-                <a class="right" style="margin-right: 60px" ng-click="changeLocationPatient()">Change</a>
+                <a class="right" style="margin-right: 60px" href="${ui.pageLink("ebolaexample", "changeInPatientLocation",
+                    [patientUuid: patient.patient.uuid])}">Change</a>
 
             </div>
         <% } %>
@@ -89,7 +78,3 @@
 
         <div style="clear: both;"></div>
     </span>
-
-<script type="text/javascript">
-    angular.bootstrap("")
-</script>
