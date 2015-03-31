@@ -12,7 +12,7 @@
 %>
 
 <div id="vitals" ng-show="isFeatureEnabled()" class="long-info-section"  ng-controller="VitalsSummaryController"
-ng-init="init({patientUuid:'${patient.patient.uuid}'})">
+ng-init="init({patientUuid:'${patient.patient.uuid}', fullConsciousnessName: true})">
 
     <div class="info-header" >
         <i class="icon-vitals"></i>

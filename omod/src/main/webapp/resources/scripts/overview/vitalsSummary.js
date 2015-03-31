@@ -34,7 +34,10 @@ angular.module('vitalsSummary', ['feature-toggles', 'tabletapp', 'filters'])
             };
             $scope.getObsDesc = function(obs){
                 var answers = VitalsAnswerBuilder.getAnswers(obs);
-                var result = [answers.consciousness,
+                var consciousness = (config.fullConsciousnessName) ?
+                    VitalsAnswerBuilder.getConsciousnessFullName(answers.consciousness)
+                    : answers.consciousness;
+                var result = ['AVPU: ' + consciousness,
                                 'T: ' + answers.temperature,
                                 'Pulse: ' + answers.heartRate,
                                 'Resp: ' + answers.respiratoryRate,
@@ -55,24 +58,29 @@ angular.module('vitalsSummary', ['feature-toggles', 'tabletapp', 'filters'])
                 return null;
             }
 
+            function getConsciousnessFullName(consciousness) {
+                var map = {
+                    'A':'Alert',
+                    'V':'Voice',
+                    'P':'Pain',
+                    'U':'Unresponsive',
+                    '-':'-'
+                };
+                return map[consciousness];
+            }
+
             function getAnswers(obs){
                 var answers = {consciousness:'-', temperature:'-', heartRate:'-',
                     respiratoryRate:'-', o2sat:'-', systolicBP:'-',
                     diastolicBP: '-'};
 
                 _.each(obs, function(ob){
-
                     if(ob.concept == questions.consciousness.concept){
                         var consciousness = extractOptionLabel(questions.consciousness, ob.value);
-                        var map = {
-                            'A':'Alert',
-                            'V':'Voice',
-                            'P':'Pain',
-                            'U':'Unresponsive'
-                        };
-                        answers.consciousness = map[consciousness];
+                        answers.consciousness = consciousness;
                     }else if(ob.concept == questions.temperature.concept){
-                        answers.temperature = ob.value + '˚C';
+                        var temperature = Number(ob.value).toFixed(1);
+                        answers.temperature = temperature + '˚C';
                     }else if(ob.concept == questions.heartRate.concept){
                         answers.heartRate = ob.value;
                     }else if(ob.concept == questions.respiratoryRate.concept){
@@ -87,5 +95,5 @@ angular.module('vitalsSummary', ['feature-toggles', 'tabletapp', 'filters'])
                 });
                 return answers;
             }
-            return {getAnswers:getAnswers};
+            return {getAnswers:getAnswers, getConsciousnessFullName: getConsciousnessFullName};
         }]);
