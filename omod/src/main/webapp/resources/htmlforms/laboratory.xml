@@ -15,6 +15,7 @@
         float:left;
         }
     </style>
+
     <ifMode mode="VIEW" include="false">
         <div id="who-when-where">
             <p id="who" style="display:none">
@@ -35,7 +36,7 @@
             </p>
             <p id="when">
                 <label>
-                    <uimessage code="coreapps.patientDashBoard.date"/>
+                    <strong>Date of test</strong>
                 </label>
                 <span>
                     <encounterDate id="encounterDate" default="now"/>
