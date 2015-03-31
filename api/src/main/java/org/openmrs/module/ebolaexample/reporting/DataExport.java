@@ -19,17 +19,16 @@ import org.openmrs.module.reporting.report.definition.ReportDefinition;
 
 import java.util.Date;
 
-import static org.openmrs.module.ebolaexample.metadata.EbolaMetadata._Concept.EBOLA_STAGE;
-import static org.openmrs.module.ebolaexample.metadata.EbolaMetadata._Concept.TYPE_OF_PATIENT;
-import static org.openmrs.module.ebolaexample.metadata.EbolaMetadata._Concept.WEIGHT_IN_KG;
+import static org.openmrs.module.ebolaexample.metadata.EbolaMetadata._Concept.*;
 import static org.openmrs.module.ebolaexample.metadata.EbolaMetadata._EncounterType.EBOLA_REGISTRATION;
-import static org.openmrs.module.ebolaexample.metadata.EbolaMetadata._PersonAttributeType.NEXT_OF_KIN_NAME;
-import static org.openmrs.module.ebolaexample.metadata.EbolaMetadata._PersonAttributeType.NEXT_OF_KIN_PHONE;
-import static org.openmrs.module.ebolaexample.metadata.EbolaMetadata._PersonAttributeType.TELEPHONE_NUMBER;
+import static org.openmrs.module.ebolaexample.metadata.EbolaMetadata._PersonAttributeType.*;
 import static org.openmrs.module.ebolaexample.metadata.KerryTownMetadata._PatientIdentifierType.KERRY_TOWN_IDENTIFIER;
 import static org.openmrs.module.reporting.common.TimeQualifier.FIRST;
 
 public class DataExport {
+
+    private static final int ADMISSION_ENCOUNTER_TYPE = 4;
+    private static final int TRANSFER_ENCOUNTER_TYPE = 7;
 
     public DataSetDefinition buildRegistrationAndDischargeDataSetDefinition() {
         PatientDataSetDefinition dsd = new PatientDataSetDefinition();
@@ -144,6 +143,26 @@ public class DataExport {
         dsd.addColumn("registrationdate", sqlPatientDataDefinition, "");
     }
 
+    private SqlDataSetDefinition addLocationHistory() {
+        SqlDataSetDefinition sqlDataSetDefinition = new SqlDataSetDefinition();
+        sqlDataSetDefinition.setSqlQuery(
+                "SELECT \n" +
+                        "  patient_identifier.identifier as ktidnumber, \n" +
+                        "  parent_location.name as ward,\n" +
+                        "  location.name as bed, \n" +
+                        "  encounter.encounter_datetime,\n" +
+                        "  coalesce(creator.username, creator.system_id) created_by\n" +
+                        "FROM encounter \n" +
+                        "  JOIN location ON encounter.location_id = location.location_id\n" +
+                        "  JOIN location as parent_location on location.parent_location = parent_location.location_id\n" +
+                        "  JOIN patient_identifier ON encounter.patient_id = patient_identifier.patient_id\n" +
+                        "  JOIN patient_identifier_type on patient_identifier_type.patient_identifier_type_id = patient_identifier.identifier_type\n" +
+                        "  JOIN users as creator ON creator.user_id = encounter.creator\n" +
+                        "WHERE encounter.encounter_type in (" + ADMISSION_ENCOUNTER_TYPE + ", " + TRANSFER_ENCOUNTER_TYPE + ") AND patient_identifier_type.uuid = '" + KERRY_TOWN_IDENTIFIER + "';");
+
+        return sqlDataSetDefinition;
+    }
+
     private SqlDataSetDefinition addDrugAdministrations() {
         SqlDataSetDefinition sqlDataSetDefinition = new SqlDataSetDefinition();
         sqlDataSetDefinition.setSqlQuery("SELECT\n" +
@@ -208,7 +227,7 @@ public class DataExport {
         "  drug_order.duration,\n" +
         "  duration_units.name as duration_units,\n" +
         "  drug_order.as_needed,\n" +
-        "  drug_order.as_needed_condition,\n" +
+        "  drug_order.as_needed_condition \n" +
         "FROM orders \n" +
         "  JOIN drug_order ON orders.order_id = drug_order.order_id\n" +
         "  JOIN drug ON drug_order.drug_inventory_id = drug.drug_id\n" +
@@ -230,6 +249,7 @@ public class DataExport {
         reportDefinition.addDataSetDefinition("patient_registration_and_discharge", buildRegistrationAndDischargeDataSetDefinition(), null);
         reportDefinition.addDataSetDefinition("drug_orders", addDrugOrders(), null);
         reportDefinition.addDataSetDefinition("drug_administrations", addDrugAdministrations(), null);
+        reportDefinition.addDataSetDefinition("location_history", addLocationHistory(), null);
 
         return reportDefinition;
     }
