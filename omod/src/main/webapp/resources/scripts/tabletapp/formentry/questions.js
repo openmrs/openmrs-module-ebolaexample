@@ -54,7 +54,7 @@ angular.module('tabletapp')
                 { label: "Vagina", value: "162673AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
                 { label: "Urine", value: "162919AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
             ]),
-            ebolaStage: questionBuilder.selectOneObs2("Ebola Stage", "162834AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",[
+            ebolaStage: questionBuilder.selectOneObs3("Ebola Stage", "162834AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",[
                 { label: "1 - Early/Dry", value: "162829AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"},
                 { label: "2 - GI/Wet", value: "162830AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"},
                 { label: "3 - Severe", value: "162831AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"}

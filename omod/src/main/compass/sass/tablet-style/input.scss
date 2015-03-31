@@ -44,14 +44,14 @@
   }
 
   &.long2 {
-    width: 138px;
-    max-width: 138px;
+    width: 80px;
+    max-width: 80px;
     padding: 0 15px;
   }
 
   &.long3 {
-    width: 155px;
-    max-width: 155px;
+    width: 125px;
+    max-width: 125px;
     padding: 0 15px;
   }
 
@@ -66,9 +66,9 @@
   }
 
   &.medium2 {
-    font-size: 1.25em;
+    font-size: 1.0em;
     vertical-align: baseline;
-    height: 50px;
+    height: 35px;
     &.long span {
       padding-top: 7px;
     }

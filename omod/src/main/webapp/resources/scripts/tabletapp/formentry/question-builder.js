@@ -180,6 +180,17 @@ angular.module('tabletapp')
             };
         }
 
+        function selectOneObs3(label, concept, options) {
+            return {
+                handler: questionHandlers.simpleObs,
+                template: "selectOne2",
+                label: label,
+                buttonClass: "medium2 long3",
+                options: options,
+                concept: concept
+            };
+        }
+
         function selectMultipleObs(label, concept, options) {
             return {
                 handler: questionHandlers.multipleObs,
@@ -209,6 +220,7 @@ angular.module('tabletapp')
             symptomSeverity: symptomSeverityQuestion,
             selectOneObs: selectOneObs,
             selectOneObs2: selectOneObs2,
+            selectOneObs3: selectOneObs3,
             selectMultipleObs: selectMultipleObs,
             selectMultipleObs2: selectMultipleObs2
         };
