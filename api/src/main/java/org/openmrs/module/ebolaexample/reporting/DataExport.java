@@ -2,11 +2,8 @@ package org.openmrs.module.ebolaexample.reporting;
 
 import org.openmrs.*;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
-import org.openmrs.module.ebolaexample.metadata.KerryTownMetadata;
 import org.openmrs.module.metadatadeploy.MetadataUtils;
 import org.openmrs.module.reporting.common.Birthdate;
-import org.openmrs.module.reporting.common.TimeQualifier;
 import org.openmrs.module.reporting.data.converter.BirthdateConverter;
 import org.openmrs.module.reporting.data.converter.ObsValueConverter;
 import org.openmrs.module.reporting.data.converter.PropertyConverter;
@@ -76,7 +73,7 @@ public class DataExport {
         programEnrollmentsDefinition.addParameter(new Parameter("outcome", "outcome", Object.class));
 
         dsd.addColumn("datedischarged", programEnrollmentsDefinition, "", new PropertyConverter(PatientProgram.class, "dateCompleted"));
-        dsd.addColumn("outcome", programEnrollmentsDefinition, "", new PropertyConverter(PatientProgram.class, "outcome"));
+        dsd.addColumn("outcome", programEnrollmentsDefinition, "", new ConceptConverter(PatientProgram.class, "outcome"));
     }
 
     private void addEbolaStage(PatientDataSetDefinition dsd, EncounterType registrationEncounterType) {
@@ -156,16 +153,16 @@ public class DataExport {
                 "  concept_name.name as concept,\n" +
                 "  drug.name as formulation,\n" +
                 "  route.name as route,\n" +
-                "  drug_order.frequency,\n" +
+                "  frequency.name as frequency,\n" +
                 "  drug_order.dosing_type,\n" +
                 "  drug_order.dose,\n" +
-                "  drug_order.dose_units,\n" +
+                "  dose_units.name as dose_units,\n" +
                 "  drug_order.dosing_instructions,\n" +
                 "  drug_order.duration,\n" +
-                "  drug_order.duration_units,\n" +
+                "  duration_units.name as duration_units,\n" +
                 "  drug_order.as_needed,\n" +
                 "  drug_order.as_needed_condition,\n" +
-                "  drug_order.dispense_as_written,\n" +
+                "  ebola_scheduled_dose.reason_not_administered_non_coded as reason_not_administered,\n" +
                 "  ebola_scheduled_dose.scheduled_datetime as datetime_administered,\n" +
                 "  ebola_scheduled_dose.status\n" +
                 "FROM orders \n" +
@@ -173,7 +170,10 @@ public class DataExport {
                 "  JOIN drug_order ON orders.order_id = drug_order.order_id\n" +
                 "  JOIN drug ON drug_order.drug_inventory_id = drug.drug_id\n" +
                 "  JOIN concept_name ON orders.concept_id = concept_name.concept_id AND concept_name.locale = 'en' AND concept_name.locale_preferred = 1\n" +
-                "  JOIN concept_name as route ON drug_order.route = route.concept_id AND route.locale = 'en' AND route.locale_preferred = 1\n" +
+                "  LEFT JOIN concept_name as route ON drug_order.route = route.concept_id AND route.locale = 'en' AND route.locale_preferred = 1\n" +
+                "  LEFT JOIN concept_name as dose_units ON drug_order.dose_units = dose_units.concept_id AND dose_units.locale = 'en' AND dose_units.locale_preferred = 1\n" +
+                "  LEFT JOIN concept_name as duration_units ON drug_order.duration_units = duration_units.concept_id AND duration_units.locale = 'en' AND duration_units.locale_preferred = 1\n" +
+                "  LEFT JOIN concept_name as frequency ON drug_order.frequency = frequency.concept_id AND frequency.locale = 'en' AND frequency.locale_preferred = 1\n" +
                 "  JOIN users as creator ON creator.user_id = ebola_scheduled_dose.creator\n" +
                 "  JOIN patient_identifier ON orders.patient_id = patient_identifier.patient_id\n" +
                 "  JOIN patient_identifier_type ON patient_identifier.identifier_type = patient_identifier_type.patient_identifier_type_id\n" +
@@ -200,22 +200,23 @@ public class DataExport {
         "  concept_name.name as concept,\n" +
         "  drug.name as formulation,\n" +
         "  route.name as route,\n" +
-        "  drug_order.frequency,\n" +
+        "  frequency.name as frequency,\n" +
         "  drug_order.dosing_type,\n" +
         "  drug_order.dose,\n" +
-        "  drug_order.dose_units,\n" +
+        "  dose_units.name as dose_units,\n" +
         "  drug_order.dosing_instructions,\n" +
         "  drug_order.duration,\n" +
-        "  drug_order.duration_units,\n" +
+        "  duration_units.name as duration_units,\n" +
         "  drug_order.as_needed,\n" +
         "  drug_order.as_needed_condition,\n" +
-        "  drug_order.dispense_as_written\n" +
         "FROM orders \n" +
         "  JOIN drug_order ON orders.order_id = drug_order.order_id\n" +
         "  JOIN drug ON drug_order.drug_inventory_id = drug.drug_id\n" +
         "  JOIN concept_name ON orders.concept_id = concept_name.concept_id AND concept_name.locale = 'en' AND concept_name.locale_preferred = 1\n" +
-        "  JOIN concept_name as route ON drug_order.route = route.concept_id AND route.locale = 'en' AND route.locale_preferred = 1\n" +
-        "  JOIN users as creator ON creator.user_id = orders.creator\n" +
+        "  LEFT JOIN concept_name as route ON drug_order.route = route.concept_id AND route.locale = 'en' AND route.locale_preferred = 1\n" +
+        "  LEFT JOIN concept_name as dose_units ON drug_order.dose_units = dose_units.concept_id AND dose_units.locale = 'en' AND dose_units.locale_preferred = 1\n" +
+        "  LEFT JOIN concept_name as duration_units ON drug_order.duration_units = duration_units.concept_id AND duration_units.locale = 'en' AND duration_units.locale_preferred = 1\n" +
+        "  LEFT JOIN concept_name as frequency ON drug_order.frequency = frequency.concept_id AND frequency.locale = 'en' AND frequency.locale_preferred = 1\n" +        "  JOIN users as creator ON creator.user_id = orders.creator\n" +
         "  JOIN users as orderer ON orderer.user_id = orders.orderer\n" +
         "  JOIN patient_identifier ON orders.patient_id = patient_identifier.patient_id\n" +
         "  JOIN patient_identifier_type ON patient_identifier.identifier_type = patient_identifier_type.patient_identifier_type_id\n" +

@@ -92,7 +92,7 @@ public class DataExportTest extends EbolaMetadataTest {
         assertThat((String) patientRow.getColumnValue("weight"), is(WEIGHT));
         assertThat((String) patientRow.getColumnValue("typeofpatient"), is(TYPE_OF_PATIENT));
         assertThat((String) patientRow.getColumnValue("ebolastage"), is(EBOLA_STAGE));
-        assertThat((String) patientRow.getColumnValue("datedischarged"), is(NOW.toString()));
+        assertThat(patientRow.getColumnValue("datedischarged").toString(), is(NOW.toString()));
     }
 
     private void createTestPatient() {
