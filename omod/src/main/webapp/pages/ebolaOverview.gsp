@@ -69,11 +69,17 @@ ${ui.includeFragment("ebolaexample", "overview/patientHeader", [patient: patient
 
 <div class="info-body jump-header">
     <span class="jump-label">Jump to:</span>
+    <i class="icon-medkit"><a href="#laboratory">Lab results</a></i>
     <i class="icon-vitals"><a href="#vitals">Vitals</a></i>
     <i class="icon-medkit"><a href="#symptoms">Symptoms</a></i>
     <i class="icon-medkit"><a href="#prescriptions">Prescriptions</a></i>
     <i class="icon-medkit"><a href="#med-admin">Med admin</a></i>
     <i class="icon-medkit"><a href="#ivfluids">IV fluids</a></i>
+
+    <i class="icon-medkit"
+       ng-app="feature-toggles"
+       ng-show = "isFeatureEnabled('clinicalNote')"
+       ng-controller="FeatureToggleController"><a href="#">Clinical notes</a></i>
 </div>
 <div class="clear"></div>
 

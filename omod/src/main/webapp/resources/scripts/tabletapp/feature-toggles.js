@@ -6,7 +6,8 @@ angular.module("feature-toggles", [])
             {name:'vitalsAndSymptomsSummaryDesktop', enabled:false},
             {name:'vitalsAndSymptomsSummaryTablet', enabled:false},
             {name:'ivFluids', enabled:true},
-            {name:'laboratory', enabled:false}
+            {name:'laboratory', enabled:false},
+            {name:'clinicalNote', enabled:false}
         ];
         var url = "/" + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/ebola/feature-toggle";
 
@@ -63,6 +64,10 @@ angular.module("feature-toggles", [])
 
         $scope.turnOff = function(toggleName){
             FeatureToggles.turnOff(toggleName);
+        };
+
+        $scope.isFeatureEnabled = function(toggleName){
+            return FeatureToggles.isFeatureEnabled(toggleName);
         };
 
         $scope.turnOn = function(toggleName){
