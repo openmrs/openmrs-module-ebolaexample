@@ -3,10 +3,10 @@
 
 .patient-header {
 	background: $grey1;
-	padding: 0.3em;
+	padding: 0.1em;
 	color: #ffcc00;
 	font-family: "OpenSansBold";
-	font-size: 2.2em;
+	font-size: 1.6em;
 	overflow: hidden;
 
   	@include yellow-button;
@@ -45,12 +45,12 @@
 
 .patient-id {
 	float: left;
-	margin-right: 0.5em;
+	margin-right: 0.4em;
 }
 
 .patient-info {
 	float: right;
-	margin-left: 0.5em;
+	margin-left: 0.4em;
 }
 
 div.actions-header{
