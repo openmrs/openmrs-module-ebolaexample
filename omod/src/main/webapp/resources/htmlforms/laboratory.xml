@@ -14,6 +14,11 @@
         #obs label:last-of-type{
         float:left;
         }
+        .field-error{
+        color: #ff6666;
+        font-size: 1.1em;
+        display: block;
+        }
     </style>
 
     <ifMode mode="VIEW" include="false">
