@@ -54,7 +54,7 @@ angular.module('tabletapp')
                 { label: "Vagina", value: "162673AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
                 { label: "Urine", value: "162919AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
             ]),
-            ebolaStage: questionBuilder.selectOneObs3("Ebola Stage", "162834AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",[
+            ebolaStage: questionBuilder.selectOneObs3("Stage", "162834AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",[
                 { label: "1 - Early/Dry", value: "162829AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"},
                 { label: "2 - GI/Wet", value: "162830AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"},
                 { label: "3 - Severe", value: "162831AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"}
@@ -78,7 +78,7 @@ angular.module('tabletapp')
             respiratory:{
                 handler: questionHandlers.multipleSymptomsPresent,
                 template: "selectMulti2",
-                label: "Respiratory",
+                label: "Resp:",
                 buttonClass: "medium2 long3",
                 options: [
                     { label: "Short of breath", value: "122496AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
