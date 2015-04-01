@@ -119,7 +119,7 @@ public class LaboratoryEncounterControllerTest  extends EbolaRestTestBase {
     }
 
     private Obs getMalariaCodedObs(Patient patient, Date dateCreated) {
-        Concept concept = Context.getConceptService().getConceptByUuid("32AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        Concept concept = Context.getConceptService().getConceptByUuid("32AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         Obs obs = new Obs(patient, concept, dateCreated, null);
         Concept answer_concept = Context.getConceptService().getConceptByUuid("703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         obs.setValueCoded(answer_concept);

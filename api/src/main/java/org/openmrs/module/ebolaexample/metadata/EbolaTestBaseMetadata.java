@@ -53,7 +53,7 @@ public class EbolaTestBaseMetadata extends AbstractMetadataBundle {
     }
 
     private void installLabTestData(){
-        Concept concept = concept("MALARIAL SMEAR", "32AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Coded", "Test");
+        Concept concept = concept("MALARIAL SMEAR", "32AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Coded", "Test");
         Concept concept2 = concept("Ebola SMEAR", "1030AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Coded", "Test");
         Concept concept664 = concept("Neg", "664AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "N/A", "Misc");
         Concept concept703 = concept("Pos", "703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "N/A", "Misc");
