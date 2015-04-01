@@ -79,7 +79,7 @@ ${ui.includeFragment("ebolaexample", "overview/patientHeader", [patient: patient
     <i class="icon-medkit"
        ng-app="feature-toggles"
        ng-show = "isFeatureEnabled('clinicalNote')"
-       ng-controller="FeatureToggleController"><a href="#">Clinical notes</a></i>
+       ng-controller="FeatureToggleController"><a href="${ui.pageLink("ebolaexample", "clinicalNotes", [patient: patient.patient.id])}">Clinical notes</a></i>
 </div>
 <div class="clear"></div>
 
