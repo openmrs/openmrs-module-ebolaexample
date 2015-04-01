@@ -28,7 +28,7 @@ angular.module('laboratory', ['feature-toggles', 'filters'])
                     $scope.encounters = response["encounters"];
 
                     _.each($scope.encounters, function(encounter){
-                        if(encounter.key == "1030AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"){
+                        if(encounter.key == "162599AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"){
                             $scope.ebolaTests = encounter.value;
                         }
                         if(encounter.key == "32AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"){

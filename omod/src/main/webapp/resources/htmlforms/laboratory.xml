@@ -52,7 +52,7 @@
                         <label>Ebola test</label>
                     </strong>
                     <p id="obs">
-                        <obs conceptId="CIEL:1030" style="radio" answerConceptIds="CIEL:703,CIEL:664"
+                        <obs conceptId="CIEL:162599" style="radio" answerConceptIds="CIEL:703,CIEL:664"
                              answerLabels="Positive,Negative"/>
                     </p>
 
