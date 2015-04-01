@@ -76,7 +76,7 @@
     <p>
         <button type="submit" class="confirm right">Save</button>
         <a class="cancel button" href="${ui.pageLink("ebolaexample", "clinicalNotes", [patient:patient.patient.uuid])}">
-            Discard
+            Cancel
         </a>
     </p>
 </form>
