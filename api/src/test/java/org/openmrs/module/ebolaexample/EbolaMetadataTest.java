@@ -1,13 +1,25 @@
 package org.openmrs.module.ebolaexample;
 
 import org.junit.Before;
-import org.openmrs.*;
-import org.openmrs.api.*;
+import org.openmrs.Concept;
+import org.openmrs.ConceptClass;
+import org.openmrs.ConceptName;
+import org.openmrs.ConceptSource;
+import org.openmrs.GlobalProperty;
+import org.openmrs.LocationTag;
+import org.openmrs.PersonAttributeType;
+import org.openmrs.VisitType;
+import org.openmrs.api.AdministrationService;
+import org.openmrs.api.ConceptNameType;
+import org.openmrs.api.ConceptService;
+import org.openmrs.api.EncounterService;
+import org.openmrs.api.LocationService;
+import org.openmrs.api.PersonService;
+import org.openmrs.api.VisitService;
 import org.openmrs.module.appframework.AppFrameworkConstants;
 import org.openmrs.module.ebolaexample.metadata.EbolaMetadata;
 import org.openmrs.module.emrapi.EmrApiConstants;
-import org.openmrs.module.metadatadeploy.MetadataUtils;
-import org.openmrs.module.metadatasharing.api.MetadataSharingService;
+import org.openmrs.module.metadatadeploy.builder.ConceptBuilder;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -41,11 +53,24 @@ public abstract class EbolaMetadataTest extends BaseModuleContextSensitiveTest {
 
     @Before
     public void setUp() throws Exception {
+        fixConceptMetadataToBeConsistentWithCiel();
         createExpectedCielConcepts();
         createExpectedLocationTags();
         createExpectedVisitTypes();
         createExpectedEncounterTypes();
         createExpectedPersonAttributeTypes();
+    }
+
+    private void fixConceptMetadataToBeConsistentWithCiel() {
+        // the standard test dataset differs from the CIEL dictionary in some ways, so we fix that here
+        ConceptClass test = conceptService.getConceptClassByName("Test");
+        test.setUuid("8d4907b2-c2cc-11de-8d13-0010c6dffd0f");
+        conceptService.saveConceptClass(test);
+
+        ConceptSource ciel = new ConceptSource();
+        ciel.setName("CIEL");
+        ciel.setUuid("249b13c8-72fa-4b96-8d3d-b200efed985e");
+        conceptService.saveConceptSource(ciel);
     }
 
     private void createExpectedPersonAttributeTypes() {
@@ -94,6 +119,24 @@ public abstract class EbolaMetadataTest extends BaseModuleContextSensitiveTest {
         conceptService.saveConcept(ebolaProgram);
         conceptService.saveConcept(weightInKg);
         conceptService.saveConcept(typeOfPatient);
+
+        conceptService.saveConcept(new ConceptBuilder("1138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+                .name("1138AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Indeterminate", Locale.ENGLISH, ConceptNameType.FULLY_SPECIFIED)
+                .conceptClass(conceptService.getConceptClassByName("Misc"))
+                .datatype(conceptService.getConceptDatatypeByName("N/A"))
+                .build());
+
+        conceptService.saveConcept(new ConceptBuilder("664AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+                .name("664AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Negative", Locale.ENGLISH, ConceptNameType.FULLY_SPECIFIED)
+                .conceptClass(conceptService.getConceptClassByName("Misc"))
+                .datatype(conceptService.getConceptDatatypeByName("N/A"))
+                .build());
+
+        conceptService.saveConcept(new ConceptBuilder("703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+                .name("703AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Positive", Locale.ENGLISH, ConceptNameType.FULLY_SPECIFIED)
+                .conceptClass(conceptService.getConceptClassByName("Misc"))
+                .datatype(conceptService.getConceptDatatypeByName("N/A"))
+                .build());
     }
 
     private void createExpectedVisitTypes() {

@@ -31,6 +31,7 @@ public class EbolaExampleActivatorComponentTest extends EbolaMetadataTest {
     @Test
     public void testStarted() throws Exception {
         new EbolaExampleActivator().started();
+        assertThat(conceptService.getConceptByUuid("162599AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA").getConceptId(), is(162599));
     }
 
     @Test

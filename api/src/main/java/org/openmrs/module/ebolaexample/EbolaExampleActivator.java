@@ -267,7 +267,8 @@ public class EbolaExampleActivator extends BaseModuleActivator {
         MetadataBundle kerryTownMetadata = Context.getRegisteredComponent("kerryTownMetadata", MetadataBundle.class);
         MetadataBundle ebolaDemoData = Context.getRegisteredComponent("ebolaDemoData", MetadataBundle.class);
         MetadataBundle ebolaRolePrivilegeMetadata = Context.getRegisteredComponent("ebolaRolePrivilegeMetadata", MetadataBundle.class);
-        service.installBundles(Arrays.asList(ebola, kerryTownMetadata, ebolaDemoData, ebolaRolePrivilegeMetadata));
+        MetadataBundle missingConcepts = Context.getRegisteredComponent("missingConceptsBundle", MetadataBundle.class);
+        service.installBundles(Arrays.asList(ebola, kerryTownMetadata, ebolaDemoData, ebolaRolePrivilegeMetadata, missingConcepts));
     }
 
     public void setupEmrApiGlobalProperties(AdministrationService administrationService) {

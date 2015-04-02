@@ -38,7 +38,7 @@
         <openMRSVersion>1.10.2-SNAPSHOT</openMRSVersion>
         <openmrsTestutilsVersion>1.5</openmrsTestutilsVersion>
         <appframeworkVersion>2.3</appframeworkVersion>
-        <metadatadeployVersion>1.4</metadatadeployVersion>
+        <metadatadeployVersion>1.5-SNAPSHOT</metadatadeployVersion>
         <metadatasharingVersion>1.1.8</metadatasharingVersion>
         <emrapiVersion>1.5</emrapiVersion>
         <uiframeworkVersion>3.4-SNAPSHOT</uiframeworkVersion>
