@@ -35,24 +35,24 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <openMRSVersion>1.10.2</openMRSVersion>
+        <openMRSVersion>1.10.3</openMRSVersion>
         <openmrsTestutilsVersion>1.5</openmrsTestutilsVersion>
         <appframeworkVersion>2.3</appframeworkVersion>
-        <metadatadeployVersion>1.5-SNAPSHOT</metadatadeployVersion>
-        <metadatasharingVersion>1.1.8</metadatasharingVersion>
-        <emrapiVersion>1.5</emrapiVersion>
-        <uiframeworkVersion>3.4-SNAPSHOT</uiframeworkVersion>
+        <metadatadeployVersion>1.5</metadatadeployVersion>
+        <metadatasharingVersion>1.1.10</metadatasharingVersion>
+        <emrapiVersion>1.12</emrapiVersion>
+        <uiframeworkVersion>3.4</uiframeworkVersion>
         <coreappsVersion>1.5</coreappsVersion>
-        <reportingVersion>0.9.3</reportingVersion>
+        <reportingVersion>0.9.8.1</reportingVersion>
         <htmlformentryVersion>2.5</htmlformentryVersion>
         <htmlformentryuiVersion>1.1</htmlformentryuiVersion>
         <registrationappVersion>1.1</registrationappVersion>
         <calculationVersion>1.1</calculationVersion>
-        <serialization.xstreamVersion>0.2.7</serialization.xstreamVersion>
-        <providermanagementVersion>2.2</providermanagementVersion>
+        <serialization.xstreamVersion>0.2.10</serialization.xstreamVersion>
+        <providermanagementVersion>2.3</providermanagementVersion>
         <uicommonsVersion>1.5</uicommonsVersion>
         <appuiVersion>1.3</appuiVersion>
-        <webservices.restVersion>2.11</webservices.restVersion>
+        <webservices.restVersion>2.12</webservices.restVersion>
     </properties>
 
 	<dependencyManagement>
@@ -220,6 +220,12 @@
                 <dependency>
                     <groupId>org.openmrs.module</groupId>
                     <artifactId>metadatadeploy-api</artifactId>
+                    <version>${metadatadeployVersion}</version>
+                    <scope>provided</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.openmrs.module</groupId>
+                    <artifactId>metadatadeploy-api-1.10</artifactId>
                     <version>${metadatadeployVersion}</version>
                     <scope>provided</scope>
                 </dependency>
@@ -831,6 +837,10 @@
         <dependency>
             <groupId>org.openmrs.module</groupId>
             <artifactId>metadatadeploy-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.openmrs.module</groupId>
+            <artifactId>metadatadeploy-api-1.10</artifactId>
         </dependency>
         <dependency>
             <groupId>org.openmrs.module</groupId>
