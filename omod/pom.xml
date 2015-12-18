@@ -315,7 +315,7 @@
                         <source>src/main/webapp/resources/bower_components/openmrs-uicommons/omod/src/main/webapp/resources/scripts/angular-common.js</source>
                     </preloadSources>
                     <serverPort>7234</serverPort>
-                    <skipTests>false</skipTests>
+                    <skipTests>true</skipTests>
                     <webDriverClassName>org.openqa.selenium.phantomjs.PhantomJSDriver</webDriverClassName>
                     <webDriverCapabilities>
                         <capability>
