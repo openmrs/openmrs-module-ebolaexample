@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.openmrs.Concept;
 import org.openmrs.ConceptClass;
 import org.openmrs.ConceptName;
+import org.openmrs.ConceptNumeric;
 import org.openmrs.ConceptSource;
 import org.openmrs.GlobalProperty;
 import org.openmrs.LocationTag;
@@ -97,11 +98,13 @@ public abstract class EbolaMetadataTest extends BaseModuleContextSensitiveTest {
         ebolaProgram.setDatatype(conceptService.getConceptDatatypeByName("N/A"));
         ebolaProgram.setConceptClass(conceptService.getConceptClassByName("Misc"));
 
-        Concept weightInKg = new Concept();
+        ConceptNumeric weightInKg = new ConceptNumeric();
         weightInKg.setUuid(EbolaMetadata._Concept.WEIGHT_IN_KG);
         weightInKg.addName(new ConceptName("Weight In Kg", Locale.ENGLISH));
         weightInKg.setDatatype(conceptService.getConceptDatatypeByName("Numeric"));
         weightInKg.setConceptClass(conceptService.getConceptClassByName("Misc"));
+        weightInKg.setUnits("kg");
+        weightInKg.setPrecise(false);
 
         Concept typeOfPatient = new Concept();
         typeOfPatient.setUuid(EbolaMetadata._Concept.TYPE_OF_PATIENT);
