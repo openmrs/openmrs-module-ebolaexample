@@ -927,10 +927,12 @@
 				</plugin>
                 <plugin>
                     <artifactId>maven-release-plugin</artifactId>
-                    <version>2.4.2</version>
+                    <version>2.5</version>
                     <configuration>
-                        <!-- refapp distro contains SNAPSHOT dependencies -->
-                        <allowTimestampedSnapshots>true</allowTimestampedSnapshots>
+                        <autoVersionSubmodules>true</autoVersionSubmodules>
+                        <tagNameFormat>@{project.version}</tagNameFormat>
+                        <!-- do not allow SNAPSHOT dependencies -->
+                        <allowTimestampedSnapshots>false</allowTimestampedSnapshots>
                     </configuration>
                 </plugin>
                 <plugin>
