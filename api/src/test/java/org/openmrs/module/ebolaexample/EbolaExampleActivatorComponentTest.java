@@ -1,5 +1,11 @@
 package org.openmrs.module.ebolaexample;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
+import java.util.Arrays;
+import java.util.Locale;
+
 import org.junit.Test;
 import org.openmrs.Concept;
 import org.openmrs.ConceptName;
@@ -10,12 +16,6 @@ import org.openmrs.module.metadatadeploy.MetadataUtils;
 import org.openmrs.module.metadatadeploy.api.MetadataDeployService;
 import org.openmrs.module.metadatadeploy.bundle.MetadataBundle;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Arrays;
-import java.util.Locale;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 
 public class EbolaExampleActivatorComponentTest extends EbolaMetadataTest {
 
@@ -31,7 +31,8 @@ public class EbolaExampleActivatorComponentTest extends EbolaMetadataTest {
     @Test
     public void testStarted() throws Exception {
         new EbolaExampleActivator().started();
-        assertThat(conceptService.getConceptByUuid("162599AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA").getConceptId(), is(162599));
+        //Do a check like this if we have any concepts in MissingConceptsBundle
+        //assertThat(conceptService.getConceptByUuid("162599AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA").getConceptId(), is(162599));
     }
 
     @Test
