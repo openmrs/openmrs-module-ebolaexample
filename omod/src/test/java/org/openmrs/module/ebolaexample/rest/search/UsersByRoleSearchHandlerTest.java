@@ -1,10 +1,13 @@
 package org.openmrs.module.ebolaexample.rest.search;
 
+import static junit.framework.TestCase.assertTrue;
+
+import java.util.LinkedHashMap;
+import java.util.List;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
-import org.openmrs.Drug;
 import org.openmrs.Role;
 import org.openmrs.User;
 import org.openmrs.api.context.Context;
@@ -18,15 +21,6 @@ import org.openmrs.web.test.BaseModuleWebContextSensitiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
-
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Set;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.TestCase.assertTrue;
 
 /**
  * Integration tests for the DrugConceptSearchHandler
@@ -61,9 +55,7 @@ public class UsersByRoleSearchHandlerTest extends BaseModuleWebContextSensitiveT
     @Test
     public void shouldReturnUsersByRole() throws Exception {
         User user = Context.getUserService().getUserByUuid("1010d442-e134-11de-babe-001e378eb67e");
-        Iterator<Role> roleIterator = Context.getAllRoles(user).iterator();
-        roleIterator.next();
-        Role role = roleIterator.next();
+        Role role = Context.getUserService().getRole("System Developer");
 
         MockHttpServletRequest request = new MockHttpServletRequest("GET", "/rest/v1/user");
         request.addParameter("role", role.getRole());
