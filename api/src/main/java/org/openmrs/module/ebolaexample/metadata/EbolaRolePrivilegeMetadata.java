@@ -1,11 +1,11 @@
 package org.openmrs.module.ebolaexample.metadata;
 
-import org.openmrs.module.metadatadeploy.bundle.AbstractMetadataBundle;
-import org.springframework.stereotype.Component;
-
 import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.idSet;
 import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.privilege;
 import static org.openmrs.module.metadatadeploy.bundle.CoreConstructors.role;
+
+import org.openmrs.module.metadatadeploy.bundle.AbstractMetadataBundle;
+import org.springframework.stereotype.Component;
 
 @Component("ebolaRolePrivilegeMetadata")
 public class EbolaRolePrivilegeMetadata extends AbstractMetadataBundle {
@@ -42,6 +42,7 @@ public class EbolaRolePrivilegeMetadata extends AbstractMetadataBundle {
 
         install(role(_Role.APPLICATION_LOOKS_UP_PATIENTS, "Looks up patients", idSet(), idSet(
                 _Privilege.APP_COREAPPS_FIND_PATIENT,
+                _Privilege.APP_EBOLAEXAMPLE_ACTIVE_PATIENTS,
                 _Privilege.APP_EBOLAEXAMPLE_DATA_EXPORT)));
 
         install(role(_Role.APPLICATION_REGISTERS_PATIENTS, "Registers patients", idSet(), idSet(
